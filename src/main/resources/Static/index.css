@@ -1,0 +1,130 @@
+/* === ESTILO GENERAL DE LA PÁGINA === */
+body {
+  margin: 0; /* Elimina márgenes por defecto del navegador */
+  font-family: "Seogoe IU", sans-serif; /* Fuente principal */
+  background: linear-gradient(to right, #0c1220, #5845a3); /* Fondo con degradado */
+  color: #e7dede; /* Color de texto por defecto: blanco */
+}
+
+/* === BARRA DE NAVEGACIÓN SUPERIOR === */
+.navbar {
+  display: flex; /* Usa flexbox para organizar los elementos */
+  align-items: center; /* Centra verticalmente */
+  justify-content: space-between; /* Espacio entre logo, nav y usuario */
+  background: #151414; /* Fondo oscuro */
+  padding: 10px 30px; /* Espaciado interno */
+  height: 50px; /* Altura de la barra */
+}
+
+/* Logo dentro de la barra de navegación */
+.logo img {
+  height: 100px; /* Tamaño del logo */
+}
+
+/* === ENLACES DEL MENÚ DE NAVEGACIÓN === */
+nav a {
+  margin: 0 15px; /* Espacio horizontal entre enlaces */
+  text-decoration: none; /* Quita subrayado */
+  color: #ffffff; /* Color gris claro */
+  font-weight: bold; /* Texto en negrita */
+}
+
+/* === ÁREA DEL USUARIO EN LA DERECHA === */
+.user-area {
+  display: flex; /* Usa flexbox */
+  align-items: center; /* Centrado vertical */
+  gap: 10px; /* Espacio entre el avatar y el nombre */
+}
+
+/* Enlace completo del usuario (avatar + nombre) */
+.user-link {
+  display: flex; /* Flexbox para alinear avatar y nombre */
+  align-items: center;
+  gap: 10px;
+  text-decoration: none; /* Quita subrayado */
+  color: white; /* Color del texto */
+}
+
+/* Cambio visual al pasar el mouse sobre el avatar */
+.user-link:hover .avatar {
+  background-color: #5f0e8e; /* Fondo gris más claro */
+}
+
+/* Cambio visual al pasar el mouse sobre el nombre */
+.user-link:hover .username {
+  color: #5f0e8e; /* Cambio de color al pasar el mouse */
+}
+
+/* Avatar circular con iniciales del usuario */
+.avatar {
+  background-color: #1f3362; /* Fondo gris oscuro */
+  border-radius: 50%; /* Hace el avatar redondo */
+  width: 35px;
+  height: 35px;
+  display: flex; /* Centrado del texto */
+  align-items: center;
+  justify-content: center;
+  font-weight: bold; /* Texto en negrita */
+}
+
+/* === CONTENIDO PRINCIPAL DE LA PÁGINA === */
+.content {
+  padding: 30px 50px; /* Espaciado interno del contenido */
+}
+
+/* Títulos secundarios */
+h2 {
+  margin-bottom: 15px;
+  color: #fff;
+}
+
+/* === CONTENEDOR DE TARJETAS === */
+.cards-container {
+  display: grid; /* Usa CSS Grid */
+  grid-template-columns: repeat(4, 5fr); /* 4 columnas iguales */
+  gap: 30px; /* Espacio entre tarjetas */
+  margin-bottom: 40px; /* Espacio inferior */
+}
+
+/* === ESTILO DE CADA TARJETA === */
+.card {
+  background-color: #1e1e2f; /* Fondo oscuro */
+  border-radius: 10px; /* Bordes redondeados */
+  overflow: hidden; /* Oculta desbordes */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4); /* Sombra para profundidad */
+  transition: transform 0.3s; /* Suaviza el efecto al pasar el mouse */
+  text-decoration: none; /* Quita subrayado */
+  color: inherit; /* Hereda color del texto del contenedor */
+  display: block; /* Hace que todo el contenedor sea clickeable */
+}
+
+/* Efecto al pasar el mouse sobre la tarjeta */
+.card:hover {
+  transform: scale(1.18); /* Ligeramente más grande */
+}
+
+/* Imagen de la tarjeta */
+.card img {
+  width: 100%; /* Ocupa todo el ancho */
+  height: 120px; /* Altura fija */
+  object-fit: cover; /* Mantiene proporciones y recorta */
+}
+
+/* Contenido interno de la tarjeta */
+.card-body {
+  padding: 10px; /* Espaciado interno */
+}
+
+/* Título de la tarjeta */
+.card-body h3 {
+  font-size: 16px;
+  margin: 0;
+  color: #66a1aa; 
+  font-family: Verdana, Geneva, Tahoma, sans-serif;
+}
+
+/* Descripción de la tarjeta */
+.card-body p {
+  font-size: 14px;
+  color: #ffffff; 
+}
