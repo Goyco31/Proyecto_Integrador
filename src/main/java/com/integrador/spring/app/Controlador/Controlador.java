@@ -19,6 +19,11 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class Controlador {
     // Servicio que maneja la lógica de autenticación y registro
     private final ControladorService authService;
+  
+    @PostMapping("/control")
+      public String inicio(){
+          return"index";
+      }
 
 
     // Recibe los datos de login en el cuerpo de la solicitud y los pasa al servicio(para el manejo de solicitud post a la ruta: "/control/login")
@@ -36,4 +41,5 @@ public class Controlador {
     }
     
 }
+
 
