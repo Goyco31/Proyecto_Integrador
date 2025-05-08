@@ -1,12 +1,27 @@
 package com.integrador.spring.app.Controlador;
 
+import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RestController;
 
-@RestController
+@Controller
 public class HolaControlador {
-    @GetMapping("/")
-    String hola(){
-        return"Hola Mundo con Darkcode";
+    @GetMapping("skill")
+        public String inicio() {
+            return "paginaPrincipal"; // Renderiza paginaPrincipal.html
     }
-}
+    
+    @GetMapping("/Explorar")
+        public String explorar() {
+            return "Explorar"; // Renderiza Explorar.html
+    }
+    
+    @GetMapping("/Clasificacion")
+        public String clasificacion() {
+            return "Clasificacion"; // Renderiza Clasificacion.html
+    }
+    
+    @GetMapping("/usuario")
+        public String usuario() {
+            return "usuario"; // Renderiza usuario.html
+    }
+ }
