@@ -6,7 +6,7 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Orbitron', sans-serif;
-    background: linear-gradient(-45deg, #1a1a40, #3a0ca3, #7209b7, #4cc9f0);
+    background: linear-gradient(-45deg, #0d0d1f, #2a058a, #4e078f, #3298c6);
     background-size: 400% 400%;
     animation: neonBackground 20s ease infinite;
     overflow-x: hidden;
