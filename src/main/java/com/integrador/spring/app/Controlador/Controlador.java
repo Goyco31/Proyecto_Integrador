@@ -46,7 +46,26 @@ public class Controlador {
         // Devuelve la respuesta del servicio envuelta en un ResponseEntity con estado HTTP 200 OK
         return ResponseEntity.ok(authService.registro(request));
     }
+  
+  @GetMapping("skill")
+        public String inicio() {
+            return "paginaPrincipal"; // Renderiza paginaPrincipal.html
+    }
+    
+    @GetMapping("/Explorar")
+        public String explorar() {
+            return "Explorar"; // Renderiza Explorar.html
+    }
+    
+    @GetMapping("/Clasificacion")
+        public String clasificacion() {
+            return "Clasificacion"; // Renderiza Clasificacion.html
+    }
+    
+    @GetMapping("/usuario")
+        public String usuario() {
+            return "usuario"; // Renderiza usuario.html
+    }
+  
     
 }
-
-
