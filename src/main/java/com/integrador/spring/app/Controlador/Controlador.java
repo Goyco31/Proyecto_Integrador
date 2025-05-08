@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 import lombok.RequiredArgsConstructor;
 
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
@@ -23,13 +22,6 @@ import org.springframework.web.bind.annotation.RequestBody;
 public class Controlador {
     // Servicio que maneja la lógica de autenticación y registro
     private final ControladorService authService;
-    
-    //para el manejo de solicitud post a la ruta: "/""
-    @GetMapping("/")
-    public String mostrarRegistro() {
-        return "index";
-    }
-
 
     // Recibe los datos de login en el cuerpo de la solicitud y los pasa al servicio
     @PostMapping(value = "login")
@@ -46,26 +38,5 @@ public class Controlador {
         // Devuelve la respuesta del servicio envuelta en un ResponseEntity con estado HTTP 200 OK
         return ResponseEntity.ok(authService.registro(request));
     }
-  
-  @GetMapping("skill")
-        public String inicio() {
-            return "paginaPrincipal"; // Renderiza paginaPrincipal.html
-    }
-    
-    @GetMapping("/Explorar")
-        public String explorar() {
-            return "Explorar"; // Renderiza Explorar.html
-    }
-    
-    @GetMapping("/Clasificacion")
-        public String clasificacion() {
-            return "Clasificacion"; // Renderiza Clasificacion.html
-    }
-    
-    @GetMapping("/usuario")
-        public String usuario() {
-            return "usuario"; // Renderiza usuario.html
-    }
-  
     
 }
