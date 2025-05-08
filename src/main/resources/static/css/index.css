@@ -26,6 +26,7 @@ body {
 }
 
 /*Contenedor del formulario*/
+@media (max-width: 480px){
 .formulario-contenedor {
     background-color: rgba(10, 10, 30, 0.9);
     padding: 1.5rem;
@@ -36,6 +37,7 @@ body {
     animation: fadeIn 1.2s ease-out;
     position: relative;
     z-index: 1;
+}
 }
 
 @keyframes fadeIn {
