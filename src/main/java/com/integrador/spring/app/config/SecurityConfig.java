@@ -41,7 +41,16 @@ public class SecurityConfig {
             .authorizeHttpRequests(authRequest ->
                 authRequest
                     // Permitir acceso a recursos estáticos
-                    .requestMatchers("/", "/index", "/css/**", "/js/**", "/jscript/**", "/images/**", "/favicon.ico").permitAll()
+                    .requestMatchers("/", 
+                    "/index", 
+                    "/css/**", 
+                    "/js/**", 
+                    "/jscript/**", 
+                    "/imagenes/**", 
+                    "/favicon.ico",
+                    "/skill",
+                    "/explorar",
+                    "/clasificacion").permitAll()
                     // Permitir acceso a las rutas de control
                     .requestMatchers("/control/**").permitAll()
                     // Requiere autenticación para todo lo demás
