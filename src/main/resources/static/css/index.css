@@ -120,7 +120,7 @@ a:hover {
     font-size: 0.75rem;
     margin-top: 0.4rem;
     color: #ccc;
-    margin-botton: 1rem; /*Agrega espacio entre los términos y los botones*/
+    margin-bottom: 1rem; /*Agrega espacio entre los términos y los botones*/
 }
 
 /*Botón principal de registro*/
