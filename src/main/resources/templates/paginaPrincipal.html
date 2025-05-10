@@ -1,141 +1,230 @@
 <!DOCTYPE html>
-<html lang="es" xmlns:th="http://www.thymeleaf.org" >
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
 <head>
-  <meta charset="UTF-8"> 
-  <!-- Título que aparece en la pestaña del navegador -->
-  <title>paginaPrincipal</title>
-  
-  <!-- Enlace al archivo de estilos externo -->
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Legendary Page</title>
+  <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
   <link rel="stylesheet" th:href="@{/css/estiloPagPrin.css}">
 </head>
-<body>
 
-  <!-- Barra de navegación principal (header del sitio) -->
+<body>
+  <!-- Overlay que oscurecerá el fondo -->
+  <div class="overlay" id="overlay"></div>
+
   <header class="navbar">
-    
-    <!-- Logo a la izquierda -->
     <div class="logo">
-      <img th:src="@{/Imagenes/SKILLTourney_sin fondo.png}" alt="Logo de SkillTourney">
-    </div>
-    
-    <!-- Enlaces de navegación -->
-    <nav>
-      <a th:href="@{/Explorar}">Explorar</a>
-      <a th:href="@{/Clasificacion}">Clasificación</a>
-      <a th:href="@{/usuario}">Usuario</a>
-    </nav>
-    
-    <!-- Área del usuario (icono y nombre) -->
-    <div class="user-area">
-      <a href="usuario.html" class="user-link">
-        <div class="avatar">ST</div> <!-- Avatar con iniciales -->
-        <div class="username">USER</div> <!-- Nombre o seudónimo del usuario -->
+      <a href="/">
+        <img th:src="@{/Imagenes/Logo.png}" alt="Logo">
       </a>
+    </div>
+
+
+
+    <ul class="nav-menu">
+      <li><a href="#inicio">INICIO</a></li>
+      <li><a href="#juegos">JUEGOS</a></li>
+      <li><a href="#premios">PREMIOS</a></li>
+      <li><a href="#noticias">NOTICIAS</a></li>
+    </ul>
+
+    <div class="right-menu">
+      <a href="#">ENTRAR</a>
+      <a th:href="@{/index}">REGISTRAR</a>
+    </div>
+
+    <div class="hamburger" id="hamburger">
+      <span></span>
+      <span></span>
+      <span></span>
     </div>
   </header>
 
-  <!-- Contenido principal del sitio -->
-  <main class="content">
+  <div class="mobile-menu" id="mobileMenu">
+    <li><a href="#inicio">INICIO</a></li>
+    <li><a href="#juegos">JUEGOS</a></li>
+    <li><a href="#premios">PREMIOS</a></li>
+    <li><a href="#noticias">NOTICIAS</a></li>
+  </div>
 
-    <!-- Sección de torneos nuevos -->
-    <section>
-      <h2>Nuevos:</h2>
-      
-      <!-- Contenedor de tarjetas de torneos -->
-      <div class="cards-container">
+  <!-- Resto de tu contenido aquí -->
 
-        <!-- Tarjeta 1: Torneo de Dota 2 -->
-        <a href="torneo1.html" class="card">
-          <img src="https://i.blogs.es/de368e/dota-2-wallpaper/1366_2000.jpg" alt="Torneo">
-          <div class="card-body">
-            <h3>DOTA 2</h3>
-            <p>📅20 JUL, 8PM</p>
-            <p>🏆200 PEN</p>
-          </div>
-        </a>
-
-        <!-- Tarjeta 2: Torneo de CSGO 2 -->
-        <a href="torneo2.html" class="card">
-          <img src="https://hardzone.es/app/uploads-hardzone.es/2023/09/counter-strike-2.jpg" alt="Torneo">
-          <div class="card-body">
-            <h3>CSGO 2</h3>
-            <p>📅13 JUN, 4PM</p>
-            <p>🏆100 PEN</p>
-          </div>
-        </a>
-
-        <!-- Tarjeta 3: Próximamente -->
-        <a href="torneo3.html" class="card">
-          <img th:src="@{/Imagenes/PROXIMAMENTE.jpg}" alt="Torneo">
-          <div class="card-body">
-            <h3>PROXIMAMENTE...</h3>
-            <p>📅...</p>
-            <p>🏆0 PEN</p>
-          </div>
-        </a>
-
-        <!-- Tarjeta 4: Próximamente -->
-        <a href="torneo4.html" class="card">
-          <img th:src="@{/Imagenes/PROXIMAMENTE.jpg}" alt="Torneo">
-          <div class="card-body">
-            <h3>PROXIMAMENTE...</h3>
-            <p>📅...</p>
-            <p>🏆0 PEN</p>
-          </div>
-        </a>
-
+  <main class="hero-section" id="inicio">
+    <div class="hero-content">
+      <h1>ÚNETE</h1>
+      <p>Participa en nuestros torneos y lleva tu forma de jugar al siguiente nivel mientras conectas con comunidades
+        únicas.</p>
+      <div class="hero-buttons">
+        <a href="#" class="btn primary">¡COMIENZA A JUGAR!</a>
+        <a href="#" class="btn secondary">VER COMUNIDADES</a>
       </div>
-    </section>
-
-    <!-- Sección de torneos recomendados -->
-    <section>
-      <h2>Recomendados para ti:</h2>
-      
-      <!-- Contenedor de tarjetas de torneos -->
-      <div class="cards-container">
-
-        <!-- Tarjeta 5: Torneo de Dota 2 -->
-        <a href="torneo5.html" class="card">
-          <img src="https://i.blogs.es/de368e/dota-2-wallpaper/1366_2000.jpg" alt="Torneo">
-          <div class="card-body">
-            <h3>DOTA 2</h3>
-            <p>📅20 JUL, 8PM</p>
-            <p>🏆200 PEN</p>
-          </div>
-        </a>
-
-        <!-- Tarjeta 6: Torneo de CSGO 2 -->
-        <a href="torneo6.html" class="card">
-          <img src="https://hardzone.es/app/uploads-hardzone.es/2023/09/counter-strike-2.jpg" alt="Torneo">
-          <div class="card-body">
-            <h3>CSGO 2</h3>
-            <p>📅13 JUN, 4PM</p>
-            <p>🏆100 PEN</p>
-          </div>
-        </a>
-
-        <!-- Tarjeta 7: Próximamente -->
-        <a href="torneo7.html" class="card">
-          <img src="/src/main/resources/Static/Imagenes/PROXIMAMENTE.jpg" alt="Torneo">
-          <div class="card-body">
-            <h3>PROXIMAMENTE...</h3>
-            <p>📅...</p>
-            <p>🏆0 PEN</p>
-          </div>
-        </a>
-
-        <!-- Tarjeta 8: Próximamente -->
-        <a href="torneo8.html" class="card">
-          <img src="/src/main/resources/Static/Imagenes/PROXIMAMENTE.jpg" alt="Torneo">
-          <div class="card-body">
-            <h3>PROXIMAMENTE...</h3>
-            <p>📅...</p>
-            <p>🏆0 PEN</p>
-          </div>
-        </a>
-
-      </div>
-    </section>
+    </div>
   </main>
+
+  <main class="games-section" id="juegos">
+    <h2>Los juegos de nuestros torneos</h2>
+    <p>
+      En nuestra plataforma encontrarás los títulos más competitivos del momento.
+      Participa en torneos de Counter-Strike 2 y Dota 2, dos de los juegos más emblemáticos de los eSports.
+      Únete a una comunidad activa, mejora tus habilidades y compite por la gloria.
+    </p>
+    <div class="game-card" id="cs2-card" onclick="toggleInfo('cs2')">
+      <img src="https://cdn.akamai.steamstatic.com/apps/csgo/images/csgo_react/social/cs2.jpg" alt="Counter-Strike 2">
+      <h3>Counter-Strike 2</h3>
+      <div class="game-info" id="cs2-info">
+        <p>Counter-Strike 2 es un shooter táctico de equipos donde la precisión, estrategia y comunicación lo son todo.
+        </p>
+      </div>
+    </div>
+
+    <div class="game-card" id="dota2-card" onclick="toggleInfo('dota2')">
+      <img src="https://i.pinimg.com/736x/8a/8b/50/8a8b50da2bc4afa933718061fe291520.jpg" alt="Dota 2">
+      <h3>Dota 2</h3>
+      <div class="game-info" id="dota2-info">
+        <p>Dota 2 es un MOBA competitivo con héroes únicos, batallas épicas y estrategias infinitas.</p>
+      </div>
+    </div>
+  </main>
+
+
+
+
+
+
+  <main class="prize-rewards" id="premios">
+    <h2 class="section-title">Premios Épicos para los Ganadores</h2>
+    <p class="intro">
+      En cada torneo, los campeones no solo obtienen la gloria, sino también recompensas inolvidables. Desde dinero en
+      efectivo hasta hardware gamer de última generación, ¡los premios están pensados para verdaderos campeones!
+    </p>
+
+    <div class="reward-grid">
+      <div class="reward-card">
+        <img src="https://www.cambios.ec/wp-content/uploads/efectivo-logo.png" alt="Premio en efectivo">
+        <h3>Premios en efectivo</h3>
+        <p>Los primeros puestos se llevan atractivos montos en dólares. ¡Compite, gana y cobra!</p>
+      </div>
+      <div class="reward-card">
+        <img src="https://cdn-icons-png.flaticon.com/512/3556/3556550.png" alt="PC Gamer">
+        <h3>Equipos Gamer</h3>
+        <p>Teclados mecánicos, monitores 240Hz, sillas ergonómicas y más para potenciar tu rendimiento.</p>
+      </div>
+      <div class="reward-card">
+        <img src="https://cdn.pixabay.com/photo/2021/09/11/10/27/medal-6615190_1280.png" alt="Trofeo digital">
+        <h3>Trofeos digitales</h3>
+        <p>Tu nombre quedará grabado en nuestro Salón de la Fama. Comparte tu trofeo con el mundo.</p>
+      </div>
+    </div>
+  </main>
+
+
+
+  <main class="news-section" id="noticias">
+    <h2 class="section-title">Últimas Noticias del Torneo</h2>
+    <p class="intro">Mantente al tanto de los cambios más recientes, las entrevistas y todo lo que está sucediendo en el
+      emocionante mundo de los torneos de videojuegos. ¡Acompáñanos!</p>
+
+    <div class="news-list">
+      <div class="news-highlight">
+        <img
+          src="https://tvazteca.brightspotcdn.com/dims4/default/59099e2/2147483647/strip/true/crop/1751x1080+84+0/resize/1200x740!/format/jpg/quality/90/?url=http%3A%2F%2Ftv-azteca-brightspot.s3.amazonaws.com%2Fe3%2F28%2F8e4dd3cd4e0aa568b01d01fc24d1%2Faze-ce-story-b-esports.jpg"
+          alt="Final del Torneo">
+        <div class="news-content">
+          <h3 class="news-title">¡La Gran Final está Aquí!</h3>
+          <p class="news-summary">Este fin de semana, los mejores equipos de CS2 y Dota 2 se enfrentarán por la
+            victoria. ¡No te lo puedes perder!</p>
+          <a href="#" class="read-more" data-modal="modal1">Leer más</a>
+        </div>
+      </div>
+      <!-- Modal 1 -->
+      <div id="modal1" class="modal">
+        <div class="modal-content">
+          <button class="close">&times;</button>
+          <h2>Final del Torneo CS2</h2>
+          <p>Detalles completos de la gran final, estadísticas de jugadores, entrevistas y más.</p>
+        </div>
+      </div>
+
+
+      <div class="news-item">
+        <img
+          src="https://media.istockphoto.com/id/1310926051/es/vector/meg%C3%A1fono-con-cartel-de-burbujas-de-voz-de-nuevas-regulaciones-altavoz-etiqueta-para-negocios.jpg?s=612x612&w=0&k=20&c=pSi56SxMeeYBI3B7vPTPJKeP2lyIto2T4pceqt2N9hk="
+          alt="Nuevas Reglas">
+        <div class="news-content">
+          <h3 class="news-title">Nuevas Reglas en el Torneo</h3>
+          <p class="news-summary">Conoce las reglas actualizadas para este torneo. Las nuevas dinámicas prometen hacer
+            la competencia aún más emocionante.</p>
+          <a href="#" class="read-more" data-modal="modal2">Leer más</a>
+        </div>
+      </div>
+      <!-- Modal 2 -->
+      <div id="modal2" class="modal">
+        <div class="modal-content">
+          <button class="close">&times;</button>
+          <h2>Actualización de Reglas</h2>
+          <p>Consulta las reglas actualizadas que entran en vigencia en la próxima temporada.</p>
+        </div>
+      </div>
+
+      <div class="news-item">
+        <img src="https://cloudfront-us-east-1.images.arcpublishing.com/copesa/R5GNIF5YLRD73EVPN7YHWADDP4.jpg"
+          alt="Entrevista Campeón">
+        <div class="news-content">
+          <h3 class="news-title">Entrevista al Campeón del Año Pasado</h3>
+          <p class="news-summary">Un vistazo al detrás de cámaras con el equipo ganador de la temporada pasada.
+            Consejos, estrategias y más...</p>
+          <a href="#" class="read-more" data-modal="modal3">Leer más</a>
+        </div>
+      </div>
+      <!-- Modal 3 -->
+      <div id="modal3" class="modal">
+        <div class="modal-content">
+          <button class="close">&times;</button>
+          <h2>Entrevista</h2>
+          <p>Primera entrevista al camperon del año pasaso.</p>
+        </div>
+      </div>
+    </div>
+  </main>
+
+
+
+  <footer class="footer">
+    <div class="footer-content">
+      <div class="footer-section about">
+        <h2>Skill Tourney</h2>
+        <p>Organizamos los mejores torneos de CS2 y Dota 2 en línea. Únete y demuestra tus habilidades.</p>
+      </div>
+
+      <div class="footer-section links">
+        <h3>Enlaces</h3>
+        <ul>
+          <li><a href="#inicio">Inicio</a></li>
+          <li><a href="#juegos">Juegos</a></li>
+          <li><a href="#premios">Premios</a></li>
+          <li><a href="#noticias">Noticias</a></li>
+        </ul>
+      </div>
+
+      <div class="footer-section contact">
+        <h3>Contáctanos</h3>
+        <p><strong>Teléfono:</strong> +51 987 654 321</p>
+        <p><strong>Correo:</strong> contacto@SkillTourney.com</p>
+        <div class="social-links">
+          <a href="#">Facebook</a> |
+          <a href="#">Instagram</a> |
+          <a href="#">Twitter</a>
+        </div>
+      </div>
+
+
+
+      <div class="footer-bottom">
+        <p>&copy; 2025 Skill Tourney | Todos los derechos reservados</p>
+      </div>
+  </footer>
+  <script th:src="@{/jscript/pagPrincipal.js}"></script>
 </body>
+
 </html>
