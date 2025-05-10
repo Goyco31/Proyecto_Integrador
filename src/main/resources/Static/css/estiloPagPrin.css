@@ -1,130 +1,741 @@
-/* === ESTILO GENERAL DE LA PÁGINA === */
+/* Reset de márgenes y padding para todos los elementos */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
 body {
-  margin: 0; /* Elimina márgenes por defecto del navegador */
-  font-family: "Seogoe IU", sans-serif; /* Fuente principal */
-  background: linear-gradient(to right, #0c1220, #5845a3); /* Fondo con degradado */
-  color: #e7dede; /* Color de texto por defecto: blanco */
+  font-family: 'Anton', sans-serif;
+  background: #f5f5f5;
+  color: black;
+  text-align: center;
 }
 
-/* === BARRA DE NAVEGACIÓN SUPERIOR === */
+/* Overlay para oscurecer el fondo */
+.overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  /* Fondo oscuro semitransparente */
+  display: none;
+  z-index: 998;
+}
+
+.overlay.active {
+  display: block;
+  /* Muestra el overlay cuando se activa */
+}
+
+/* Barra de navegación */
 .navbar {
-  display: flex; /* Usa flexbox para organizar los elementos */
-  align-items: center; /* Centra verticalmente */
-  justify-content: space-between; /* Espacio entre logo, nav y usuario */
-  background: #151414; /* Fondo oscuro */
-  padding: 10px 30px; /* Espaciado interno */
-  height: 50px; /* Altura de la barra */
+  background-color: rgb(12, 12, 12);
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 1000;
+  transition: background 0.3s ease, box-shadow 0.3s ease, border-radius 0.3s ease;
 }
 
-/* Logo dentro de la barra de navegación */
+/* Cambios al hacer scroll */
+.navbar.fixed {
+  background-color: rgba(50, 50, 50, 0.7);
+  /* gris con transparencia */
+  backdrop-filter: blur(4px);
+  border-radius: 0 0 20px 20px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
+}
+
+
+
+.logo {
+  font-weight: bold;
+  font-size: 1.5rem;
+}
+
 .logo img {
-  height: 100px; /* Tamaño del logo */
+  width: 80px;  /* Ajusta el ancho fijo que desees */
+  height: auto;  /* Mantiene la proporción de la imagen */
+  object-fit: contain;  /* Asegura que la imagen no se recorte, ajustándola dentro del contenedor */
 }
 
-/* === ENLACES DEL MENÚ DE NAVEGACIÓN === */
-nav a {
-  margin: 0 15px; /* Espacio horizontal entre enlaces */
-  text-decoration: none; /* Quita subrayado */
-  color: #ffffff; /* Color gris claro */
-  font-weight: bold; /* Texto en negrita */
+.nav-menu {
+  display: flex;
+  gap: 30px;
+  list-style: none;
 }
 
-/* === ÁREA DEL USUARIO EN LA DERECHA === */
-.user-area {
-  display: flex; /* Usa flexbox */
-  align-items: center; /* Centrado vertical */
-  gap: 10px; /* Espacio entre el avatar y el nombre */
+.nav-menu li a {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  font-size: 14px;
+  letter-spacing: 1px;
 }
 
-/* Enlace completo del usuario (avatar + nombre) */
-.user-link {
-  display: flex; /* Flexbox para alinear avatar y nombre */
-  align-items: center;
-  gap: 10px;
-  text-decoration: none; /* Quita subrayado */
-  color: white; /* Color del texto */
+.right-menu a {
+  text-decoration: none;
+  color: rgb(255, 255, 255);
+  font-size: 14px;
+  letter-spacing: 1px;
 }
 
-/* Cambio visual al pasar el mouse sobre el avatar */
-.user-link:hover .avatar {
-  background-color: #5f0e8e; /* Fondo gris más claro */
+.right-menu a:nth-child(1) {
+  background-color: rgba(107, 106, 106); 
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  text-decoration: none;
+  margin-right: 10px;
 }
 
-/* Cambio visual al pasar el mouse sobre el nombre */
-.user-link:hover .username {
-  color: #5f0e8e; /* Cambio de color al pasar el mouse */
+.right-menu a:nth-child(2) {
+  background-color: rgb(89, 5, 122,0.75);
+  color: white;
+  padding: 0.5rem 1rem;
+  border-radius: 5px;
+  text-decoration: none;
 }
 
-/* Avatar circular con iniciales del usuario */
-.avatar {
-  background-color: #1f3362; /* Fondo gris oscuro */
-  border-radius: 50%; /* Hace el avatar redondo */
-  width: 35px;
-  height: 35px;
-  display: flex; /* Centrado del texto */
-  align-items: center;
+
+.hamburger {
+  display: none;
+  flex-direction: column;
+  cursor: pointer;
+  gap: 5px;
+}
+
+.hamburger span {
+  width: 25px;
+  height: 3px;
+  background: rgb(255, 255, 255);
+  border-radius: 2px;
+}
+
+/* Menú móvil */
+.mobile-menu {
+  position: fixed;
+  top: 0;
+  left: 0;
+  background: rgba(255, 255, 255, 0.95);
+  width: 25%;
+  height: 100vh;
+  display: none;
+  flex-direction: column;
   justify-content: center;
-  font-weight: bold; /* Texto en negrita */
+  align-items: center;
+  z-index: 999;
+  backdrop-filter: blur(4px);
 }
 
-/* === CONTENIDO PRINCIPAL DE LA PÁGINA === */
-.content {
-  padding: 30px 50px; /* Espaciado interno del contenido */
+.mobile-menu.active {
+  display: flex;
+  /* Muestra el menú móvil cuando se activa */
 }
 
-/* Títulos secundarios */
-h2 {
-  margin-bottom: 15px;
+.mobile-menu li {
+  list-style: none;
+  margin: 15px 0;
+}
+
+.mobile-menu a {
+  text-decoration: none;
+  font-size: 24px;
+  color: black;
+  letter-spacing: 2px;
+}
+
+/* Estilos del contenido principal */
+.hero-section {
+  background-image: url('https://weezevent.com/wp-content/uploads/2018/10/15140712/compet_esport.jpg');
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  color: white;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  padding: 0 20px;
+  position: relative;
+}
+
+.hero-section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.5);
+  /* Oscurece el fondo */
+  z-index: 1;
+}
+
+.hero-content {
+  z-index: 2;
+  max-width: 800px;
+}
+
+.hero-content h1 {
+  font-size: 64px;
+  letter-spacing: 5px;
+  margin-bottom: 20px;
+  text-transform: uppercase;
+}
+
+.hero-content p {
+  font-size: 20px;
+  line-height: 1.6;
+  margin-bottom: 40px;
+  background-color: rgba(0, 0, 0, 0.4);
+  padding: 10px 20px;
+  border-radius: 10px;
+  display: inline-block;
+}
+
+.hero-buttons {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.btn {
+  text-decoration: none;
+  padding: 15px 30px;
+  border-radius: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.btn.primary {
+  background-color: #7c3aed;
+  /* Violeta */
+  color: white;
+}
+
+.btn.secondary {
+  background-color: rgba(255, 255, 255, 0.1);
+  color: white;
+  border: 1px solid white;
+}
+
+.btn:hover {
+  transform: scale(1.05);
+}
+
+.games-section {
+  background-image: url('https://img.freepik.com/vector-gratis/fondo-controlador-videojuego-futurista-espacio-texto_1017-54730.jpg?semt=ais_hybrid&w=740');
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  /* ⚠️ Esta línea soluciona el problema */
+  gap: 30px;
+  flex-wrap: wrap;
+  text-align: center;
+  padding: 60px 20px 30px;
   color: #fff;
 }
 
-/* === CONTENEDOR DE TARJETAS === */
-.cards-container {
-  display: grid; /* Usa CSS Grid */
-  grid-template-columns: repeat(4, 5fr); /* 4 columnas iguales */
-  gap: 30px; /* Espacio entre tarjetas */
-  margin-bottom: 40px; /* Espacio inferior */
+
+.games-section h2 {
+  font-size: 2.5rem;
+  margin-bottom: 20px;
+  font-weight: bold;
+  color: #ffffff;
 }
 
-/* === ESTILO DE CADA TARJETA === */
-.card {
-  background-color: #1e1e2f; /* Fondo oscuro */
-  border-radius: 10px; /* Bordes redondeados */
-  overflow: hidden; /* Oculta desbordes */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4); /* Sombra para profundidad */
-  transition: transform 0.3s; /* Suaviza el efecto al pasar el mouse */
-  text-decoration: none; /* Quita subrayado */
-  color: inherit; /* Hereda color del texto del contenedor */
-  display: block; /* Hace que todo el contenedor sea clickeable */
+.games-intro p {
+  font-size: 1.1rem;
+  max-width: 800px;
+  margin: 0 auto;
+  color: #dddddd;
+  line-height: 1.6;
 }
 
-/* Efecto al pasar el mouse sobre la tarjeta */
-.card:hover {
-  transform: scale(1.18); /* Ligeramente más grande */
+.game-card {
+  background: rgba(128, 128, 128, 0.5);
+  /* Gris con 50% de transparencia */
+  border-radius: 20px;
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+  width: 280px;
+  text-align: center;
+  padding: 20px;
+  transition: all 0.3s ease;
+  cursor: pointer;
+  overflow: hidden;
+  max-height: 400px;
+  backdrop-filter: blur(5px);
+  /* opcional, efecto de vidrio esmerilado */
 }
 
-/* Imagen de la tarjeta */
-.card img {
-  width: 100%; /* Ocupa todo el ancho */
-  height: 120px; /* Altura fija */
-  object-fit: cover; /* Mantiene proporciones y recorta */
+
+
+.game-card.expanded {
+  max-height: 600px;
+  /* Solo esta crecerá */
 }
 
-/* Contenido interno de la tarjeta */
-.card-body {
-  padding: 10px; /* Espaciado interno */
+.game-card img {
+  width: 100%;
+  height: auto;
+  height: 180px;
+  object-fit: contain;
+  display: block;
+  margin: 0 auto;
 }
 
-/* Título de la tarjeta */
-.card-body h3 {
-  font-size: 16px;
-  margin: 0;
-  color: #66a1aa; 
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+
+
+.game-card h3 {
+  font-size: 24px;
+  margin-bottom: 10px;
 }
 
-/* Descripción de la tarjeta */
-.card-body p {
+.game-info {
+  max-height: 0;
+  overflow: hidden;
+  transition: max-height 0.3s ease;
   font-size: 14px;
-  color: #ffffff; 
+  color: #333;
+}
+
+.game-info.active {
+  max-height: 200px;
+  margin-top: 10px;
+}
+
+
+
+
+.prize-rewards {
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  background: url('https://img.freepik.com/fotos-premium/fondo-luz-neon-geometrico-abstracto_1029744-173.jpg?semt=ais_hybrid&w=740');
+  background-size: cover;
+  color: #f2f2f2;
+  border-radius: 0;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+}
+
+.intro {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.reward-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  /* Permite ajustar automáticamente el número de columnas */
+  gap: 2rem;
+  margin-bottom: 2rem;
+}
+
+/* Estilo para cada tarjeta */
+.reward-card {
+  background: #262626;
+  padding: 1.5rem;
+  border-radius: 10px;
+  text-align: center;
+  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  animation: fadeInCard 1s ease-in forwards;
+  opacity: 0;
+}
+
+.reward-card:hover {
+  transform: translateY(-10px);
+  box-shadow: 0 0 10px #d6d1db;
+}
+
+.reward-card img {
+  width: 150px;
+  height: 150px;
+  object-fit: contain;
+  /* La imagen se ajustará completamente sin recortes */
+}
+
+.reward-card h3 {
+  color: #ffffff;
+  margin-bottom: 0.5rem;
+}
+
+/* Animaciones */
+@keyframes fadeInUp {
+  0% {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+
+  100% {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInCard {
+  0% {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+
+  100% {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+
+
+
+.news-section {
+  background: url('https://static.vecteezy.com/system/resources/previews/001/741/292/non_2x/blurred-shiny-purple-background-free-photo.jpg')no-repeat center center;
+  background-size: cover;
+  margin: 0 auto;
+  padding: 3rem 1.5rem;
+  color: #fffefe;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.section-title {
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 1.5rem;
+  color: #ffffff;
+}
+
+.intro {
+  font-size: 1.2rem;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.news-list {
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 2rem;
+}
+
+.news-item, .news-highlight {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: rgba(255, 249, 249, 0.2); /* Color con opacidad */
+  padding: 1rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s ease;
+}
+
+
+.news-highlight {
+  flex-direction: column;
+  margin-bottom: 2rem;
+}
+
+.news-highlight img {
+  width: 100%;
+  height: 300px;
+  object-fit: cover;
+  border-radius: 10px;
+}
+
+.news-item img {
+  width: 150px;
+  height: 100px;
+  object-fit: cover;
+  border-radius: 10px;
+  margin-right: 20px;
+}
+
+.news-content {
+  flex: 1;
+}
+
+.news-title {
+  font-size: 1.8rem;
+  margin-bottom: 1rem;
+  color: #cecece;
+}
+
+.news-summary {
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  color: #eeeeee;
+}
+
+.read-more {
+  color: #007bff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.read-more:hover {
+  text-decoration: underline;
+}
+
+/* Estilo para el modal */
+.modal {
+  display: none; /* Inicialmente oculto */
+  position: fixed; /* Fijo en la pantalla */
+  z-index: 1; /* Asegura que el modal esté encima de otros contenidos */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  justify-content: center;
+  align-items: center;
+}
+
+/* Estilo para el modal */
+.modal {
+  display: none; /* Inicialmente oculto */
+  position: fixed; /* Fijo en la pantalla */
+  z-index: 1; /* Asegura que el modal esté encima de otros contenidos */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  justify-content: center;
+  align-items: center;
+}
+
+/* Estilo para el modal */
+.modal {
+  display: none; /* Inicialmente oculto */
+  position: fixed; /* Fijo en la pantalla */
+  z-index: 1; /* Asegura que el modal esté encima de otros contenidos */
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5); /* Fondo semitransparente */
+  justify-content: center;
+  align-items: center;
+}
+
+/* Estilo del contenido del modal */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1000;
+  left: 0; top: 0;
+  width: 100%; height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  justify-content: center;
+  align-items: center;
+}
+
+.modal-content {
+  background: rgba(59, 58, 58, 0.9);
+  padding: 2rem;
+  border-radius: 10px;
+  width: 80%;
+  max-width: 600px;
+  color: white;
+  position: relative;
+}
+
+.modal .close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 1.5rem;
+  background: none;
+  border: none;
+  color: white;
+  cursor: pointer;
+}
+
+
+
+/* Estilos generales del footer */
+.footer {
+  background-color: rgba(0, 0, 0, 0.8);
+  color: #fff;
+  padding: 40px 0;
+}
+
+.footer-content {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.footer-section {
+  flex: 1;
+  padding: 10px;
+  min-width: 250px;
+}
+
+.footer-section h2, .footer-section h3 {
+  font-size: 1.5em;
+  margin-bottom: 15px;
+}
+
+.footer-section p {
+  font-size: 1em;
+  line-height: 1.5;
+  color: #ccc;
+}
+
+.footer-section ul {
+  list-style: none;
+  padding: 0;
+}
+
+.footer-section ul li {
+  margin: 10px 0;
+}
+
+.footer-section ul li a {
+  color: #fefeff;
+  text-decoration: none;
+  font-weight: bold;
+}
+
+.footer-section ul li a:hover {
+  text-decoration: underline;
+}
+
+/* Estilos para los enlaces de redes sociales */
+.social-links {
+  margin-top: 10px;
+}
+
+.social-links a {
+  color: #ffffff;
+  text-decoration: none;
+  margin-right: 15px;
+}
+
+.social-links a:hover {
+  text-decoration: underline;
+}
+
+/* Estilos para la sección de pie de página */
+.footer-bottom {
+  text-align: center;  
+  padding: 15px 0;
+  font-size: 0.9em;
+  width: 100%;  
+  position: relative;
+  bottom: 0;  
+}
+
+/* Estilo para el texto en el pie de página */
+.footer-bottom p {
+  color: #ccc;
+  margin: 0;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* Estilos responsivos */
+@media (max-width: 1024px) {
+  .nav-menu
+
+  /*,
+  .right-menu*/
+    {
+    display: none;
+  }
+
+  .mobile-menu {
+    width: 35%;
+  }
+
+
+  .hamburger {
+    display: flex;
+    /* Muestra el botón de hamburguesa */
+  }
+
+  .section-title {
+    font-size: 2rem;
+  }
+
+  .reward-grid {
+    grid-template-columns: repeat(2, 1fr);
+    /* Dos columnas por defecto */
+  }
+
+  .reward-card:nth-child(3) {
+    grid-column: span 2;
+    /* Tercera tarjeta ocupa toda la fila */
+  }
+}
+
+
+
+
+
+
+/* Estilos responsivos */
+@media (max-width: 768px) {
+  .reward-grid {
+    display: grid;
+    grid-template-columns: 1fr;
+    /* Una columna para móviles */
+    grid-template-areas:
+      "t1"
+      "t2"
+      "t3";
+    /* Cada tarjeta se coloca en su propia fila */
+  }
+
+  .reward-card:nth-child(1) {
+    grid-area: t1;
+  }
+
+  .reward-card:nth-child(2) {
+    grid-area: t2;
+  }
+
+  .reward-card:nth-child(3) {
+    grid-area: t3;
+  }
+
+  .reward-card {
+    width: 100%;
+    /* Cada tarjeta ocupa el 100% del ancho */
+    margin-bottom: 1rem;
+    /* Espacio entre las tarjetas */
+  }
 }
