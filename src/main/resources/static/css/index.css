@@ -6,24 +6,15 @@ body {
     margin: 0;
     padding: 0;
     font-family: 'Orbitron', sans-serif;
-    background: linear-gradient(-45deg, #0d0d1f, #2a058a, #4e078f, #3298c6);
-    background-size: 400% 400%;
-    animation: neonBackground 20s ease infinite;
+    background: url('Imágenes/Imagen mando.jpg') no-repeat center center/cover;
     overflow-x: hidden;
     color: #fff;
     display: flex;
     justify-content: center;
     align-items: center;
-    min-height: 100vh;
-    position: relative;
+    height: 100vh;
 }
 
-/* Animación del fondo*/
-@keyframes neonBackground {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
 
 /*Contenedor del formulario*/
 @media (max-width: 480px){
@@ -218,7 +209,6 @@ body {
     background-color: rgba(10, 10, 30, 0.9);
     padding: 2.5rem;
     border-radius: 20px;
-
     box-shadow: 0 0 25px #00ffff80;
     width: 90%;
     max-width: 400px;
@@ -558,5 +548,4 @@ hr {
     filter: brightness(1.1);
 
 }
-
 }
