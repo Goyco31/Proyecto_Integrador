@@ -6,15 +6,15 @@ import org.springframework.web.bind.annotation.GetMapping;
 @Controller
 public class ControladorVistas {
     @GetMapping("/")
-    public String mostrarRegistro() {
-        return "index";
-    }
-    
-    @GetMapping("/skill")
     public String inicio() {
         return "paginaPrincipal";
     }
-    
+
+    @GetMapping("/index")
+    public String mostrarRegistro() {
+        return "index";
+    }
+
     @GetMapping("/explorar")
     public String explorar() {
         return "Explorar";
