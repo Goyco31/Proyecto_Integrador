@@ -14,42 +14,60 @@ body {
     align-items: center;
     height: 100vh;
 }
-
+/* Contenedor externo (con más bordes redondeados) */
+.formulario-outer {
+  position: relative;
+  padding: 3px;
+  border-radius: 32px; /* Esquinas más redondeadas en el contorno */
+  width: 500px;
+  max-width: 90%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 
 /*Contenedor del formulario*/
-@media (max-width: 480px){
 .formulario-contenedor {
     background-color: rgba(10, 10, 30, 0.9);
     padding: 1.5rem;
-    border-radius: 15px;
+    border-radius: 32px;
     border-radius: 16px;
     box-shadow: 0 0 25px #00ffff80;
     width: 90%;
-    max-width: 400px;
+    display:flex;
+    flex-direction: column;
+    justify-content: space-between;
     animation: fadeIn 1.2s ease-out;
-    position: relative;
-    z-index: 1;
-}
+    box-sizing: border-box;
+    overflow: visible;
+
+  /* Aplicar borde arcoíris solo alrededor del formulario */
+  border: 5px solid transparent;
+  background-clip: padding-box;
+  border-image: conic-gradient(from 0deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff008c, #ff0000);
+  border-image-slice: 1;
+  animation: arcoiris 4s linear infinite;  /* Rotación del borde arcoíris */
 }
 
-
+/* Animación de entrada */
 @keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
+  from { opacity: 0; transform: translateY(-30px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Animación arcoíris */
+@keyframes arcoiris {
+  0% { border-image-source: conic-gradient(from 0deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff008c, #ff0000); }
+  100% { border-image-source: conic-gradient(from 360deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff008c, #ff0000); }
 }
 
 /*Textos*/
 h1 {
     text-align: center;
     color: #00ffff;
-    font-size: 1.8rem;
+    font-size: 1.6rem;
     text-shadow: 0 0 8px #00ffff88;
+    margin: 0.5rem 0;
 }
 
 h3 {
@@ -57,13 +75,13 @@ h3 {
     color: #ff00ff;
     font-size: 1rem;
     text-shadow: 0 0 6px #ff00ff88;
-    margin-top: 1rem;
+    margin: 0.3rem 0;
 }
 
 p {
     text-align: center;
-    margin-bottom: 1rem;
-    font-size: 0.95rem;
+    margin: 0.3rem 0;
+    font-size: 0.85rem;
 }
 
 a {
@@ -81,13 +99,13 @@ a:hover {
 .formulario input[type="text"],
 .formulario input[type="password"] {
     width: 100%;
-    padding: 10px;
-    margin: 0.5rem 0;
+    padding: 8px;
+    margin: 4px 0;
     border: 2px solid #00ffff55;
-    border-radius: 10px;
+    border-radius: 8px;
     background-color: #1a1a2f;
     color: #ffffff;
-    font-size: 0.85rem;
+    font-size: 0.8rem;
     transition: border 0.3s, box-shadow 0.3s;
 }
 
@@ -99,201 +117,16 @@ a:hover {
 
 /*Términos y condiciones*/
 .terminos {
-    font-size: 0.8rem;
-    margin: 1rem 0;
+    font-size: 0.75rem;
+    margin-top: 0.4rem;
     color: #ccc;
+    margin-botton: 1rem; /*Agrega espacio entre los términos y los botones*/
 }
 
 /*Botón principal de registro*/
 .btn-registrarme {
     width: 100%;
     padding: 10px;
-    margin-top: 1rem;
-    background: linear-gradient(90deg, #00ffff, #ff00ff);
-    color: black;
-    border: none;
-    border-radius: 12px;
-    font-weight: bold;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-size: 0.95rem;
-    transition: transform 0.3s ease, box-shadow 0.3s;
-}
-
-.btn-registrarme:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px #00ffffaa;
-}
-
-/*Separadpr*/
-hr {
-    border: 0;
-    border-top: 1px solid #555;
-    margin: 2rem 0 1rem;
-}
-
-/*Botones sociales con íconos*/
-.botones-sociales {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.botones-sociales button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 0.95rem;
-    transition: transform 0.2s ease, background 0.3s ease;
-}
-
-.botones-sociales button i {
-    font-size: 1.1rem;
-}
-
-/*Estilos individuales por red social */
-.btn-discord {
-    background-color: #5865f2;
-    color: white;
-}
-
-.btn-google {
-    background-color: #db4437;
-    color: white;
-}
-
-.btn-kick {
-    background-color: #33ff33;
-    color: black;
-}
-
-.botones-sociales button:hover {
-    transform: scale(1.05);
-    filter: brightness(1.1);
-
-/*Importar fuente orbitron*/
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
-
-/*Fondo con degradado neón animado*/
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Orbitron', sans-serif;
-    background: linear-gradient(-45deg, #1a1a40, #3a0ca3, #7209b7, #4cc9f0);
-    background-size: 400% 400%;
-    animation: neonBackground 20s ease infinite;
-    overflow: hidden;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    position: relative;
-}
-
-/* Animación del fondo*/
-@keyframes neonBackground {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/*Contenedor del formulario*/
-.formulario-contenedor {
-    background-color: rgba(10, 10, 30, 0.9);
-    padding: 2.5rem;
-    border-radius: 20px;
-    box-shadow: 0 0 25px #00ffff80;
-    width: 90%;
-    max-width: 400px;
-    animation: fadeIn 1.2s ease-out;
-    position: relative;
-    z-index: 1;
-}
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/*Textos*/
-h1 {
-    text-align: center;
-    color: #00ffff;
-    font-size: 1.4rem;
-    text-shadow: 0 0 8px #00ffff88;
-}
-
-h3 {
-    text-align: center;
-    color: #ff00ff;
-    font-size: 0.9rem;
-    text-shadow: 0 0 6px #ff00ff88;
-    margin-top: 1rem;
-}
-
-p {
-    text-align: center;
-    margin-bottom: 1rem;
-    font-size: 0.95rem;
-}
-
-a {
-    color: #00ffff;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-    color: #ffffff;
-}
-
-/* Estilos para las cajas donde escribe el usuario*/
-.formulario input[type="email"],
-.formulario input[type="text"],
-.formulario input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin: 0.5rem 0;
-    border: 2px solid #00ffff55;
-    border-radius: 10px;
-    background-color: #1a1a2f;
-    color: #ffffff;
-    font-size: 0.85rem;
-    transition: border 0.3s, box-shadow 0.3s;
-}
-
-.formulario input:focus {
-    outline: none;
-    border-color: #00ffff;
-    box-shadow: 0 0 10px #00ffff88;
-}
-
-/*Términos y condiciones*/
-.terminos {
-    font-size: 0.8rem;
-    margin: 1rem 0;
-    color: #ccc;
-}
-
-/*Botón principal de registro*/
-.btn-registrarme {
-    width: 100%;
-    padding: 10px;
-    margin-top: 1rem;
     background: linear-gradient(90deg, #00ffff, #ff00ff);
     color: black;
     border: none;
@@ -314,199 +147,14 @@ a:hover {
 hr {
     border: 0;
     border-top: 1px solid #555;
-    margin: 2rem 0 1rem;
-}
-
-/*Botones sociales con íconos*/
-.botones-sociales {
-    display: flex;
-    flex-direction: column;
-    gap: 12px;
-}
-
-.botones-sociales button {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-    padding: 12px;
-    border: none;
-    border-radius: 10px;
-    font-weight: bold;
-    cursor: pointer;
-    font-size: 0.95rem;
-    transition: transform 0.2s ease, background 0.3s ease;
-}
-
-.botones-sociales button i {
-    font-size: 1.1rem;
-}
-
-/*Estilos individuales por red social */
-.btn-discord {
-    background-color: #5865f2;
-    color: white;
-}
-
-.btn-google {
-    background-color: #db4437;
-    color: white;
-}
-
-.btn-kick {
-    background-color: #33ff33;
-    color: black;
-}
-
-.botones-sociales button:hover {
-    transform: scale(1.05);
-    filter: brightness(1.1);
-
-
-/*Importar fuente orbitron*/
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
-
-/*Fondo con degradado neón animado*/
-body {
-    margin: 0;
-    padding: 0;
-    font-family: 'Orbitron', sans-serif;
-    background: linear-gradient(-45deg, #1a1a40, #3a0ca3, #7209b7, #4cc9f0);
-    background-size: 400% 400%;
-    animation: neonBackground 20s ease infinite;
-    overflow: hidden;
-    color: #fff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    position: relative;
-}
-
-/* Animación del fondo*/
-@keyframes neonBackground {
-    0% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
-    100% { background-position: 0% 50%; }
-}
-
-/*Contenedor del formulario*/
-.formulario-contenedor {
-    background-color: rgba(10, 10, 30, 0.9);
-    padding: 1.5rem;
-    border-radius: 16px;
-    box-shadow: 0 0 25px #00ffff80;
-    width: 90%;
-    max-width: 400px;
-    animation: fadeIn 1.2s ease-out;
-    position: relative;
-    z-index: 1;
-}
-
-@keyframes fadeIn {
-    from {
-        opacity: 0;
-        transform: translateY(-30px);
-    }
-    to {
-        opacity: 1;
-        transform: translateY(0);
-    }
-}
-
-/*Textos*/
-h1 {
-    text-align: center;
-    color: #00ffff;
-    font-size: 1.8rem;
-    text-shadow: 0 0 8px #00ffff88;
-}
-
-h3 {
-    text-align: center;
-    color: #ff00ff;
-    font-size: 1rem;
-    text-shadow: 0 0 6px #ff00ff88;
-    margin-top: 1rem;
-}
-
-p {
-    text-align: center;
-    margin-bottom: 1rem;
-    font-size: 0.95rem;
-}
-
-a {
-    color: #00ffff;
-    text-decoration: none;
-}
-
-a:hover {
-    text-decoration: underline;
-    color: #ffffff;
-}
-
-/* Estilos para las cajas donde escribe el usuario*/
-.formulario input[type="email"],
-.formulario input[type="text"],
-.formulario input[type="password"] {
-    width: 100%;
-    padding: 10px;
-    margin: 0.5rem 0;
-    border: 2px solid #00ffff55;
-    border-radius: 10px;
-    background-color: #1a1a2f;
-    color: #ffffff;
-    font-size: 0.85rem;
-    transition: border 0.3s, box-shadow 0.3s;
-}
-
-.formulario input:focus {
-    outline: none;
-    border-color: #00ffff;
-    box-shadow: 0 0 10px #00ffff88;
-}
-
-/*Términos y condiciones*/
-.terminos {
-    font-size: 0.8rem;
     margin: 1rem 0;
-    color: #ccc;
-}
-
-/*Botón principal de registro*/
-.btn-registrarme {
-    width: 100%;
-    padding: 10px;
-    margin-top: 1rem;
-    background: linear-gradient(90deg, #00ffff, #ff00ff);
-    color: black;
-    border: none;
-    border-radius: 12px;
-    font-weight: bold;
-    cursor: pointer;
-    text-transform: uppercase;
-    font-size: 0.95rem;
-    transition: transform 0.3s ease, box-shadow 0.3s;
-}
-
-.btn-registrarme:hover {
-    transform: scale(1.05);
-    box-shadow: 0 0 15px #00ffffaa;
-}
-
-/*Separadpr*/
-hr {
-    border: 0;
-    border-top: 1px solid #555;
-    margin: 2rem 0 1rem;
 }
 
 /*Botones sociales con íconos*/
 .botones-sociales {
     display: flex;
     flex-direction: column;
-    gap: 12px;
+    gap: 10px;
 }
 
 .botones-sociales button {
@@ -514,17 +162,18 @@ hr {
     align-items: center;
     justify-content: center;
     gap: 10px;
-    padding: 12px;
+    padding: 10px;
     border: none;
     border-radius: 10px;
     font-weight: bold;
     cursor: pointer;
-    font-size: 0.95rem;
+    font-size: 0.85rem;
     transition: transform 0.2s ease, background 0.3s ease;
 }
 
-.botones-sociales button i {
-    font-size: 1.1rem;
+/* Corregir el tamaño del icono de Kick */
+.botones-sociales .btn-kick i {
+  font-size: 1.2rem; /* Asegurándome de que el icono sea visible */
 }
 
 /*Estilos individuales por red social */
@@ -546,6 +195,14 @@ hr {
 .botones-sociales button:hover {
     transform: scale(1.05);
     filter: brightness(1.1);
-
 }
+/* Responsive para pantallas pequeñas */
+@media (max-width: 520px) {
+  .formulario-outer {
+    width: 90vw;
+    height: auto; /* Permitir altura automática en dispositivos pequeños */
+  }
+  .formulario-contenedor {
+    padding: 1rem;
+  }
 }
