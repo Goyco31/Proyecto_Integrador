@@ -1,11 +1,6 @@
 <div style="justify-content: center">
     <img src="documentacion/logo.jpeg" style="display: block; margin: 0 auto">
 </div>
-
-<p>
-    <img src="documentacion/logo.jpeg">
-</p>
-
 # SkillTourney
 
 [![Repositorio](https://img.shields.io/badge/GitHub-Proyecto-blue)](https://github.com/Goyco31/Proyecto_Integrador.gito)
