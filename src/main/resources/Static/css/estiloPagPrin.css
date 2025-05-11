@@ -1,130 +1,429 @@
+/* === VARIABLES GLOBALES === */
+:root {
+    --main-purple: #5f0e8e; /* Morado principal */
+    --light-purple: #9a7ea9; /* Morado claro para acentos o texto */
+    --dark-blue: #0c1220;   /* Azul oscuro para fondos principales */
+    --medium-blue: #1e1e2f; /* Azul medio, usado para tarjetas y navbar */
+    --accent-blue: #1f3362; /* Azul de acento, para bordes o fondos secundarios */
+    --pure-white: #ffffff;  /* Blanco puro para texto y elementos */
+    --text-light-gray: #cccccc; /* Gris claro para texto secundario */
+    --card-shadow: rgba(0, 0, 0, 0.4); /* Sombra para tarjetas */
+    --hover-glow: rgba(154, 126, 169, 0.5); /* Resplandor para hover en tarjetas */
+}
+
 /* === ESTILO GENERAL DE LA PÁGINA === */
 body {
-  margin: 0; /* Elimina márgenes por defecto del navegador */
-  font-family: "Seogoe IU", sans-serif; /* Fuente principal */
-  background: linear-gradient(to right, #0c1220, #5845a3); /* Fondo con degradado */
-  color: #e7dede; /* Color de texto por defecto: blanco */
+    margin: 0;
+    font-family: "Segoe UI", 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    background: linear-gradient(to bottom, var(--dark-blue), var(--medium-blue));
+    color: var(--pure-white);
 }
 
 /* === BARRA DE NAVEGACIÓN SUPERIOR === */
 .navbar {
-  display: flex; /* Usa flexbox para organizar los elementos */
-  align-items: center; /* Centra verticalmente */
-  justify-content: space-between; /* Espacio entre logo, nav y usuario */
-  background: #151414; /* Fondo oscuro */
-  padding: 10px 30px; /* Espaciado interno */
-  height: 50px; /* Altura de la barra */
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--medium-blue); /* Usando variable */
+    padding: 15px 5%; /* Aumentado padding vertical, usando % para horizontal */
+    height: 80px; /* Aumentada la altura */
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
 
-/* Logo dentro de la barra de navegación */
-.logo img {
-  height: 100px; /* Tamaño del logo */
+.logo-container { /* Contenedor del logo para mejor control si es necesario */
+    display: flex;
+    align-items: center;
+}
+
+.logo { /* Estilo para la imagen del logo */
+    height: 150px; /* Aumentado el tamaño del logo, ajusta según tu imagen */
+    max-height: 200%; /* Para que no exceda la altura del navbar si es muy grande */
 }
 
 /* === ENLACES DEL MENÚ DE NAVEGACIÓN === */
-nav a {
-  margin: 0 15px; /* Espacio horizontal entre enlaces */
-  text-decoration: none; /* Quita subrayado */
-  color: #ffffff; /* Color gris claro */
-  font-weight: bold; /* Texto en negrita */
+.menu-principal a {
+    margin: 0 1.5rem; /* 24px */
+    text-decoration: none;
+    color: var(--pure-white);
+    font-weight: bold;
+    position: relative; /* Para el efecto hover */
+    transition: color 0.3s ease;
+    font-size: xx-large;
+}
+
+.menu-principal a::after { /* Efecto de subrayado animado */
+    content: '';
+    position: absolute;
+    bottom: -8px; /* Ajusta la posición del subrayado */
+    left: 0;
+    width: 0;
+    height: 3px; /* Grosor del subrayado */
+    background: var(--main-purple);
+    transition: width 0.3s ease;
+}
+
+.menu-principal a:hover {
+    color: var(--light-purple); /* Cambio de color del texto al pasar el mouse */
+}
+
+.menu-principal a:hover::after {
+    width: 100%;
 }
 
 /* === ÁREA DEL USUARIO EN LA DERECHA === */
-.user-area {
-  display: flex; /* Usa flexbox */
-  align-items: center; /* Centrado vertical */
-  gap: 10px; /* Espacio entre el avatar y el nombre */
+.user-panel {
+    display: flex;
+    align-items: center;
 }
-
-/* Enlace completo del usuario (avatar + nombre) */
 .user-link {
-  display: flex; /* Flexbox para alinear avatar y nombre */
-  align-items: center;
-  gap: 10px;
-  text-decoration: none; /* Quita subrayado */
-  color: white; /* Color del texto */
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--pure-white); /* Color del texto del nombre de usuario */
+    padding: 8px 12px;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+}
+.user-avatar {
+    background-color: var(--accent-blue);
+    border-radius: 50%;
+    width: 40px; /* Ligeramente más grande */
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: var(--pure-white);
+    font-size: 15px; /* Ajusta el tamaño de las iniciales si es necesario */
+    transition: background-color 0.3s ease;
 }
 
-/* Cambio visual al pasar el mouse sobre el avatar */
-.user-link:hover .avatar {
-  background-color: #5f0e8e; /* Fondo gris más claro */
+.user-name {
+    font-weight: bold;
+    transition: color 0.3s ease;
 }
 
-/* Cambio visual al pasar el mouse sobre el nombre */
-.user-link:hover .username {
-  color: #5f0e8e; /* Cambio de color al pasar el mouse */
+.user-link:hover {
+    background-color: rgba(255,255,255,0.1); /* Ligero fondo al pasar el mouse */
 }
 
-/* Avatar circular con iniciales del usuario */
-.avatar {
-  background-color: #1f3362; /* Fondo gris oscuro */
-  border-radius: 50%; /* Hace el avatar redondo */
-  width: 35px;
-  height: 35px;
-  display: flex; /* Centrado del texto */
-  align-items: center;
-  justify-content: center;
-  font-weight: bold; /* Texto en negrita */
+.user-link:hover .user-avatar {
+    background-color: var(--main-purple); /* Cambio de color del avatar */
 }
 
-/* === CONTENIDO PRINCIPAL DE LA PÁGINA === */
-.content {
-  padding: 30px 50px; /* Espaciado interno del contenido */
+.user-link:hover .user-name {
+    color: var(--light-purple); /* Cambio de color del nombre */
 }
 
-/* Títulos secundarios */
-h2 {
-  margin-bottom: 15px;
-  color: #fff;
+/* === SECCIÓN HERO === */
+.hero-banner {
+    height: 70vh; /* Altura relativa a la ventana */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                url('../Imagenes/hero-bg.jpg'); 
+    background-size: cover;
+    background-position: center;
+    text-align: center; /* Centrar el slogan-container si es necesario */
+    padding: 0 20px; /* Espacio por si el slogan es muy ancho */
 }
 
-/* === CONTENEDOR DE TARJETAS === */
+.main-slogan {
+    font-family: 'Monda', sans-serif;
+    font-weight: 700; 
+    font-size: clamp(2.5rem, 5vw, 4rem); /* Ajusta el tamaño si Monda se ve diferente a Bebas Neue */
+    color: var(--pure-white); 
+    line-height: 1.3;
+    text-transform: uppercase; 
+    letter-spacing: 1px;
+    padding: 30px 40px;
+    border-radius: 10px;
+}
+/* === SECCIÓN DE JUEGOS DESTACADOS === */
+.featured-games {
+    padding: 4rem 5%;
+}
+
+.game-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr; /* Por defecto para pantallas grandes */
+    gap: 2rem;
+    margin-bottom: 4rem;
+    background: var(--medium-blue);
+    border-radius: 15px;
+    overflow: hidden;
+    border: 1px solid var(--accent-blue); /* Borde sutil */
+    box-shadow: 0 8px 15px var(--card-shadow);
+}
+
+/* Para dispositivos más pequeños, apilar las columnas */
+@media (max-width: 768px) {
+    .game-card {
+        grid-template-columns: 1fr; /* Una columna */
+    }
+    .game-card.reverse .game-info { /* Mantener el orden visual correcto */
+        grid-row: 2;
+    }
+    .game-card.reverse .game-carousel {
+        grid-row: 1;
+    }
+}
+
+.game-card.reverse .game-info {
+    grid-column: 2; /* En escritorio, texto a la derecha */
+}
+.game-card.reverse .game-carousel {
+    grid-column: 1; /* En escritorio, imagen a la izquierda */
+}
+
+.game-info {
+    padding: 100px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    font-size: large;
+}
+
+.game-title {
+    font-family: 'Bebas Neue', sans-serif; /* Fuente para el título */
+    font-size: clamp(4rem, 6vw, 5rem); /* Un poco más grande si la fuente lo permite */
+    color: var(--main-purple); /* Un color más vibrante, o un blanco brillante */
+    text-transform: uppercase; /* Todo en mayúsculas */
+    letter-spacing: 1px; /* Espaciado entre letras */
+    margin-bottom: 0.8rem;
+}
+
+.game-description {
+    font-family: 'Exo 2', sans-serif; /* Fuente para la descripción */
+    font-size: 1rem;
+    color: var(--text-light-gray);
+    line-height: 1.7; /* Un poco más de espaciado entre líneas */
+    margin-bottom: 1.5rem;
+}
+
+.game-specs span {
+    font-family: 'Exo 2', sans-serif; /* Fuente para los specs */
+    font-weight: 700; /* Más grueso si la fuente lo tieneb */
+    display: inline-block;
+    background-color: var(--main-purple); /* Usar el morado principal */
+    color: var(--pure-white);
+    padding: 0.6em 1.2em; /* Un poco más de padding */
+    border-radius: 5px;
+    margin-right: 0.7em;
+    margin-bottom: 0.7em;
+    font-size: 0.85rem; /* Ligeramente más pequeño para no robar protagonismo al título */
+    text-transform: uppercase
+    border 1px solid rgba(255,255,255,0.2);
+}
+.game-carousel {
+    position: relative;
+    min-height: 300px; /* Altura mínima para el carrusel */
+    height: 100%; /* Para que ocupe la altura de la tarjeta */
+    background-color: #000; /* Fondo mientras carga imagen */
+}
+
+.game-carousel img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Cubre el área sin deformar */
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.game-carousel img.active {
+    opacity: 1;
+}
+
+/* === SECCIÓN DE TORNEOS === */
+.tournaments-section {
+    padding: 30px 5%; /* Coherencia con featured-games */
+}
+
+.section-title { /* Estilo para "TORNEOS ACTIVOS" */
+    font-size: 100px; /* Tamaño adaptable */
+    font-family: 'Monda', sans-serif;
+    color: var(--light-purple);
+    text-align: center; /* Centrado del título */
+    margin-bottom: 40px; /* Espacio antes de las tarjetas */
+    text-transform: uppercase;
+}
+
+/* === CONTENEDOR DE TARJETAS DE TORNEO === */
 .cards-container {
-  display: grid; /* Usa CSS Grid */
-  grid-template-columns: repeat(4, 5fr); /* 4 columnas iguales */
-  gap: 30px; /* Espacio entre tarjetas */
-  margin-bottom: 40px; /* Espacio inferior */
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Puede variar */
+    gap: 30px;
+    justify-items: center; /* Esto ayuda a centrar las tarjetas si no llenan toda la fila */
 }
 
-/* === ESTILO DE CADA TARJETA === */
-.card {
-  background-color: #1e1e2f; /* Fondo oscuro */
-  border-radius: 10px; /* Bordes redondeados */
-  overflow: hidden; /* Oculta desbordes */
-  box-shadow: 0 4px 12px rgba(0,0,0,0.4); /* Sombra para profundidad */
-  transition: transform 0.3s; /* Suaviza el efecto al pasar el mouse */
-  text-decoration: none; /* Quita subrayado */
-  color: inherit; /* Hereda color del texto del contenedor */
-  display: block; /* Hace que todo el contenedor sea clickeable */
+/* === ESTILO DE CADA TARJETA DE TORNEO === */
+.tournament-card {
+    background-color: var(--medium-blue);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 6px 15px var(--card-shadow);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    display: flex; /* Para mejor control del contenido interno */
+    flex-direction: column;
+    width: 100%; /* Para que ocupen el espacio asignado por el grid */
+    max-width: 550px; /* Un ancho máximo opcional por tarjeta */
+    border: 3px solid var(--accent-blue); /* Borde personalizable */
+    cursor: pointer; /* Indica que es clickeable */
 }
 
-/* Efecto al pasar el mouse sobre la tarjeta */
-.card:hover {
-  transform: scale(1.18); /* Ligeramente más grande */
+.tournament-card:hover {
+    transform: translateY(-10px) scale(1.03); /* Efecto sutil de elevación y escala */
+    box-shadow: 0 12px 25px var(--hover-glow), 0 8px 15px var(--card-shadow) ; /* Sombra más pronunciada y resplandor */
+    border-color: var(--main-purple); /* Cambio de color del borde al pasar el mouse */
 }
 
-/* Imagen de la tarjeta */
-.card img {
-  width: 100%; /* Ocupa todo el ancho */
-  height: 120px; /* Altura fija */
-  object-fit: cover; /* Mantiene proporciones y recorta */
+.card-header { /* Cabecera de la tarjeta de torneo */
+    padding: 15px;
+    background-color: rgba(0,0,0,0.2); /* Un poco más oscuro para destacar */
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-/* Contenido interno de la tarjeta */
-.card-body {
-  padding: 10px; /* Espaciado interno */
+.card-header h3 {
+    font-size: 1.25rem; /* 20px */
+    margin: 0;
+    color: var(--light-purple);
+    font-family: Verdana, Geneva, Tahoma, sans-serif;
 }
 
-/* Título de la tarjeta */
-.card-body h3 {
-  font-size: 16px;
-  margin: 0;
-  color: #66a1aa; 
-  font-family: Verdana, Geneva, Tahoma, sans-serif;
+.premiun-badge { 
+    background-color: var(--main-purple);
+    color: var(--pure-white);
+    font-size: 0.75rem; /* 12px */
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
 }
 
-/* Descripción de la tarjeta */
-.card-body p {
-  font-size: 14px;
-  color: #ffffff; 
+.card-content { /* Contenido principal de la tarjeta de torneo */
+    padding: 15px;
+    flex-grow: 1; /* Para que ocupe el espacio disponible si las tarjetas tienen alturas variables */
+}
+
+.card-content p {
+    font-size: 0.9rem; /* 14.4px */
+    color: var(--text-light-gray);
+    margin-bottom: 0.8em;
+    line-height: 1.5;
+}
+.card-content p:last-child {
+    margin-bottom: 0;
+}
+
+/* === MODAL === */
+.carousel-modal {
+    display: none; /* Oculto por defecto */
+    position: fixed;
+    z-index: 1000; /* Encima de todo */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Scroll si el contenido es muy grande */
+    background-color: rgba(0,0,0,0.9); /* Fondo oscuro semitransparente */
+    backdrop-filter: blur(5px); /* Efecto de desenfoque (experimental, no todos los navegadores) */
+}
+
+.modal-content {
+    background-color: var(--medium-blue);
+    margin: 5% auto; /* Centrado vertical y horizontal */
+    padding: 20px;
+    border: 1px solid var(--accent-blue);
+    border-radius: 10px;
+    width: 80%; /* Ancho del modal */
+    max-width: 900px; /* Ancho máximo */
+    position: relative;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+}
+
+.close-modal {
+    color: var(--text-light-gray);
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 2.5rem; /* Más grande para fácil click */
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.close-modal:hover,
+.close-modal:focus {
+    color: var(--main-purple);
+    text-decoration: none;
+    cursor: pointer;
+}
+
+.modal-carousel { /* Contenedor para el carrusel dentro del modal */
+    height: 60vh; /* Altura del carrusel en el modal */
+    background-color: #000; /* Fondo de ejemplo */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: white; /* Texto de ejemplo si no hay imágenes */
+}
+
+/* === AJUSTES RESPONSIVOS ADICIONALES === */
+@media (max-width: 992px) { /* Tablets y móviles grandes */
+    .navbar {
+        padding: 10px 3%;
+        height: 70px;
+    }
+    .logo {
+        height: 55px;
+    }
+    .menu-principal a {
+        margin: 0 1rem; /* Reducir espacio entre enlaces */
+        font-size: 0.95rem;
+    }
+    .user-name {
+        display: none; /* Opcional: ocultar nombre de usuario en pantallas pequeñas */
+    }
+     .user-avatar {
+        width: 35px;
+        height: 35px;
+    }
+}
+
+@media (max-width: 768px) { /* Móviles */
+    .menu-principal {
+        display: none; 
+    }
+    .main-slogan {
+        font-size: clamp(2rem, 6vw, 2.8rem); /* Ajustar slogan para móviles */
+    }
+    .featured-games {
+        padding: 2rem 3%;
+    }
+    .game-card {
+        grid-template-columns: 1fr; /* Una columna para game-card */
+    }
+    .game-card.reverse .game-info,
+    .game-card.reverse .game-carousel {
+        grid-column: 1; /* Reset para apilamiento */
+    }
+     .tournaments-section {
+        padding: 20px 3%;
+    }
+    .cards-container {
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Tarjetas más pequeñas en móvil */
+        gap: 20px;
+    }
+    .modal-content {
+        width: 90%;
+        margin: 10% auto;
+    }
 }

@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>SkillTourney - Torneos Profesionales</title>
+    <link rel="stylesheet" th:href="@{/css/estiloPagPrin.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Exo+2:wght@400;700&family=Monda:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Exo+2:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Barra de navegación -->
+    <header class="navbar">
+        <div class="logo-container">
+            <img th:src="@{/Imagenes/SkillTourney_sin fondo.png}" alt="Logo SkillTourney" class="logo">
+        </div>
+        
+        <nav class="menu-principal">
+            <a th:href="@{/Explorar}">Explorar</a>
+            <a th:href="@{/Clasificacion}">Clasificacion</a>
+            <a th:href="@{/Tienda}">Tienda</a>
+        </nav>
+        <div class="user-panel">
+    <a th:href="@{/usuario}" class="user-link">
+        <div class="user-avatar">ST</div>
+        <div class="user-name">USER</div>
+    </a>
+      </div>
+    </header>
+
+    <!-- Sección Hero con slogan -->
+    <section class="hero-banner">
+        <div class="slogan-container">
+            <h1 class="main-slogan">Impulsa tu juego<br>Atrae a tu audiencia<br>Haz historia</h1>
+        </div>
+    </section>
+
+    <!-- Sección de Juegos Destacados -->
+    <section class="featured-games">
+        <!-- Dota 2 -->
+        <div class="game-card">
+            <div class="game-info">
+                <h2 class="game-title"> DOTA 2 </h2>
+                <p class="game-description">Torneos profesionales con premios en efectivo. Forma tu equipo y compite. Has historia, unete y participa, se el mejor y alacanza tu maximo nivel</p>
+                <div class="game-specs">
+                    <span>5vs5</span>
+                    <span>Premio: 💰200</span>
+                    <span>Modo: Competitivo</span>
+                </div>
+            </div>
+            <div class="game-carousel">
+                <img th:src="@{/Imagenes/dota2.webp}" class="active" alt="Dota 2 gameplay 1">
+                <img th:src="@{/Imagenes/torneodota2.jpg}" alt="Dota 2 gameplay 2">
+            </div>
+        </div>
+
+        <!-- CS:GO 2 -->
+        <div class="game-card reverse">
+            <div class="game-carousel">
+                <img th:src="@{/Imagenes/counter-strike-2.webp}" class="active" alt="CSGO gameplay 1">
+                <img th:src="@{/Imagenes/torneo-counter-strike-esports.webp}" alt="CSGO gameplay 2">
+            </div>
+            <div class="game-info">
+                <h2 class="game-title"> CS:GO 2</h2>
+                <p class="game-description">Demuestra tu precisión en el shooter táctico más popularen uno de los juego clasicos y preferidos por la mayoria de juagodres</p>
+                <div class="game-specs">
+                    <span>5vs5</span>
+                    <span>Premio: 💰150</span>
+                    <span>Modo: Defusal</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Sección de Torneos -->
+    <section class="tournaments-section" id="eventos">
+        <h2 class="section-title">TORNEOS ACTIVOS</h2>
+        <div class="cards-container">
+            <!-- Tarjeta 1 -->
+            <div class="tournament-card" data-carousel="dota-carousel">
+                <div class="card-header">
+                    <h3>Torneo DOTA 2</h3>
+                    <span class="premiun-badge">PREMIUM</span>
+                </div>
+                <div class="card-content">
+                    <p class="schedule">📅 20 Julio | 🕒 8:00 PM</p>
+                    <p class="prize">🏆 $100 PEN</p>
+                </div>
+            </div>
+            <!-- Tarjeta 2 -->
+            <div class="tournament-card" data-carousel="dota-carousel">
+                <div class="card-header">
+                    <h3>Torneo DOTA 2</h3>
+                    <span class="premiun-badge">PREMIUM</span>
+                </div>
+                <div class="card-content">
+                    <p class="schedule">📅 20 Julio | 🕒 8:00 PM</p>
+                    <p class="prize">🏆 $200 PEN</p>
+                </div>
+            </div>
+            <!-- Tarjeta 3 -->
+            <div class="tournament-card" data-carousel="dota-carousel">
+                <div class="card-header">
+                    <h3>Torneo CSGO 2</h3>
+                </div>
+                <div class="card-content">
+                    <p class="schedule">📅 20 Julio | 🕒 8:00 PM</p>
+                    <p class="prize">🏆 $250 PEN</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Modal Carrusel -->
+    <div class="carousel-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <div class="modal-carousel"></div>
+        </div>
+    </div>
+
+    <script th:src="@{/jscript/estilo.js}"></script>
+</body>
+</html>

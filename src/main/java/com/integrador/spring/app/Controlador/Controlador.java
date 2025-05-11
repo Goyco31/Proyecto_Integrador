@@ -1,6 +1,5 @@
 package com.integrador.spring.app.Controlador;
 
-
 // Importaciones necesarias para manejar respuestas HTTP y anotaciones de Spring
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;

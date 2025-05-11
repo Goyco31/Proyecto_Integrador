@@ -20,13 +20,17 @@ public class ControladorPublico {
         return "Clasificacion";
     }
 
-    @GetMapping("/usuario")
-    public String usuario() {
-        return "usuario";
+    @GetMapping("/Tienda")
+    public String tienda() {
+        return "Tienda";
     }
 
     @GetMapping("/skill")
     public String inicio() {
-        return "paginaPrincipal";
+        return "paginaTorneol";
+    }
+     @GetMapping("/usuario")
+    public String usuario() {
+        return "usuario";
     }
 }
