@@ -47,6 +47,11 @@ public class SecurityConfig {
                     // Permitir acceso a las rutas de control
                     .requestMatchers("/control/**").permitAll()
                     // Requiere autenticación para todo lo demás
+                    // Recursos públicos y estáticos
+                    .requestMatchers("/", "/index", "/css/**", "/js/**", "/images/**",
+                    "/Explorar", "/Clasificacion", "/usuario", "/skill",
+                    "/control/login", "/control/registro").permitAll()
+                    // Todo lo demás, incluyendo /control/** excepto login y registro, requiere autenticación
                     .anyRequest().authenticated()
             )
         .sessionManagement(sessionManager -> 
