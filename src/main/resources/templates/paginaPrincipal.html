@@ -7,6 +7,7 @@
   <title>Legendary Page</title>
   <link href="https://fonts.googleapis.com/css2?family=Anton&display=swap" rel="stylesheet">
   <link rel="stylesheet" th:href="@{/css/estiloPagPrin.css}">
+  <link rel="stylesheet" th:href="@{/css/modal-registro.css}">
 </head>
 
 <body>
@@ -20,8 +21,6 @@
       </a>
     </div>
 
-
-
     <ul class="nav-menu">
       <li><a href="#inicio">INICIO</a></li>
       <li><a href="#juegos">JUEGOS</a></li>
@@ -31,7 +30,7 @@
 
     <div class="right-menu">
       <a href="#">ENTRAR</a>
-      <a th:href="@{/index}">REGISTRAR</a>
+      <a href="#" data-modal="register-modal">REGISTRAR</a>
     </div>
 
     <div class="hamburger" id="hamburger">
@@ -42,13 +41,13 @@
   </header>
 
   <div class="mobile-menu" id="mobileMenu">
-    <li><a href="#inicio">INICIO</a></li>
-    <li><a href="#juegos">JUEGOS</a></li>
-    <li><a href="#premios">PREMIOS</a></li>
-    <li><a href="#noticias">NOTICIAS</a></li>
+    <ul>
+      <li><a href="#inicio">INICIO</a></li>
+      <li><a href="#juegos">JUEGOS</a></li>
+      <li><a href="#premios">PREMIOS</a></li>
+      <li><a href="#noticias">NOTICIAS</a></li>
+    </ul>
   </div>
-
-  <!-- Resto de tu contenido aquí -->
 
   <main class="hero-section" id="inicio">
     <div class="hero-content">
@@ -87,12 +86,7 @@
     </div>
   </main>
 
-
-
-
-
-
-  <main class="prize-rewards" id="premios">
+  <main class="prize-section" id="premios">
     <h2 class="section-title">Premios Épicos para los Ganadores</h2>
     <p class="intro">
       En cada torneo, los campeones no solo obtienen la gloria, sino también recompensas inolvidables. Desde dinero en
@@ -117,8 +111,6 @@
       </div>
     </div>
   </main>
-
-
 
   <main class="news-section" id="noticias">
     <h2 class="section-title">Últimas Noticias del Torneo</h2>
@@ -145,7 +137,6 @@
           <p>Detalles completos de la gran final, estadísticas de jugadores, entrevistas y más.</p>
         </div>
       </div>
-
 
       <div class="news-item">
         <img
@@ -185,10 +176,10 @@
           <p>Primera entrevista al camperon del año pasaso.</p>
         </div>
       </div>
+      <!-- Modal Registro -->
+      <div th:replace="~{fragments/modal-registro :: register-modal}"></div>
     </div>
   </main>
-
-
 
   <footer class="footer">
     <div class="footer-content">
@@ -217,14 +208,14 @@
           <a href="#">Twitter</a>
         </div>
       </div>
+    </div>
 
-
-
-      <div class="footer-bottom">
-        <p>&copy; 2025 Skill Tourney | Todos los derechos reservados</p>
-      </div>
+    <div class="footer-bottom">
+      <p>&copy; 2025 Skill Tourney | Todos los derechos reservados</p>
+    </div>
   </footer>
+  <div th:replace="~{fragments/modal-registro}"></div>
   <script th:src="@{/jscript/pagPrincipal.js}"></script>
+  <script th:src="@{/jscript/modal-registro.js}"></script>
 </body>
-
 </html>
