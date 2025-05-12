@@ -41,9 +41,18 @@ public class SecurityConfig {
             .authorizeHttpRequests(authRequest ->
                 authRequest
                     // Recursos públicos y estáticos
-                    .requestMatchers("/", "/index", "/css/**", "/js/**", "/images/**",
-                    "/Explorar", "/Clasificacion", "/usuario", "/skill",
-                    "/control/login", "/control/registro").permitAll()
+                    .requestMatchers("/", 
+                    "/index", 
+                    "/css/**", 
+                    "/js/**", 
+                    "/jscript/**", 
+                    "/Imagenes/**",
+                    "/fragments/**", 
+                    "/favicon.ico",
+                    "/skill",
+                    "/explorar",
+                    "/paginaTorneo",
+                    "/clasificacion").permitAll()
                     // Todo lo demás, incluyendo /control/** excepto login y registro, requiere autenticación
                     .anyRequest().authenticated()
             )
