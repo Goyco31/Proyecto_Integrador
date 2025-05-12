@@ -259,16 +259,14 @@ body {
     margin-bottom: 40px;
     text-transform: uppercase;
 }
-
 /* === CONTENEDOR DE TARJETAS DE TORNEO === */
 .cards-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); /* Tarjetas un poco más anchas */
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* Tarjetas un poco más anchas */
     gap: 30px;
     justify-items: center;
     padding: 0 10px;
 }
-
 /* === ESTILO DE CADA TARJETA DE TORNEO === */
 .tournament-card {
     background-color: var(--medium-blue);
@@ -281,10 +279,10 @@ body {
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 450px; /* Ajustado desde 550px */
+    max-width: 520px; /* Ajustado desde 550px */
     border: 2px solid var(--accent-blue);
     cursor: pointer;
-    min-height: 180px; /* Para darles una altura base */
+    min-height: 200px; /* Para darles una altura base */
 }
 .tournament-card:hover {
     transform: translateY(-10px) scale(1.03);
@@ -300,7 +298,7 @@ body {
     align-items: center;
 }
 .card-header h3 {
-    font-size: 1.2rem; /* Ligeramente reducido */
+    font-size: 1.4rem; /* Ligeramente reducido */
     margin: 0;
     color: var(--light-purple);
     font-family: 'Exo 2', sans-serif; /* Cambiado desde Verdana para consistencia */
@@ -308,8 +306,8 @@ body {
 .premiun-badge { 
     background-color: var(--main-purple);
     color: var(--pure-white);
-    font-size: 0.7rem;
-    padding: 4px 8px;
+    font-size: 0.8rem;
+    padding: 5px 10px;
     border-radius: 5px;
     font-weight: bold;
     text-transform: uppercase;
@@ -322,7 +320,7 @@ body {
     justify-content: space-around;
 }
 .card-content p {
-    font-size: 0.9rem;
+    font-size: 1rem;
     color: var(--text-light-gray);
     margin-bottom: 0.5em;
     line-height: 1.4;
@@ -524,5 +522,107 @@ body {
     .modal-button {
         width: 100%;
         text-align: center;
+    }
+}
+/* === ESTILOS PARA EL FOOTER === */
+.site-footer {
+    background-color: #2a2a2a; /* Un gris oscuro, similar al de la imagen */
+    color: var(--text-light-gray); /* Usar tu variable de gris claro */
+    padding: 40px 5%; /* Espaciado interno arriba/abajo y a los lados */
+    font-size: 0.9rem; /* Tamaño de fuente base para el footer */
+}
+
+.footer-container {
+    display: flex;
+    flex-wrap: wrap; /* Para que las columnas se apilen en pantallas pequeñas */
+    justify-content: space-between; /* Espacio entre las columnas */
+    gap: 30px; /* Espacio entre columnas cuando se apilan */
+    margin-bottom: 30px;
+}
+
+.footer-column {
+    flex: 1; /* Permite que las columnas crezcan y ocupen espacio */
+    min-width: 220px; /* Ancho mínimo para cada columna antes de apilarse */
+    padding: 0 15px; /* Espaciado ligero dentro de cada columna */
+}
+
+.footer-column h4 {
+    font-family: 'Monda', sans-serif; /* O la fuente que uses para títulos */
+    color: var(--pure-white);
+    font-size: 1.3rem; /* Tamaño del título de columna */
+    margin-bottom: 15px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.footer-column p {
+    line-height: 1.7;
+    margin-bottom: 10px;
+}
+
+.footer-column ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+.footer-column ul li {
+    margin-bottom: 10px;
+}
+
+.footer-column ul li a,
+.footer-column p a { /* Estilo para enlaces en párrafos y listas */
+    color: var(--text-light-gray);
+    text-decoration: none;
+    transition: color 0.3s ease;
+}
+
+.footer-column ul li a:hover,
+.footer-column p a:hover {
+    color: var(--main-purple); /* O var(--pure-white) */
+}
+
+.social-links a {
+    color: var(--text-light-gray);
+    text-decoration: none;
+    margin: 0 5px; /* Espacio entre enlaces sociales */
+    transition: color 0.3s ease;
+}
+
+.social-links a:first-child {
+    margin-left: 0;
+}
+
+.social-links a:hover {
+    color: var(--main-purple); /* O var(--pure-white) */
+}
+
+.footer-bottom {
+    text-align: center;
+    padding-top: 20px;
+    border-top: 1px solid #444; /* Una línea sutil de separación */
+    font-size: 0.8rem;
+    color: #aaa; /* Un gris un poco más oscuro para el copyright */
+}
+
+/* === AJUSTES RESPONSIVOS PARA EL FOOTER === */
+@media (max-width: 768px) {
+    .footer-container {
+        flex-direction: column; /* Apila las columnas en vertical */
+        align-items: center; /* Centra las columnas apiladas */
+        text-align: center; /* Centra el texto dentro de las columnas */
+    }
+
+    .footer-column {
+        min-width: 100%; /* Cada columna ocupa todo el ancho */
+        margin-bottom: 30px; /* Espacio entre columnas apiladas */
+    }
+    
+    .footer-column:last-child {
+        margin-bottom: 0;
+    }
+
+    .social-links {
+        margin-top: 10px; /* Espacio extra para los enlaces sociales */
     }
 }
