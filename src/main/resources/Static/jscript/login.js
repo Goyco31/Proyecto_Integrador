@@ -4,6 +4,11 @@ document.addEventListener('DOMContentLoaded', function() {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
       document.getElementById('login-modal').style.display = 'flex';
+      // Limpiar mensajes previos al abrir el modal
+      const existingMessage = document.getElementById('login-message');
+      if(existingMessage) {
+        existingMessage.remove();
+      }
     });
   });
 
@@ -16,17 +21,22 @@ document.addEventListener('DOMContentLoaded', function() {
   document.getElementById('abrir-registro').addEventListener('click', (e) => {
     e.preventDefault();
     document.getElementById('login-modal').style.display = 'none';
-    // Aquí puedes agregar lógica para mostrar el modal de registro
   });
 
   // Manejo del formulario
   document.getElementById('loginForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
+    // Mostrar loader o estado de carga
+    const submitButton = this.querySelector('button[type="submit"]');
+    const originalButtonText = submitButton.innerHTML;
+    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+    submitButton.disabled = true;
+    
     // 1. Obtener los datos del formulario
     const formData = {
-      nickname: this.querySelector('[name="nickname"]').value, // Asegúrate que el input tenga name="nickname"
-      contraseña: this.querySelector('[name="contraseña"]').value // Asegúrate que el input tenga name="contraseña"
+      nickname: this.querySelector('[name="nickname"]').value,
+      contraseña: this.querySelector('[name="contraseña"]').value
     };
     
     try {
@@ -47,19 +57,64 @@ document.addEventListener('DOMContentLoaded', function() {
 
       const data = await response.json();
       
-      // 4. Guardar el token JWT si la autenticación fue exitosa
+      // 4. Si la autenticación fue exitosa
       if (data.token) {
         localStorage.setItem('authToken', data.token);
-        // Redirigir al usuario o cerrar el modal
-        window.location.href = '/dashboard.html'; // Ajusta esta ruta
+        
+        // Mostrar mensaje de éxito en lugar de redirigir
+        const form = document.getElementById('loginForm');
+        
+        // Limpiar mensajes previos
+        const existingMessage = document.getElementById('login-message');
+        if(existingMessage) {
+          existingMessage.remove();
+        }
+        
+        // Crear y mostrar mensaje de éxito
+        const successMessage = document.createElement('div');
+        successMessage.id = 'login-message';
+        successMessage.className = 'success-message';
+        successMessage.innerHTML = `
+          <i class="fas fa-check-circle"></i> Inicio de sesión exitoso
+          <p>Bienvenido, ${data.nickname || 'usuario'}!</p>
+        `;
+        
+        // Insertar después del formulario
+        form.parentNode.insertBefore(successMessage, form.nextSibling);
+        
+        // Opcional: cerrar el modal después de 3 segundos
+        setTimeout(() => {
+          document.getElementById('login-modal').style.display = 'none';
+        }, 3000);
+        
+        // Limpiar el formulario
+        form.reset();
       } else {
         throw new Error('No se recibió token de autenticación');
       }
       
     } catch (error) {
       console.error('Error en el login:', error);
-      alert('Error al iniciar sesión: ' + error.message);
-      // También puedes mostrar el error en el modal en lugar de usar alert
+      
+      // Mostrar mensaje de error en el modal
+      const form = document.getElementById('loginForm');
+      const existingMessage = document.getElementById('login-message');
+      
+      if(existingMessage) {
+        existingMessage.remove();
+      }
+      
+      const errorMessage = document.createElement('div');
+      errorMessage.id = 'login-message';
+      errorMessage.className = 'error-message';
+      errorMessage.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${error.message}`;
+      
+      form.parentNode.insertBefore(errorMessage, form.nextSibling);
+      
+    } finally {
+      // Restaurar el botón a su estado original
+      submitButton.innerHTML = originalButtonText;
+      submitButton.disabled = false;
     }
   });
 });
