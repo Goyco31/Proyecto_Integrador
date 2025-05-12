@@ -1,0 +1,248 @@
+/*Importar fuente orbitron*/
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+
+/* Eliminar las animaciones de fondo y centrado */
+body {
+  background: transparent !important;
+  overflow: auto !important;
+  min-height: auto !important;
+}
+
+/* Estructura principal del modal */
+.modal {
+  display: none;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 1000;
+  background: transparent !important; /* Elimina cualquier fondo */
+  justify-content: center;
+  align-items: center;
+}
+
+/* Contenedor del formulario (este será tu modal real) */
+.formulario-contenedor {
+  background-color: rgba(10, 10, 30, 0.95); /* Fondo azul oscuro */
+  padding: 2.5rem;
+  border-radius: 20px;
+  box-shadow: 0 0 25px #00ffff80;
+  width: 90%;
+  max-width: 450px;
+  position: relative;
+  z-index: 1001;
+  border: 2px solid #00ffff; /* Borde neón */
+}
+
+/* Elimina cualquier elemento de fondo */
+.modal-backdrop {
+  display: none !important;
+}
+
+/* Asegura que no haya márgenes/padding no deseados */
+.modal-content {
+  padding: 0 !important;
+  margin: 0 !important;
+  background: transparent !important;
+}
+
+/* Botón de cerrar */
+.close-modal {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: transparent;
+  border: none;
+  color: #00ffff;
+  font-size: 1.5rem;
+  cursor: pointer;
+  z-index: 1002;
+}
+/*Contenedor del formulario*/
+.formulario-contenedor {
+    background-color: rgba(10, 10, 30, 0.9);
+    padding: 2.5rem;
+    border-radius: 20px;
+    box-shadow: 0 0 25px #00ffff80;
+    width: 90%;
+    max-width: 450px;
+    animation: fadeIn 1.2s ease-out;
+    position: relative;
+    z-index: 1;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-30px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
+/*Textos*/
+h1 {
+    text-align: center;
+    color: #00ffff;
+    font-size: 1.8rem;
+    text-shadow: 0 0 8px #00ffff88;
+}
+
+h3 {
+    text-align: center;
+    color: #ff00ff;
+    font-size: 1rem;
+    text-shadow: 0 0 6px #ff00ff88;
+    margin-top: 1rem;
+}
+
+p {
+    text-align: center;
+    margin-bottom: 1rem;
+    font-size: 0.95rem;
+}
+
+a {
+    color: #00ffff;
+    text-decoration: none;
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #ffffff;
+}
+
+/* Estilos para las cajas donde escribe el usuario*/
+.formulario-contenedor input[type="email"],
+.formulario-contenedor input[type="text"],
+.formulario-contenedor input[type="password"] {
+    width: 100%;
+    padding: 12px;
+    margin: 0.7rem 0;
+    border: 2px solid #00ffff55;
+    border-radius: 10px;
+    background-color: #1a1a2f;
+    color: #ffffff;
+    font-size: 0.9rem;
+    transition: border 0.3s, box-shadow 0.3s;
+}
+
+.formulario input:focus {
+    outline: none;
+    border-color: #00ffff;
+    box-shadow: 0 0 10px #00ffff88;
+}
+
+/*Términos y condiciones*/
+.terminos {
+    font-size: 0.8rem;
+    margin: 1rem 0;
+    color: #ccc;
+}
+
+/*Botón principal de registro*/
+.btn-login {
+    width: 100%;
+    padding: 12px;
+    margin-top: 1rem;
+    background: linear-gradient(90deg, #00ffff, #ff00ff);
+    color: black;
+    border: none;
+    border-radius: 12px;
+    font-weight: bold;
+    cursor: pointer;
+    text-transform: uppercase;
+    font-size: 1rem;
+    transition: transform 0.3s ease, box-shadow 0.3s;
+}
+
+.btn-login:hover {
+    transform: scale(1.05);
+    box-shadow: 0 0 15px #00ffffaa;
+}
+
+/*Separadpr*/
+hr {
+    border: 0;
+    border-top: 1px solid #555;
+    margin: 2rem 0 1rem;
+}
+
+/*Botones sociales con íconos*/
+.social-buttons {
+    display: flex;
+    flex-direction: column;
+    gap: 12px;
+}
+
+.social-buttons button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    padding: 12px;
+    border: none;
+    border-radius: 10px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 0.95rem;
+    transition: transform 0.2s ease, background 0.3s ease;
+}
+
+.social-buttons button i {
+    font-size: 1.1rem;
+}
+
+/*Estilos individuales por red social */
+.btn-social-discord {
+    background-color: #5865f2;
+    color: white;
+}
+
+.btn-social-google {
+    background-color: #db4437;
+    color: white;
+}
+
+.btn-social kick {
+    background-color: #33ff33;
+    color: black;
+}
+
+.social-buttons button:hover {
+    transform: scale(1.05);
+    filter: brightness(1.1);
+}
+
+/* Estilos para mensajes */
+.success-message {
+  background-color: #d4edda;
+  color: #00aeff;
+  padding: 15px;
+  border-radius: 5px;
+  margin: 15px 0;
+  text-align: center;
+  border: 1px solid #c3e6cb;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 15px;
+  border-radius: 5px;
+  margin: 15px 0;
+  text-align: center;
+  border: 1px solid #f5c6cb;
+}
+
+.success-message i, .error-message i {
+  margin-right: 10px;
+}
+
+/* Estilo para el spinner */
+.fa-spinner {
+  margin-right: 8px;
+}

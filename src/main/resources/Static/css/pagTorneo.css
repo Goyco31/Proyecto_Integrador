@@ -1,0 +1,408 @@
+/* === FUENTES === */
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Monda:wght@400;700&display=swap');
+
+@font-face {
+  font-family: 'Sink';
+  src: url('../fonts/SinkDisplay.woff2') format('woff2'),
+       url('../fonts/SinkDisplay.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+/* === VARIABLES GLOBALES === */
+:root {
+    --main-purple: #5f0e8e;
+    --light-purple: #9a7ea9;
+    --dark-blue: #0c1220;
+    --medium-blue: #1e1e2f;
+    --accent-blue: #1f3362;
+    --pure-white: #ffffff;
+    --text-light-gray: #cccccc;
+    --card-shadow: rgba(0, 0, 0, 0.4);
+    --hover-glow: rgba(154, 126, 169, 0.5);
+    --light-glow-color: rgba(220, 180, 255, 0.7);
+    --main-purple-glow: rgba(95, 14, 142, 0.5);
+}
+
+/* === ESTILOS BASE === */
+body {
+    margin: 0;
+    font-family: "Exo 2", "Segoe UI", sans-serif;
+    background: linear-gradient(to bottom, var(--dark-blue), var(--medium-blue));
+    color: var(--pure-white);
+}
+
+/* === ESTRUCTURA PRINCIPAL === */
+.navbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background: var(--medium-blue);
+    padding: 15px 5%;
+    height: 120px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+    height: 150px;
+}
+
+.logo {
+    height: 150px;
+    max-height: 130px;
+    width: auto;
+    object-fit: contain;
+}
+
+/* === NAVEGACIÓN === */
+.menu-principal a {
+    margin: 0 1.5rem;
+    text-decoration: none;
+    color: var(--pure-white);
+    font-weight: bold;
+    font-size: 1.5rem;
+    position: relative;
+    transition: color 0.3s ease;
+}
+
+.menu-principal a::after {
+    content: '';
+    position: absolute;
+    bottom: -8px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: var(--main-purple);
+    transition: width 0.3s ease;
+}
+
+.menu-principal a:hover {
+    color: var(--light-purple);
+}
+
+.menu-principal a:hover::after {
+    width: 100%;
+}
+
+/* === PANEL DE USUARIO === */
+.user-panel {
+    display: flex;
+    align-items: center;
+}
+
+.user-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--pure-white);
+    padding: 8px 12px;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+}
+
+.user-avatar {
+    background-color: var(--accent-blue);
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: var(--pure-white);
+    font-size: 25px;
+    transition: background-color 0.3s ease;
+}
+
+.user-name {
+    font-weight: bold;
+    transition: color 0.3s ease;
+}
+
+.user-link:hover {
+    background-color: rgba(255,255,255,0.1);
+}
+
+.user-link:hover .user-avatar {
+    background-color: var(--main-purple);
+}
+
+.user-link:hover .user-name {
+    color: var(--light-purple);
+}
+
+/* === HERO SECTION === */
+.hero-banner {
+    height: 90vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                url('../Imagenes/hero-bg.jpg');
+    background-size: cover;
+    background-position: center;
+    text-align: center;
+    padding: 0 20px;
+}
+
+.slogan-container {
+    max-width: 1100px;
+    width: 100%;
+    perspective: 1000px;
+}
+
+.main-slogan {
+    font-family: 'Monda', sans-serif;
+    font-weight: 700;
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    color: var(--pure-white);
+    line-height: 1.35;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    padding: 50px 70px;
+    border-radius: 15px;
+    transition: transform 0.3s ease-in-out;
+}
+
+.main-slogan:hover {
+    transform: scale(1.05);
+}
+
+/* === JUEGOS DESTACADOS === */
+.featured-games {
+    padding: 4rem 5%;
+}
+
+.game-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    margin-bottom: 4rem;
+    background: #181828;
+    border-radius: 15px;
+    overflow: hidden;
+    border: 2px solid var(--main-purple);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+}
+
+.game-card:hover {
+    transform: scale(1.02);
+    border-color: var(--light-purple);
+}
+
+.game-info {
+    padding: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.game-title {
+    font-family: 'Sink', sans-serif;
+    font-size: clamp(2rem, 3.5vw, 2.8rem);
+    color: var(--pure-white);
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 0.8rem;
+}
+
+.game-description {
+    font-size: 1rem;
+    color: var(--text-light-gray);
+    line-height: 1.6;
+    margin-bottom: 1.5rem;
+}
+
+.game-specs span {
+    display: inline-block;
+    background-color: var(--main-purple);
+    color: var(--pure-white);
+    padding: 0.6em 1.2em;
+    border-radius: 5px;
+    margin-right: 0.7em;
+    margin-bottom: 0.7em;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    border: 1px solid rgba(255,255,255,0.2);
+    box-shadow: 0 0 8px var(--main-purple-glow);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.game-specs span:hover {
+    background-color: var(--light-purple);
+    box-shadow: 0 0 12px var(--light-glow-color);
+}
+
+.game-carousel {
+    position: relative;
+    min-height: 300px;
+    height: 100%;
+    background-color: #000;
+}
+
+.game-carousel img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0;
+    transition: opacity 1s ease-in-out;
+}
+
+.game-carousel img.active {
+    opacity: 1;
+}
+
+/* === TORNEOS === */
+.tournaments-section {
+    padding: 30px 5%;
+}
+
+.section-title {
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-family: 'Monda', sans-serif;
+    color: var(--light-purple);
+    text-align: center;
+    margin-bottom: 40px;
+    text-transform: uppercase;
+}
+
+.cards-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 30px;
+    justify-items: center;
+    padding: 0 10px;
+}
+
+.tournament-card {
+    background-color: var(--medium-blue);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    color: inherit;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    max-width: 520px;
+    border: 2px solid var(--accent-blue);
+    cursor: pointer;
+}
+
+.tournament-card:hover {
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 12px 25px var(--hover-glow);
+    border-color: var(--main-purple);
+}
+
+.card-header {
+    padding: 15px;
+    background-color: rgba(0,0,0,0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-header h3 {
+    font-size: 1.4rem;
+    margin: 0;
+    color: var(--light-purple);
+}
+
+.premiun-badge {
+    background-color: var(--main-purple);
+    color: var(--pure-white);
+    font-size: 0.8rem;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    text-transform: uppercase;
+}
+
+.card-content {
+    padding: 15px;
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.card-content p {
+    font-size: 1rem;
+    color: var(--text-light-gray);
+    margin-bottom: 0.5em;
+    line-height: 1.4;
+}
+
+
+
+/* === RESPONSIVE DESIGN === */
+@media (max-width: 992px) {
+    .navbar {
+        padding: 10px 3%;
+        height: 70px;
+    }
+    
+    .logo {
+        max-height: 55px;
+    }
+    
+    .menu-principal a {
+        margin: 0 0.8rem;
+        font-size: 1rem;
+    }
+    
+    .user-name {
+        display: none;
+    }
+    
+    .user-avatar {
+        width: 35px;
+        height: 35px;
+        font-size: 13px;
+    }
+}
+
+@media (max-width: 768px) {
+    .menu-principal {
+        display: none;
+    }
+    
+    .main-slogan {
+        font-size: clamp(2.2rem, 8vw, 3.5rem);
+        padding: 30px 20px;
+    }
+    
+    .featured-games {
+        padding: 2rem 3%;
+    }
+    
+    .game-card {
+        grid-template-columns: 1fr;
+    }
+    
+    .tournaments-section {
+        padding: 20px 3%;
+    }
+    
+    .cards-container {
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    }
+    
+    .footer-container {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .footer-column {
+        min-width: 100%;
+        margin-bottom: 30px;
+    }
+}

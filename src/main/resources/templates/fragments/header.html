@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <header class="navbar" th:fragment="header">
+        <div class="logo">
+            <a href="/">
+                <img th:src="@{/Imagenes/Logo.png}" alt="Logo Skill Tourney">
+            </a>
+        </div>
+
+        <ul class="nav-menu">
+            <li><a href="/">INICIO</a></li>
+            <li><a href="#juegos">JUEGOS</a></li>
+            <li><a href="#premios">PREMIOS</a></li>
+            <li><a href="#noticias">NOTICIAS</a></li>
+            <li><a href="/paginaTorneo">TORNEOS</a></li>
+        </ul>
+
+        <div class="right-menu">
+            <a href="#" data-modal="login-modal">INICIAR SESIÓN</a>
+            <a href="#" data-modal="register-modal">REGISTRAR</a>
+        </div>
+
+        <div class="hamburger" id="hamburger">
+            <span></span>
+            <span></span>
+            <span></span>
+        </div>
+</header>
+
+    <div class="mobile-menu" id="mobileMenu">
+        <ul>
+            <li><a href="#inicio">INICIO</a></li>
+            <li><a href="#juegos">JUEGOS</a></li>
+            <li><a href="#premios">PREMIOS</a></li>
+            <li><a href="#noticias">NOTICIAS</a></li>
+        </ul>
+</div>
+</body>
+</html>
