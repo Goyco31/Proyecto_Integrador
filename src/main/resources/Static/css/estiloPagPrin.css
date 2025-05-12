@@ -1,4 +1,4 @@
-/* Reset de márgenes y padding para todos los elementos */
+/* === RESET Y ESTILOS BASE === */
 * {
   margin: 0;
   padding: 0;
@@ -12,7 +12,7 @@ body {
   text-align: center;
 }
 
-/* Overlay para oscurecer el fondo */
+/* === OVERLAY MODAL === */
 .overlay {
   position: fixed;
   top: 0;
@@ -28,135 +28,11 @@ body {
   display: block;
 }
 
-/* Barra de navegación */
-.navbar {
-  background-color: rgb(12, 12, 12);
-  background-size: cover;
-  background-position: center;
-  background-repeat: no-repeat;
-  color: white;
-  padding: 20px 40px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 1000;
-  transition: background 0.3s ease, box-shadow 0.3s ease, border-radius 0.3s ease;
-}
-
-.navbar.fixed {
-  background-color: rgba(50, 50, 50, 0.7);
-  backdrop-filter: blur(4px);
-  border-radius: 0 0 20px 20px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-}
-
-.logo {
-  font-weight: bold;
-  font-size: 1.5rem;
-}
-
-.logo img {
-  width: 80px;
-  height: auto;
-  object-fit: contain;
-}
-
-.nav-menu {
-  display: flex;
-  gap: 30px;
-  list-style: none;
-}
-
-.nav-menu li a {
-  text-decoration: none;
-  color: rgb(255, 255, 255);
-  font-size: 14px;
-  letter-spacing: 1px;
-}
-
-.right-menu a {
-  text-decoration: none;
-  color: rgb(255, 255, 255);
-  font-size: 14px;
-  letter-spacing: 1px;
-}
-
-.right-menu a:nth-child(1) {
-  background-color: rgba(107, 106, 106); 
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  text-decoration: none;
-  margin-right: 10px;
-}
-
-.right-menu a:nth-child(2) {
-  background-color: rgba(89, 5, 122, 0.75);
-  color: white;
-  padding: 0.5rem 1rem;
-  border-radius: 5px;
-  text-decoration: none;
-}
-
-.hamburger {
-  display: none;
-  flex-direction: column;
-  cursor: pointer;
-  gap: 5px;
-}
-
-.hamburger span {
-  width: 25px;
-  height: 3px;
-  background: rgb(255, 255, 255);
-  border-radius: 2px;
-}
-
-/* Menú móvil */
-.mobile-menu {
-  position: fixed;
-  top: 0;
-  left: 0;
-  background: rgba(255, 255, 255, 0.95);
-  width: 25%;
-  height: 100vh;
-  display: none;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  z-index: 999;
-  backdrop-filter: blur(4px);
-}
-
-.mobile-menu.active {
-  display: flex;
-}
-
-.mobile-menu ul {
-  list-style: none;
-  padding: 0;
-}
-
-.mobile-menu li {
-  margin: 15px 0;
-}
-
-.mobile-menu a {
-  text-decoration: none;
-  font-size: 24px;
-  color: black;
-  letter-spacing: 2px;
-}
-
-/* Estilos del contenido principal */
+/* === SECCIÓN HERO === */
 .hero-section {
   background-image: url('https://weezevent.com/wp-content/uploads/2018/10/15140712/compet_esport.jpg');
   background-size: cover;
   background-position: center;
-  background-repeat: no-repeat;
   color: white;
   height: 100vh;
   display: flex;
@@ -181,14 +57,14 @@ body {
 }
 
 .hero-content h1 {
-  font-size: 64px;
-  letter-spacing: 5px;
+  font-size: clamp(2.5rem, 6vw, 4rem);
+  letter-spacing: 3px;
   margin-bottom: 20px;
   text-transform: uppercase;
 }
 
 .hero-content p {
-  font-size: 20px;
+  font-size: clamp(1rem, 2vw, 1.25rem);
   line-height: 1.6;
   margin-bottom: 40px;
   background-color: rgba(0, 0, 0, 0.4);
@@ -210,7 +86,7 @@ body {
   border-radius: 30px;
   font-size: 16px;
   font-weight: bold;
-  transition: background 0.3s, transform 0.2s;
+  transition: all 0.3s ease;
 }
 
 .btn.primary {
@@ -226,8 +102,10 @@ body {
 
 .btn:hover {
   transform: scale(1.05);
+  opacity: 0.9;
 }
 
+/* === SECCIÓN DE JUEGOS === */
 .games-section {
   background-image: url('https://img.freepik.com/vector-gratis/fondo-controlador-videojuego-futurista-espacio-texto_1017-54730.jpg?semt=ais_hybrid&w=740');
   background-size: cover;
@@ -286,7 +164,7 @@ body {
 }
 
 .game-card h3 {
-  font-size: 24px;
+  font-size: 1.5rem;
   margin-bottom: 10px;
 }
 
@@ -303,6 +181,7 @@ body {
   margin-top: 10px;
 }
 
+/* === SECCIÓN DE PREMIOS === */
 .prize-section {
   margin: 0 auto;
   padding: 3rem 1.5rem;
@@ -311,7 +190,6 @@ body {
   color: #f2f2f2;
   border-radius: 0;
   max-width: 100%;
-  box-sizing: border-box;
 }
 
 .section-title {
@@ -339,7 +217,7 @@ body {
   padding: 1.5rem;
   border-radius: 10px;
   text-align: center;
-  transition: transform 0.4s ease, box-shadow 0.4s ease;
+  transition: all 0.4s ease;
   animation: fadeInCard 1s ease-in forwards;
   opacity: 0;
 }
@@ -360,28 +238,14 @@ body {
   margin-bottom: 0.5rem;
 }
 
-@keyframes fadeInUp {
-  0% {
-    opacity: 0;
-    transform: translateY(40px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 @keyframes fadeInCard {
-  0% {
-    opacity: 0;
-    transform: scale(0.95);
-  }
-  100% {
+  to {
     opacity: 1;
     transform: scale(1);
   }
 }
 
+/* === SECCIÓN DE NOTICIAS === */
 .news-section {
   background: url('https://static.vecteezy.com/system/resources/previews/001/741/292/non_2x/blurred-shiny-purple-background-free-photo.jpg') no-repeat center center;
   background-size: cover;
@@ -389,7 +253,6 @@ body {
   padding: 3rem 1.5rem;
   color: #fffefe;
   max-width: 100%;
-  box-sizing: border-box;
 }
 
 .news-list {
@@ -400,8 +263,6 @@ body {
 
 .news-item, .news-highlight {
   display: flex;
-  flex-direction: row;
-  align-items: center;
   background: rgba(255, 249, 249, 0.2);
   padding: 1rem;
   border-radius: 10px;
@@ -445,16 +306,7 @@ body {
   color: #eeeeee;
 }
 
-.read-more {
-  color: #007bff;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.read-more:hover {
-  text-decoration: underline;
-}
-
+/* === MODAL === */
 .modal {
   display: none;
   position: fixed;
@@ -489,102 +341,8 @@ body {
   cursor: pointer;
 }
 
-.footer {
-  background-color: rgba(0, 0, 0, 0.8);
-  color: #fff;
-  padding: 40px 0;
-}
-
-.footer-content {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 0 20px;
-}
-
-.footer-section {
-  flex: 1;
-  padding: 10px;
-  min-width: 250px;
-}
-
-.footer-section h2, .footer-section h3 {
-  font-size: 1.5em;
-  margin-bottom: 15px;
-}
-
-.footer-section p {
-  font-size: 1em;
-  line-height: 1.5;
-  color: #ccc;
-}
-
-.footer-section ul {
-  list-style: none;
-  padding: 0;
-}
-
-.footer-section ul li {
-  margin: 10px 0;
-}
-
-.footer-section ul li a {
-  color: #fefeff;
-  text-decoration: none;
-  font-weight: bold;
-}
-
-.footer-section ul li a:hover {
-  text-decoration: underline;
-}
-
-.social-links {
-  margin-top: 10px;
-}
-
-.social-links a {
-  color: #ffffff;
-  text-decoration: none;
-  margin-right: 15px;
-}
-
-.social-links a:hover {
-  text-decoration: underline;
-}
-
-.footer-bottom {
-  text-align: center;
-  padding: 15px 0;
-  font-size: 0.9em;
-  width: 100%;
-  margin-top: 20px;
-}
-
-.footer-bottom p {
-  color: #ccc;
-  margin: 0;
-}
-
-/* Estilos responsivos */
+/* === RESPONSIVE DESIGN === */
 @media (max-width: 1024px) {
-  .nav-menu {
-    display: none;
-  }
-
-  .mobile-menu {
-    width: 35%;
-  }
-
-  .hamburger {
-    display: flex;
-  }
-
-  .section-title {
-    font-size: 2rem;
-  }
-
   .reward-grid {
     grid-template-columns: repeat(2, 1fr);
   }
@@ -595,10 +353,6 @@ body {
 }
 
 @media (max-width: 768px) {
-  .mobile-menu {
-    width: 50%;
-  }
-
   .reward-grid {
     grid-template-columns: 1fr;
   }
@@ -620,26 +374,16 @@ body {
 }
 
 @media (max-width: 480px) {
-  .mobile-menu {
-    width: 70%;
-  }
-
   .hero-content h1 {
-    font-size: 48px;
-  }
-
-  .hero-content p {
-    font-size: 16px;
+    font-size: 2.5rem;
   }
 
   .btn {
-    padding: 10px 20px;
-    font-size: 14px;
+    padding: 12px 24px;
   }
 
-  .footer-section {
-    min-width: 100%;
-    text-align: center;
-    margin-bottom: 20px;
+  .game-card {
+    width: 100%;
+    max-width: 300px;
   }
 }
