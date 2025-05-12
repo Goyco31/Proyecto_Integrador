@@ -216,3 +216,33 @@ hr {
     transform: scale(1.05);
     filter: brightness(1.1);
 }
+
+/* Estilos para mensajes */
+.success-message {
+  background-color: #d4edda;
+  color: #00aeff;
+  padding: 15px;
+  border-radius: 5px;
+  margin: 15px 0;
+  text-align: center;
+  border: 1px solid #c3e6cb;
+}
+
+.error-message {
+  background-color: #f8d7da;
+  color: #721c24;
+  padding: 15px;
+  border-radius: 5px;
+  margin: 15px 0;
+  text-align: center;
+  border: 1px solid #f5c6cb;
+}
+
+.success-message i, .error-message i {
+  margin-right: 10px;
+}
+
+/* Estilo para el spinner */
+.fa-spinner {
+  margin-right: 8px;
+}
