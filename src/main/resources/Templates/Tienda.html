@@ -3,9 +3,25 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>Tienda</title>
+    <link rel="stylesheet" th:href="@{/css/estiloPagPrin.css}">
 </head>
 <body>
-    <h1>hola</h1>
+<header class="navbar">
+        <div class="logo-container">
+            <img th:src="@{/Imagenes/SkillTourney_sin fondo.png}" alt="Logo SkillTourney" class="logo">
+        </div>
+        <nav class="menu-principal">
+            <a th:href="@{/Explorar}">Explorar</a>
+            <a th:href="@{/Clasificacion}">Clasificacion</a>
+            <a th:href="@{/Tienda}">Tienda</a>
+        </nav>
+        <div class="user-panel">
+    <a th:href="@{/usuario}" class="user-link">
+        <div class="user-avatar">ST</div>
+        <div class="user-name">USER</div>
+    </a>
+      </div>
+    </header>
 </body>
 </html>

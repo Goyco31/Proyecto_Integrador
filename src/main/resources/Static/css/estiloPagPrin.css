@@ -1,69 +1,81 @@
+/* Importada fuentes de Google Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Monda:wght@400;700&display=swap');
+
+/* --- Definición de la fuente Sink --- */
+@font-face {
+  font-family: 'Sink'; /* Nombre para usar en CSS */
+  src: url('../fonts/SinkDisplay.woff2') format('woff2'), /* ¡AJUSTA 'SinkDisplay.woff2' AL NOMBRE DE TU ARCHIVO! */
+       url('../fonts/SinkDisplay.woff') format('woff');   /* Opcional: si tienes un .woff como respaldo */
+  font-weight: normal; 
+  font-style: normal;
+}
 /* === VARIABLES GLOBALES === */
 :root {
-    --main-purple: #5f0e8e; /* Morado principal */
-    --light-purple: #9a7ea9; /* Morado claro para acentos o texto */
-    --dark-blue: #0c1220;   /* Azul oscuro para fondos principales */
-    --medium-blue: #1e1e2f; /* Azul medio, usado para tarjetas y navbar */
-    --accent-blue: #1f3362; /* Azul de acento, para bordes o fondos secundarios */
-    --pure-white: #ffffff;  /* Blanco puro para texto y elementos */
-    --text-light-gray: #cccccc; /* Gris claro para texto secundario */
-    --card-shadow: rgba(0, 0, 0, 0.4); /* Sombra para tarjetas */
-    --hover-glow: rgba(154, 126, 169, 0.5); /* Resplandor para hover en tarjetas */
+    --main-purple: #5f0e8e;
+    --light-purple: #9a7ea9;
+    --dark-blue: #0c1220;
+    --medium-blue: #1e1e2f;
+    --accent-blue: #1f3362;
+    --pure-white: #ffffff;
+    --text-light-gray: #cccccc;
+    --card-shadow: rgba(0, 0, 0, 0.4);
+    --hover-glow: rgba(154, 126, 169, 0.5);
+    --light-glow-color: rgba(220, 180, 255, 0.7);
+    --white-glow-color: rgba(255, 255, 255, 0.6);
+    --main-purple-glow: rgba(95, 14, 142, 0.5);
 }
-
 /* === ESTILO GENERAL DE LA PÁGINA === */
 body {
     margin: 0;
-    font-family: "Segoe UI", 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+    font-family: "Exo 2", "Segoe UI", 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
     background: linear-gradient(to bottom, var(--dark-blue), var(--medium-blue));
     color: var(--pure-white);
 }
-
 /* === BARRA DE NAVEGACIÓN SUPERIOR === */
 .navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    background: var(--medium-blue); /* Usando variable */
-    padding: 15px 5%; /* Aumentado padding vertical, usando % para horizontal */
-    height: 80px; /* Aumentada la altura */
+    background: var(--medium-blue);
+    padding: 15px 5%;
+    height: 120px;
     box-shadow: 0 2px 10px rgba(0,0,0,0.3);
 }
-
-.logo-container { /* Contenedor del logo para mejor control si es necesario */
+.logo-container {
     display: flex;
     align-items: center;
+    height: 150px; /* Asegura que el contenedor del logo tenga altura */
 }
 
-.logo { /* Estilo para la imagen del logo */
-    height: 150px; /* Aumentado el tamaño del logo, ajusta según tu imagen */
-    max-height: 200%; /* Para que no exceda la altura del navbar si es muy grande */
+.logo {
+    height: 150px; /* Que el logo ocupe la altura del contenedor */
+    max-height: 130px; /* Limita la altura máxima del logo para que no desborde */
+    width: auto; /* Mantiene la proporción */
+    object-fit: contain; /* Asegura que el logo se vea completo sin deformarse */
 }
 
 /* === ENLACES DEL MENÚ DE NAVEGACIÓN === */
 .menu-principal a {
-    margin: 0 1.5rem; /* 24px */
+    margin: 0 1.5rem;
     text-decoration: none;
     color: var(--pure-white);
     font-weight: bold;
-    position: relative; /* Para el efecto hover */
+    font-size: xx-large; /* Ajustado desde xx-large a un valor más manejable */
+    position: relative;
     transition: color 0.3s ease;
-    font-size: xx-large;
 }
-
-.menu-principal a::after { /* Efecto de subrayado animado */
+.menu-principal a::after {
     content: '';
     position: absolute;
-    bottom: -8px; /* Ajusta la posición del subrayado */
+    bottom: -8px;
     left: 0;
     width: 0;
-    height: 3px; /* Grosor del subrayado */
+    height: 3px;
     background: var(--main-purple);
     transition: width 0.3s ease;
 }
-
 .menu-principal a:hover {
-    color: var(--light-purple); /* Cambio de color del texto al pasar el mouse */
+    color: var(--light-purple);
 }
 
 .menu-principal a:hover::after {
@@ -80,7 +92,7 @@ body {
     align-items: center;
     gap: 10px;
     text-decoration: none;
-    color: var(--pure-white); /* Color del texto del nombre de usuario */
+    color: var(--pure-white);
     padding: 8px 12px;
     border-radius: 20px;
     transition: background-color 0.3s ease;
@@ -88,37 +100,32 @@ body {
 .user-avatar {
     background-color: var(--accent-blue);
     border-radius: 50%;
-    width: 40px; /* Ligeramente más grande */
-    height: 40px;
+    width: 50px;
+    height: 50px;
     display: flex;
     align-items: center;
     justify-content: center;
     font-weight: bold;
     color: var(--pure-white);
-    font-size: 15px; /* Ajusta el tamaño de las iniciales si es necesario */
+    font-size: 25px;
     transition: background-color 0.3s ease;
 }
-
 .user-name {
     font-weight: bold;
     transition: color 0.3s ease;
 }
-
 .user-link:hover {
-    background-color: rgba(255,255,255,0.1); /* Ligero fondo al pasar el mouse */
+    background-color: rgba(255,255,255,0.1);
 }
-
 .user-link:hover .user-avatar {
-    background-color: var(--main-purple); /* Cambio de color del avatar */
+    background-color: var(--main-purple);
 }
-
 .user-link:hover .user-name {
-    color: var(--light-purple); /* Cambio de color del nombre */
+    color: var(--light-purple);
 }
-
 /* === SECCIÓN HERO === */
 .hero-banner {
-    height: 70vh; /* Altura relativa a la ventana */
+    height: 90vh; /* Ajustado desde 1100px a un valor relativo más manejable */
     display: flex;
     align-items: center;
     justify-content: center;
@@ -126,139 +133,140 @@ body {
                 url('../Imagenes/hero-bg.jpg'); 
     background-size: cover;
     background-position: center;
-    text-align: center; /* Centrar el slogan-container si es necesario */
-    padding: 0 20px; /* Espacio por si el slogan es muy ancho */
+    text-align: center;
+    padding: 0 20px;
+}
+.slogan-container {
+    max-width: 1100px; 
+    width: 100%;
+    perspective: 1000px; 
 }
 
 .main-slogan {
     font-family: 'Monda', sans-serif;
     font-weight: 700; 
-    font-size: clamp(2.5rem, 5vw, 4rem); /* Ajusta el tamaño si Monda se ve diferente a Bebas Neue */
+    font-size: clamp(3rem, 6vw, 5.5rem); 
     color: var(--pure-white); 
-    line-height: 1.3;
+    line-height: 1.35;
     text-transform: uppercase; 
-    letter-spacing: 1px;
-    padding: 30px 40px;
-    border-radius: 10px;
+    letter-spacing: 1.5px;
+    padding: 50px 70px; 
+    border-radius: 15px;
+    transition: transform 0.3s ease-in-out;
+    will-change: transform;
+}
+.main-slogan:hover {
+    transform: scale(1.05);
 }
 /* === SECCIÓN DE JUEGOS DESTACADOS === */
 .featured-games {
     padding: 4rem 5%;
 }
-
 .game-card {
     display: grid;
-    grid-template-columns: 1fr 1fr; /* Por defecto para pantallas grandes */
-    gap: 2rem;
+    grid-template-columns: 1fr 1fr;
+    gap: 0; 
     margin-bottom: 4rem;
-    background: var(--medium-blue);
+    background: #181828;
     border-radius: 15px;
     overflow: hidden;
-    border: 1px solid var(--accent-blue); /* Borde sutil */
-    box-shadow: 0 8px 15px var(--card-shadow);
+    border: 2px solid var(--main-purple);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
 }
-
-/* Para dispositivos más pequeños, apilar las columnas */
-@media (max-width: 768px) {
-    .game-card {
-        grid-template-columns: 1fr; /* Una columna */
-    }
-    .game-card.reverse .game-info { /* Mantener el orden visual correcto */
-        grid-row: 2;
-    }
-    .game-card.reverse .game-carousel {
-        grid-row: 1;
-    }
+.game-card:hover {
+    transform: scale(1.02);
+    border-color: var(--light-purple);
 }
 
 .game-card.reverse .game-info {
-    grid-column: 2; /* En escritorio, texto a la derecha */
+    grid-column: 2;
 }
 .game-card.reverse .game-carousel {
-    grid-column: 1; /* En escritorio, imagen a la izquierda */
+    grid-column: 1;
 }
-
 .game-info {
-    padding: 100px;
+    padding: 2rem; /* Reducido desde 100px */
     display: flex;
     flex-direction: column;
     justify-content: center;
-    font-size: large;
+    /* font-size: large; */ /* Quitado para que los elementos hijos definan su tamaño */
 }
-
 .game-title {
-    font-family: 'Bebas Neue', sans-serif; /* Fuente para el título */
-    font-size: clamp(4rem, 6vw, 5rem); /* Un poco más grande si la fuente lo permite */
-    color: var(--main-purple); /* Un color más vibrante, o un blanco brillante */
-    text-transform: uppercase; /* Todo en mayúsculas */
-    letter-spacing: 1px; /* Espaciado entre letras */
+    font-family: 'Sink', sans-serif; /* Usando Sink para títulos de juegos */
+    font-size: clamp(2rem, 3.5vw, 2.8rem); /* Ajustado desde un valor muy grande */
+    font-weight: normal; /* O 'bold' si tienes la versión bold de Sink */
+    color: var(--pure-white);
+    text-transform: uppercase;
+    letter-spacing: 1px;
     margin-bottom: 0.8rem;
 }
-
 .game-description {
-    font-family: 'Exo 2', sans-serif; /* Fuente para la descripción */
+    font-family: 'Exo 2', sans-serif;
     font-size: 1rem;
     color: var(--text-light-gray);
-    line-height: 1.7; /* Un poco más de espaciado entre líneas */
+    line-height: 1.6; /* Ajustado desde 1.7 */
     margin-bottom: 1.5rem;
 }
-
 .game-specs span {
-    font-family: 'Exo 2', sans-serif; /* Fuente para los specs */
-    font-weight: 700; /* Más grueso si la fuente lo tieneb */
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 700;
     display: inline-block;
-    background-color: var(--main-purple); /* Usar el morado principal */
+    background-color: var(--main-purple);
     color: var(--pure-white);
-    padding: 0.6em 1.2em; /* Un poco más de padding */
+    padding: 0.6em 1.2em;
     border-radius: 5px;
     margin-right: 0.7em;
     margin-bottom: 0.7em;
-    font-size: 0.85rem; /* Ligeramente más pequeño para no robar protagonismo al título */
-    text-transform: uppercase
-    border 1px solid rgba(255,255,255,0.2);
+    font-size: 0.85rem;
+    text-transform: uppercase; /* Corregido: añadido punto y coma */
+    border: 1px solid rgba(255,255,255,0.2); /* Corregido: añadido ':' */
+    box-shadow: 0 0 8px var(--main-purple-glow);
+    transition: background-color 0.3s ease, box-shadow 0.3s ease;
+}
+.game-specs span:hover {
+    background-color: var(--light-purple);
+    box-shadow: 0 0 12px var(--light-glow-color);
 }
 .game-carousel {
     position: relative;
-    min-height: 300px; /* Altura mínima para el carrusel */
-    height: 100%; /* Para que ocupe la altura de la tarjeta */
-    background-color: #000; /* Fondo mientras carga imagen */
+    min-height: 300px;
+    height: 100%;
+    background-color: #000;
 }
-
 .game-carousel img {
     position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    object-fit: cover; /* Cubre el área sin deformar */
+    top: 0; left: 0;
+    width: 100%; height: 100%;
+    object-fit: cover;
     opacity: 0;
-    transition: opacity 1s ease-in-out;
+    transition: opacity 1s ease-in-out, transform 0.5s ease;
 }
-
 .game-carousel img.active {
     opacity: 1;
 }
-
+.game-card:hover .game-carousel img.active {
+    transform: scale(1.05);
+}
 /* === SECCIÓN DE TORNEOS === */
 .tournaments-section {
-    padding: 30px 5%; /* Coherencia con featured-games */
+    padding: 30px 5%;
 }
-
-.section-title { /* Estilo para "TORNEOS ACTIVOS" */
-    font-size: 100px; /* Tamaño adaptable */
+.section-title {
+    font-size: clamp(2.5rem, 5vw, 4rem); /* Ajustado desde 100px */
     font-family: 'Monda', sans-serif;
     color: var(--light-purple);
-    text-align: center; /* Centrado del título */
-    margin-bottom: 40px; /* Espacio antes de las tarjetas */
+    text-align: center;
+    margin-bottom: 40px;
     text-transform: uppercase;
 }
 
 /* === CONTENEDOR DE TARJETAS DE TORNEO === */
 .cards-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); /* Puede variar */
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr)); /* Tarjetas un poco más anchas */
     gap: 30px;
-    justify-items: center; /* Esto ayuda a centrar las tarjetas si no llenan toda la fila */
+    justify-items: center;
+    padding: 0 10px;
 }
 
 /* === ESTILO DE CADA TARJETA DE TORNEO === */
@@ -266,100 +274,96 @@ body {
     background-color: var(--medium-blue);
     border-radius: 10px;
     overflow: hidden;
-    box-shadow: 0 6px 15px var(--card-shadow);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 6px 15px rgba(0,0,0,0.3);
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     text-decoration: none;
     color: inherit;
-    display: flex; /* Para mejor control del contenido interno */
+    display: flex;
     flex-direction: column;
-    width: 100%; /* Para que ocupen el espacio asignado por el grid */
-    max-width: 550px; /* Un ancho máximo opcional por tarjeta */
-    border: 3px solid var(--accent-blue); /* Borde personalizable */
-    cursor: pointer; /* Indica que es clickeable */
+    width: 100%;
+    max-width: 450px; /* Ajustado desde 550px */
+    border: 2px solid var(--accent-blue);
+    cursor: pointer;
+    min-height: 180px; /* Para darles una altura base */
 }
-
 .tournament-card:hover {
-    transform: translateY(-10px) scale(1.03); /* Efecto sutil de elevación y escala */
-    box-shadow: 0 12px 25px var(--hover-glow), 0 8px 15px var(--card-shadow) ; /* Sombra más pronunciada y resplandor */
-    border-color: var(--main-purple); /* Cambio de color del borde al pasar el mouse */
+    transform: translateY(-10px) scale(1.03);
+    box-shadow: 0 12px 25px var(--hover-glow), 0 8px 15px var(--card-shadow);
+    border-color: var(--main-purple);
 }
 
-.card-header { /* Cabecera de la tarjeta de torneo */
+.card-header {
     padding: 15px;
-    background-color: rgba(0,0,0,0.2); /* Un poco más oscuro para destacar */
+    background-color: rgba(0,0,0,0.2);
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-
 .card-header h3 {
-    font-size: 1.25rem; /* 20px */
+    font-size: 1.2rem; /* Ligeramente reducido */
     margin: 0;
     color: var(--light-purple);
-    font-family: Verdana, Geneva, Tahoma, sans-serif;
+    font-family: 'Exo 2', sans-serif; /* Cambiado desde Verdana para consistencia */
 }
-
 .premiun-badge { 
     background-color: var(--main-purple);
     color: var(--pure-white);
-    font-size: 0.75rem; /* 12px */
-    padding: 5px 10px;
+    font-size: 0.7rem;
+    padding: 4px 8px;
     border-radius: 5px;
     font-weight: bold;
     text-transform: uppercase;
 }
-
-.card-content { /* Contenido principal de la tarjeta de torneo */
+.card-content {
     padding: 15px;
-    flex-grow: 1; /* Para que ocupe el espacio disponible si las tarjetas tienen alturas variables */
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
 }
-
 .card-content p {
-    font-size: 0.9rem; /* 14.4px */
+    font-size: 0.9rem;
     color: var(--text-light-gray);
-    margin-bottom: 0.8em;
-    line-height: 1.5;
+    margin-bottom: 0.5em;
+    line-height: 1.4;
 }
 .card-content p:last-child {
     margin-bottom: 0;
 }
 
 /* === MODAL === */
-.carousel-modal {
-    display: none; /* Oculto por defecto */
+.carousel-modal { /* Este es el overlay oscuro de fondo */
+    display: none;
     position: fixed;
-    z-index: 1000; /* Encima de todo */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
-    overflow: auto; /* Scroll si el contenido es muy grande */
-    background-color: rgba(0,0,0,0.9); /* Fondo oscuro semitransparente */
-    backdrop-filter: blur(5px); /* Efecto de desenfoque (experimental, no todos los navegadores) */
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    overflow-y: auto; /* Permite scroll en el overlay si el modal es muy alto */
+    background-color: rgba(0,0,0,0.85); /* Ligeramente menos opaco */
+    backdrop-filter: blur(5px);
+    padding-top: 5vh; /* Espacio arriba */
+    padding-bottom: 5vh; /* Espacio abajo */
 }
-
-.modal-content {
-    background-color: var(--medium-blue);
-    margin: 5% auto; /* Centrado vertical y horizontal */
-    padding: 20px;
-    border: 1px solid var(--accent-blue);
+.modal-content { /* La caja blanca/azul del modal */
+    background-color: var(--dark-blue); /* Fondo más oscuro para contraste */
+    margin: 0 auto; /* Centrado horizontal, el padding del overlay maneja vertical */
+    padding: 25px;
+    border: 1px solid var(--main-purple);
     border-radius: 10px;
-    width: 80%; /* Ancho del modal */
-    max-width: 900px; /* Ancho máximo */
+    width: 90%;
+    max-width: 700px; /* Ancho máximo del contenido del modal */
     position: relative;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    box-shadow: 0 5px 25px rgba(0,0,0,0.5);
 }
-
 .close-modal {
     color: var(--text-light-gray);
     position: absolute;
-    top: 15px;
-    right: 25px;
-    font-size: 2.5rem; /* Más grande para fácil click */
+    top: 10px; right: 15px;
+    font-size: 2.2rem;
     font-weight: bold;
     transition: color 0.3s ease;
+    line-height: 1;
 }
-
 .close-modal:hover,
 .close-modal:focus {
     color: var(--main-purple);
@@ -367,63 +371,158 @@ body {
     cursor: pointer;
 }
 
-.modal-carousel { /* Contenedor para el carrusel dentro del modal */
-    height: 60vh; /* Altura del carrusel en el modal */
-    background-color: #000; /* Fondo de ejemplo */
+/* === ESTILOS PARA DETALLES DEL TORNEO EN EL MODAL === */
+.tournament-modal-details {
+    /* Este es el div principal que se inserta con JS */
+    color: var(--text-light-gray);
+}
+.tournament-modal-banner {
+    width: 100%;
+    max-height: 220px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid var(--medium-blue);
+}
+.tournament-modal-header {
     display: flex;
     align-items: center;
-    justify-content: center;
-    color: white; /* Texto de ejemplo si no hay imágenes */
+    gap: 15px;
+    margin-bottom: 20px;
+}
+.tournament-modal-game-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 8px; /* Cuadrado redondeado */
+    object-fit: contain;
+    background-color: var(--medium-blue); /* Fondo para el icono */
+    padding: 5px;
+}
+.tournament-modal-title {
+    font-family: 'Monda', sans-serif; /* Consistente con títulos de sección */
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    color: var(--main-purple);
+    margin: 0;
+    line-height: 1.2;
+}
+.tournament-modal-info {
+    background-color: var(--medium-blue);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+.tournament-modal-info p {
+    margin: 10px 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+.tournament-modal-info p strong {
+    color: var(--light-purple); /* Color diferente para destacar */
+    margin-right: 8px;
+}
+.tournament-modal-description {
+    margin-top: 20px;
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--pure-white);
+}
+.tournament-modal-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid var(--medium-blue);
+}
+.modal-button {
+    padding: 10px 20px;
+    text-decoration: none;
+    color: var(--pure-white);
+    border-radius: 5px;
+    font-weight: bold;
+    font-family: 'Exo 2', sans-serif;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+.modal-button.rules-button {
+    background-color: var(--accent-blue);
+}
+.modal-button.rules-button:hover {
+    background-color: #3a5f9e;
+    transform: translateY(-2px);
+}
+.modal-button.register-button {
+    background-color: var(--main-purple);
+}
+.modal-button.register-button:hover {
+    background-color: var(--light-purple);
+    transform: translateY(-2px);
 }
 
 /* === AJUSTES RESPONSIVOS ADICIONALES === */
-@media (max-width: 992px) { /* Tablets y móviles grandes */
+@media (max-width: 992px) {
     .navbar {
         padding: 10px 3%;
         height: 70px;
     }
     .logo {
-        height: 55px;
+        max-height: 55px;
     }
     .menu-principal a {
-        margin: 0 1rem; /* Reducir espacio entre enlaces */
-        font-size: 0.95rem;
+        margin: 0 0.8rem;
+        font-size: 1rem;
     }
     .user-name {
-        display: none; /* Opcional: ocultar nombre de usuario en pantallas pequeñas */
+        display: none;
     }
      .user-avatar {
-        width: 35px;
-        height: 35px;
+        width: 35px; height: 35px;
+        font-size: 13px;
     }
 }
 
-@media (max-width: 768px) { /* Móviles */
+@media (max-width: 768px) {
     .menu-principal {
-        display: none; 
+        display: none; /* Considerar menú hamburguesa */
     }
     .main-slogan {
-        font-size: clamp(2rem, 6vw, 2.8rem); /* Ajustar slogan para móviles */
+        font-size: clamp(2.2rem, 8vw, 3.5rem);
+        padding: 30px 20px;
     }
     .featured-games {
         padding: 2rem 3%;
     }
     .game-card {
-        grid-template-columns: 1fr; /* Una columna para game-card */
+        grid-template-columns: 1fr;
     }
     .game-card.reverse .game-info,
     .game-card.reverse .game-carousel {
-        grid-column: 1; /* Reset para apilamiento */
+        grid-column: 1;
     }
      .tournaments-section {
         padding: 20px 3%;
     }
     .cards-container {
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); /* Tarjetas más pequeñas en móvil */
+        grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
         gap: 20px;
     }
     .modal-content {
-        width: 90%;
-        margin: 10% auto;
+        width: 95%;
+        margin: 2.5vh auto; /* Ajuste para pantallas pequeñas */
+        padding: 15px;
+    }
+    .tournament-modal-title {
+        font-size: clamp(1.4rem, 2vw, 1.8rem);
+    }
+    .tournament-modal-actions {
+        flex-direction: column; /* Apilar botones en móvil */
+    }
+    .modal-button {
+        width: 100%;
+        text-align: center;
     }
 }
