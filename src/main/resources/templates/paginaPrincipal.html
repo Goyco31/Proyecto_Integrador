@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
 
 <head>
   <meta charset="UTF-8">
@@ -9,46 +9,15 @@
   <link rel="stylesheet" th:href="@{/css/estiloPagPrin.css}">
   <link rel="stylesheet" th:href="@{/css/modal-registro.css}">
   <link rel="stylesheet" th:href="@{/css/modal-login.css}">
+  <link rel="stylesheet" th:href="@{/css/header.css}">
+  <link rel="stylesheet" th:href="@{/css/footer.css}">
 </head>
 
 <body>
   <!-- Overlay que oscurecerá el fondo -->
   <div class="overlay" id="overlay"></div>
 
-  <header class="navbar">
-    <div class="logo">
-      <a href="/">
-        <img th:src="@{/Imagenes/Logo.png}" alt="Logo">
-      </a>
-    </div>
-
-    <ul class="nav-menu">
-      <li><a href="#inicio">INICIO</a></li>
-      <li><a href="#juegos">JUEGOS</a></li>
-      <li><a href="#premios">PREMIOS</a></li>
-      <li><a href="#noticias">NOTICIAS</a></li>
-    </ul>
-
-    <div class="right-menu">
-      <a href="#" data-modal="login-modal">INICIAR SESION</a>
-      <a href="#" data-modal="register-modal">REGISTRAR</a>
-    </div>
-
-    <div class="hamburger" id="hamburger">
-      <span></span>
-      <span></span>
-      <span></span>
-    </div>
-  </header>
-
-  <div class="mobile-menu" id="mobileMenu">
-    <ul>
-      <li><a href="#inicio">INICIO</a></li>
-      <li><a href="#juegos">JUEGOS</a></li>
-      <li><a href="#premios">PREMIOS</a></li>
-      <li><a href="#noticias">NOTICIAS</a></li>
-    </ul>
-  </div>
+  <div th:replace="~{fragments/header :: header}"></div>
 
   <main class="hero-section" id="inicio">
     <div class="hero-content">
@@ -185,41 +154,11 @@
     </div>
   </main>
 
-  <footer class="footer">
-    <div class="footer-content">
-      <div class="footer-section about">
-        <h2>Skill Tourney</h2>
-        <p>Organizamos los mejores torneos de CS2 y Dota 2 en línea. Únete y demuestra tus habilidades.</p>
-      </div>
 
-      <div class="footer-section links">
-        <h3>Enlaces</h3>
-        <ul>
-          <li><a href="#inicio">Inicio</a></li>
-          <li><a href="#juegos">Juegos</a></li>
-          <li><a href="#premios">Premios</a></li>
-          <li><a href="#noticias">Noticias</a></li>
-        </ul>
-      </div>
 
-      <div class="footer-section contact">
-        <h3>Contáctanos</h3>
-        <p><strong>Teléfono:</strong> +51 987 654 321</p>
-        <p><strong>Correo:</strong> contacto@SkillTourney.com</p>
-        <div class="social-links">
-          <a href="#">Facebook</a> |
-          <a href="#">Instagram</a> |
-          <a href="#">Twitter</a>
-        </div>
-      </div>
-    </div>
-
-    <div class="footer-bottom">
-      <p>&copy; 2025 Skill Tourney | Todos los derechos reservados</p>
-    </div>
-  </footer>
   <div th:replace="~{fragments/modal-registro}"></div>
   <div th:replace="~{fragments/modal-login}"></div>
+  <div th:replace="~{fragments/footer}"></div>
   <script th:src="@{/jscript/pagPrincipal.js}"></script>
   <script th:src="@{/jscript/modal-registro.js}"></script>
   <script th:src="@{/jscript/modal-login.js}"></script>
