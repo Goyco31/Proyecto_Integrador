@@ -40,11 +40,22 @@ public class SecurityConfig {
                 .disable()) // Desactiva CSRF ya que se usa JWT (no sesiones)
             .authorizeHttpRequests(authRequest ->
                 authRequest
-                    // Recursos públicos y estáticos
-                    .requestMatchers("/", "/index", "/css/**", "/js/**", "/images/**",
-                    "/Explorar", "/Clasificacion", "/usuario", "/skill",
-                    "/control/login", "/control/registro").permitAll()
-                    // Todo lo demás, incluyendo /control/** excepto login y registro, requiere autenticación
+                    // Permitir acceso a recursos estáticos
+                    .requestMatchers("/", 
+                    "/index", 
+                    "/css/**", 
+                    "/js/**", 
+                    "/jscript/**", 
+                    "/Imagenes/**",
+                    "/fragments/**", 
+                    "/favicon.ico",
+                    "/skill",
+                    "/explorar",
+                    "/paginaTorneo",
+                    "/clasificacion").permitAll()
+                    // Permitir acceso a las rutas de control
+                    .requestMatchers("/control/**").permitAll()
+                    // Requiere autenticación para todo lo demás
                     .anyRequest().authenticated()
             )
         .sessionManagement(sessionManager -> 

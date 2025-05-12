@@ -19,12 +19,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/control")
 // Genera un constructor con los atributos requeridos (final), útil para inyección de dependencias
 @RequiredArgsConstructor
-public class Controlador {
+public class ControladorAPI {
     // Servicio que maneja la lógica de autenticación y registro
     private final ControladorService authService;
 
     // Recibe los datos de login en el cuerpo de la solicitud y los pasa al servicio
-    @PostMapping(value = "login")
+    @PostMapping("/login")
     @ResponseBody
     public ResponseEntity<ControladorResponse> login(@RequestBody LoginRequest request) {
         // Devuelve la respuesta del servicio envuelta en un ResponseEntity con estado HTTP 200 OK
@@ -32,11 +32,11 @@ public class Controlador {
     }
 
     // Recibe los datos de registro en el cuerpo de la solicitud y los pasa al servicio(para el manejo de solicitud post a la ruta: "/control/registro")
-    @PostMapping(value = "registro")
+    @PostMapping("/registro")
     @ResponseBody
     public ResponseEntity<ControladorResponse> registro(@RequestBody RegisterRequest request) {
         // Devuelve la respuesta del servicio envuelta en un ResponseEntity con estado HTTP 200 OK
         return ResponseEntity.ok(authService.registro(request));
     }
-    
+  
 }
