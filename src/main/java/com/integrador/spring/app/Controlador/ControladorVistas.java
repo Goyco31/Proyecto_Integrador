@@ -15,6 +15,11 @@ public class ControladorVistas {
         return "index";
     }
 
+    @GetMapping("/paginaTorneo")
+    public String paginatorneo() {
+        return "paginaTorneo";
+    }
+
     @GetMapping("/explorar")
     public String explorar() {
         return "Explorar";
