@@ -41,12 +41,13 @@ const tournamentsData = {
 document.addEventListener('DOMContentLoaded', () => {
     // Carrusel automático para secciones de juegos
     const initGameCarousels = () => {
+        // Recorre todos los carruseles de juegos
         document.querySelectorAll('.game-carousel').forEach(carousel => {
             const images = carousel.querySelectorAll('img');
             if (images.length === 0) return; // No hacer nada si no hay imágenes
             let currentIndex = 0;
             images[currentIndex].classList.add('active'); // Activar la primera imagen
-
+            // Cambia la imagen activa cada 3 segundos
             setInterval(() => {
                 images[currentIndex].classList.remove('active');
                 currentIndex = (currentIndex + 1) % images.length;
@@ -84,24 +85,28 @@ document.addEventListener('DOMContentLoaded', () => {
                         </div>
                     </div>
                 `;
+                // Muestra un mensaje si no hay datos para el ID
             } else {
                 modalContentOutputArea.innerHTML = '<p style="color:white; text-align:center; padding: 20px;">Los detalles de este torneo no están disponibles.</p>';
             }
+            // Error si el contenedor del modal no existe
         } else {
             console.error("El área de contenido del modal (.modal-tournament-content-area) no se encontró.");
         }
     };
+    // Verifica que todos los elementos necesarios existan
     if (tournamentCards.length > 0 && modal && closeModalButton && modalContentOutputArea) {
         tournamentCards.forEach(card => {
             card.addEventListener('click', () => {
                 const tournamentId = card.dataset.tournamentId;
                 if (tournamentId) {
-                    loadModalContent(tournamentId);
-                    modal.style.display = 'block';
+                    loadModalContent(tournamentId); // Carga los datos del torneo
+                    modal.style.display = 'block'; // Muestra el modal
                     document.body.style.overflow = 'hidden'; // Evita el scroll del body
                 }
             });
         });
+        // Función para cerrar el modal
         const closeTheModal = () => {
             modal.style.display = 'none';
             document.body.style.overflow = 'auto'; // Restaura el scroll del body
@@ -109,14 +114,18 @@ document.addEventListener('DOMContentLoaded', () => {
                 modalContentOutputArea.innerHTML = ''; // Limpia el contenido del modal al cerrar
             }
         };
+        // Cerrar al hacer clic en la 'X'
         closeModalButton.onclick = closeTheModal;
+        // Cerrar al hacer clic fuera del contenido del modal
         window.onclick = (e) => {
             if (e.target === modal) { // Si se hace clic en el overlay oscuro
                 closeTheModal();
             }
         };
     } else {
-        console.warn();
+        // Si no se encuentran los elementos necesarios, mostrar advertencia
+        console.warn("Algunos elementos del modal o tarjetas de torneo no están disponibles.");
     }
+    //Inicia los carruseles 
     initGameCarousels();
 });

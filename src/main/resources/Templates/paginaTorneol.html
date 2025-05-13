@@ -3,39 +3,47 @@
 <head>
     <meta charset="UTF-8">
     <title>SkillTourney - Torneos Profesionales</title>
+
+    <!-- Enlace al archivo de estilos externo usando Thymeleaf -->
     <link rel="stylesheet" th:href="@{/css/estiloPagPrin.css}">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- Carga de fuentes desde Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Monda:wght@400;700&display=swap" rel="stylesheet">
 </head>
 <body>
+    <!-- Barra de navegación superior -->
     <header class="navbar">
+        <!-- Logo de SkillTourney -->
         <div class="logo-container">
             <img th:src="@{/Imagenes/SkillTourney_sin fondo.png}" alt="Logo SkillTourney" class="logo">
         </div>
-        <nav class="menu-principal">
+        <nav class="menu-principal"> <!-- Menú de navegación principal -->
             <a th:href="@{/Explorar}">Explorar</a>
             <a th:href="@{/Clasificacion}">Clasificación</a>
             <a th:href="@{/Tienda}">Tienda</a>
         </nav>
-        <div class="user-panel">
+        <div class="user-panel"> <!-- Panel de usuario -->
             <a th:href="@{/usuario}" class="user-link">
-                <div class="user-avatar">ST</div>
-                <div class="user-name">USER</div>
+                <div class="user-avatar">ST</div> <!-- Avatar con iniciales -->
+                <div class="user-name">USER</div> <!-- Nombre del usuario -->
             </a>
         </div>
     </header>
-
+    <!-- Sección de presentación de SkillTourney -->
     <section class="hero-banner">
         <div class="slogan-container">
             <h1 class="main-slogan">Impulsa tu juego<br>Atrae a tu audiencia<br>Haz historia</h1>
         </div>
     </section>
-
+    <!-- Sección de juegos destacados -->
     <section class="featured-games">
         <div class="game-card">
             <div class="game-info">
+
+                <!-- Tarjeta de DOTA 2 -->
                 <h2 class="game-title">DOTA 2</h2>
                 <p class="game-description">Torneos profesionales con premios en efectivo. Forma tu equipo y compite. Haz historia, únete y participa, sé el mejor y alcanza tu máximo nivel.</p>
                 <div class="game-specs">
@@ -44,13 +52,14 @@
                     <span>Modo: Competitivo</span>
                 </div>
             </div>
+            <!-- Carrusel de imágenes para DOTA 2 -->
             <div class="game-carousel">
                 <img th:src="@{/Imagenes/dota2.webp}" class="active" alt="Dota 2 gameplay 1">
                 <img th:src="@{/Imagenes/torneodota2.jpg}" alt="Dota 2 gameplay 2">
             </div>
         </div>
-
-        <div class="game-card reverse">
+        <!-- Tarjeta de CS:GO 2 -->
+        <div class="game-card reverse"> <!-- Diseño inverso para alternar el orden -->
             <div class="game-carousel">
                 <img th:src="@{/Imagenes/counter-strike-2.webp}" class="active" alt="CSGO gameplay 1">
                 <img th:src="@{/Imagenes/torneo-counter-strike-esports.webp}" alt="CSGO gameplay 2">
@@ -66,12 +75,14 @@
             </div>
         </div>
     </section>
-
+    <!-- Sección de torneos activos -->
     <section class="tournaments-section" id="eventos">
         <h2 class="section-title">TORNEOS ACTIVOS</h2>
         <div class="cards-container">
             <div class="tournament-card" data-tournament-id="dota-julio-premium">
                 <div class="card-header">
+
+                    <!-- Torneo 1 -->
                     <h3>Torneo DOTA 2</h3>
                     <span class="premiun-badge">PREMIUM</span>
                 </div>
@@ -82,6 +93,8 @@
             </div>
             <div class="tournament-card" data-tournament-id="dota-agosto-pro">
                 <div class="card-header">
+
+                    <!-- Torneo 2 -->
                     <h3>Torneo DOTA 2</h3>
                     <span class="premiun-badge">PRO</span>
                 </div>
@@ -90,6 +103,7 @@
                     <p class="prize">🏆 $200 PEN</p>
                 </div>
             </div>
+            <!-- Torneo 3 -->
             <div class="tournament-card" data-tournament-id="csgo-julio-open">
                 <div class="card-header">
                     <h3>Torneo CSGO 2</h3>
@@ -103,16 +117,23 @@
         </div>
     </section>
 
+    <!-- Modal para mostrar contenido adicional (galería de imágenes o detalles del torneo) -->
     <div class="carousel-modal"> <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div class="modal-tournament-content-area"></div> </div>
+            <span class="close-modal">&times;</span> <!-- Botón para cerrar el modal -->
+            <div class="modal-tournament-content-area"></div> </div> <!-- Contenido dinámico cargado por estilo.js -->
     </div>
+
+    <!-- Pie de página de SkillTourney -->
     <footer class="site-footer">
         <div class="footer-container">
+
+            <!-- Columna 1: Información -->
             <div class="footer-column">
                 <h4>Skill Tourney</h4>
                 <p>Organizamos los mejores torneos de CS2 y Dota 2 en línea. Únete y demuestra tus habilidades.</p>
             </div>
+
+            <!-- Columna 2: Enlaces -->
             <div class="footer-column">
                 <h4>Enlaces</h4>
                 <ul>
@@ -120,6 +141,8 @@
                     <li><a href="#">Noticias</a></li>
                 </ul>
             </div>
+
+            <!-- Columna 3: Contacto -->
             <div class="footer-column">
                 <h4>Contáctanos</h4>
                 <p>
@@ -133,10 +156,14 @@
                     </div>
             </div>
         </div>
+
+        <!-- Derechos de autor -->
         <div class="footer-bottom">
             <p>&copy; 2025 Skill Tourney | Todos los derechos reservados</p>
         </div>
     </footer>
+
+    <!-- Script de JavaScript externo (estilo.js) -->
     <script th:src="@{/jscript/estilo.js}"></script>
 </body>
 </html>
