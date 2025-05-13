@@ -9,6 +9,12 @@
   font-style: normal;
 }
 
+* {
+    font-family: 'Anton', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
 /* === VARIABLES GLOBALES === */
 :root {
     --main-purple: #5f0e8e;
@@ -24,16 +30,8 @@
     --main-purple-glow: rgba(95, 14, 142, 0.5);
 }
 
-/* === ESTILOS BASE === */
-body {
-    margin: 0;
-    font-family: "Exo 2", "Segoe UI", sans-serif;
-    background: linear-gradient(to bottom, var(--dark-blue), var(--medium-blue));
-    color: var(--pure-white);
-}
-
 /* === ESTRUCTURA PRINCIPAL === */
-.navbar {
+/*.navbar {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -57,7 +55,7 @@ body {
 }
 
 /* === NAVEGACIÓN === */
-.menu-principal a {
+/*.menu-principal a {
     margin: 0 1.5rem;
     text-decoration: none;
     color: var(--pure-white);
@@ -87,7 +85,7 @@ body {
 }
 
 /* === PANEL DE USUARIO === */
-.user-panel {
+/*.user-panel {
     display: flex;
     align-items: center;
 }
@@ -155,7 +153,7 @@ body {
 }
 
 .main-slogan {
-    font-family: 'Monda', sans-serif;
+    /*font-family: 'Monda', sans-serif;*/
     font-weight: 700;
     font-size: clamp(3rem, 6vw, 5.5rem);
     color: var(--pure-white);
