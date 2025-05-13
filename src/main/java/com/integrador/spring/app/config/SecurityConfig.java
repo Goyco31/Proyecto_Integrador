@@ -51,6 +51,7 @@ public class SecurityConfig {
                     "/favicon.ico",
                     "/skill",
                     "/explorar",
+                    "/noticias",
                     "/paginaTorneo",
                     "/clasificacion").permitAll()
                     // Permitir acceso a las rutas de control

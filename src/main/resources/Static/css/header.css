@@ -20,7 +20,7 @@
 }
 
 .logo img {
-    width: 80px;
+    width: 100px;
     height: auto;
     object-fit: contain;
     transition: transform 0.3s ease;
@@ -95,7 +95,7 @@
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
 }
 
-.hamburger {
+/*.hamburger {
     display: none;
     flex-direction: column;
     cursor: pointer;
@@ -122,7 +122,7 @@
     transform: translateY(-8px) rotate(-45deg);
 }
 
-/* Menú móvil */
+ /*Menú móvil 
 .mobile-menu {
     position: fixed;
     top: 0;
@@ -162,7 +162,7 @@
 
 .mobile-menu a:hover {
     color: #7c3aed;
-}
+}*/
 
 /* Responsive */
 @media (max-width: 1024px) {

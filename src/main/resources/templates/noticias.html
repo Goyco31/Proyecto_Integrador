@@ -1,0 +1,214 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkillTourney - Noticias</title>
+    <link rel="stylesheet" th:href="@{/css/noticias.css}" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Monda:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" th:href="@{/css/header.css}" />
+    <link rel="stylesheet" th:href="@{/css/footer.css}" />
+  </head>
+  <body>
+    <!-- Overlay que oscurecerá el fondo -->
+    <div class="overlay" id="overlay"></div>
+
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div class="noticias">
+
+        <!--Cabezera-->
+      <header>
+        <h1>Últimas Noticias del Torneo</h1>
+        <p>
+          Mantente al tanto de los cambios más recientes, las entrevistas y todo
+          lo que está sucediendo en el emocionante mundo de los torneos de
+          videojuegos. ¡Acompáñanos!
+        </p>
+      </header>
+
+      <!--Noticias -->
+      <article>
+        <section>
+          <figure>
+            <img
+              src="https://img.global.news.samsung.com/pe/wp-content/uploads/2025/05/im%C3%A1genes.jpg"
+              alt=""
+            />
+          </figure>
+          <div class="info">
+            <h2 class="titulo">
+              Samsung lanza la Odyssey Cup, el torneo que destaca el talento
+              gamer en Perú
+            </h2>
+            <p class="descripcion">
+              La Odyssey Cup en Perú es una competencia de Counter-Strike 2 que
+              busca al mejor equipo nacional que representará al país en torneo
+              regional en Brasil.
+            </p>
+            <p>
+              <a
+                href="https://news.samsung.com/pe/samsung-lanza-la-odyssey-cup-el-torneo-que-destaca-el-talento-gamer-en-peru"
+                target="_blank"
+                >Ver mas...</a
+              >
+            </p>
+            <time class="fecha" datetime="06-05-2025">6 de mayo del 2025</time>
+          </div>
+        </section>
+
+        <section>
+          <figure>
+            <iframe
+              width="560"
+              height="315"
+              src="https://www.youtube.com/embed/PspuiHlF5dM?si=RNuO7nz1DbX97wx5"
+              title="YouTube video player"
+              frameborder="0"
+              allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+              referrerpolicy="strict-origin-when-cross-origin"
+              allowfullscreen
+            ></iframe>
+          </figure>
+          <div class="info">
+            <h2 class="titulo">
+              El remake de Counter-Strike 1.6 se lanzará en Steam — Los fans
+              hacen lo que Valve no hace
+            </h2>
+            <p class="descripcion">
+              El legendario Counter-Strike 1.6 tendrá «un nuevo comienzo» — un
+              remake en toda regla llamado CS: Legacy.
+            </p>
+            <p>
+              <a
+                href="https://itc.ua/es/noticias/el-remake-de-counter-strike-1-6-se-lanzara-en-steam-los-fans-hacen-lo-que-valve-no-hace/"
+                target="_blank"
+                >Ver mas...</a
+              >
+            </p>
+            <time class="fecha" datetime="17-03-2025">17 de marzo de 2025</time>
+          </div>
+        </section>
+
+        <section>
+          <figure>
+            <img
+              src="https://esportsbureau.com/wp-content/uploads/2024/12/ESL-desvela-las-fechas-de-2026-para-los-eventos-Counter-Strike-2.jpg"
+              alt=""
+            />
+          </figure>
+          <div class="info">
+            <h2 class="titulo">
+              ESL desvela las fechas de 2026 para los eventos de Counter-Strike
+              2
+            </h2>
+            <p class="descripcion">
+              Por ahora no se han facilitado detalles sobre cada evento, como la
+              ubicación, el formato y los premios.
+            </p>
+            <p>
+              <a
+                href="https://esportsbureau.com/esl-desvela-las-fechas-de-2026-para-los-eventos-de-counter-strike-2/"
+                target="_blank"
+                >Ver mas...</a
+              >
+            </p>
+            <time class="fecha" datetime="06-05-2025">6 de mayo del 2025</time>
+          </div>
+        </section>
+
+        <section>
+          <figure>
+            <img
+              src="https://portal.andina.pe/EDPfotografia3/Thumbnail/2024/07/05/001079814W.jpg"
+              alt=""
+            />
+          </figure>
+          <div class="info">
+            <h2 class="titulo">
+              Campeonato de Dota 2 realizado en el Perú corona a Team Liquid
+              como ganador
+            </h2>
+            <p class="descripcion">
+              La final de la segunda temporada de la Elite League, el torneo de
+              Dota 2 con el mayor pozo de premios en efectivo en toda
+              Latinoamérica se llevó a cabo en nuestro país.
+            </p>
+            <p>
+              <a
+                href="https://andina.pe/agencia/noticia-campeonato-dota-2-realizado-el-peru-corona-a-team-liquid-como-ganador-992154.aspx"
+                target="_blank"
+                >Ver mas...</a
+              >
+            </p>
+            <time class="fecha" datetime="19-03-2025">19 de mayo del 2025</time>
+          </div>
+        </section>
+
+        <section>
+          <figure>
+            <img
+              src="https://www.infobae.com/resizer/v2/AFIXRQJ2E5BLLMLTACBJEHJ5J4.png?auth=c63945656b78667772e279743157999086cb11e5293fe9ba50684d2b8280888f&smart=true&width=992&height=558&quality=85"
+              alt=""
+            />
+          </figure>
+          <div class="info">
+            <h2 class="titulo">
+              La victoria histórica de un equipo peruano en el torneo
+              internacional de Dota 2
+            </h2>
+            <p class="descripcion">
+              El mundo de los esports ha vivido un momento inolvidable con la
+              reciente victoria de un equipo peruano en un prestigioso torneo
+              internacional de Dota 2.
+            </p>
+            <p>
+              <a
+                href="https://atomix.vg/la-victoria-historica-de-un-equipo-peruano-en-el-torneo-internacional-de-dota-2/"
+                target="_blank"
+                >Ver mas...</a
+              >
+            </p>
+            <time class="fecha" datetime="28-04-2025"
+              >28 de abril del 2025</time
+            >
+          </div>
+        </section>
+
+        <section>
+          <figure>
+            <img
+              src="https://trome.com/resizer/v2/K5KS7LPRQJFURAHMVYAMGIAZAY.jpg?auth=a94c8a0e32a0019f7988e6726794a35e8bf0a940189dd09e0ee26a27a4b0d6ef&width=1200&height=682&quality=90&smart=true"
+              alt=""
+            />
+          </figure>
+          <div class="info">
+            <h2 class="titulo">El gran reto de los Gamers peruanos</h2>
+            <p class="descripcion">
+              En el último Mundial de Dota 2 los nacionales se quedaron con la
+              medalla de oro, imponiendo su clase entre 65 países. Son grandes
+              favoritos para ‘arrasar’ en Bolivarianos Lima – Ayacucho 2025.
+            </p>
+            <p>
+              <a
+                href="https://trome.com/deportes/polideportivo/polideportivo-esports-el-gran-reto-de-los-gamers-peruanos-imp-noticia/"
+                target="_blank"
+                >Ver mas...</a
+              >
+            </p>
+            <time class="fecha" datetime="09-05-2025">9 de mayo del 2025</time>
+          </div>
+        </section>
+      </article>
+    </div>
+
+    <div th:replace="~{fragments/footer}"></div>
+    <div th:replace="~{fragments/modal-registro}"></div>
+    <div th:replace="~{fragments/modal-login}"></div>
+    <script th:src="@{/jscript/modal-registro.js}"></script>
+    <script th:src="@{/jscript/modal-login.js}"></script>
+    <script th:src="@{/jscript/pagPrincipal.js}"></script>
+  </body>
+</html>
