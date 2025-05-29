@@ -1,4 +1,4 @@
-package com.integrador.spring.app.Controlador;
+package com.integrador.spring.app.Servicio;
 
 // Importaciones de Spring Security y otras utilidades
 import org.springframework.security.authentication.AuthenticationManager;
@@ -7,6 +7,9 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.integrador.spring.app.Controlador.ControladorResponse;
+import com.integrador.spring.app.Controlador.LoginRequest;
+import com.integrador.spring.app.Controlador.RegisterRequest;
 // Importaciones de clases del proyecto
 import com.integrador.spring.app.DAO.UserDAO;
 import com.integrador.spring.app.JWT.JwtService;
