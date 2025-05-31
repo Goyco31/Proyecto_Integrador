@@ -33,7 +33,7 @@ const tournamentsData = {
         description: "Demuestra tu puntería y tácticas en el CS:GO Open. Abierto a todos los niveles. ¡No te quedes fuera!",
         slots: "24/32 equipos",
         format: "Sistema Suizo + Playoffs",
-        rulesLink: "/ReglamentoenDoc/Reglamento_CS2_y_Formatos_Torneo.pdf",
+        rulesLink: "/ReglamentoenDoc/reglamentodeCSGO2.pdf",
         registerLink: "/registro-torneo-csgo.html",
     }
 };
