@@ -12,6 +12,7 @@ import lombok.Builder;// Permite usar el patrón Builder para crear instancias
 @AllArgsConstructor
 @NoArgsConstructor
 public class ControladorResponse {
+    String mensaje;
     // Campo que representa el token JWT generado y devuelto al usuario tras autenticarse
     String token;
 }

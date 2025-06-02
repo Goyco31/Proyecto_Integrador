@@ -26,14 +26,14 @@ public class JwtService {
         return getToken(new HashMap<>(),user);
     }
 
-    private String getToken(Map<String,Object>extraClaims,UserDetails user){
+    public String getToken(Map<String, Object> extraClaims, UserDetails user) {
         return Jwts
             .builder()
             .setClaims(extraClaims)
             .setSubject(user.getUsername())
             .setIssuedAt(new Date(System.currentTimeMillis()))
-            .setExpiration(new Date(System.currentTimeMillis()+1000*60*24))
-            .signWith(getkey(),SignatureAlgorithm.HS256)
+            .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) // 24 horas
+            .signWith(getkey(), SignatureAlgorithm.HS256)
             .compact();
     }
 
@@ -71,6 +71,16 @@ public class JwtService {
 
     private boolean isTokenExpired(String token){
         return getExpiration(token).before(new Date());
+    }
+
+    public String generateRefreshToken(UserDetails user) {
+        return Jwts
+            .builder()
+            .setSubject(user.getUsername())
+            .setIssuedAt(new Date(System.currentTimeMillis()))
+            .setExpiration(new Date(System.currentTimeMillis() + 1000L * 60 * 60 * 24 * 30)) // 30 días
+            .signWith(getkey(), SignatureAlgorithm.HS256)
+            .compact();
     }
 
 }

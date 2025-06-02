@@ -3,7 +3,7 @@ package com.integrador.spring.app.Servicio;
 // Importaciones de Spring Security y otras utilidades
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import org.springframework.security.core.userdetails.UserDetails;
+
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -30,36 +30,63 @@ public class ControladorService {
     private final JwtService jwtService;
     private final PasswordEncoder passwordEncoder;
     private final AuthenticationManager authenticationManager;
-
+    private final EmailService emailService;
 
     //Método para autenticar (login) un usuario.
     public ControladorResponse login(LoginRequest request) {
-        // Autentica el usuario usando Spring Security (verifica nickname y contraseña)
-        authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getNickname(), request.getContraseña()));
-        UserDetails user = userDAO.findByNickname(request.getNickname()).orElseThrow();
-        String token=jwtService.getToken(user);
+        // Autenticar usuario
+        authenticationManager.authenticate(
+            new UsernamePasswordAuthenticationToken(
+                request.getNickname(),
+                request.getContraseña()
+            )
+        );
+
+        // Generar token JWT
+        User user = userDAO.findByNickname(request.getNickname())
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        String token = jwtService.getToken(user);
+
         return ControladorResponse.builder()
+            .mensaje("Autenticación exitosa")
             .token(token)
             .build();
     }
     
     //Método para registrar un nuevo usuario.
     public ControladorResponse registro(RegisterRequest request) {
-        // Crea un nuevo objeto de usuario con los datos del formulario, codificando la contraseña
+        // Verificar si el usuario ya existe
+        if(userDAO.findByNickname(request.getNickname()).isPresent()) {
+            throw new RuntimeException("El nickname ya está en uso");
+        }
+
+        // Crear nuevo usuario
         User user = User.builder()
             .nombre(request.getNombre())
-            .contraseña(passwordEncoder.encode(request.getContraseña()))
             .apellido(request.getApellido())
             .nickname(request.getNickname())
             .correo(request.getCorreo())
+            .contraseña(passwordEncoder.encode(request.getContraseña()))
             .role(role.USER)
             .build();
 
-            userDAO.save(user);
+        userDAO.save(user);
 
-            return ControladorResponse.builder()
-                .token(jwtService.getToken(user))
-                .build();
+        try {
+            emailService.sendWelcomeEmail(
+                user.getCorreo(), 
+                user.getNombre(),
+                user.getNickname()
+            );
+        } catch (Exception e) {
+            // Log the error but don't fail registration
+            System.err.println("Error enviando correo: " + e.getMessage());
+        }
+
+        return ControladorResponse.builder()
+            .mensaje("Usuario registrado exitosamente")
+            .build();
     }
 
 }
