@@ -17,7 +17,7 @@ public class EstadisticaRonda {
     // id autoincrementable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idEstadisticaRonda;
+    private Integer idEstadisticaRonda;
 
     // Atributos de la clase
     private int kills, asistencias, muertes;

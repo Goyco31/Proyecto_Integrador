@@ -21,7 +21,7 @@ public class Juego {
     //id autoincrementable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idJuego;
+    private Integer idJuego;
 
     //Atributos de la clase
     @Column(unique = true)

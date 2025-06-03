@@ -22,7 +22,7 @@ public class Recarga {
     // id autoincrementable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idRecarga;
+    private Integer idRecarga;
 
     //Atributos de la clase
     private LocalDate fechaRecarga;

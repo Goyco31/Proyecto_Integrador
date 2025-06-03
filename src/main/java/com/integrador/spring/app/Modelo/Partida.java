@@ -21,7 +21,7 @@ public class Partida {
     //id autoincrementable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idPartida;
+    private Integer idPartida;
     
     //Atributos de la clase
     private LocalDate fechaPartida;

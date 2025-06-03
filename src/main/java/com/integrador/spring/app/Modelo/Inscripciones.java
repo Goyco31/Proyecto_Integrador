@@ -19,7 +19,7 @@ public class Inscripciones {
     //id autoincrementable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idIncripcion;
+    private Integer idIncripcion;
     
     //Atributos de la clase
     private LocalDate fechaIncripcion;

@@ -17,7 +17,7 @@ public class InfoUsuario {
     //id autoincrementable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idInfo;
+    private Integer idInfo;
 
     //Atributos de la clase
     private byte[] imgPerfil, imgBanner;

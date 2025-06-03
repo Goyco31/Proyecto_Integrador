@@ -20,7 +20,7 @@ public class Mensajes {
     //id autoincrementable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idMensaje;
+    private Integer idMensaje;
 
     //Atributo de la tabla
     @Lob

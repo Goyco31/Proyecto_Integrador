@@ -25,7 +25,7 @@ public class Torneo {
     //Id autoincrementable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idTorneo;
+    private Integer idTorneo;
 
     //Entidades de la clase
     private String nombreTorneo, modoJuego;

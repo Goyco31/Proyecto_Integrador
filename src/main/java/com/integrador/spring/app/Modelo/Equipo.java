@@ -21,7 +21,7 @@ public class Equipo {
     //id autoincrementable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idEquipo;
+    private Integer idEquipo;
 
     //Atributos de la clase
     @Column(unique = true)

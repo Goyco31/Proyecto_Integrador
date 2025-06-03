@@ -19,7 +19,7 @@ public class Ronda {
     // id autoincrementable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idRonda;
+    private Integer idRonda;
 
     // Atributos de la clase
     private int numeroRonda, puntajeEquipo1, puntajeEquipo2,

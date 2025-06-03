@@ -18,7 +18,7 @@ public class Monedas {
     //id autoincrementable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int idMonedas;
+    private Integer idMonedas;
 
     //Atributo de la clase
     private BigDecimal saldo;
