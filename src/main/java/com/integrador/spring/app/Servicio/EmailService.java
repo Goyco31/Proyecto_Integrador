@@ -43,4 +43,49 @@ public class EmailService {
             throw new RuntimeException("Error al enviar correo electrónico", e);
         }
     }
+
+    // Método para enviar códigos 2FA
+    public void send2FACode(String toEmail, String code) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+            
+            helper.setFrom(fromEmail);
+            helper.setTo(toEmail);
+            helper.setSubject("Código de verificación - Two Factor Authentication");
+            
+            // Contexto para la plantilla
+            Context context = new Context();
+            context.setVariable("code", code);
+            context.setVariable("expirationMinutes", 5); // Tiempo de expiración
+            
+            // Procesar plantilla HTML
+            String htmlContent = templateEngine.process("email/2fa-code", context);
+            helper.setText(htmlContent, true);
+            
+            mailSender.send(message);
+            System.out.println("Código 2FA enviado a: " + toEmail);
+        } catch (MessagingException e) {
+            System.err.println("Error al enviar código 2FA: " + e.getMessage());
+            throw new RuntimeException("Error al enviar código de verificación", e);
+        }
+    }
+    public void send2FASetupEmail(String toEmail) {
+    try {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+        
+        helper.setFrom(fromEmail);
+        helper.setTo(toEmail);
+        helper.setSubject("Configuración de Seguridad - Verificación en Dos Pasos");
+        
+        Context context = new Context();
+        String htmlContent = templateEngine.process("email/2fa-setup", context);
+        helper.setText(htmlContent, true);
+        
+        mailSender.send(message);
+    } catch (MessagingException e) {
+        throw new RuntimeException("Error al enviar correo de configuración 2FA", e);
+    }
+}
 }

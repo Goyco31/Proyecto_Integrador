@@ -1,0 +1,13 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Código de Verificación</title>
+</head>
+<body>
+    <h1>Tu código de verificación</h1>
+    <p>Utiliza este código para completar tu autenticación:</p>
+    <h2 th:text="${code}">123456</h2>
+    <p>El código expirará en <span th:text="${expirationMinutes}">5</span> minutos</p>
+</body>
+</html>

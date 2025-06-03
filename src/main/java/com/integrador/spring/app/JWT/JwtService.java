@@ -82,5 +82,23 @@ public class JwtService {
             .signWith(getkey(), SignatureAlgorithm.HS256)
             .compact();
     }
+    // Genera token temporal solo para 2FA
+    public String generateTempToken(UserDetails user) {
+        return Jwts.builder()
+            .setSubject(user.getUsername())
+            .setIssuedAt(new Date(System.currentTimeMillis()))
+            .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 5)) // 5 minutos
+            .signWith(getkey(), SignatureAlgorithm.HS256)
+            .compact();
+    }
+
+    // Verifica token temporal
+    public boolean isTempTokenValid(String token) {
+        try {
+            return !getAllClaims(token).getExpiration().before(new Date());
+        } catch (Exception e) {
+            return false;
+        }
+    }
 
 }

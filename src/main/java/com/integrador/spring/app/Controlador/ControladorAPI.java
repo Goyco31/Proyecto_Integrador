@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.integrador.spring.app.JWT.JwtService;
@@ -49,6 +50,7 @@ public class ControladorAPI {
         // Devuelve la respuesta del servicio envuelta en un ResponseEntity con estado HTTP 200 OK
         return ResponseEntity.ok(authService.registro(request));
     }
+    
     @PostMapping("/refresh-token")
     public ResponseEntity<ControladorResponse> refreshToken(HttpServletRequest request) {
         final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
@@ -73,6 +75,12 @@ public class ControladorAPI {
         
         throw new RuntimeException("Refresh token inválido");
     }
-    
+
+    @PostMapping("/toggle-2fa")
+    @ResponseBody
+    public ResponseEntity<String> toggle2FA(@RequestParam String nickname) {
+        return ResponseEntity.ok(authService.toggle2FA(nickname));
+    }
+        
   
 }
