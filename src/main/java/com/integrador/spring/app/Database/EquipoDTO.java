@@ -12,7 +12,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EquipoDTO {
     //Entidades
-    private int idEquipo;
+    private Integer idEquipo;
     private String nombreEquipo;
     private LocalDate fechaCreacion;
     private List<UsuarioDTO> usuario;

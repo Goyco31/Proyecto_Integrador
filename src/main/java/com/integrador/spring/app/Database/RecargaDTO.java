@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RecargaDTO {
     // Entidades
-    private int idRecarga;
+    private Integer idRecarga;
     private UsuarioDTO usuario;
     private LocalDate fechaRecarga;
     private int cantidad;

@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class JuegoDTO {
     //Entidades
-    private int idJuego;
+    private Integer idJuego;
     private String nombreJuego;
     private String generoJuego;
     private byte[] imgJuego;

@@ -15,7 +15,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class TorneoDTO {
     //Entidades
-    private int idTorneo;
+    private Integer idTorneo;
     private String nombreTorneo, modoJuego;
     private EstadoTorneo estado;
     private TipoTorneo tipo;

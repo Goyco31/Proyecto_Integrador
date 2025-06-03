@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MensajesDTO {
     //Entidades
-    private int idMensaje;
+    private Integer idMensaje;
     private UsuarioDTO emisor;
     private UsuarioDTO receptor;
     private String contenido;

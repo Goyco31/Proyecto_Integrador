@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class MonedasDTO {
     // Entidades
-    private int idMonedas;
+    private Integer idMonedas;
     private BigDecimal saldo;
     private UsuarioDTO usuario;
 

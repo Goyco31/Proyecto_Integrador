@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class EstadisticaRondaDTO {
     //Entidades
-    private int idEstadisticaRonda;
+    private Integer idEstadisticaRonda;
     private RondaDTO ronda;
     private UsuarioDTO usuario;
     private int kills, asistencias, muertes;

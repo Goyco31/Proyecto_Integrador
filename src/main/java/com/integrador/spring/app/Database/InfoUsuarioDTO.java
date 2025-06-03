@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class InfoUsuarioDTO {
     //Entidades
-    private int idInfo;
+    private Integer idInfo;
     private UsuarioDTO usuario;
     private byte[] imgPerfil, imgBanner;
     private String discord, youtube, twitch, kick;

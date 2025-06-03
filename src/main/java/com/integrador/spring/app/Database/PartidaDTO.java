@@ -13,7 +13,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class PartidaDTO {
     //Entidades
-    private int idPartida;
+    private Integer idPartida;
     private LocalDate fechaPartida;
     private EstadoPartida estado;
     private TorneoDTO torneo;

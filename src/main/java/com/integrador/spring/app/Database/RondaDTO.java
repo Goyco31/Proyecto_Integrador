@@ -9,7 +9,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class RondaDTO {
     //Entidades
-    private int idRonda;
+    private Integer idRonda;
     private int numeroRonda, puntajeEquipo1, puntajeEquipo2,
             totalKillsEquipo1, totalKillsEquipo2;
     private PartidaDTO partida;

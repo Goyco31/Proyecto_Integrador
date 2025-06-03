@@ -11,7 +11,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class InscripcionesDTO {
     //Entidades
-    private int idIncripcion;
+    private Integer idIncripcion;
     private LocalDate fechaIncripcion;
     private EquipoDTO equipo;
     private TorneoDTO torneo;
