@@ -18,6 +18,9 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
@@ -55,6 +58,25 @@ public class User implements UserDetails{
     @Enumerated(EnumType.STRING)
     role role;
 
+
+     @OneToOne
+    private InfoUsuario info;
+
+    // Relacion uno a uno con la tabla Monedas
+    @OneToOne
+    private Monedas monedas;
+
+    // Relacion uno a muchos con la tabla Recarga
+    @OneToMany
+    private List<Recarga> recarga;
+
+    // Relacion uno a muchos con la tabla mensajes
+    @OneToMany
+    private List<Mensajes> mensajes;
+
+    // Relacion muchos a uno con la tabla equipo
+    @ManyToOne
+    private Equipo equipo;
     // Retorna una colección de autoridades (roles) del usuario para Spring Security
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
