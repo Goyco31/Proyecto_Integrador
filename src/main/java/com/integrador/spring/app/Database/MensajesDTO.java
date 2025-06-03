@@ -10,17 +10,19 @@ import lombok.NoArgsConstructor;
 @Data
 @NoArgsConstructor
 public class MensajesDTO {
-    //Entidades
+    // Entidades
     private Integer idMensaje;
+    private String razon;
     private UsuarioDTO emisor;
     private UsuarioDTO receptor;
     private String contenido;
     private LocalDate fechaEnvio;
     private Boolean leido;
 
-    //Constructor de acceso a la tabla Mensajes
+    // Constructor de acceso a la tabla Mensajes
     public MensajesDTO(Mensajes mensajes) {
         this.idMensaje = mensajes.getIdMensaje();
+        this.razon = mensajes.getRazon();
         this.emisor = new UsuarioDTO(mensajes.getEmisor());
         this.receptor = new UsuarioDTO(mensajes.getReceptor());
         this.contenido = mensajes.getContenido();
@@ -28,7 +30,4 @@ public class MensajesDTO {
         this.leido = mensajes.getLeido();
     }
 
-    
-
 }
-

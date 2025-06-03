@@ -16,13 +16,14 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 public class Mensajes {
-    
-    //id autoincrementable
+
+    // id autoincrementable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idMensaje;
 
-    //Atributo de la tabla
+    // Atributo de la tabla
+    private String razon;
     @Lob
     private String contenido;
     private LocalDate fechaEnvio;
@@ -36,5 +37,4 @@ public class Mensajes {
     @ManyToOne
     private User receptor;
 
-    
 }
