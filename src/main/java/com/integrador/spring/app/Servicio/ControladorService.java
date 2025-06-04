@@ -1,5 +1,7 @@
 package com.integrador.spring.app.Servicio;
 
+import java.util.List;
+
 // Importaciones de Spring Security y otras utilidades
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -7,12 +9,14 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import com.google.common.base.Preconditions;
+import com.google.common.base.Strings;
+import com.google.common.collect.Lists;
 import com.integrador.spring.app.Controlador.ControladorResponse;
 import com.integrador.spring.app.Controlador.LoginRequest;
 import com.integrador.spring.app.Controlador.RegisterRequest;
 // Importaciones de clases del proyecto
 import com.integrador.spring.app.DAO.UserDAO;
-import com.integrador.spring.app.JWT.JwtService;
 import com.integrador.spring.app.Modelo.User;
 import com.integrador.spring.app.Modelo.role;
 
@@ -33,9 +37,16 @@ public class ControladorService {
     private final EmailService emailService;
     private final TwoFactorAuthService twoFactorAuthService;
     private final UserDAO userDao;
+    public List<List<User>> getUsersInBatches(int batchSize) {
+        Preconditions.checkArgument(batchSize > 0, "El tamaño del lote debe ser mayor a 0");
+        List<User> allUsers = userDAO.findAll();
+        return Lists.partition(allUsers, batchSize);
+    }
     
     //Método para autenticar (login) un usuario.
     public ControladorResponse login(LoginRequest request) {
+        Preconditions.checkArgument(!Strings.isNullOrEmpty(request.getNickname()), "Nickname requerido");
+        Preconditions.checkArgument(!Strings.isNullOrEmpty(request.getContraseña()), "Contraseña requerida");
         // 1. Autenticación básica
         authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(
@@ -89,10 +100,19 @@ public class ControladorService {
 
     
     public ControladorResponse registro(RegisterRequest request) {
+    // Validaciones más explícitas y legibles
+    Preconditions.checkArgument(!Strings.isNullOrEmpty(request.getNickname()), "El nickname no puede estar vacío");
+    Preconditions.checkArgument(!Strings.isNullOrEmpty(request.getCorreo()), "El correo no puede estar vacío");
+    Preconditions.checkArgument(request.getContraseña() != null && request.getContraseña().length() >= 8, 
+        "La contraseña debe tener al menos 8 caracteres");
+        
         // Verificar si el usuario ya existe
         if(userDAO.findByNickname(request.getNickname()).isPresent()) {
             throw new RuntimeException("El nickname ya está en uso");
         }
+
+        // Determinar el rol basado en el dominio del correo
+        boolean isAdminEmail = request.getCorreo().toLowerCase().endsWith("@utp.edu.pe");
 
         // Crear nuevo usuario con 2FA activado por defecto
         User user = User.builder()
@@ -101,7 +121,7 @@ public class ControladorService {
             .nickname(request.getNickname())
             .correo(request.getCorreo())
             .contraseña(passwordEncoder.encode(request.getContraseña()))
-            .role(role.USER)
+            .role(isAdminEmail ? role.ADMIN : role.USER) // Rol dinámico aquí
             .is2faEnabled(true) // 2FA activado automáticamente
             .build();
 
@@ -122,7 +142,7 @@ public class ControladorService {
         }
 
         return ControladorResponse.builder()
-            .mensaje("Usuario registrado exitosamente. Se ha activado la verificación en dos pasos.")
+            .mensaje("Usuario registrado exitosamente como " + (isAdminEmail ? "ADMIN" : "USER")+ "Se ha activado la verificación en dos pasos.")
             .build();
     }
 

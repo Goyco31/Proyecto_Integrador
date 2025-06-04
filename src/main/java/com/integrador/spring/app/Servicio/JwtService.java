@@ -1,13 +1,18 @@
-package com.integrador.spring.app.JWT;
+package com.integrador.spring.app.Servicio;
 
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
+import java.util.concurrent.TimeUnit;
 import java.util.function.Function;
 import java.security.Key;
 
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
+
+import com.google.common.cache.Cache;
+import com.google.common.cache.CacheBuilder;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -20,7 +25,11 @@ public class JwtService {
 
     // Clave secreta para firmar el JWT (debe estar codificada en Base64)
     private static final String SECRET_KEY = "8A25CB2D0F3E4F79B3A8B934AE86B4F1A2B3C4D5E6F7A8B9C0D1E2F3A4B5C6D7";
-
+    private final Cache<String, String> tokenCache = CacheBuilder.newBuilder()
+        .maximumSize(1000) // Máximo 1000 tokens en cache
+        .expireAfterWrite(1, TimeUnit.HOURS) // Expira después de 1 hora
+        .build();
+        
     //Genera un token JWT para un usuario dado sin claims adicionales.
     public String getToken(UserDetails user){
         return getToken(new HashMap<>(),user);
@@ -99,6 +108,21 @@ public class JwtService {
         } catch (Exception e) {
             return false;
         }
+    }
+
+    public void cacheToken(String username, String token) {
+        tokenCache.put(username, token);
+    }
+
+    public Optional<String> getCachedToken(String username) {
+        return Optional.ofNullable(tokenCache.getIfPresent(username));
+    }
+
+    // Añade este método a tus llamadas después de generar un token
+    public String getTokenAndCache(UserDetails user) {
+        String token = getToken(user);
+        cacheToken(user.getUsername(), token);
+        return token;
     }
 
 }
