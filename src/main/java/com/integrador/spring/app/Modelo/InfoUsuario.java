@@ -1,9 +1,9 @@
 package com.integrador.spring.app.Modelo;
 
 import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
+import jakarta.persistence.MapsId;
 import jakarta.persistence.OneToOne;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -16,7 +16,6 @@ public class InfoUsuario {
 
     //id autoincrementable
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idInfo;
 
     //Atributos de la clase
@@ -25,5 +24,7 @@ public class InfoUsuario {
 
     //Relacio uno a uno con la tabla usuario
     @OneToOne
+    @MapsId
+    @JoinColumn(name = "id")
     private User usuario;
 }
