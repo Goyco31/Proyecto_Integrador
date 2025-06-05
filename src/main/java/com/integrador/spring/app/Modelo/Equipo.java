@@ -3,6 +3,11 @@ package com.integrador.spring.app.Modelo;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
+import jakarta.persistence.CascadeType;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -26,14 +31,16 @@ public class Equipo {
     //Atributos de la clase
     @Column(unique = true)
     private String nombreEquipo;
-    
+    @CreationTimestamp
     private LocalDate fechaCreacion;
 
     //Relacio uno a muchos con la tabla usuario
-    @OneToMany
+    @OneToMany(mappedBy = "equipo", cascade = CascadeType.ALL, orphanRemoval = true)
+    @JsonManagedReference
     private List<User> usuario;
 
     //Relacio uno a uno muchos la tabla Inscripciones
-    @OneToMany
+    @OneToMany //(mappedBy = "equipo", cascade = CascadeType.ALL, orphanRemoval = true)
+    //@JsonManagedReference
     private List<Inscripciones> inscripciones;
 }

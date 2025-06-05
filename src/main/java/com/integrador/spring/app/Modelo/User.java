@@ -10,6 +10,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 // Importa anotaciones de JPA para mapeo de entidades
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
@@ -76,6 +78,7 @@ public class User implements UserDetails{
 
     // Relacion muchos a uno con la tabla equipo
     @ManyToOne
+    @JsonBackReference
     private Equipo equipo;
     // Retorna una colección de autoridades (roles) del usuario para Spring Security
     @Override

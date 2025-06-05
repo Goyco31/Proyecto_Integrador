@@ -15,7 +15,7 @@ public class TorneoServices {
     @Autowired
     private TorneoRepo repo_torneo;
 
-    public List<Torneo> listarTorneos() {
+    public List<Torneo> listarTorneo() {
         return repo_torneo.findAll();
     }
 
@@ -23,7 +23,7 @@ public class TorneoServices {
         return repo_torneo.findById(id);
     }
 
-    public Optional<Torneo> buscarNombre(String nombre) {
+    public Optional<Torneo> buscarTorneoNombre(String nombre) {
         return repo_torneo.findByNombreTorneo(nombre);
     }
 
@@ -33,15 +33,15 @@ public class TorneoServices {
         return repo_torneo.save(existe);
     }
 
-    public Torneo guardar(Torneo torneo){
+    public Torneo guardar(Torneo torneo) {
         return repo_torneo.save(torneo);
     }
 
-    public  void eliminarId(Integer id){
+    public void eliminar(Integer id) {
         repo_torneo.deleteById(id);
     }
 
-    public void elinimarNombre(String nombre){
+    public void eliminarTorneoNombre(String nombre) {
         repo_torneo.deleteByNombreTorneo(nombre);
     }
 }

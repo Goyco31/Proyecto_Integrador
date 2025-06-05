@@ -41,7 +41,7 @@ public class EquipoServices {
         repo_equipo.deleteById(id);
     }
 
-    public void eliminarNickname(String nom_equipo){
+    public void eliminarNombre(String nom_equipo){
         repo_equipo.deleteByNombreEquipo(nom_equipo);
     }
 }

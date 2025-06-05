@@ -2,6 +2,10 @@ package com.integrador.spring.app.Modelo;
 
 import java.time.LocalDate;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -22,10 +26,12 @@ public class Inscripciones {
     private Integer idIncripcion;
     
     //Atributos de la clase
+    @CreationTimestamp
     private LocalDate fechaIncripcion;
 
     //Relacio muchos a uno con la tabla Equipo
     @ManyToOne
+    @JsonBackReference
     private Equipo equipo;
 
     //Relacio muchos a uno con la tabla

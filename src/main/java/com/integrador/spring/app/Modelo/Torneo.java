@@ -4,6 +4,11 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
+import org.hibernate.annotations.CreationTimestamp;
+
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
@@ -28,11 +33,15 @@ public class Torneo {
     private Integer idTorneo;
 
     //Entidades de la clase
-    private String nombreTorneo, modoJuego;
+    @Column(unique = true)
+    private String nombreTorneo;
+    private String modoJuego;
     @Lob
     private String descripcion;
     private BigDecimal precioInscripcion, premio;
-    private LocalDate fechaInicio, fechaFin;
+    @CreationTimestamp
+    private LocalDate fechaInicio;
+    private LocalDate fechaFin;
     @Enumerated(EnumType.STRING)
     private EstadoTorneo estado;
     @Enumerated(EnumType.STRING)
@@ -40,6 +49,7 @@ public class Torneo {
 
     //Relacion muchos a uno con la tabla Juego
     @ManyToOne
+    @JsonBackReference
     private Juego juego;
 
     //Relacion uno a muchos con la tabla Inscripciones

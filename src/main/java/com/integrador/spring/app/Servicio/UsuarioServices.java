@@ -27,6 +27,10 @@ public class UsuarioServices {
         return repo_usuario.findByNickname(nick);
     }
 
+    public boolean buscarCorreo(String correo){
+        return repo_usuario.existsByCorreo(correo);
+    }
+
     public User actualizar(Integer id, User user) {
         User existe = repo_usuario.findById(id)
         .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
