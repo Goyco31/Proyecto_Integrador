@@ -17,4 +17,6 @@ public class LoginRequest {
     String nickname;
     // Campo para la contraseña del usuario (en texto plano al ser enviada)
     String contraseña;
+
+    String tokenVerificacion;
 }

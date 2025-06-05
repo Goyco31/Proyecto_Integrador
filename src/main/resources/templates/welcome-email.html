@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Bienvenido</title>
+    <style>
+        body { font-family: Arial, sans-serif; line-height: 1.6; }
+        .container { max-width: 600px; margin: 0 auto; padding: 20px; }
+        .header { background-color: #f8f9fa; padding: 10px; text-align: center; }
+        .content { padding: 20px; }
+        .footer { margin-top: 20px; font-size: 12px; text-align: center; color: #6c757d; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>¡Bienvenido a nuestra plataforma!</h1>
+        </div>
+        <div class="content">
+            <p>Hola <span th:text="${nombre}"></span>,</p>
+            <p>Gracias por registrarte en nuestra plataforma. Aquí están los detalles de tu cuenta:</p>
+            <ul>
+                <li><strong>Nombre de usuario:</strong> <span th:text="${nickname}"></span></li>
+            </ul>
+            <p>Ya puedes iniciar sesión y comenzar a disfrutar de nuestros servicios.</p>
+        </div>
+        <div class="footer">
+            <p>Este es un correo automático, por favor no respondas a este mensaje.</p>
+        </div>
+    </div>
+</body>
+</html>

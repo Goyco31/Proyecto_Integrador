@@ -12,6 +12,9 @@ import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
+import com.integrador.spring.app.Servicio.JwtService;
+
+import io.jsonwebtoken.ExpiredJwtException;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
@@ -21,55 +24,79 @@ import lombok.RequiredArgsConstructor;
 //Filtro que intercepta cada solicitud HTTP una sola vez para validar el JWT
 @Component
 @RequiredArgsConstructor
-public class JwtAuthenticationFilter extends OncePerRequestFilter{
-    // Servicio para operaciones con tokens JWT
+public class JwtAuthenticationFilter extends OncePerRequestFilter {
     private final JwtService jwtService;
-    // Servicio para cargar los detalles del usuario autenticado
     private final UserDetailsService userDetailsService;
 
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain)
             throws ServletException, IOException {
-        // Extrae el token JWT desde la cabecera Authorization
-        final String token = getTokenFromRequest(request);
-        // Si no hay token, continúa con la cadena de filtros sin hacer nada
-        final String nickname;
-        if(token==null){
+        
+        // Skip JWT filter for registration and login endpoints
+        if (request.getServletPath().startsWith("/control/registro") || 
+            request.getServletPath().startsWith("/control/login")) {
             filterChain.doFilter(request, response);
             return;
         }
 
-        // Extrae el nombre de usuario (nickname) desde el token
-        nickname=jwtService.getUsernameFromToken(token);
-
-        // Verifica si el usuario aún no está autenticado en el contexto de seguridad
-        if(nickname!=null && SecurityContextHolder.getContext().getAuthentication()==null){
-            // Carga los detalles del usuario
-            UserDetails userDetails=userDetailsService.loadUserByUsername(nickname);
-            // Verifica si el token es válido con respecto al usuario
-            if(jwtService.isTokenValid(token, userDetails)){
-                // Crea el token de autenticación de Spring con los detalles del usuario
-                UsernamePasswordAuthenticationToken contrToken = new UsernamePasswordAuthenticationToken(userDetails,null, userDetails.getAuthorities());
-                // Establece los detalles de la solicitud en el token
-                contrToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-                // Coloca el token de autenticación en el contexto de seguridad
-                SecurityContextHolder.getContext().setAuthentication(contrToken);
-            }
+        final String token = getTokenFromRequest(request);
+        
+        if (token == null) {
+            filterChain.doFilter(request, response);
+            return;
         }
-        // Continúa con el resto de la cadena de filtros
+
+        try {
+            final String username = jwtService.getUsernameFromToken(token);
+            
+            if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+                UserDetails userDetails = userDetailsService.loadUserByUsername(username);
+                
+                if (jwtService.isTokenValid(token, userDetails)) {
+                    UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+                        userDetails, null, userDetails.getAuthorities());
+                    authToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                    SecurityContextHolder.getContext().setAuthentication(authToken);
+                }
+            }
+        } catch (ExpiredJwtException ex) {
+            handleExpiredToken(request, response, ex);
+            return;
+        }
+        
         filterChain.doFilter(request, response);
     }
-    
-    //Extrae el token JWT del encabezado Authorization de la solicitud
-    private String getTokenFromRequest(HttpServletRequest request){
-        final String authHeader=request.getHeader(HttpHeaders.AUTHORIZATION);
-        // Verifica que el header no sea vacío y comience con "Bearer"
-        if(StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer")){
-            return authHeader.substring(7);// Devuelve el token sin "Bearer "
+
+    private void handleExpiredToken(HttpServletRequest request, HttpServletResponse response, ExpiredJwtException ex) 
+            throws IOException {
+        // Verificar si es una solicitud de refresh token
+        if (isRefreshTokenRequest(request)) {
+            allowForRefreshToken(ex, request);
+        } else {
+            response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
+            response.setContentType("application/json");
+            response.getWriter().write("{\"error\": \"Token expirado\", \"message\": \"Por favor, renueve su token\"}");
+        }
+    }
+
+    private boolean isRefreshTokenRequest(HttpServletRequest request) {
+        String isRefreshToken = request.getHeader("isRefreshToken");
+        String requestURL = request.getRequestURL().toString();
+        return "true".equals(isRefreshToken) && requestURL.contains("refresh-token");
+    }
+
+    private void allowForRefreshToken(ExpiredJwtException ex, HttpServletRequest request) {
+        UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(
+            null, null, null);
+        SecurityContextHolder.getContext().setAuthentication(authToken);
+        request.setAttribute("claims", ex.getClaims());
+    }
+
+    private String getTokenFromRequest(HttpServletRequest request) {
+        final String authHeader = request.getHeader(HttpHeaders.AUTHORIZATION);
+        if (StringUtils.hasText(authHeader) && authHeader.startsWith("Bearer ")) {
+            return authHeader.substring(7);
         }
         return null;
     }
-
-    
-    
 }
