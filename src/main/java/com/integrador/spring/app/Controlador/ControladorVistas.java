@@ -40,5 +40,11 @@ public class ControladorVistas {
     @GetMapping("/noticias")
     public String noticias(){
         return "/noticias";
-    }    
+    } 
+    
+    @GetMapping("/canjear")
+    public String canjear(){
+        return "/canjear";
+    } 
+    
 }
