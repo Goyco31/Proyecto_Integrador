@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SkillTourney - Recompensas</title>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+    <link href="/css/style.css" th:href="@{/css/style_canjes.css}" rel="stylesheet" />
+
+</head>
+<body>
+
+    <!-- Navbar -->
+    <header class="navbar">
+        <div class="logo-container">
+            <img th:src="@{/Imagenes/SkillTourney_sin fondo.png}" alt="Logo SkillTourney" class="logo">
+        </div>
+
+        <nav class="menu-principal">
+            <a href="#">Inicio</a>
+            <a href="#">Torneos</a>
+            <a href="#">Recompensas</a>
+            <a href="#">Soporte</a>
+        </nav>
+
+        <div class="user-panel">
+            <div class="coins-display">
+                <span>💰</span> <strong>4,250</strong> monedas
+            </div>
+            <button class="get-coins-btn">Obtener más</button>
+            <a href="#" class="user-link">
+                <div class="user-avatar">P</div>
+                Perfil
+            </a>
+        </div>
+    </header>
+
+    <!-- Sección de Recompensas -->
+    <section class="rewards-section">
+        <h2 class="section-title">Canjea tus Recompensas</h2>
+        <div class="cards-container">
+
+            <!-- Card 1 -->
+            <div class="reward-card">
+                 <img th:src="@{/Imagenes/steam.png}" alt="Steam" class="reward-image">
+                <div class="card-content">
+                    <h3>Tarjeta Steam $10</h3>
+                    <p class="reward-description">Ideal para juegos, DLCs y más en Steam.</p>
+                    <div class="reward-cost">2,000 monedas</div>
+                    <button class="redeem-button">Canjear</button>
+                </div>
+            </div>
+
+            <!-- Card 2 -->
+            <div class="reward-card">
+                <img th:src="@{/Imagenes/ps.png}" alt="PSN" class="reward-image">
+                <div class="card-content">
+                    <h3>Tarjeta PlayStation $10</h3>
+                    <p class="reward-description">Úsala para juegos, Plus o contenido digital.</p>
+                    <div class="reward-cost">2,300 monedas</div>
+                    <button class="redeem-button">Canjear</button>
+                </div>
+            </div>
+
+            <!-- Card 3 -->
+            <div class="reward-card">
+                <img th:src="@{/Imagenes/xbox.png}" alt="Xbox" class="reward-image">
+                <div class="card-content">
+                    <h3>Tarjeta Xbox $10</h3>
+                    <p class="reward-description">Cómprate ese DLC o Game Pass que querías.</p>
+                    <div class="reward-cost">2,300 monedas</div>
+                    <button class="redeem-button">Canjear</button>
+                </div>
+            </div>
+
+            <!-- Card 4 -->
+            <div class="reward-card">
+                <img th:src="@{/Imagenes/mousegamer.png}"alt="Mouse Gamer" class="reward-image">
+                <div class="card-content">
+                    <h3>Mouse Gamer RGB</h3>
+                    <p class="reward-description">Alta precisión para tus partidas competitivas.</p>
+                    <div class="reward-cost">6,500 monedas</div>
+                    <button class="redeem-button">Canjear</button>
+                </div>
+            </div>
+
+            <!-- Card 5 -->
+            <div class="reward-card">
+               <img th:src="@{/Imagenes/discord.png}" alt="Discord Nitro" class="reward-image">
+                <div class="card-content">
+                    <h3>Discord Nitro 1 mes</h3>
+                    <p class="reward-description">Potencia tu perfil, sube contenido y usa stickers.</p>
+                    <div class="reward-cost">1,200 monedas</div>
+                    <button class="redeem-button">Canjear</button>
+                </div>
+            </div>
+
+            <!-- Card 6 -->
+            <div class="reward-card">
+                <img th:src="@{/Imagenes/switch.png}" alt="Tarjeta de nintendo" class="reward-image">
+                <div class="card-content">
+                    <h3>Tarjeta de nintendo switch $35</h3>
+                    <p class="reward-description">Compra tus juegos digitales favoritos.</p>
+                    <div class="reward-cost">3,800 monedas</div>
+                    <button class="redeem-button">Canjear</button>
+                </div>
+            </div>
+         
+                <!-- Card 7 -->
+            <div class="reward-card">
+                 <img th:src="@{/Imagenes/steam.png}" alt="Steam" class="reward-image">
+                <div class="card-content">
+                    <h3>Tarjeta Steam $75</h3>
+                    <p class="reward-description">Ideal para juegos, DLCs y más en Steam.</p>
+                    <div class="reward-cost">8,500 monedas</div>
+                    <button class="redeem-button">Canjear</button>
+                </div>
+            </div>
+
+             <!-- Card 8 -->
+            <div class="reward-card">
+                <img th:src="@{/Imagenes/ps.png}" alt="PSN" class="reward-image">
+                <div class="card-content">
+                    <h3>Tarjeta PlayStation $35</h3>
+                    <p class="reward-description">Úsala para juegos, Plus o contenido digital.</p>
+                    <div class="reward-cost">3,500 monedas</div>
+                    <button class="redeem-button">Canjear</button>
+                </div>
+            </div>
+
+              <!-- Card 9 -->
+            <div class="reward-card">
+                 <img th:src="@{/Imagenes/playstore.png}" alt="Steam" class="reward-image">
+                <div class="card-content">
+                    <h3>Tarjeta Google Play $5</h3>
+                    <p class="reward-description">Ideal para juegos.</p>
+                    <div class="reward-cost">1,000 monedas</div>
+                    <button class="redeem-button">Canjear</button>
+                </div>
+            </div>
+           
+            <!-- Card 10 -->
+            <div class="reward-card">
+                 <img th:src="@{/Imagenes/playstore.png}" alt="Steam" class="reward-image">
+                <div class="card-content">
+                    <h3>Tarjeta Google Play $10</h3>
+                    <p class="reward-description">Ideal para juegos.</p>
+                    <div class="reward-cost">2,000 monedas</div>
+                    <button class="redeem-button">Canjear</button>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="site-footer">
+        <div class="footer-container">
+            <div class="footer-column">
+                <h4>Sobre SkillTourney</h4>
+                <p>Plataforma de torneos profesionales con recompensas reales para gamers de verdad.</p>
+            </div>
+            <div class="footer-column">
+                <h4>Enlaces útiles</h4>
+                <ul>
+                    <li><a href="#">Centro de ayuda</a></li>
+                    <li><a href="#">Términos y condiciones</a></li>
+                    <li><a href="#">Política de privacidad</a></li>
+                </ul>
+            </div>
+            <div class="footer-column">
+                <h4>Síguenos</h4>
+                <div class="social-links">
+                    <a href="#">Instagram</a>
+                    <a href="#">YouTube</a>
+                    <a href="#">Discord</a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            © 2025 SkillTourney. Todos los derechos reservados.
+        </div>
+    </footer>
+
+</body>
+</html>
