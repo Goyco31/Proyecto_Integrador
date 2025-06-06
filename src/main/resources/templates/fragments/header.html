@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <header class="navbar" th:fragment="header">
         <div class="logo">
@@ -19,6 +21,12 @@
             <li><a href="#premios">PREMIOS</a></li>
             <li><a href="/noticias">NOTICIAS</a></li>
             <li><a href="/paginaTorneo">TORNEOS</a></li>
+            <div class="user-panel"> <!-- Panel de usuario -->
+                <a th:href="@{/usuario}" class="user-link">
+                    <div class="user-avatar">ST</div> <!-- Avatar con iniciales -->
+                    <div class="user-name">USER</div> <!-- Nombre del usuario -->
+                </a>
+            </div>
         </ul>
 
         <div class="right-menu">
@@ -31,7 +39,7 @@
             <span></span>
             <span></span>
         </div>
-</header>
+    </header>
 
     <div class="mobile-menu" id="mobileMenu">
         <ul>
@@ -40,6 +48,7 @@
             <li><a href="#premios">PREMIOS</a></li>
             <li><a href="#noticias">NOTICIAS</a></li>
         </ul>
-</div>
+    </div>
 </body>
+
 </html>

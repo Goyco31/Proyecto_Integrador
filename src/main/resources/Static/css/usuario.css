@@ -1,0 +1,232 @@
+/* === FUENTES === */
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Monda:wght@400;700&display=swap');
+
+@font-face {
+  font-family: 'Sink';
+  src: url('../fonts/SinkDisplay.woff2') format('woff2'),
+       url('../fonts/SinkDisplay.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+
+* {
+    font-family: 'Anton', sans-serif;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.cont{
+    background-color: var(--dark-background);
+    margin: 0;
+    padding: 0;
+}
+/* Variables CSS - Es buena práctica tener estas variables definidas en un archivo CSS principal
+   para consistencia en todo el proyecto. Si no tienes uno, puedes ponerlas aquí. */
+:root {
+    --main-purple: #2a165b; /* Un púrpura principal para fondos/elementos (ej. header) */
+    --light-purple: #a04aff; /* Púrpura brillante para los acentos, hover y bordes */
+    --dark-background: #1a0f3d; /* Fondo muy oscuro del cuerpo y inputs */
+    --border-color-purple: #5a3d9b; /* Color de borde para inputs */
+    --pure-white: #ffffff; /* Blanco puro para texto */
+    --text-light-gray: #e0e0e0; /* Gris claro para texto general */
+    --text-medium-gray: #c0c0c0; /* Gris medio para etiquetas */
+}
+
+/* Estilos para el cuerpo del documento (se asume que se aplica a todo el HTML) */
+body {
+    font-family: 'Poppins', sans-serif; /* Fuente recomendada para tu estilo */
+    background-color: var(--dark-background); /* Fondo oscuro del cuerpo */
+    color: var(--text-light-gray); /* Color de texto general */
+    margin: 0;
+    padding: 0;
+    line-height: 1.6;
+    background-image: url(https://img.freepik.com/vector-gratis/fondo-lavanda-digital-realista_23-2150595000.jpg?semt=ais_items_boosted&w=740);
+}
+main{
+    padding: 0;
+    margin: 0;
+}
+/* Estilos Específicos de la Página de Perfil */
+.profile-container {
+    max-width: 800px;
+    width: 100%; /* Asegura que ocupe el 100% del ancho disponible hasta max-width */
+    /* Quita el margin-top y margin-bottom de aquí si lo manejas con el padding de .content-wrap */
+    margin: 0 auto; /* Centra horizontalmente, los márgenes verticales se manejarán por el padding del padre */
+    padding: 30px;
+    background-image: linear-gradient(to bottom, var(--main-purple), var(--dark-background));
+    border-radius: 15px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.5);
+    text-align: center;
+    /* No necesitas flex-grow aquí si ya .content-wrap lo tiene y .profile-container es su hijo directo */
+}
+
+.profile-title {
+    font-size: 36px;
+    color: var(--pure-white);
+    margin-bottom: 30px;
+    text-transform: uppercase; /* Texto en mayúsculas */
+    letter-spacing: 2px; /* Espaciado entre letras */
+    position: relative;
+}
+
+.profile-title::after {
+    content: '';
+    display: block;
+    width: 80px;
+    height: 4px;
+    background-color: var(--light-purple); /* Línea decorativa bajo el título */
+    margin: 15px auto 0;
+    border-radius: 2px;
+}
+
+.profile-card {
+    background-color: var(--main-purple); /* Fondo de la tarjeta interior del perfil */
+    padding: 30px;
+    border-radius: 10px;
+    box-shadow: 0 3px 15px rgba(0, 0, 0, 0.4);
+}
+
+.profile-header {
+    display: flex;
+    flex-direction: column; /* Organiza los elementos en columna (imagen y nombre) */
+    align-items: center; /* Centra los elementos horizontalmente */
+    margin-bottom: 30px; /* Espacio inferior para separar de los detalles */
+    position: relative; /* Para posicionar el ícono de la cámara */
+}
+
+.profile-picture-wrapper {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%; /* Hace el contenedor circular */
+    overflow: hidden; /* Recorta la imagen a la forma circular */
+    border: 4px solid var(--light-purple); /* Borde alrededor de la imagen */
+    box-shadow: 0 0 15px rgba(160, 74, 255, 0.6); /* Efecto de brillo */
+    margin-bottom: 20px; /* Espacio debajo de la imagen de perfil */
+    display: flex; /* Para centrar la imagen dentro del wrapper */
+    justify-content: center;
+    align-items: center;
+    background-color: #3d2a71; /* Fondo de respaldo si la imagen no carga */
+}
+
+/* Esto intenta ocultar cualquier texto no deseado que pueda aparecer dentro del wrapper */
+.profile-picture-wrapper > span,
+.profile-picture-wrapper > p,
+.profile-picture-wrapper > label {
+    display: none !important; /* Fuerza la ocultación */
+}
+
+.profile-picture-wrapper img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover; /* Asegura que la imagen cubra todo el espacio sin distorsionarse */
+    color: var(--pure-white); /* Color del texto ALT si la imagen no carga */
+    font-size: 16px; /* Tamaño del texto ALT */
+    text-align: center; /* Alineación del texto ALT */
+}
+
+.profile-picture-wrapper .edit-icon {
+    position: absolute;
+    bottom: 8px; /* Posiciona el botón del ícono de la cámara */
+    right: 8px;
+    background-color: var(--light-purple);
+    border: none;
+    border-radius: 50%; /* Hace el botón circular */
+    width: 36px;
+    height: 36px;
+    display: flex; /* Para centrar el SVG dentro del botón */
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    padding: 0;
+    z-index: 10; /* Asegura que el botón esté por encima de la imagen */
+}
+
+.profile-picture-wrapper .edit-icon svg {
+    color: var(--pure-white); /* Color del ícono de la cámara */
+    width: 18px;
+    height: 18px;
+    display: block; /* Para un mejor centrado del SVG */
+    margin: 0;
+    padding: 0;
+}
+
+.profile-picture-wrapper .edit-icon:hover {
+    background-color: #8c3bcc; /* Cambio de color al pasar el ratón */
+}
+
+#profile-display-name {
+    font-size: 28px;
+    color: var(--pure-white);
+    font-weight: 700;
+    margin-top: 10px; /* Espacio entre la imagen y el nombre del usuario */
+}
+
+.profile-details {
+    text-align: left; /* Alinea los detalles del perfil a la izquierda */
+    margin-bottom: 30px;
+}
+
+.detail-group {
+    margin-bottom: 20px; /* Espacio entre cada grupo de detalle (label + input) */
+}
+
+.detail-group label {
+    display: block; /* Hace que el label ocupe su propia línea */
+    font-size: 18px;
+    color: var(--text-medium-gray);
+    margin-bottom: 8px;
+    font-weight: 600;
+}
+
+.detail-group input[type="text"],
+.detail-group input[type="email"] {
+    width: calc(100% - 24px); /* Ancho completo menos padding y borde */
+    padding: 12px;
+    border: 2px solid var(--border-color-purple);
+    border-radius: 8px;
+    background-color: var(--dark-background); /* Fondo de los campos de entrada */
+    color: var(--pure-white);
+    font-size: 16px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+    outline: none; /* Eliminar el contorno al enfocar */
+}
+
+.detail-group input[type="text"]:focus,
+.detail-group input[type="email"]:focus {
+    border-color: var(--light-purple);
+    box-shadow: 0 0 10px rgba(160, 74, 255, 0.4);
+}
+
+.detail-group input[disabled] {
+    opacity: 0.7; /* Hace los campos deshabilitados un poco transparentes */
+    cursor: default; /* Cursor predeterminado */
+    background-color: var(--main-purple); /* Fondo para campos deshabilitados */
+    border-color: #4a2c8a;
+}
+
+.profile-actions {
+    margin-top: 20px; /* Espacio superior para los botones de acción */
+}
+
+.profile-actions .btn-edit,
+.profile-actions .btn-save {
+    background-color: var(--light-purple);
+    color: var(--pure-white);
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-size: 18px;
+    font-weight: 700;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    margin: 0 10px;
+    min-width: 180px; /* Ancho mínimo para los botones */
+}
+
+.profile-actions .btn-edit:hover,
+.profile-actions .btn-save:hover {
+    background-color: #8c3bcc;
+    transform: translateY(-2px); /* Pequeño efecto al pasar el ratón */
+}
