@@ -55,6 +55,16 @@ public class User implements UserDetails{
     @Enumerated(EnumType.STRING)
     role role;
 
+    @Column(name = "is_2fa_enabled") // Exactamente como en la BD
+    @Builder.Default
+    private boolean is2faEnabled = false;
+    
+    @Column(name = "two_factor_code", length = 6)
+    private String twoFactorCode;
+    
+    @Column(name = "two_factor_expiry")
+    private LocalDateTime twoFactorExpiry;
+    
     // Retorna una colección de autoridades (roles) del usuario para Spring Security
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
