@@ -29,12 +29,14 @@ public class JuegoController {
     @Autowired
     private JuegoServices service_juego;
 
+    //lista todos los juegos
     @GetMapping("")
     public ResponseEntity<List<Juego>> listarTodo() {
         List<Juego> juego = service_juego.listarJuegos();
         return new ResponseEntity<>(juego, HttpStatus.OK);
     }
 
+    //busca el juego por su id
     @GetMapping("/id/{id}")
     public ResponseEntity<Juego> buscarId(@PathVariable Integer id) {
         Optional<Juego> juego = service_juego.buscarId(id);
@@ -42,6 +44,7 @@ public class JuegoController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    //busca el juego por su nombre
     @GetMapping("/nombre/{juego}")
     public ResponseEntity<Juego> buscarJuegos(@PathVariable String juego) {
         Optional<Juego> juegos = service_juego.buscarJuego(juego);
@@ -49,6 +52,7 @@ public class JuegoController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    //registra un nuevo juego
     @PostMapping("/registrar")
     public ResponseEntity<Juego> registrarJuego(
             @RequestParam("nombre") String nombre,
@@ -63,6 +67,7 @@ public class JuegoController {
         }
     }
 
+    //actualizar el juego por su id
     @PutMapping("/actualizar/id/{id}")
     public ResponseEntity<Juego> actualizarJuegoId(@PathVariable Integer id,
             @RequestParam("nombre") String nombre,
@@ -81,6 +86,7 @@ public class JuegoController {
         }
     }
 
+    //actualizar el juego por su nombre
     @PutMapping("/actualizar/nombre/{juego}")
     public ResponseEntity<Juego> actualizarJuegoId(@PathVariable String juego,
             @RequestParam("nombre") String nombre,
@@ -99,6 +105,7 @@ public class JuegoController {
         }
     }
 
+    //elimina el juego por su id
     @DeleteMapping("/eliminar/id/{id}")
     public ResponseEntity<Void> eliminarJuegoId(@PathVariable Integer id) {
         try {
@@ -109,6 +116,7 @@ public class JuegoController {
         }
     }
 
+    //elimina el juego por su nombre
     @DeleteMapping("/eliminar/nombre/{nombreJuego}")
     public ResponseEntity<Void> eliminarJuegoNombre(@PathVariable String nombreJuego){
         try {

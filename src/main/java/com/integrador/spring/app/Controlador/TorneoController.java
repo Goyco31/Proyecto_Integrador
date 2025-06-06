@@ -55,17 +55,21 @@ public class TorneoController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    //registrar un nuevo torneo
     @PostMapping("/registrar")
     public ResponseEntity<Torneo> registrarTorneo(@RequestBody Torneo torneo) {
         Torneo registrar = services_torneo.guardar(torneo);
         return new ResponseEntity<>(registrar, HttpStatus.CREATED);
     }
 
+    //actualizar el juego por su id
     @PutMapping("/actualizar/id/{id}")
     public ResponseEntity<Torneo> actualizarId(@PathVariable Integer id, @RequestBody Torneo torneo) {
+        //busca si el juego existe
         Optional<Torneo> existe = services_torneo.buscarId(id);
         if (existe.isPresent()) {
             Torneo actualizar = existe.get();
+            //si el campo no tiene nueva informacion se mantendra igual
             if (torneo.getNombreTorneo() != null) {
                 actualizar.setNombreTorneo(torneo.getNombreTorneo());
             }
@@ -90,25 +94,33 @@ public class TorneoController {
             if (torneo.getTipo() != null) {
                 actualizar.setTipo(torneo.getTipo());
             }
+            //si el campo no tiene nueva informacion se mantendra igual
             if (torneo.getJuego() != null && torneo.getJuego().getIdJuego() != null) {
-                Optional<Juego> juego =  services_juego.buscarId(torneo.getJuego().getIdJuego());
+                //busca el juego del que se equiere hacer un toreno
+                Optional<Juego> juego = services_juego.buscarId(torneo.getJuego().getIdJuego());
+                //si existe se agregara a la lista de torneos del juego
                 if (juego.isPresent()) {
                     actualizar.setJuego(juego.get());
-                } else{
+                } else {
+                    //si no existe el juego saldra un error
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
                 }
             }
+            //guardar la actualizacion realizarda
             return new ResponseEntity<>(services_torneo.guardar(actualizar), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
+    //actualiza el torneo por su nombre
     @PutMapping("/actualizar/nombre/{nombre}")
     public ResponseEntity<Torneo> actualizarnombreTorneo(@PathVariable String nombre, @RequestBody Torneo torneo) {
+        //valda que exista
         Optional<Torneo> existe = services_torneo.buscarTorneoNombre(nombre);
         if (existe.isPresent()) {
             Torneo actualizar = existe.get();
+            // si el campo no tiene nueva informacion se mantendra igual
             if (torneo.getNombreTorneo() != null) {
                 actualizar.setNombreTorneo(torneo.getNombreTorneo());
             }
@@ -133,20 +145,26 @@ public class TorneoController {
             if (torneo.getTipo() != null) {
                 actualizar.setTipo(torneo.getTipo());
             }
-             if (torneo.getJuego() != null && torneo.getJuego().getIdJuego() != null) {
-                Optional<Juego> juego =  services_juego.buscarJuego(torneo.getJuego().getNombreJuego());
+            //si el campo no tiene nueva informacion se mantendra igual
+            if (torneo.getJuego() != null && torneo.getJuego().getIdJuego() != null) {
+                //valida si el juego existe 
+                Optional<Juego> juego = services_juego.buscarJuego(torneo.getJuego().getNombreJuego());
+                //si existe el torneo se agregara a la lista del juego
                 if (juego.isPresent()) {
                     actualizar.setJuego(juego.get());
-                } else{
+                } else {
+                    //si no existe saldra un error
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
                 }
             }
+            //guarda las actualizaciones
             return new ResponseEntity<>(services_torneo.guardar(actualizar), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
+    //elimina el torneo por su id
     @DeleteMapping("/eliminar/id/{id}")
     public ResponseEntity<Void> eliminarTorneoId(@PathVariable Integer id) {
         try {
@@ -157,6 +175,7 @@ public class TorneoController {
         }
     }
 
+    //elimina el torneo por su nombre
     @DeleteMapping("/eliminar/torneo/{nombre}")
     public ResponseEntity<Void> eliminarTorneoNombre(@PathVariable String nombre) {
         try {

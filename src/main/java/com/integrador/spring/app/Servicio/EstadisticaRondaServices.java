@@ -9,16 +9,19 @@ import org.springframework.stereotype.Service;
 import com.integrador.spring.app.DAO.EstadisticaRondaRepo;
 import com.integrador.spring.app.Modelo.EstadisticaRonda;
 
+//servicios que se usaran para el controlador de la estadistica  las rondas
 @Service
 public class EstadisticaRondaServices {
 
     @Autowired
     private EstadisticaRondaRepo repo_estadistica;
 
+    //lista todas las estadisticas
     public List<EstadisticaRonda> listarEstadistica() {
         return repo_estadistica.findAll();
     }
 
+    //busca por su id
     public Optional<EstadisticaRonda> buscarId(int id) {
         return repo_estadistica.findById(id);
     }

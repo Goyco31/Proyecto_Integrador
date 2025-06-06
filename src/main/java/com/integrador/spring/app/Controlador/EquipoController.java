@@ -49,12 +49,14 @@ public class EquipoController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    // registra un nuevo equipo
     @PostMapping("/registrar")
     public ResponseEntity<Equipo> registrarEquipo(@RequestBody Equipo equipo) {
         Equipo registrar = services_equipo.guardar(equipo);
         return new ResponseEntity<>(registrar, HttpStatus.CREATED);
     }
 
+    // actualiza la informacion del equipo por su id
     @PutMapping("actualizar/id/{id}")
     public ResponseEntity<Equipo> actualizarEquipoId(@PathVariable Integer id, @RequestBody Equipo equipo) {
         Optional<Equipo> existe = services_equipo.buscarId(id);
@@ -70,6 +72,7 @@ public class EquipoController {
         }
     }
 
+    // actualiza el equipo por su nombre
     @PutMapping("actualizar/nombre/{nombre}")
     public ResponseEntity<Equipo> actualizarEquipoNombre(@PathVariable String nombre, @RequestBody Equipo equipo) {
         Optional<Equipo> existe = services_equipo.buscarNombreEquipo(nombre);
@@ -85,8 +88,9 @@ public class EquipoController {
         }
     }
 
+    // elimina el juego por su id
     @DeleteMapping("/id/{id}")
-    public ResponseEntity<Void> eliminarEquipoId(@PathVariable Integer id){
+    public ResponseEntity<Void> eliminarEquipoId(@PathVariable Integer id) {
         try {
             services_equipo.eliminar(id);
             return ResponseEntity.noContent().build();
@@ -95,8 +99,9 @@ public class EquipoController {
         }
     }
 
+    // elimina el juego por su nombre
     @DeleteMapping("/nombre/{nombre}")
-    public ResponseEntity<Void> eliminarEquipoNombre(@PathVariable String nombre){
+    public ResponseEntity<Void> eliminarEquipoNombre(@PathVariable String nombre) {
         try {
             services_equipo.eliminarNombre(nombre);
             return ResponseEntity.noContent().build();

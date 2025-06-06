@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 
 import com.integrador.spring.app.Modelo.Inscripciones;
 
+//manejo del CRUD de la clase Inscripciones con JPA
 @Repository
 public interface InscripcionesRepo extends JpaRepository<Inscripciones, Integer>{
 
