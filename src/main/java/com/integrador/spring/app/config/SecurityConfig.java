@@ -3,6 +3,7 @@ package com.integrador.spring.app.config;
 // Importaciones necesarias para configurar seguridad HTTP, sesiones y filtros
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -53,9 +54,25 @@ public class SecurityConfig {
                     "/explorar",
                     "/noticias",
                     "/paginaTorneo",
+                    "/torneos",
+                    "/torneos/crear",
+                    "/torneos/{id}",
                     "/clasificacion").permitAll()
                     // Permitir acceso a las rutas de control
-                    .requestMatchers("/control/**").permitAll()
+                    // 2. Endpoints públicos de la API
+                    .requestMatchers(HttpMethod.GET, 
+                        "/paginaTorneo",
+                        "/torneos",
+                        "/torneos/{id}"
+                    ).permitAll()
+                    
+                    // 3. Endpoints de autenticación
+                    .requestMatchers("/control/login", "/control/registro","/control/verify-2fa").permitAll()
+                    // 4. Endpoints protegidos
+                    .requestMatchers(HttpMethod.POST, "/control/torneos").authenticated()
+                    .requestMatchers(HttpMethod.PUT, "/control/torneos/**").authenticated()
+                    .requestMatchers(HttpMethod.DELETE, "/control/torneos/**").authenticated()
+                    .requestMatchers("/torneos/crear").authenticated()
                     // Requiere autenticación para todo lo demás
                     .anyRequest().authenticated()
             )

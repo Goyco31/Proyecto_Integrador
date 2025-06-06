@@ -66,10 +66,10 @@ public class ControladorService {
 
         // 2. Verificar si requiere 2FA
         if (user.is2faEnabled()) {
-            // Si ya viene con código, verificar
             if (request.getTokenVerificacion() != null) {
                 if (twoFactorAuthService.verify2FACode(user.getCorreo(), request.getTokenVerificacion())) {
-                    String token = jwtService.getToken(user);
+                    
+                    String token = jwtService.getTokenWith2FAVerified(user);
                     return ControladorResponse.builder()
                         .mensaje("Autenticación exitosa")
                         .token(token)

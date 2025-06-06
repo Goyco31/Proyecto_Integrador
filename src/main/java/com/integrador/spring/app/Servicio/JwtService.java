@@ -13,6 +13,7 @@ import org.springframework.stereotype.Service;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
+import com.integrador.spring.app.Modelo.User;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
@@ -60,7 +61,7 @@ public class JwtService {
         return (nickname.equals(userDetails.getUsername())&& !isTokenExpired(token));
     }
 
-    private Claims getAllClaims(String token){
+    public Claims getAllClaims(String token){
         return Jwts
             .parserBuilder()
             .setSigningKey(getkey())
@@ -104,7 +105,10 @@ public class JwtService {
     // Verifica token temporal
     public boolean isTempTokenValid(String token) {
         try {
-            return !getAllClaims(token).getExpiration().before(new Date());
+            Claims claims = getAllClaims(token);
+            // Verifica que NO tenga el claim 2fa_verified (es token temporal)
+            return claims.get("2fa_verified", Boolean.class) == null && 
+                !claims.getExpiration().before(new Date());
         } catch (Exception e) {
             return false;
         }
@@ -123,6 +127,28 @@ public class JwtService {
         String token = getToken(user);
         cacheToken(user.getUsername(), token);
         return token;
+    }
+    public boolean is2FAComplete(String token) {
+        try {
+            // Verificar si el token tiene el claim especial de 2FA completo
+            Claims claims = getAllClaims(token);
+            return claims.get("2fa_complete", Boolean.class) != null;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+    public String getTokenWith2FAVerified(User user) {
+        Map<String, Object> claims = new HashMap<>();
+        claims.put("2fa_verified", true);  // Claim especial para indicar 2FA completado
+        claims.put("role", user.getRole().name());  // Incluir el rol directamente en el token
+        
+        return Jwts.builder()
+            .setClaims(claims)
+            .setSubject(user.getUsername())
+            .setIssuedAt(new Date(System.currentTimeMillis()))
+            .setExpiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60 * 24)) // 24 horas
+            .signWith(getkey(), SignatureAlgorithm.HS256)
+            .compact();
     }
 
 }
