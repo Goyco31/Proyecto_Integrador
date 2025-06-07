@@ -15,6 +15,7 @@ public class UsuarioServices {
     @Autowired
     private UserDAO repo_usuario;
 
+
     public List<User> listarUsuarios() {
         return repo_usuario.findAll();
     }
@@ -23,17 +24,17 @@ public class UsuarioServices {
         return repo_usuario.findById(id);
     }
 
-    public Optional<User> buscarNickname(String nick){
+    public Optional<User> buscarNickname(String nick) {
         return repo_usuario.findByNickname(nick);
     }
 
-    public boolean buscarCorreo(String correo){
+    public boolean buscarCorreo(String correo) {
         return repo_usuario.existsByCorreo(correo);
     }
 
     public User actualizar(Integer id, User user) {
         User existe = repo_usuario.findById(id)
-        .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+                .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         return repo_usuario.save(existe);
     }
 
@@ -45,7 +46,7 @@ public class UsuarioServices {
         repo_usuario.deleteById(id);
     }
 
-    public void eliminarNickname(String nick){
+    public void eliminarNickname(String nick) {
         repo_usuario.deleteByNickname(nick);
     }
 

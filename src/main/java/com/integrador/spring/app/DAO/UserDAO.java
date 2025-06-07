@@ -17,5 +17,5 @@ public interface UserDAO extends JpaRepository<User,Integer>{
     public boolean existsByCorreo(String correo);
     //elimina al usuario por su nickname
     public void deleteByNickname(String nickname);
-    
+    public boolean existsByContraseña(String contra);
 }

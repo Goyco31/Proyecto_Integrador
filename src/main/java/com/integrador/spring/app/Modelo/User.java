@@ -37,12 +37,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-// Indica que esta clase es una entidad JPA y se mapeará a una tabla llamada "usuario"
+// Indica que esta clase es una entidad JPA y se mapeará a una tabla llamada
+// "usuario"
 @Entity
-@Table(name="usuario", uniqueConstraints = {@UniqueConstraint(columnNames = {"nickname"})})
-public class User implements UserDetails{
-    @Id //Clave primaria
-    @GeneratedValue //Valor generado automaticamente
+@Table(name = "usuario", uniqueConstraints = { @UniqueConstraint(columnNames = { "nickname" }) })
+public class User implements UserDetails {
+    @Id // Clave primaria
+    @GeneratedValue // Valor generado automaticamente
     @Basic
     @Column(nullable = false)
     Integer id_usuario;
@@ -52,6 +53,7 @@ public class User implements UserDetails{
     @Column(nullable = false)
     String correo;
     String contraseña;
+    private Integer monedas;
     // Fecha de registro que se genera automáticamente al crear el registro
     @CreationTimestamp
     @Column(name = "fecha_registro", nullable = false, updatable = false)
@@ -60,18 +62,16 @@ public class User implements UserDetails{
     @Enumerated(EnumType.STRING)
     role role;
 
-
-     @OneToOne
-    private InfoUsuario info;
-
-    // Relacion uno a uno con la tabla Monedas
     @OneToOne
-    private Monedas monedas;
+    private InfoUsuario info;
 
     // Relacion uno a muchos con la tabla Recarga
     @OneToMany
     private List<Recarga> recarga;
 
+    @OneToMany
+    //@JsonManagedReference
+    private List<CanjeRecompensa> canje;
     // Relacion uno a muchos con la tabla mensajes
     @OneToMany
     private List<Mensajes> mensajes;
@@ -80,13 +80,15 @@ public class User implements UserDetails{
     @ManyToOne
     @JsonBackReference
     private Equipo equipo;
+
     // Retorna una colección de autoridades (roles) del usuario para Spring Security
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
-    // Los siguientes métodos indican el estado de la cuenta del usuario para control de acceso
+    // Los siguientes métodos indican el estado de la cuenta del usuario para
+    // control de acceso
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -106,10 +108,12 @@ public class User implements UserDetails{
     public boolean isEnabled() {
         return true;
     }
+
     @Override
     public String getPassword() {
         return this.contraseña; // Retorna la contraseña
     }
+
     @Override
     public String getUsername() {
         return this.nickname; // Retorna el nombre de usuario

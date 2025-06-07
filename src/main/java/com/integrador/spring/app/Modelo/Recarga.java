@@ -2,6 +2,9 @@ package com.integrador.spring.app.Modelo;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
+import org.hibernate.annotations.CreationTimestamp;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.EnumType;
@@ -22,12 +25,11 @@ public class Recarga {
     // id autoincrementable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private Integer idRecarga;
+    private int idRecarga;
 
     //Atributos de la clase
-    private LocalDate fechaRecarga;
-    private int cantidad;
-    private BigDecimal montoPagar;
+    @CreationTimestamp
+    private LocalDateTime fechaRecarga;
     @Enumerated(EnumType.STRING)
     private TipoPago tipoPago;
     @Enumerated(EnumType.STRING)
@@ -37,6 +39,9 @@ public class Recarga {
     // Relacion muchos a uno con la tabla Usuario
     @ManyToOne
     private User usuario;
+
+    @ManyToOne
+    private ComprarMonedas comprarMonedas;
 
     //variables permitidas para el tipo de pago
     public static enum TipoPago {

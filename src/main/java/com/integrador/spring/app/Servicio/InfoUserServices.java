@@ -15,15 +15,15 @@ public class InfoUserServices {
     @Autowired
     private InfoUsuarioRepo repo_infoUser;
 
-    public List<InfoUsuario> listar() {
+    public List<InfoUsuario> listarInfo() {
         return repo_infoUser.findAll();
     }
 
-    public Optional<InfoUsuario> buscarId(int id) {
+    public Optional<InfoUsuario> buscarId(Integer id) {
         return repo_infoUser.findById(id);
     }
 
-    public InfoUsuario actualizar(int id, InfoUsuario info){
+    public InfoUsuario actualizar(Integer id, InfoUsuario info){
         InfoUsuario existe = repo_infoUser.findById(id).orElseThrow(() -> new RuntimeException("Informacion no encontrada"));
         return repo_infoUser.save(existe);
     }
@@ -32,7 +32,7 @@ public class InfoUserServices {
         return repo_infoUser.save(info);
     }
     
-    public void eliminar(int id){
+    public void eliminar(Integer id){
         repo_infoUser.deleteById(id);
     }
 }

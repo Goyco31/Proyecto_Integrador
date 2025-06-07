@@ -56,13 +56,13 @@ public class UsuarioController {
     // Actualizar a un usuario por su id
     @PutMapping("/actualizar/id/{id}")
     public ResponseEntity<User> actualizarId(@PathVariable Integer id, @RequestBody User user) {
-        //busca el usuario que se quiere actualizar
+        // busca el usuario que se quiere actualizar
         Optional<User> existe = service_user.buscarId(id);
-        //valida que existe el usuario
+        // valida que existe el usuario
         if (existe.isPresent()) {
 
             User actualizar = existe.get();
-            //si no se ingresa nuevo informacion en el campo se mantendra igual
+            // si no se ingresa nuevo informacion en el campo se mantendra igual
             if (user.getNombre() != null) {
                 actualizar.setNombre(user.getNombre());
             }
@@ -81,17 +81,20 @@ public class UsuarioController {
             if (user.getContraseña() != null) {
                 actualizar.setContraseña(user.getContraseña());
             }
-            //si no se ingresa nuevo informacion en el campo se mantendra igual
+            if (user.getMonedas() != null) {
+                actualizar.setMonedas(user.getMonedas());
+            }
+            // si no se ingresa nuevo informacion en el campo se mantendra igual
             if (user.getEquipo() != null && user.getEquipo().getIdEquipo() != null) {
-                //busca al equipo que se quiere unir
+                // busca al equipo que se quiere unir
                 Optional<Equipo> equipo = services_equipo.buscarId(user.getEquipo().getIdEquipo());
                 if (equipo.isPresent()) {
                     Equipo cant = equipo.get();
-                    //si el equipo ya tiene 5 integrantes no le dejara unirse
+                    // si el equipo ya tiene 5 integrantes no le dejara unirse
                     if (cant.getUsuario().size() >= 5) {
                         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
                     }
-                    //si aun no esta lleno se unira con exito
+                    // si aun no esta lleno se unira con exito
                     actualizar.setEquipo(equipo.get());
                 } else {
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
@@ -106,7 +109,7 @@ public class UsuarioController {
     // Actualizar a un usuario por su Nickname
     @PutMapping("/actualizar/nickname/{nick}")
     public ResponseEntity<User> actualizarNickname(@PathVariable String nick, @RequestBody User user) {
-        //busca al usuario y valida que existe
+        // busca al usuario y valida que existe
         Optional<User> existe = service_user.buscarNickname(nick);
         if (existe.isPresent()) {
             User actualizar = existe.get();
@@ -129,9 +132,12 @@ public class UsuarioController {
             if (user.getContraseña() != null) {
                 actualizar.setContraseña(user.getContraseña());
             }
+            if (user.getMonedas() != null) {
+                actualizar.setMonedas(user.getMonedas());
+            }
             // si no se ingresa nueva informacion se mantendra igual
             if (user.getEquipo() != null && user.getEquipo().getNombreEquipo() != null) {
-                //busca el equipo al que se quiere unir
+                // busca el equipo al que se quiere unir
                 Optional<Equipo> equipo = services_equipo.buscarNombreEquipo(user.getEquipo().getNombreEquipo());
                 if (equipo.isPresent()) {
                     Equipo cant = equipo.get();

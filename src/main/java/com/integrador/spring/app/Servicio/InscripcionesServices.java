@@ -36,5 +36,4 @@ public class InscripcionesServices {
     public void eliminar(int id){
         repo_inscripciones.deleteById(id);
     }
-
 }

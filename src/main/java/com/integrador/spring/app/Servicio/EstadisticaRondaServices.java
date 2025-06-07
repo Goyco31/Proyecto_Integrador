@@ -16,12 +16,10 @@ public class EstadisticaRondaServices {
     @Autowired
     private EstadisticaRondaRepo repo_estadistica;
 
-    //lista todas las estadisticas
     public List<EstadisticaRonda> listarEstadistica() {
         return repo_estadistica.findAll();
     }
 
-    //busca por su id
     public Optional<EstadisticaRonda> buscarId(int id) {
         return repo_estadistica.findById(id);
     }

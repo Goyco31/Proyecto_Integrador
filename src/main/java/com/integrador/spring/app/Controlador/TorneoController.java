@@ -65,7 +65,7 @@ public class TorneoController {
     //actualizar el juego por su id
     @PutMapping("/actualizar/id/{id}")
     public ResponseEntity<Torneo> actualizarId(@PathVariable Integer id, @RequestBody Torneo torneo) {
-        //busca si el juego existe
+        //busca si el torneo existe
         Optional<Torneo> existe = services_torneo.buscarId(id);
         if (existe.isPresent()) {
             Torneo actualizar = existe.get();
@@ -116,11 +116,11 @@ public class TorneoController {
     //actualiza el torneo por su nombre
     @PutMapping("/actualizar/nombre/{nombre}")
     public ResponseEntity<Torneo> actualizarnombreTorneo(@PathVariable String nombre, @RequestBody Torneo torneo) {
-        //valda que exista
+        //busca si el torneo existe
         Optional<Torneo> existe = services_torneo.buscarTorneoNombre(nombre);
         if (existe.isPresent()) {
             Torneo actualizar = existe.get();
-            // si el campo no tiene nueva informacion se mantendra igual
+            //si el campo no tiene nueva informacion se mantendra igual
             if (torneo.getNombreTorneo() != null) {
                 actualizar.setNombreTorneo(torneo.getNombreTorneo());
             }
@@ -146,18 +146,18 @@ public class TorneoController {
                 actualizar.setTipo(torneo.getTipo());
             }
             //si el campo no tiene nueva informacion se mantendra igual
-            if (torneo.getJuego() != null && torneo.getJuego().getIdJuego() != null) {
-                //valida si el juego existe 
+            if (torneo.getJuego() != null && torneo.getJuego().getNombreJuego() != null) {
+                //busca el juego del que se equiere hacer un toreno
                 Optional<Juego> juego = services_juego.buscarJuego(torneo.getJuego().getNombreJuego());
-                //si existe el torneo se agregara a la lista del juego
+                //si existe se agregara a la lista de torneos del juego
                 if (juego.isPresent()) {
                     actualizar.setJuego(juego.get());
                 } else {
-                    //si no existe saldra un error
+                    //si no existe el juego saldra un error
                     return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
                 }
             }
-            //guarda las actualizaciones
+            //guardar la actualizacion realizarda
             return new ResponseEntity<>(services_torneo.guardar(actualizar), HttpStatus.OK);
         } else {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
