@@ -1,0 +1,560 @@
+/* === FUENTES === */
+/* Importa las fuentes de Google Fonts para mantener la coherencia del diseño */
+@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Monda:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
+
+/* === VARIABLES GLOBALES (Puedes copiar las que ya tienes en style.css para consistencia) === */
+/* Define variables CSS para colores, sombras, etc., facilitando la gestión y consistencia del diseño */
+:root {
+    --main-purple: #5f0e8e;
+    --light-purple: #9a7ea9;
+    --dark-blue: #0c1220;
+    --medium-blue: #1e1e2f;
+    --accent-blue: #1f3362;
+    --pure-white: #ffffff;
+    --text-light-gray: #cccccc;
+    --card-shadow: rgba(0, 0, 0, 0.4);
+    --hover-glow: rgba(154, 126, 169, 0.5);
+    --light-glow-color: rgba(220, 180, 255, 0.7);
+    --main-purple-glow: rgba(95, 14, 142, 0.5);
+    --red-danger: #dc3545; /* Nuevo color para botones de peligro */
+}
+
+/* === ESTILOS GLOBALES PARA EL ADMINISTRADOR === */
+/* Estilos básicos para el cuerpo del documento, fuente, color de fondo, etc. */
+body {
+    font-family: 'Exo 2', sans-serif;
+    background-color: var(--dark-blue);
+    color: var(--text-light-gray);
+    margin: 0;
+    padding: 0;
+    display: flex; /* Utiliza flexbox para organizar el sidebar y el contenido principal */
+    min-height: 100vh; /* Asegura que ocupe al menos toda la altura de la ventana */
+}
+
+/* Contenedor principal del layout de administrador (sidebar + contenido) */
+.admin-container {
+    display: flex;
+    width: 100%;
+}
+
+/* === BARRA LATERAL (SIDEBAR) === */
+/* Estilos para la barra de navegación lateral */
+.admin-sidebar {
+    width: 250px;
+    background-color: var(--medium-blue);
+    padding: 20px;
+    box-shadow: 2px 0 10px rgba(0,0,0,0.3); /* Sombra para darle profundidad */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: sticky; /* Se mantiene en su lugar al hacer scroll */
+    top: 0;
+    height: 100vh; /* Ocupa toda la altura de la ventana */
+}
+
+/* Estilos del logo o título de la barra lateral */
+.admin-logo {
+    font-family: 'Monda', sans-serif;
+    font-size: 1.8rem;
+    color: var(--pure-white);
+    margin-bottom: 30px;
+    text-transform: uppercase;
+    text-align: center;
+    padding-bottom: 15px;
+    border-bottom: 1px solid rgba(255,255,255,0.1); /* Separador visual */
+    width: 100%;
+}
+
+/* Estilos de la lista de navegación */
+.admin-nav ul {
+    list-style: none; /* Elimina los puntos de la lista */
+    padding: 0;
+    width: 100%;
+}
+
+.admin-nav ul li {
+    margin-bottom: 15px; /* Espaciado entre elementos de la lista */
+}
+
+/* Estilos de los enlaces de navegación */
+.admin-nav ul li a {
+    display: block; /* Ocupa todo el ancho disponible del li */
+    background-color: var(--accent-blue);
+    color: var(--pure-white);
+    text-decoration: none; /* Elimina el subrayado */
+    padding: 12px 15px;
+    border-radius: 8px; /* Bordes redondeados */
+    transition: background-color 0.3s ease, transform 0.2s ease; /* Transiciones suaves al hover */
+    font-weight: bold;
+    text-align: center;
+}
+
+.admin-nav ul li a:hover {
+    background-color: var(--main-purple); /* Cambio de color al pasar el ratón */
+    transform: translateX(5px); /* Pequeño desplazamiento al pasar el ratón */
+}
+
+/* === ÁREA DE CONTENIDO PRINCIPAL === */
+/* Área principal donde se muestra el contenido (torneos, configuración BD) */
+.admin-content-area {
+    flex-grow: 1; /* Ocupa el espacio restante después del sidebar */
+    padding: 30px;
+    overflow-y: auto; /* Permite scroll vertical si el contenido es largo */
+}
+
+/* Estilos del encabezado del contenido principal */
+.admin-header {
+    background-color: var(--medium-blue);
+    padding: 20px 30px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    text-align: center;
+}
+
+.admin-header h1 {
+    font-family: 'Monda', sans-serif;
+    color: var(--light-purple);
+    font-size: 2.5rem;
+    margin: 0;
+}
+
+/* Estilos para las secciones de contenido (Torneos, Configurar BD) */
+.admin-section {
+    background-color: var(--medium-blue);
+    padding: 30px;
+    border-radius: 10px;
+    margin-bottom: 30px;
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+    display: none; /* Por defecto oculto, JavaScript maneja la visibilidad */
+}
+
+/* Clase para mostrar la sección activa */
+.admin-section.active {
+    display: block;
+}
+
+.admin-section h2 {
+    font-family: 'Monda', sans-serif;
+    font-size: 1.8rem;
+    color: var(--pure-white);
+    margin-bottom: 25px;
+    text-align: center;
+    border-bottom: 2px solid var(--accent-blue); /* Línea divisoria */
+    padding-bottom: 10px;
+}
+
+/* === BOTONES GENERALES === */
+/* Estilos base para todos los botones de acción */
+.btn-primary,
+.btn-secondary,
+.btn-danger,
+.btn-cancel {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    font-size: 1rem;
+    margin: 5px; /* Espaciado entre botones */
+}
+
+/* Estilos específicos para botones primarios (Guardar, Nuevo) */
+.btn-primary {
+    background-color: var(--main-purple);
+    color: var(--pure-white);
+}
+.btn-primary:hover {
+    background-color: var(--light-purple);
+    transform: translateY(-2px); /* Efecto flotante al pasar el ratón */
+}
+
+/* Estilos específicos para botones secundarios (Exportar, Importar, Cancelar eliminación) */
+.btn-secondary {
+    background-color: var(--accent-blue);
+    color: var(--pure-white);
+}
+.btn-secondary:hover {
+    background-color: color-mix(in srgb, var(--accent-blue), var(--pure-white) 15%); /* Ligeramente más claro al pasar el ratón */
+    transform: translateY(-2px);
+}
+
+/* Estilos específicos para botones de peligro (Eliminar) */
+.btn-danger {
+    background-color: var(--red-danger);
+    color: var(--pure-white);
+}
+.btn-danger:hover {
+    background-color: color-mix(in srgb, var(--red-danger), black 15%);
+    transform: translateY(-2px);
+}
+
+/* Estilos para botones de cancelar (en formularios) */
+.btn-cancel {
+    background-color: #6c757d; /* Gris */
+    color: var(--pure-white);
+}
+.btn-cancel:hover {
+    background-color: #5a6268;
+    transform: translateY(-2px);
+}
+
+/* Contenedor para los botones de acciones de torneos (alineación y responsividad) */
+.tournament-actions {
+    display: flex;
+    justify-content: flex-end; /* Alinea los botones a la derecha */
+    margin-bottom: 20px;
+    flex-wrap: wrap; /* Asegura que los botones se envuelvan en pantallas pequeñas */
+}
+
+/* === TABLA DE TORNEOS === */
+/* Contenedor para la tabla que permite el desplazamiento horizontal */
+.table-container {
+    overflow-x: auto;
+    background-color: var(--dark-blue);
+    border-radius: 8px;
+    box-shadow: inset 0 0 10px rgba(0,0,0,0.3); /* Sombra interior */
+}
+
+/* Estilos generales de la tabla */
+.tournaments-table {
+    width: 100%;
+    border-collapse: collapse; /* Elimina el espaciado entre celdas */
+    min-width: 800px; /* Ancho mínimo para evitar que se vea mal en pantallas pequeñas */
+}
+
+/* Estilos para las celdas de encabezado y datos */
+.tournaments-table th,
+.tournaments-table td {
+    padding: 12px 15px;
+    text-align: left;
+    border-bottom: 1px solid var(--accent-blue);
+}
+
+/* Estilos específicos para los encabezados de la tabla */
+.tournaments-table th {
+    background-color: var(--accent-blue);
+    color: var(--pure-white);
+    font-family: 'Monda', sans-serif;
+    text-transform: uppercase;
+    font-size: 0.9rem;
+}
+
+/* Estilos específicos para las celdas de datos */
+.tournaments-table td {
+    background-color: var(--medium-blue);
+    color: var(--text-light-gray);
+    font-size: 0.95rem;
+}
+
+/* Efecto al pasar el ratón sobre las filas de la tabla */
+.tournaments-table tbody tr:hover td {
+    background-color: color-mix(in srgb, var(--medium-blue), var(--accent-blue) 10%);
+}
+
+/* Estilos para los botones dentro de la columna de acciones de la tabla */
+.tournaments-table .actions-column button {
+    margin-right: 8px;
+    padding: 6px 12px;
+    font-size: 0.85rem;
+}
+
+/* Estilos para el mensaje cuando no hay torneos */
+.info-message {
+    text-align: center;
+    padding: 20px;
+    background-color: var(--accent-blue);
+    border-radius: 8px;
+    margin-top: 20px;
+}
+
+/* Estilos para las "badges" de estado (Activo, Finalizado, Cancelado) */
+.status-badge {
+    padding: 4px 8px;
+    border-radius: 5px;
+    font-size: 0.8em;
+    font-weight: bold;
+    color: var(--pure-white);
+    display: inline-block; /* Para que el padding y border-radius funcionen bien */
+}
+
+.status-activo {
+    background-color: #28a745; /* Verde */
+}
+.status-finalizado {
+    background-color: #007bff; /* Azul */
+}
+.status-cancelado {
+    background-color: var(--red-danger); /* Rojo */
+}
+
+
+/* === FORMULARIOS (Común para Torneo y BD) === */
+/* Estilos generales para los formularios dentro del panel de administración */
+.admin-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px; /* Espacio entre grupos de formulario */
+    max-width: 600px; /* Ancho máximo para mejor legibilidad */
+    margin: 0 auto; /* Centra el formulario */
+}
+
+/* Estilos para cada grupo de formulario (etiqueta + input) */
+.form-group {
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 8px;
+    font-weight: bold;
+    color: var(--pure-white);
+}
+
+/* Estilos para todos los campos de entrada de texto, número, contraseña, textarea y select */
+.admin-form input[type="text"],
+.admin-form input[type="number"],
+.admin-form input[type="password"],
+.admin-form textarea,
+.admin-form select {
+    padding: 10px;
+    border: 1px solid var(--accent-blue);
+    border-radius: 5px;
+    background-color: var(--dark-blue);
+    color: var(--pure-white);
+    font-size: 1rem;
+    width: 100%; /* Ocupa todo el ancho disponible del grupo */
+}
+
+/* Estilos de foco para los campos de entrada */
+.admin-form input[type="text"]:focus,
+.admin-form input[type="number"]:focus,
+.admin-form input[type="password"]:focus,
+.admin-form textarea:focus,
+.admin-form select:focus {
+    border-color: var(--main-purple);
+    outline: none; /* Elimina el contorno predeterminado del navegador */
+    box-shadow: 0 0 0 3px rgba(95, 14, 142, 0.3); /* Sombra de foco */
+}
+
+/* Permite redimensionar verticalmente los textareas */
+.admin-form textarea {
+    resize: vertical;
+}
+
+/* Contenedor para los botones de acción dentro de los formularios */
+.form-actions {
+    display: flex;
+    justify-content: flex-end; /* Alinea los botones a la derecha */
+    gap: 10px; /* Espacio entre botones */
+    margin-top: 20px;
+    flex-wrap: wrap;
+}
+
+/* Para campos de entrada de solo lectura */
+.admin-form input[readonly] {
+    background-color: #2a2a3e; /* Un color ligeramente diferente para indicar que es readonly */
+    opacity: 0.8;
+    cursor: not-allowed; /* Cambia el cursor para indicar que no es editable */
+}
+
+
+/* === MODAL === */
+/* Estilos del contenedor del modal (overlay oscuro) */
+.modal {
+    display: none; /* Hidden by default, JavaScript lo muestra */
+    position: fixed; /* Se mantiene en la misma posición al hacer scroll */
+    z-index: 1000; /* Asegura que esté por encima de otros elementos */
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto; /* Permite scroll si el contenido es demasiado grande */
+    background-color: rgba(0,0,0,0.7); /* Fondo oscuro semitransparente */
+    display: flex; /* Utiliza flexbox para centrar el contenido del modal */
+    justify-content: center;
+    align-items: center;
+    padding: 20px;
+}
+
+/* Estilos del contenido real del modal (el cuadro blanco/oscuro) */
+.modal-content {
+    background-color: var(--medium-blue);
+    padding: 30px;
+    border: 1px solid var(--main-purple);
+    border-radius: 10px;
+    width: 90%;
+    max-width: 700px; /* Ancho máximo para el modal de torneo */
+    position: relative; /* Para posicionar el botón de cerrar */
+    box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+    animation: fadeInModal 0.3s ease-out; /* Animación de aparición */
+}
+
+/* Variante para modales más pequeños (ej. el de confirmación) */
+.modal-content.small-modal {
+    max-width: 400px;
+    text-align: center;
+}
+
+/* Animación de entrada del modal */
+@keyframes fadeInModal {
+    from { opacity: 0; transform: scale(0.95); }
+    to { opacity: 1; transform: scale(1); }
+}
+
+/* Estilos del botón de cerrar (la 'x') */
+.close-button {
+    color: var(--pure-white);
+    position: absolute;
+    top: 15px;
+    right: 25px;
+    font-size: 30px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: color 0.3s ease, transform 0.2s ease;
+}
+
+.close-button:hover,
+.close-button:focus {
+    color: var(--light-purple);
+    transform: rotate(90deg); /* Efecto de rotación al pasar el ratón */
+}
+
+/* Estilos del título dentro del modal */
+.modal-content h2 {
+    font-family: 'Monda', sans-serif;
+    color: var(--light-purple);
+    text-align: center;
+    margin-bottom: 25px;
+    font-size: 2rem;
+    border-bottom: 1px solid var(--accent-blue);
+    padding-bottom: 10px;
+}
+
+
+/* === RESPONSIVE DESIGN === */
+/* Media queries para adaptar el diseño a diferentes tamaños de pantalla */
+
+/* Para pantallas entre 769px y 1024px */
+@media (max-width: 1024px) {
+    .admin-sidebar {
+        width: 200px;
+    }
+    .admin-logo {
+        font-size: 1.5rem;
+    }
+    .admin-nav ul li a {
+        padding: 10px 12px;
+        font-size: 0.9rem;
+    }
+    .admin-content-area {
+        padding: 20px;
+    }
+    .admin-header h1 {
+        font-size: 2rem;
+    }
+    .admin-section h2 {
+        font-size: 1.5rem;
+    }
+    .tournaments-table {
+        min-width: 700px; /* Ajusta el mínimo para tablas */
+    }
+}
+
+/* Para pantallas entre 481px y 768px (tablets y móviles grandes) */
+@media (max-width: 768px) {
+    .admin-container {
+        flex-direction: column; /* Cambia el layout a columna */
+    }
+    .admin-sidebar {
+        width: 100%; /* Ocupa todo el ancho */
+        height: auto;
+        flex-direction: row; /* Los elementos del sidebar se alinean en fila */
+        justify-content: space-around;
+        padding: 15px;
+        position: static; /* No sticky en móviles */
+        box-shadow: 0 2px 10px rgba(0,0,0,0.3);
+    }
+    .admin-logo {
+        display: none; /* Ocultar el logo en pantallas pequeñas para ahorrar espacio */
+    }
+    .admin-nav ul {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+    }
+    .admin-nav ul li {
+        margin-bottom: 0;
+    }
+    .admin-nav ul li a {
+        font-size: 0.85rem;
+        padding: 8px 12px;
+    }
+    .admin-content-area {
+        padding: 15px;
+    }
+    .tournament-actions {
+        justify-content: center; /* Centra los botones de acción en móviles */
+    }
+    .tournaments-table {
+        min-width: 100%; /* Permite que la tabla se ajuste al 100% en móviles */
+    }
+    .tournaments-table th,
+    .tournaments-table td {
+        padding: 8px 10px;
+        font-size: 0.8rem;
+    }
+    .tournaments-table .actions-column button {
+        margin-right: 5px;
+        padding: 4px 8px;
+        font-size: 0.75rem;
+    }
+    .modal-content {
+        padding: 20px;
+    }
+    .modal-content h2 {
+        font-size: 1.5rem;
+    }
+    .form-group label {
+        font-size: 0.9rem;
+    }
+    .admin-form input,
+    .admin-form textarea,
+    .admin-form select {
+        font-size: 0.9rem;
+        padding: 8px;
+    }
+    .btn-primary, .btn-secondary, .btn-danger, .btn-cancel {
+        padding: 8px 15px;
+        font-size: 0.9rem;
+    }
+}
+
+/* Para pantallas muy pequeñas (móviles) */
+@media (max-width: 480px) {
+    .admin-nav ul {
+        flex-direction: column; /* La navegación se vuelve vertical */
+        align-items: center;
+    }
+    .admin-nav ul li {
+        width: 90%;
+        margin-bottom: 10px;
+    }
+    .admin-content-area {
+        padding: 10px;
+    }
+    .admin-header h1 {
+        font-size: 1.8rem;
+    }
+    .admin-section h2 {
+        font-size: 1.3rem;
+    }
+    .modal-content {
+        padding: 15px;
+    }
+    .modal-content h2 {
+        font-size: 1.3rem;
+    }
+}

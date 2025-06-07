@@ -12,8 +12,7 @@
     <link rel="stylesheet" th:href="@{/css/footer.css}">
 </head>
 <body>
-    <!-- Overlay que oscurecerá el fondo -->
-  <div class="overlay" id="overlay"></div>
+    <div class="overlay" id="overlay"></div>
 
     <div th:replace="~{fragments/header :: header}"></div>
 
@@ -52,55 +51,28 @@
                     <span>5vs5</span>
                     <span>Premio: 💰 Variable</span>
                     <span>Modo: Defusal</span>
-                </div>
+                T</div>
             </div>
         </div>
     </section>
 
     <section class="tournaments-section" id="eventos">
         <h2 class="section-title">TORNEOS ACTIVOS</h2>
-        <div class="cards-container">
-            <div class="tournament-card" data-tournament-id="dota-julio-premium">
-                <div class="card-header">
-                    <h3>Torneo DOTA 2</h3>
-                    <span class="premiun-badge">PREMIUM</span>
-                </div>
-                <div class="card-content">
-                    <p class="schedule">📅 20 Julio | 🕒 8:00 PM</p>
-                    <p class="prize">🏆 $100 PEN</p>
-                </div>
+        <div class="cards-container" id="tournaments-cards-container">
             </div>
-            <div class="tournament-card" data-tournament-id="dota-agosto-pro">
-                <div class="card-header">
-                    <h3>Torneo DOTA 2</h3>
-                    <span class="premiun-badge">PRO</span>
-                </div>
-                <div class="card-content">
-                    <p class="schedule">📅 15 Agosto | 🕒 7:30 PM</p>
-                    <p class="prize">🏆 $200 PEN</p>
-                </div>
-            </div>
-            <div class="tournament-card" data-tournament-id="csgo-julio-open">
-                <div class="card-header">
-                    <h3>Torneo CSGO 2</h3>
-                    <span>OPEN</span>
-                </div>
-                <div class="card-content">
-                    <p class="schedule">📅 25 Julio | 🕒 9:00 PM</p>
-                    <p class="prize">🏆 $250 PEN</p>
-                </div>
-            </div>
-        </div>
+        <p id="no-active-tournaments-message" class="info-message" style="display: none;">No hay torneos activos en este momento. ¡Vuelve pronto!</p>
     </section>
 
-    <div class="carousel-modal"> <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div class="modal-tournament-content-area"></div> </div>
+    <div class="carousel-modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span> <div class="modal-tournament-content-area"></div>
+        </div>
     </div>
     
     <div th:replace="~{fragments/footer}"></div>
     <div th:replace="~{fragments/modal-registro}"></div>
     <div th:replace="~{fragments/modal-login}"></div>
+
     <script th:src="@{/jscript/modal-registro.js}"></script>
     <script th:src="@{/jscript/modal-login.js}"></script>
     <script th:src="@{/jscript/pagTorneo.js}"></script>
