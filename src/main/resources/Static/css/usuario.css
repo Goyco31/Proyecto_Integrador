@@ -230,3 +230,25 @@ main{
     background-color: #8c3bcc;
     transform: translateY(-2px); /* Pequeño efecto al pasar el ratón */
 }
+
+
+.form-group.remember-me-checkbox {
+    display: flex; /* Para alinear el checkbox y el texto */
+    align-items: center; /* Centrar verticalmente */
+    margin-top: 15px; /* Espacio superior para separarlo del campo de contraseña */
+    margin-bottom: 20px; /* Espacio inferior para separarlo del botón */
+    gap: 8px; /* Espacio entre el checkbox y la label */
+}
+
+.form-group.remember-me-checkbox input[type="checkbox"] {
+    /* Puedes personalizar el tamaño o la apariencia del checkbox */
+    width: 18px; /* Ejemplo de tamaño */
+    height: 18px; /* Ejemplo de tamaño */
+    cursor: pointer;
+}
+
+.form-group.remember-me-checkbox label {
+    font-size: 0.95em; /* Ajustar el tamaño del texto */
+    color: #eee; /* Un color claro para el texto */
+    cursor: pointer;
+}
