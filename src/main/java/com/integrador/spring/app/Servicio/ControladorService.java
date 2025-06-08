@@ -143,7 +143,7 @@ public class ControladorService {
         }
 
         return ControladorResponse.builder()
-            .mensaje("Usuario registrado exitosamente como " + (isAdminEmail ? "ADMIN" : "USER")+ "Se ha activado la verificación en dos pasos.")
+            .mensaje("Usuario registrado exitosamente como " + (isAdminEmail ? "ADMIN" : "USER")+ " Se ha activado la verificación en dos pasos.")
             .build();
     }
 
