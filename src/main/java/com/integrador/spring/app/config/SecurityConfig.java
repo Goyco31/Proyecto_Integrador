@@ -57,7 +57,7 @@ public class SecurityConfig {
                     // Permitir acceso a las rutas de control
                     .requestMatchers("/control/**").permitAll()
                     // Requiere autenticación para todo lo demás
-                    .anyRequest().authenticated()
+                    .requestMatchers("/api/**").authenticated()
             )
         .sessionManagement(sessionManager -> 
             // Configura la política de sesión como STATELESS (sin sesiones, solo JWT)

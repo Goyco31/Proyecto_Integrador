@@ -15,6 +15,7 @@ import com.google.common.collect.Lists;
 import com.integrador.spring.app.Controlador.ControladorResponse;
 import com.integrador.spring.app.Controlador.LoginRequest;
 import com.integrador.spring.app.Controlador.RegisterRequest;
+import com.integrador.spring.app.Controlador.Validate2FARequest;
 // Importaciones de clases del proyecto
 import com.integrador.spring.app.DAO.UserDAO;
 import com.integrador.spring.app.Modelo.User;
@@ -155,5 +156,27 @@ public class ControladorService {
         userDao.save(user);
         
         return "2FA " + (user.is2faEnabled() ? "activado" : "desactivado");
+    }
+
+    public ControladorResponse validate2FA(Validate2FARequest request) {
+        boolean isValid = twoFactorAuthService.verify2FACode(request.getEmail(), request.getTwoFactorCode());
+        if (!isValid) {
+            throw new RuntimeException("Código 2FA inválido");
+        }
+        
+        User user = userDao.findByCorreo(request.getEmail())
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        
+        String token = jwtService.getToken(user);
+        
+        // Limpiar código 2FA
+        user.setTwoFactorCode(null);
+        user.setTwoFactorExpiry(null);
+        userDao.save(user);
+        
+        return ControladorResponse.builder()
+            .token(token)
+            .mensaje("Autenticación exitosa")
+            .build();
     }
 }
