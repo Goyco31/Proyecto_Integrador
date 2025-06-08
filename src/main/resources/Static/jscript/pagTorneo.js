@@ -1,81 +1,35 @@
-<<<<<<< HEAD
-=======
-// Define los datos de los torneos globalmente o antes de DOMContentLoaded
-const tournamentsData = {
-    "dota-julio-premium": {
-        title: "Torneo DOTA 2 - Edición Premium Julio",
-        gameImage: "/Imagenes/dota-pro-banner.webp", 
-        gameIcon: "/Imagenes/dota2-icon.png",        
-        date: "📅 20 Julio | 🕒 8:00 PM",
-        prize: "🏆 $100 PEN + Puntos de canjeto en SK-Tienda",
-        description: "¡La élite de Dota 2 se enfrenta! Participa en nuestro torneo premium y demuestra que eres el mejor. Estrategia, habilidad y trabajo en equipo te llevarán a la victoria.",
-        slots: "16/32 equipos",
-        format: "Eliminación Doble, Bo3",
-        rulesLink: "/ReglamentoenDoc/reglamentodeDota2.pdf",
-        registerLink: "/inscripcion-dota.html"
-    },
-    "dota-agosto-pro": {
-        title: "DOTA 2 Pro Challenge - Agosto",
-        gameImage: "/Imagenes/dota-pro-banner.webp",   
-        gameIcon: "/Imagenes/dota2-icon.png",
-        date: "📅 15 Agosto | 🕒 7:30 PM",
-        prize: "🏆 $200 PEN + Puntos de canjeto en SK-Tienda",
-        description: "Sube de nivel y compite contra profesionales. Grandes premios y la oportunidad de hacerte un nombre en la escena.",
-        slots: "8/16 equipos",
-        format: "Eliminación Directa, Bo5 Finales",
-        rulesLink: "/ReglamentoenDoc/reglamentodeDota2.pdf",
-        registerLink: "/inscripcion-dota.html",
-    },
-    "csgo-julio-open": {
-        title: "CS:GO Open Series - Julio",
-        gameImage: "/Imagenes/csgo-tournament-banner.png", 
-        gameIcon: "/Imagenes/csgo-icon.png",          
-        date: "📅 25 Julio | 🕒 9:00 PM",
-        prize: "🏆 $250 PEN + Puntos de canjeto en SK-Tienda",
-        description: "Demuestra tu puntería y tácticas en el CS:GO Open. Abierto a todos los niveles. ¡No te quedes fuera!",
-        slots: "24/32 equipos",
-        format: "Sistema Suizo + Playoffs",
-        rulesLink: "/ReglamentoenDoc/reglamentodeCSGO2.pdf",
-        registerLink: "/registro-torneo-csgo.html",
-    }
-};
-
->>>>>>> c6d3fad5c8a307e3e02d98aa76e715295c596e8c
 document.addEventListener('DOMContentLoaded', () => {
 
     // 1. Cargar datos de torneos
     // Intenta obtener los datos de torneos guardados en localStorage por la página de administración.
-    // 'adminTournamentsData' debe ser la misma clave utilizada en administrador.js
     const tournamentsDataRaw = localStorage.getItem('adminTournamentsData');
     // Si hay datos en localStorage, los parsea de JSON a un objeto JavaScript; si no, es un objeto vacío.
     const tournamentsFromLocalStorage = tournamentsDataRaw ? JSON.parse(tournamentsDataRaw) : {};
 
     // Combinar datos preestablecidos (hardcodeados) con los de localStorage.
     // Los datos de localStorage sobrescribirán los preestablecidos si tienen el mismo 'id'.
-    // Esto asegura que los torneos creados/editados en admin persistan.
     const combinedTournamentsData = {
         // --- Datos de ejemplo preestablecidos ---
-        // Estos torneos aparecerán si localStorage está vacío o si no hay un torneo con el mismo ID en localStorage.
-        // Si no quieres torneos preestablecidos, puedes eliminar esta sección.
         "dota-julio-premium": {
             id: "dota-julio-premium",
             title: "Torneo DOTA 2 - Edición Premium Julio",
-            gameImage: "/Imagenes/dota-pro-banner.webp", // Ruta de la imagen del banner del juego para el modal
-            gameIcon: "/Imagenes/dota2-icon.png",       // Ruta del icono del juego para el modal
+            type: "Premium", // Asegúrate de que 'type' esté presente para la insignia
+            gameImage: "/Imagenes/dota-pro-banner.webp", // RUTA DE LA IMAGEN: Asegúrate que esta ruta sea correcta para tu proyecto (ej: src/main/resources/static/Imagenes/)
+            gameIcon: "/Imagenes/dota2-icon.png",        // RUTA DEL ICONO: Asegúrate que esta ruta sea correcta
             date: "📅 20 Julio | 🕒 8:00 PM",
             prize: "🏆 $100 PEN + Puntos de canje en SK-Tienda",
             description: "¡La élite de Dota 2 se enfrenta! Participa en nuestro torneo premium y demuestra que eres el mejor. Estrategia, habilidad y trabajo en equipo te llevarán a la victoria.",
             slots: "16/32 equipos",
             format: "Eliminación Doble, Bo3",
-            // Asegúrate de que estas rutas de PDF existan en tu proyecto (ej: src/main/resources/static/Reglamentos_PDF/)
+            // Las rutas de PDF (ReglamentoenDoc) son correctas según tu estructura de carpetas mostrada
             rulesLink: "/ReglamentoenDoc/reglamentodeDota2.pdf",
-            registerLink: "/inscripcion-dota.html", // Enlace de inscripción (ejemplo)
-            status: "activo", // Estado del torneo (debe coincidir con la lógica del administrador)
-            type: "Premium" // Tipo de torneo (usado para la insignia visual)
+            registerLink: "/inscripcion-dota.html",
+            status: "activo"
         },
         "dota-agosto-pro": {
             id: "dota-agosto-pro",
             title: "DOTA 2 Pro Challenge - Agosto",
+            type: "Pro",
             gameImage: "/Imagenes/dota-pro-banner.webp",
             gameIcon: "/Imagenes/dota2-icon.png",
             date: "📅 15 Agosto | 🕒 7:30 PM",
@@ -83,14 +37,14 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Sube de nivel y compite contra profesionales. Grandes premios y la oportunidad de hacerte un nombre en la escena.",
             slots: "8/16 equipos",
             format: "Eliminación Directa, Bo5 Finales",
-            rulesLink: "/reglamentodeDota2.pdf",
+            rulesLink: "/ReglamentoenDoc/reglamentodeDota2.pdf",
             registerLink: "/inscripcion-dota.html",
-            status: "activo",
-            type: "Pro"
+            status: "activo"
         },
         "csgo-julio-open": {
             id: "csgo-julio-open",
             title: "CS:GO Open Series - Julio",
+            type: "Open",
             gameImage: "/Imagenes/csgo-tournament-banner.png",
             gameIcon: "/Imagenes/csgo-icon.png",
             date: "📅 25 Julio | 🕒 9:00 PM",
@@ -98,10 +52,9 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Demuestra tu puntería y tácticas en el CS:GO Open. Abierto a todos los niveles. ¡No te quedes fuera!",
             slots: "24/32 equipos",
             format: "Sistema Suizo + Playoffs",
-            rulesLink: "/reglamentodeDota2.pdf",
+            rulesLink: "/ReglamentoenDoc/reglamentodeCSGO2.pdf",
             registerLink: "/registro-torneo-csgo.html",
-            status: "activo",
-            type: "Open"
+            status: "activo"
         },
         // Los datos de localStorage se expanden aquí, sobrescribiendo los IDs duplicados de arriba
         ...tournamentsFromLocalStorage
@@ -118,20 +71,19 @@ document.addEventListener('DOMContentLoaded', () => {
     // 3. Función para renderizar dinámicamente las tarjetas de torneos
     const renderTournamentCards = () => {
         if (!tournamentsContainer) {
-            console.error("No se encontró el contenedor de torneos (#tournaments-cards-container).");
-            return;
+            console.error("Error: El contenedor de torneos (#tournaments-cards-container) no se encontró en el HTML. Asegúrate de que el elemento exista y su ID sea correcto.");
+            return; // No podemos renderizar si no hay contenedor
         }
 
         tournamentsContainer.innerHTML = ''; // Limpiar cualquier tarjeta existente
 
-        // Convertir el objeto de torneos a un array de sus valores para poder filtrar y mapear.
-        // Solo mostramos torneos con 'status: "activo"'.
         const activeTournaments = Object.values(combinedTournamentsData).filter(tournament => tournament.status === 'activo');
 
-        // Mostrar un mensaje si no hay torneos activos
         if (activeTournaments.length === 0) {
             if (noActiveTournamentsMessage) {
                 noActiveTournamentsMessage.style.display = 'block';
+                // Si el contenedor está vacío y no hay mensaje, aquí se vería vacío.
+                // Es crucial que 'noActiveTournamentsMessage' exista y tenga estilos para ser visible.
             }
             return;
         } else {
@@ -144,24 +96,23 @@ document.addEventListener('DOMContentLoaded', () => {
         activeTournaments.forEach(tournament => {
             const tournamentCard = document.createElement('div');
             tournamentCard.classList.add('tournament-card');
-            // Almacena el ID del torneo en un atributo de datos para fácil acceso al hacer clic
-            tournamentCard.dataset.tournamentId = tournament.id;
+            tournamentCard.dataset.tournamentId = tournament.id; // Almacena el ID del torneo
 
-            // Determina la clase CSS para la insignia de tipo (ej. "premium", "pro", "open")
-            let badgeClass = '';
-            if (tournament.type) {
-                badgeClass = tournament.type.toLowerCase().replace(/\s/g, ''); // Elimina espacios si los hay
-            }
-
-            // Inyectar el HTML de la tarjeta con los datos del torneo
+            // --- Estructura HTML para cada tarjeta ---
+            // Este HTML es generado por JS y necesita CSS para verse bien.
             tournamentCard.innerHTML = `
-                <div class="card-header">
-                    <h3>${tournament.title}</h3>
-                    <span class="type-badge ${badgeClass}">${tournament.type ? tournament.type.toUpperCase() : ''}</span>
+                <div class="card-image-wrapper">
+                    <img src="${tournament.gameImage}" alt="${tournament.title}" class="card-game-banner">
+                    <span class="type-badge type-${tournament.type ? tournament.type.toLowerCase().replace(/\s/g, '') : 'default'}">
+                        ${tournament.type ? tournament.type.toUpperCase() : ''}
+                    </span>
+                    <img src="${tournament.gameIcon}" alt="${tournament.title} Icon" class="card-game-icon">
                 </div>
-                <div class="card-content">
-                    <p class="schedule">${tournament.date}</p>
-                    <p class="prize">${tournament.prize}</p>
+                <div class="card-info">
+                    <h3 class="card-title">${tournament.title}</h3>
+                    <p class="card-schedule"><i class="fas fa-calendar-alt"></i> ${tournament.date}</p>
+                    <p class="card-prize"><i class="fas fa-trophy"></i> ${tournament.prize}</p>
+                    <p class="card-slots"><i class="fas fa-users"></i> ${tournament.slots}</p>
                 </div>
             `;
             tournamentsContainer.appendChild(tournamentCard); // Añadir la tarjeta al contenedor
@@ -169,14 +120,14 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- Funcionalidad de Carrusel de Imágenes en las secciones de juegos destacados ---
+    // (Asumo que esta parte es para un carrusel de imágenes genérico en la página, no directamente de torneos)
     const initGameCarousels = () => {
-        const gameCards = document.querySelectorAll('.game-card');
+        const gameCards = document.querySelectorAll('.game-card'); // Contenedores individuales de carrusel
         gameCards.forEach(card => {
             const carouselImages = card.querySelectorAll('.game-carousel img');
             let currentIndex = 0;
 
             if (carouselImages.length > 1) {
-                // Asegurarse de que solo la primera imagen sea 'active' al inicio
                 carouselImages.forEach((img, index) => {
                     if (index === 0) {
                         img.classList.add('active');
@@ -185,7 +136,6 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
 
-                // Cambia la imagen activa cada 3 segundos
                 setInterval(() => {
                     carouselImages[currentIndex].classList.remove('active');
                     currentIndex = (currentIndex + 1) % carouselImages.length;
@@ -203,26 +153,29 @@ document.addEventListener('DOMContentLoaded', () => {
         if (tournament && modalTournamentContentArea) {
             // Rellenar el área de contenido del modal con la información del torneo
             modalTournamentContentArea.innerHTML = `
-                <div class="modal-banner" style="background-image: url(${tournament.gameImage});">
-                    <img src="${tournament.gameIcon}" alt="${tournament.title} Icon" class="modal-game-icon">
+                <div class="modal-header">
+                    <img src="${tournament.gameImage}" alt="${tournament.title} Banner" class="modal-banner-image">
+                    <img src="${tournament.gameIcon}" alt="${tournament.title} Icon" class="modal-game-icon-lg">
                 </div>
-                <h2>${tournament.title}</h2>
-                <p class="modal-description">${tournament.description}</p>
-                <div class="modal-details">
-                    <p><strong>Tipo:</strong> ${tournament.type || 'N/A'}</p>
-                    <p><strong>Fecha:</strong> ${tournament.date}</p>
-                    <p><strong>Premio:</strong> ${tournament.prize}</p>
-                    <p><strong>Cupos:</strong> ${tournament.slots}</p>
-                    <p><strong>Formato:</strong> ${tournament.format}</p>
+                <div class="modal-body">
+                    <h2 class="modal-title">${tournament.title}</h2>
+                    <p class="modal-description">${tournament.description}</p>
+                    <div class="modal-details-grid">
+                        <p><strong>Tipo:</strong> <span>${tournament.type || 'N/A'}</span></p>
+                        <p><strong>Fecha:</strong> <span>${tournament.date}</span></p>
+                        <p><strong>Premio:</strong> <span>${tournament.prize}</span></p>
+                        <p><strong>Cupos:</strong> <span>${tournament.slots}</span></p>
+                        <p><strong>Formato:</strong> <span>${tournament.format}</span></p>
+                    </div>
                 </div>
-                <div class="modal-actions">
-                    <a href="${tournament.rulesLink}" target="_blank" class="btn-secondary">Ver Reglamento</a>
-                    <a href="${tournament.registerLink}" target="_blank" class="btn-primary">Inscribirse</a>
+                <div class="modal-footer">
+                    ${tournament.rulesLink ? `<a href="${tournament.rulesLink}" target="_blank" class="btn btn-secondary">Ver Reglamento</a>` : ''}
+                    ${tournament.registerLink ? `<a href="${tournament.registerLink}" target="_blank" class="btn btn-primary">Inscribirse</a>` : ''}
                 </div>
             `;
         } else if (modalTournamentContentArea) {
-             // Mensaje si no se encuentran los detalles del torneo
-             modalTournamentContentArea.innerHTML = '<p style="color:white; text-align:center; padding: 20px;">Los detalles de este torneo no están disponibles.</p>';
+            // Mensaje si no se encuentran los detalles del torneo
+            modalTournamentContentArea.innerHTML = '<p class="modal-error-message">Los detalles de este torneo no están disponibles.</p>';
         }
     };
 
@@ -261,7 +214,7 @@ document.addEventListener('DOMContentLoaded', () => {
     if (overlay) {
         overlay.addEventListener('click', (e) => {
             if (e.target === overlay || e.target === carouselModal) {
-                 closeTheModal();
+                closeTheModal();
             }
         });
     }
