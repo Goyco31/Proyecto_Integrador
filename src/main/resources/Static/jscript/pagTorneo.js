@@ -1,3 +1,46 @@
+<<<<<<< HEAD
+=======
+// Define los datos de los torneos globalmente o antes de DOMContentLoaded
+const tournamentsData = {
+    "dota-julio-premium": {
+        title: "Torneo DOTA 2 - Edición Premium Julio",
+        gameImage: "/Imagenes/dota-pro-banner.webp", 
+        gameIcon: "/Imagenes/dota2-icon.png",        
+        date: "📅 20 Julio | 🕒 8:00 PM",
+        prize: "🏆 $100 PEN + Puntos de canjeto en SK-Tienda",
+        description: "¡La élite de Dota 2 se enfrenta! Participa en nuestro torneo premium y demuestra que eres el mejor. Estrategia, habilidad y trabajo en equipo te llevarán a la victoria.",
+        slots: "16/32 equipos",
+        format: "Eliminación Doble, Bo3",
+        rulesLink: "/ReglamentoenDoc/reglamentodeDota2.pdf",
+        registerLink: "/inscripcion-dota.html"
+    },
+    "dota-agosto-pro": {
+        title: "DOTA 2 Pro Challenge - Agosto",
+        gameImage: "/Imagenes/dota-pro-banner.webp",   
+        gameIcon: "/Imagenes/dota2-icon.png",
+        date: "📅 15 Agosto | 🕒 7:30 PM",
+        prize: "🏆 $200 PEN + Puntos de canjeto en SK-Tienda",
+        description: "Sube de nivel y compite contra profesionales. Grandes premios y la oportunidad de hacerte un nombre en la escena.",
+        slots: "8/16 equipos",
+        format: "Eliminación Directa, Bo5 Finales",
+        rulesLink: "/ReglamentoenDoc/reglamentodeDota2.pdf",
+        registerLink: "/inscripcion-dota.html",
+    },
+    "csgo-julio-open": {
+        title: "CS:GO Open Series - Julio",
+        gameImage: "/Imagenes/csgo-tournament-banner.png", 
+        gameIcon: "/Imagenes/csgo-icon.png",          
+        date: "📅 25 Julio | 🕒 9:00 PM",
+        prize: "🏆 $250 PEN + Puntos de canjeto en SK-Tienda",
+        description: "Demuestra tu puntería y tácticas en el CS:GO Open. Abierto a todos los niveles. ¡No te quedes fuera!",
+        slots: "24/32 equipos",
+        format: "Sistema Suizo + Playoffs",
+        rulesLink: "/ReglamentoenDoc/reglamentodeCSGO2.pdf",
+        registerLink: "/registro-torneo-csgo.html",
+    }
+};
+
+>>>>>>> c6d3fad5c8a307e3e02d98aa76e715295c596e8c
 document.addEventListener('DOMContentLoaded', () => {
 
     // 1. Cargar datos de torneos
