@@ -49,6 +49,7 @@ public class User implements UserDetails{
     String nombre;
     String apellido;
     String nickname;
+    private String fotoPerfil;
     @Column(nullable = false)
     String correo;
     String contraseña;
@@ -123,5 +124,9 @@ public class User implements UserDetails{
     @Override
     public String getUsername() {
         return this.nickname; // Retorna el nombre de usuario
+    }
+
+    public String getFotoPerfil() {
+        return fotoPerfil != null ? fotoPerfil : "/imagenes/perfil/default.png";
     }
 }

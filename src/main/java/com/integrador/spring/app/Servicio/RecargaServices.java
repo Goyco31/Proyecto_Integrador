@@ -1,8 +1,19 @@
 package com.integrador.spring.app.Servicio;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
 import java.util.List;
 import java.util.Optional;
 
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.FillPatternType;
+import org.apache.poi.ss.usermodel.Font;
+import org.apache.poi.ss.usermodel.IndexedColors;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
+import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -65,4 +76,50 @@ public class RecargaServices {
     public void eliminar(int id) {
         repo_recarga.deleteById(id);
     }
+
+    public byte[] exportRecargasToExcel() throws IOException {
+    List<Recarga> recargas = repo_recarga.findAll();
+
+    Workbook workbook = new XSSFWorkbook();
+    Sheet sheet = workbook.createSheet("Historial de Recargas");
+
+    // Estilo para el encabezado
+    CellStyle headerStyle = workbook.createCellStyle();
+    headerStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
+    headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
+    Font headerFont = workbook.createFont();
+    headerFont.setBold(true);
+    headerStyle.setFont(headerFont);
+
+    // Crear fila de encabezado (CORRECCIÓN: agregar índice de columna en createCell)
+    Row headerRow = sheet.createRow(0);
+    String[] headers = {"ID", "Usuario", "Cantidad de Monedas", "Tipo de Pago", "Estado", "Fecha"};
+    for (int i = 0; i < headers.length; i++) {
+        Cell cell = headerRow.createCell(i); // ¡Faltaba el índice "i" aquí!
+        cell.setCellValue(headers[i]);
+        cell.setCellStyle(headerStyle);
+    }
+
+    // Llenar datos (CORRECCIÓN: paréntesis y nombres de métodos)
+    int rowNum = 1;
+    for (Recarga recarga : recargas) { // Corregido: usé llaves "{" en lugar de corchetes "["
+        Row row = sheet.createRow(rowNum++);
+        row.createCell(0).setCellValue(recarga.getIdRecarga()); // Usar getId() en lugar de getIdRecarga()
+        row.createCell(1).setCellValue(recarga.getUsuario().getNombre());
+        row.createCell(2).setCellValue(recarga.getComprarMonedas().getCantidad()); // Corregido: getComprarMonedas()
+        row.createCell(3).setCellValue(recarga.getTipoPago().toString());
+        row.createCell(4).setCellValue(recarga.getEstado().toString());
+        row.createCell(5).setCellValue(recarga.getFechaRecarga().toString());
+    }
+
+    // Autoajustar columnas
+    for (int i = 0; i < headers.length; i++) {
+        sheet.autoSizeColumn(i);
+    }
+
+    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+    workbook.write(outputStream);
+    workbook.close();
+    return outputStream.toByteArray();
+}
 }
