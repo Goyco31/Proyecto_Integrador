@@ -1,5 +1,8 @@
 package com.integrador.spring.app.Controlador;
 
+import com.google.common.base.Preconditions;
+import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.validator.routines.EmailValidator;
 // Importaciones de Lombok para generar automáticamente código repetitivo
 import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
@@ -22,4 +25,21 @@ public class RegisterRequest {
     String correo;
     // Contraseña del usuario, en texto plano al ser enviada
     String contraseña;
+
+    // Validación centralizada
+    public void validate() {
+        Preconditions.checkArgument(StringUtils.isNotBlank(nombre), "El nombre no puede estar vacío");
+        Preconditions.checkArgument(StringUtils.isNotBlank(apellido), "El apellido no puede estar vacío");
+        Preconditions.checkArgument(StringUtils.isNotBlank(nickname), "El nickname no puede estar vacío");
+        Preconditions.checkArgument(EmailValidator.getInstance().isValid(correo), "Correo electrónico inválido");
+        Preconditions.checkArgument(StringUtils.length(contraseña) >= 8, "La contraseña debe tener al menos 8 caracteres");
+    }
+
+    // Normalización de datos
+    public void normalize() {
+        this.nombre = StringUtils.normalizeSpace(nombre);
+        this.apellido = StringUtils.normalizeSpace(apellido);
+        this.nickname = StringUtils.normalizeSpace(nickname);
+        this.correo = StringUtils.normalizeSpace(correo).toLowerCase();
+    }
 }

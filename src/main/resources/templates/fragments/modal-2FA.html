@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Modal de Login</title>
+    <!-- Usa el mismo CSS del modal de registro -->
+    <link rel="stylesheet" th:href="@{/css/modal-login.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+    <body>
+        <!-- Modal de Verificación 2FA -->
+        <div th:fragment="2fa-modal" id="2fa-modal" class="modal" style="display: none;">
+            <div class="formulario-contenedor">
+                <!-- Botón para cerrar (X) -->
+                <button class="close-modal">&times;</button>
+                
+                <!-- Título principal -->
+                <h1>VERIFICACIÓN DE SEGURIDAD</h1>
+                
+                <!-- Mensaje informativo -->
+                <p>Hemos enviado un código de verificación a tu correo electrónico.</p>
+
+                <!-- Formulario de verificación -->
+                <form id="2faForm" th:action="@{/verify-2fa}" method="post" class="formulario">
+                    <!-- Campo oculto para el email (si ya está autenticado) o visible si no -->
+                    <div class="input-group" th:unless="${#authentication.principal != null}">
+                        <i class="fas fa-envelope"></i>
+                        <input type="email" name="email" th:value="${email}" placeholder="Tu correo electrónico" required>
+                    </div>
+                    
+                    <!-- Campo para el código -->
+                    <div class="input-group">
+                        <i class="fas fa-shield-alt"></i>
+                        <input type="text" name="twoFactorCode" placeholder="Código de verificación (6 dígitos)" 
+                            required pattern="\d{6}" maxlength="6" title="Por favor ingresa un código de 6 dígitos">
+                    </div>
+                    
+                    <!-- Botón de submit -->
+                    <button type="submit" class="btn-login">
+                        <i class="fas fa-check-circle"></i> VERIFICAR
+                    </button>
+                    
+                    <!-- Opción para reenviar código -->
+                    <div class="forgot-password">
+                        <a href="#" id="resend-code">¿No recibiste el código? Reenviar</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+
+        <!-- Script específico para el login -->
+        <script th:src="@{/jscript/login.js}" defer></script>
+    </body>
+</html>
