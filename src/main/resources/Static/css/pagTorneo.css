@@ -256,46 +256,46 @@
 }
 
 /* === TORNEOS === */
+/* === SECCIÓN DE TORNEOS === */
 .tournaments-section {
     padding: 30px 5%;
 }
-
 .section-title {
-    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-size: clamp(2.5rem, 5vw, 4rem); /* Ajustado desde 100px */
     font-family: 'Monda', sans-serif;
     color: var(--light-purple);
     text-align: center;
     margin-bottom: 40px;
     text-transform: uppercase;
 }
-
+/* === CONTENEDOR DE TARJETAS DE TORNEO === */
 .cards-container {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr)); /* Tarjetas un poco más anchas */
     gap: 30px;
     justify-items: center;
     padding: 0 10px;
 }
-
+/* === ESTILO DE CADA TARJETA DE TORNEO === */
 .tournament-card {
     background-color: var(--medium-blue);
     border-radius: 10px;
     overflow: hidden;
     box-shadow: 0 6px 15px rgba(0,0,0,0.3);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     text-decoration: none;
     color: inherit;
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 520px;
+    max-width: 520px; /* Ajustado desde 550px */
     border: 2px solid var(--accent-blue);
     cursor: pointer;
+    min-height: 200px; /* Para darles una altura base */
 }
-
 .tournament-card:hover {
     transform: translateY(-10px) scale(1.03);
-    box-shadow: 0 12px 25px var(--hover-glow);
+    box-shadow: 0 12px 25px var(--hover-glow), 0 8px 15px var(--card-shadow);
     border-color: var(--main-purple);
 }
 
@@ -306,14 +306,13 @@
     justify-content: space-between;
     align-items: center;
 }
-
 .card-header h3 {
-    font-size: 1.4rem;
+    font-size: 1.4rem; /* Ligeramente reducido */
     margin: 0;
     color: var(--light-purple);
+    font-family: 'Exo 2', sans-serif; /* Cambiado desde Verdana para consistencia */
 }
-
-.premiun-badge {
+.premiun-badge { 
     background-color: var(--main-purple);
     color: var(--pure-white);
     font-size: 0.8rem;
@@ -322,7 +321,6 @@
     font-weight: bold;
     text-transform: uppercase;
 }
-
 .card-content {
     padding: 15px;
     flex-grow: 1;
@@ -330,15 +328,147 @@
     flex-direction: column;
     justify-content: space-around;
 }
-
 .card-content p {
     font-size: 1rem;
     color: var(--text-light-gray);
     margin-bottom: 0.5em;
     line-height: 1.4;
 }
+.card-content p:last-child {
+    margin-bottom: 0;
+}
 
+/* === MODAL === */
+.carousel-modal { /* Este es el overlay oscuro de fondo */
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0; top: 0;
+    width: 100%; height: 100%;
+    overflow-y: auto; /* Permite scroll en el overlay si el modal es muy alto */
+    background-color: rgba(0,0,0,0.85); /* Ligeramente menos opaco */
+    backdrop-filter: blur(5px);
+    padding-top: 5vh; /* Espacio arriba */
+    padding-bottom: 5vh; /* Espacio abajo */
+}
+.modal-content { /* La caja blanca/azul del modal */
+    background-color: var(--dark-blue); /* Fondo más oscuro para contraste */
+    margin: 0 auto; /* Centrado horizontal, el padding del overlay maneja vertical */
+    padding: 25px;
+    border: 1px solid var(--main-purple);
+    border-radius: 10px;
+    width: 90%;
+    max-width: 700px; /* Ancho máximo del contenido del modal */
+    position: relative;
+    box-shadow: 0 5px 25px rgba(0,0,0,0.5);
+}
+.close-modal {
+    color: var(--text-light-gray);
+    position: absolute;
+    top: 10px; right: 15px;
+    font-size: 2.2rem;
+    font-weight: bold;
+    transition: color 0.3s ease;
+    line-height: 1;
+}
+.close-modal:hover,
+.close-modal:focus {
+    color: var(--main-purple);
+    text-decoration: none;
+    cursor: pointer;
+}
 
+/* === ESTILOS PARA DETALLES DEL TORNEO EN EL MODAL === */
+.tournament-modal-details {
+    /* Este es el div principal que se inserta con JS */
+    color: var(--text-light-gray);
+}
+.tournament-modal-banner {
+    width: 100%;
+    max-height: 220px;
+    object-fit: cover;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    border: 1px solid var(--medium-blue);
+}
+.tournament-modal-header {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+.tournament-modal-game-icon {
+    width: 45px;
+    height: 45px;
+    border-radius: 8px; /* Cuadrado redondeado */
+    object-fit: contain;
+    background-color: var(--medium-blue); /* Fondo para el icono */
+    padding: 5px;
+}
+.tournament-modal-title {
+    font-family: 'Monda', sans-serif; /* Consistente con títulos de sección */
+    font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+    color: var(--main-purple);
+    margin: 0;
+    line-height: 1.2;
+}
+.tournament-modal-info {
+    background-color: var(--medium-blue);
+    padding: 15px;
+    border-radius: 8px;
+    margin-bottom: 20px;
+}
+.tournament-modal-info p {
+    margin: 10px 0;
+    font-size: 0.9rem;
+    line-height: 1.5;
+}
+.tournament-modal-info p strong {
+    color: var(--light-purple); /* Color diferente para destacar */
+    margin-right: 8px;
+}
+.tournament-modal-description {
+    margin-top: 20px;
+    margin-bottom: 25px;
+    font-size: 0.95rem;
+    line-height: 1.6;
+    color: var(--pure-white);
+}
+.tournament-modal-actions {
+    display: flex;
+    gap: 15px;
+    justify-content: flex-end;
+    margin-top: 25px;
+    padding-top: 15px;
+    border-top: 1px solid var(--medium-blue);
+}
+.modal-button {
+    padding: 10px 20px;
+    text-decoration: none;
+    color: var(--pure-white);
+    border-radius: 5px;
+    font-weight: bold;
+    font-family: 'Exo 2', sans-serif;
+    text-transform: uppercase;
+    font-size: 0.85rem;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: none;
+    cursor: pointer;
+}
+.modal-button.rules-button {
+    background-color: var(--accent-blue);
+}
+.modal-button.rules-button:hover {
+    background-color: #3a5f9e;
+    transform: translateY(-2px);
+}
+.modal-button.register-button {
+    background-color: var(--main-purple);
+}
+.modal-button.register-button:hover {
+    background-color: var(--light-purple);
+    transform: translateY(-2px);
+}
 
 /* === RESPONSIVE DESIGN === */
 @media (max-width: 992px) {

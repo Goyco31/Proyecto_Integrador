@@ -9,7 +9,7 @@ const tournamentsData = {
         description: "¡La élite de Dota 2 se enfrenta! Participa en nuestro torneo premium y demuestra que eres el mejor. Estrategia, habilidad y trabajo en equipo te llevarán a la victoria.",
         slots: "16/32 equipos",
         format: "Eliminación Doble, Bo3",
-        rulesLink: "/reglamento-dota.html",
+        rulesLink: "/ReglamentoenDoc/reglamentodeDota2.pdf",
         registerLink: "/inscripcion-dota.html"
     },
     "dota-agosto-pro": {
@@ -21,7 +21,7 @@ const tournamentsData = {
         description: "Sube de nivel y compite contra profesionales. Grandes premios y la oportunidad de hacerte un nombre en la escena.",
         slots: "8/16 equipos",
         format: "Eliminación Directa, Bo5 Finales",
-        rulesLink: "/reglamento-dota.html",
+        rulesLink: "/ReglamentoenDoc/reglamentodeDota2.pdf",
         registerLink: "/inscripcion-dota.html",
     },
     "csgo-julio-open": {
@@ -33,7 +33,7 @@ const tournamentsData = {
         description: "Demuestra tu puntería y tácticas en el CS:GO Open. Abierto a todos los niveles. ¡No te quedes fuera!",
         slots: "24/32 equipos",
         format: "Sistema Suizo + Playoffs",
-        rulesLink: "/reglamento-csgo.html",
+        rulesLink: "/ReglamentoenDoc/reglamentodeCSGO2.pdf",
         registerLink: "/registro-torneo-csgo.html",
     }
 };

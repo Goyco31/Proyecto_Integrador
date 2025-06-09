@@ -1,4 +1,16 @@
-/* === ESTILOS COMUNES PARA EL HEADER === */
+/* === FUENTES === */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap');
+
+@font-face {
+  font-family: 'Sink';
+  src: url('../fonts/SinkDisplay.woff2') format('woff2'),
+       url('../fonts/SinkDisplay.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+*{
+    font-family: 'Orbitron', sans-serif;
+}
 .navbar {
     background-color: rgb(12, 12, 12);
     color: white;
@@ -32,18 +44,23 @@
 
 .nav-menu {
     display: flex;
+    /* **CORRECCIÓN:** Utiliza gap para un espaciado consistente entre los ítems */
     gap: 30px;
     list-style: none;
+    margin: 0; /* Asegura que no haya márgenes externos que afecten la alineación */
+    padding: 0; /* Asegura que no haya paddings externos que afecten la alineación */
+    align-items: center; /* **NUEVO:** Asegura que todos los ítems de la lista, incluyendo el user-panel, estén alineados verticalmente */
 }
 
 .nav-menu li a {
     text-decoration: none;
-    color: rgb(255, 255, 255);
+    color: var(--pure-white); /* Usamos la variable */
     font-size: 14px;
     letter-spacing: 1px;
     position: relative;
     padding: 5px 0;
     transition: color 0.3s ease;
+    font-weight: 600; /* Coherente con los otros textos de navegación */
 }
 
 .nav-menu li a::after {
@@ -53,16 +70,71 @@
     left: 0;
     width: 0;
     height: 2px;
-    background: #7c3aed;
+    background: #7c3aed; /* Asegura que el color sea consistente con tus acentos */
     transition: width 0.3s ease;
 }
 
 .nav-menu li a:hover {
-    color: #7c3aed;
+    color: #7c3aed; /* Asegura que el color sea consistente con tus acentos */
 }
 
 .nav-menu li a:hover::after {
     width: 100%;
+}
+
+/* Estilos para el panel de usuario */
+.user-panel {
+    display: flex;
+    align-items: center;
+    /* **CORRECCIÓN:** Ajusta el margen izquierdo para que no se pegue al último elemento de la lista */
+    margin-left: 40px; /* Un poco más de espacio para separarlo de "TORNEOS" */
+}
+
+.user-link {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    text-decoration: none;
+    color: var(--pure-white);
+    padding: 8px 12px;
+    border-radius: 20px;
+    transition: background-color 0.3s ease;
+    /* **CORRECCIÓN:** Alinea el texto con el baseline de los otros elementos de navegación */
+    vertical-align: middle;
+}
+
+.user-avatar {
+    background-color: var(--light-purple); /* **CORRECCIÓN:** Usamos un púrpura más brillante para el avatar, como en tus ejemplos */
+    border-radius: 50%;
+    width: 35px; /* **CORRECCIÓN:** Reducido el tamaño para que sea más proporcionado con los enlaces */
+    height: 35px; /* **CORRECCIÓN:** Reducido el tamaño */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: bold;
+    color: var(--pure-white);
+    font-size: 16px; /* **CORRECCIÓN:** Ajustado el tamaño de la fuente para que "ST" sea legible pero no tan grande */
+    transition: background-color 0.3s ease;
+    flex-shrink: 0; /* Evita que se encoja si hay poco espacio */
+}
+
+.user-name {
+    font-weight: bold;
+    transition: color 0.3s ease;
+    font-size: 14px; /* **CORRECCIÓN:** Coherente con los font-size de los otros ítems de navegación */
+    letter-spacing: 1px; /* Coherente con los otros ítems de navegación */
+    text-transform: uppercase; /* Si quieres que "USER" sea en mayúsculas como los otros enlaces */
+    color: var(--pure-white); /* Asegura que el color inicial sea blanco */
+}
+
+.user-link:hover {
+    background-color: rgba(255,255,255,0.1); /* Ligero fondo al pasar el mouse */
+}
+.user-link:hover .user-avatar {
+    background-color: var(--main-purple); /* Color más oscuro al pasar el mouse */
+}
+.user-link:hover .user-name {
+    color: var(--light-purple); /* Color de acento al pasar el mouse */
 }
 
 .right-menu {

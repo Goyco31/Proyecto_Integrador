@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="es" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>SkillTourney - Torneos Profesionales</title>
+    <link rel="stylesheet" th:href="@{/css/usuario.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Monda:wght@400;700&display=swap"
+        rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/header.css}">
+    <link rel="stylesheet" th:href="@{/css/footer.css}">
+</head>
+
+<body>
+    <div class="overlay" id="overlay"></div>
+
+
+    <div th:replace="~{fragments/header :: header}"></div>
+    <div class="cont">
+        <br><br><br>
+        <main class="profile-container">
+            <h1 class="profile-title">MI PERFIL</h1>
+            <div class="profile-card">
+                <div class="profile-header">
+                    <div class="profile-picture-wrapper">
+                        <img id="profile-picture"
+                            src="https://static.vecteezy.com/system/resources/previews/009/292/244/non_2x/default-avatar-icon-of-social-media-user-vector.jpg"
+                            alt="Profile Picture">
+                        <input type="file" id="profile-picture-upload" accept="image/*" style="display: none;">
+                        <button class="edit-icon" id="change-picture-btn" title="Cambiar foto">
+                            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24"
+                                fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"
+                                stroke-linejoin="round" class="feather feather-camera">
+                                <path
+                                    d="M23 19a2 2 0 0 1-2 2H3a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h4l2-3h6l2 3h4a2 2 0 0 1 2 2z">
+                                </path>
+                                <circle cx="12" cy="13" r="4"></circle>
+                            </svg>
+                        </button>
+                    </div>
+                    <h2 id="profile-display-name">Usuario Ejemplo</h2>
+                </div>
+
+                <div class="profile-details">
+                    <div class="detail-group">
+                        <label for="name">Nombre:</label>
+                        <input type="text" id="name" value="Juan" disabled>
+                    </div>
+                    <div class="detail-group">
+                        <label for="nickname">Nickname:</label>
+                        <input type="text" id="nickname" value="GamerPro" disabled>
+                    </div>
+                    <div class="detail-group">
+                        <label for="lastname">Apellido:</label>
+                        <input type="text" id="lastname" value="Pérez" disabled>
+                    </div>
+                    <div class="detail-group">
+                        <label for="email">Correo:</label>
+                        <input type="email" id="email" value="juan.perez@example.com" disabled>
+                    </div>
+                    <div class="form-group remember-me-checkbox">
+                        <label for="remember-me">¿Desea mantener la sesión?</label>
+                        <input type="checkbox" id="remember-me" name="remember-me">
+                    </div>
+
+                    <div class="profile-actions">
+                        <button class="btn-edit" id="edit-profile-btn">EDITAR PERFIL</button>
+                        <button class="btn-save" id="save-profile-btn" style="display: none;">GUARDAR CAMBIOS</button>
+                    </div>
+                </div>
+        </main>
+    </div>
+
+
+    <div th:replace="~{fragments/footer}"></div>
+    <div th:replace="~{fragments/modal-registro}"></div>
+    <div th:replace="~{fragments/modal-login}"></div>
+    <script th:src="@{/jscript/modal-registro.js}"></script>
+    <script th:src="@{/jscript/modal-login.js}"></script>
+    <script th:src="@{/jscript/pagTorneo.js}"></script>
+    <script th:src="@{/jscript/usuario.js}"></script>
+</body>
+
+</html>
