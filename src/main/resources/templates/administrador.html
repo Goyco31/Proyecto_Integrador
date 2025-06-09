@@ -5,23 +5,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Administrador - SkillTourney</title> 
     <link rel="stylesheet" th:href="@{/css/administrador.css}">
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Monda:wght@400;700&display=swap" rel="stylesheet"/>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
     <link rel="stylesheet" th:href="@{/css/header.css}" />
     <link rel="stylesheet" th:href="@{/css/footer.css}" />
 </head>
 <body>
     <!-- Inserta el fragmento del header -->
     <div th:replace="~{fragments/header :: header}"></div>
-
+<br>
+<br>
+<br>
     <!-- Contenedor general de la interfaz de administrador -->
     <div class="admin-container">
-        
+        <br>
+        <br>
+        <br>
         <!-- Menú lateral con opciones de administración -->
-        <aside class="admin-sidebar"> 
+        <aside class="admin-sidebar"> <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
         <div class="admin-logo">SkillTourney Admin</div> 
             <nav class="admin-nav"> 
                 <ul>
-                    <li><a href="#" id="show-tournaments">Administrar Torneos</a></li>
+                    <li><a href="#" id="show-tournaments">ADMINISTRAR TORNEOS</a></li>
                     <li><a href="#" id="show-db-config">Configurar Base de Datos</a></li> 
                 </ul>
             </nav>
@@ -30,13 +41,19 @@
         <!-- Contenido principal del panel de administración -->
         <main class="admin-content-area">
             <!-- Encabezado del panel -->
-
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
+<br>
             <header class="admin-header"> 
                 <h1>Panel de Administración</h1> 
             </header>
 
             <!-- Botones de acción para los torneos -->
-            <section id="tournaments-section" class="admin-section active"> <h2>Administrar Torneos</h2> <div class="tournament-actions"> <button id="new-tournament-btn" class="btn-primary">Nuevo Torneo</button>
+            <section id="tournaments-section" class="admin-section active"> <h2>ADMINISTRAR TORNEOS</h2> <div class="tournament-actions"> <button id="new-tournament-btn" class="btn-primary">Nuevo Torneo</button>
                     <button id="export-btn" class="btn-secondary">EXPORTAR</button>
                     <button id="import-btn" class="btn-secondary">IMPORTAR</button>
                 </div>

@@ -1,5 +1,5 @@
 /* === FUENTES === */
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Monda:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap');
 
 @font-face {
   font-family: 'Sink';
@@ -8,13 +8,10 @@
   font-weight: normal;
   font-style: normal;
 }
-
-* {
-    font-family: 'Anton', sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+*{
+    font-family: 'Orbitron', sans-serif;
 }
+
 
 /* === VARIABLES GLOBALES === */
 :root {

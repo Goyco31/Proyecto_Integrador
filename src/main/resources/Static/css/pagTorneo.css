@@ -1,21 +1,20 @@
 /* === FUENTES === */
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Monda:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap');
 
 @font-face {
-    font-family: 'Sink';
-    src: url('../fonts/SinkDisplay.woff2') format('woff2'),
-         url('../fonts/SinkDisplay.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+  font-family: 'Sink';
+  src: url('../fonts/SinkDisplay.woff2') format('woff2'),
+       url('../fonts/SinkDisplay.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
 }
-
-/* Reseteo básico y configuración de fuente predeterminada para todos los elementos */
-* {
-    font-family: 'Exo 2', sans-serif;
+*{
+    font-family: 'Orbitron', sans-serif;
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
+
 
 /* === VARIABLES GLOBALES === */
 :root {
@@ -87,7 +86,7 @@ body {
 }
 
 .main-slogan {
-    font-family: 'Monda', sans-serif;
+    font-family: 'Orbitron', sans-serif;
     font-weight: 700;
     font-size: clamp(3rem, 6vw, 5.5rem);
     color: var(--pure-white);
@@ -135,7 +134,7 @@ body {
 }
 
 .game-title {
-    font-family: 'Sink', sans-serif;
+    font-family: 'Orbitron', sans-serif;
     font-size: clamp(2rem, 3.5vw, 2.8rem);
     color: var(--pure-white);
     text-transform: uppercase;
@@ -201,7 +200,7 @@ body {
 
 h2 { /* Estilo para el título H2 "TORNEOS ACTIVOS" */
     font-size: clamp(2.5rem, 5vw, 4rem);
-    font-family: 'Monda', sans-serif;
+    font-family: 'Orbitron', sans-serif;
     color: var(--light-purple);
     text-align: center;
     margin-bottom: 40px;
@@ -325,7 +324,7 @@ h2 { /* Estilo para el título H2 "TORNEOS ACTIVOS" */
     margin: 0 0 10px 0;
     color: var(--light-purple);
     text-align: center;
-    font-family: 'Monda', sans-serif;
+    font-family: 'Orbitron', sans-serif;
 }
 
 .card-info p { /* Párrafos con detalles (fecha, premio, cupos) */
@@ -459,7 +458,7 @@ h2 { /* Estilo para el título H2 "TORNEOS ACTIVOS" */
 }
 
 .modal-title { /* Título H2 dentro del modal */
-    font-family: 'Monda', sans-serif;
+    font-family: 'Orbitron', sans-serif;
     font-size: 2.2em;
     color: var(--main-purple);
     margin-bottom: 15px;
