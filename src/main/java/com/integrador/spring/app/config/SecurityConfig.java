@@ -52,6 +52,7 @@ public class SecurityConfig {
                     "/skill",
                     "/explorar",
                     "/noticias",
+                    "/canjes",
                     "/paginaTorneo",
                     "/clasificacion").permitAll()
                     // Permitir acceso a las rutas de control
