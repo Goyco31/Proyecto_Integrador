@@ -150,9 +150,11 @@
       <div th:replace="~{fragments/modal-registro :: register-modal}"></div>
       <!-- Modal Login -->
       <div th:replace="~{fragments/modal-login :: login-modal}"></div>
+      <!-- Modal 2FA -->
+      <div th:replace="~{fragments/modal-2FA :: 2fa-modal}"></div>
 
-    </div>
-  </main>
+      </div>
+    </main>
 
 
 
@@ -162,5 +164,6 @@
   <script th:src="@{/jscript/pagPrincipal.js}"></script>
   <script th:src="@{/jscript/modal-registro.js}"></script>
   <script th:src="@{/jscript/modal-login.js}"></script>
+  <script th:src="@{/jscript/modal-2FA.js}"></script>
 </body>
 </html>

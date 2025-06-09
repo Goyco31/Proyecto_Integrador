@@ -10,6 +10,8 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+
 // Importa anotaciones de JPA para mapeo de entidades
 import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
@@ -18,6 +20,9 @@ import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.OneToMany;
+import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
 
@@ -44,9 +49,11 @@ public class User implements UserDetails{
     String nombre;
     String apellido;
     String nickname;
+    private String fotoPerfil;
     @Column(nullable = false)
     String correo;
     String contraseña;
+    private Integer monedas;
     // Fecha de registro que se genera automáticamente al crear el registro
     @CreationTimestamp
     @Column(name = "fecha_registro", nullable = false, updatable = false)
@@ -64,6 +71,25 @@ public class User implements UserDetails{
     
     @Column(name = "two_factor_expiry")
     private LocalDateTime twoFactorExpiry;
+
+    @OneToOne
+    private InfoUsuario info;
+
+    // Relacion uno a muchos con la tabla Recarga
+    @OneToMany
+    private List<Recarga> recarga;
+
+    @OneToMany
+    //@JsonManagedReference
+    private List<CanjeRecompensa> canje;
+    // Relacion uno a muchos con la tabla mensajes
+    @OneToMany
+    private List<Mensajes> mensajes;
+
+    // Relacion muchos a uno con la tabla equipo
+    @ManyToOne
+    @JsonBackReference
+    private Equipo equipo;
     
     // Retorna una colección de autoridades (roles) del usuario para Spring Security
     @Override
@@ -98,5 +124,9 @@ public class User implements UserDetails{
     @Override
     public String getUsername() {
         return this.nickname; // Retorna el nombre de usuario
+    }
+
+    public String getFotoPerfil() {
+        return fotoPerfil != null ? fotoPerfil : "/imagenes/perfil/default.png";
     }
 }

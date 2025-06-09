@@ -6,6 +6,9 @@ import java.util.List;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -15,6 +18,7 @@ import com.google.common.collect.Lists;
 import com.integrador.spring.app.Controlador.ControladorResponse;
 import com.integrador.spring.app.Controlador.LoginRequest;
 import com.integrador.spring.app.Controlador.RegisterRequest;
+import com.integrador.spring.app.Controlador.Validate2FARequest;
 // Importaciones de clases del proyecto
 import com.integrador.spring.app.DAO.UserDAO;
 import com.integrador.spring.app.Modelo.User;
@@ -29,6 +33,7 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class ControladorService {
 
+    private static final Logger logger = LoggerFactory.getLogger(ControladorService.class);
     // Inyección de dependencias necesarias para autenticación, acceso a datos, y codificación de contraseñas
     private final UserDAO userDAO;
     private final JwtService jwtService;
@@ -36,7 +41,7 @@ public class ControladorService {
     private final AuthenticationManager authenticationManager;
     private final EmailService emailService;
     private final TwoFactorAuthService twoFactorAuthService;
-    private final UserDAO userDao;
+
     public List<List<User>> getUsersInBatches(int batchSize) {
         Preconditions.checkArgument(batchSize > 0, "El tamaño del lote debe ser mayor a 0");
         List<User> allUsers = userDAO.findAll();
@@ -100,60 +105,78 @@ public class ControladorService {
 
     
     public ControladorResponse registro(RegisterRequest request) {
-    // Validaciones más explícitas y legibles
-    Preconditions.checkArgument(!Strings.isNullOrEmpty(request.getNickname()), "El nickname no puede estar vacío");
-    Preconditions.checkArgument(!Strings.isNullOrEmpty(request.getCorreo()), "El correo no puede estar vacío");
-    Preconditions.checkArgument(request.getContraseña() != null && request.getContraseña().length() >= 8, 
-        "La contraseña debe tener al menos 8 caracteres");
-        
-        // Verificar si el usuario ya existe
-        if(userDAO.findByNickname(request.getNickname()).isPresent()) {
-            throw new RuntimeException("El nickname ya está en uso");
-        }
-
-        // Determinar el rol basado en el dominio del correo
-        boolean isAdminEmail = request.getCorreo().toLowerCase().endsWith("@utp.edu.pe");
-
-        // Crear nuevo usuario con 2FA activado por defecto
-        User user = User.builder()
-            .nombre(request.getNombre())
-            .apellido(request.getApellido())
-            .nickname(request.getNickname())
-            .correo(request.getCorreo())
-            .contraseña(passwordEncoder.encode(request.getContraseña()))
-            .role(isAdminEmail ? role.ADMIN : role.USER) // Rol dinámico aquí
-            .is2faEnabled(true) // 2FA activado automáticamente
-            .build();
-
-        userDAO.save(user);
-
         try {
-            emailService.sendWelcomeEmail(
-                user.getCorreo(), 
-                user.getNombre(),
-                user.getNickname()
-            );
-            
-            // Opcional: Enviar instrucciones sobre el 2FA
-            emailService.send2FASetupEmail(user.getCorreo());
-            
-        } catch (Exception e) {
-            System.err.println("Error enviando correo: " + e.getMessage());
-        }
+            // Normalizar y validar
+            request.normalize();
+            request.validate();
 
-        return ControladorResponse.builder()
-            .mensaje("Usuario registrado exitosamente como " + (isAdminEmail ? "ADMIN" : "USER")+ "Se ha activado la verificación en dos pasos.")
-            .build();
+            // Verificar unicidad del nickname
+            if (userDAO.findByNickname(request.getNickname()).isPresent()) {
+                logger.warn("Intento de registro con nickname duplicado: {}", request.getNickname());
+                throw new RuntimeException("El nickname ya está en uso");
+            }
+
+            // Determinar rol
+            boolean isAdminEmail = StringUtils.endsWithIgnoreCase(request.getCorreo(), "@utp.edu.pe");
+
+            // Crear usuario
+            User user = User.builder()
+                .nombre(request.getNombre())
+                .apellido(request.getApellido())
+                .nickname(request.getNickname())
+                .correo(request.getCorreo())
+                .contraseña(passwordEncoder.encode(request.getContraseña()))
+                .role(isAdminEmail ? role.ADMIN : role.USER)
+                .is2faEnabled(true)
+                .build();
+
+            userDAO.save(user);
+            logger.info("Nuevo usuario registrado: {}", user.getNickname());
+
+            // Enviar correos
+            emailService.sendWelcomeEmail(user.getCorreo(), user.getNombre(), user.getNickname());
+            emailService.send2FASetupEmail(user.getCorreo());
+
+            return ControladorResponse.builder()
+                .mensaje("Usuario registrado exitosamente como " + (isAdminEmail ? "ADMIN" : "USER"))
+                .build();
+
+        } catch (Exception e) {
+            logger.error("Error en registro: " + e.getMessage(), e);
+            throw e; // Re-lanzar para manejo en el controlador
+        }
     }
 
 
     public String toggle2FA(String nickname) {
-        User user = userDao.findByNickname(nickname)
+        User user = userDAO.findByNickname(nickname)
             .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
         
         user.set2faEnabled(!user.is2faEnabled());
-        userDao.save(user);
+        userDAO.save(user);
         
         return "2FA " + (user.is2faEnabled() ? "activado" : "desactivado");
+    }
+
+    public ControladorResponse validate2FA(Validate2FARequest request) {
+        boolean isValid = twoFactorAuthService.verify2FACode(request.getEmail(), request.getTwoFactorCode());
+        if (!isValid) {
+            throw new RuntimeException("Código 2FA inválido");
+        }
+        
+        User user = userDAO.findByCorreo(request.getEmail())
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+        
+        String token = jwtService.getToken(user);
+        
+        // Limpiar código 2FA
+        user.setTwoFactorCode(null);
+        user.setTwoFactorExpiry(null);
+        userDAO.save(user);
+        
+        return ControladorResponse.builder()
+            .token(token)
+            .mensaje("Autenticación exitosa")
+            .build();
     }
 }

@@ -81,6 +81,10 @@ public class ControladorAPI {
     public ResponseEntity<String> toggle2FA(@RequestParam String nickname) {
         return ResponseEntity.ok(authService.toggle2FA(nickname));
     }
-        
+     
+    @PostMapping("/validate-2fa")
+    public ResponseEntity<ControladorResponse> validate2FA(@RequestBody Validate2FARequest request) {
+        return ResponseEntity.ok(authService.validate2FA(request));
+    }
   
 }
