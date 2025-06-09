@@ -1,6 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
     let tournamentsData = JSON.parse(localStorage.getItem('adminTournamentsData')) || {
-        // Datos de ejemplo preestablecidos si no hay datos guardados en localStorage
         "dota-julio-premium": {
             id: "dota-julio-premium", // ID único para el torneo
             title: "Torneo DOTA 2 - Edición Premium Julio",
@@ -48,7 +47,7 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Función auxiliar para guardar el objeto tournamentsData en localStorage
+    // Función auxiliar para guardar el objeto tournamentsData
     const saveTournamentsData = () => {
         localStorage.setItem('adminTournamentsData', JSON.stringify(tournamentsData));
     };
@@ -111,7 +110,7 @@ document.addEventListener('DOMContentLoaded', () => {
         sectionToShow.classList.add('active'); // Muestra la sección deseada
     };
 
-    // Función para renderizar (dibujar) la tabla de torneos con los datos actuales
+    // Función para renderizar la tabla de torneos con los datos actuales
     const renderTournamentsTable = () => {
         tournamentsTableBody.innerHTML = ''; // Limpiar contenido actual de la tabla
 
@@ -125,7 +124,7 @@ document.addEventListener('DOMContentLoaded', () => {
             noTournamentsMessage.style.display = 'none';
         }
 
-        // Itera sobre cada torneo y crea una fila en la tabla
+        // Repite sobre cada torneo y crea una fila en la tabla
         tournamentsArray.forEach(tournament => {
             const row = tournamentsTableBody.insertRow();
             row.dataset.tournamentId = tournament.id; // Almacena el ID del torneo en el atributo data-id de la fila
@@ -196,22 +195,18 @@ document.addEventListener('DOMContentLoaded', () => {
     // Evento para el botón "Nuevo Torneo"
     newTournamentBtn.addEventListener('click', () => openTournamentModal());
 
-    // Eventos para los botones "EXPORTAR" e "IMPORTAR" (simulados)
+    // Eventos para los botones "EXPORTAR" e "IMPORTAR"
     exportBtn.addEventListener('click', () => {
         alert('Funcionalidad de EXPORTAR aún no implementada en el frontend. Necesita un backend.');
-        // En un backend real, aquí se haría una solicitud HTTP para descargar los datos.
-        // fetch('/api/tournaments/export').then(response => response.blob()).then(blob => { ... });
+        // En un backend, aquí se haría una solicitud para descargar los datos.
     });
 
     importBtn.addEventListener('click', () => {
         alert('Funcionalidad de IMPORTAR aún no implementada en el frontend. Necesita un backend.');
-        // En un backend real, aquí se abriría un input de tipo file para que el usuario suba un archivo.
-        // const input = document.createElement('input'); input.type = 'file'; input.click();
+        // En un backend, aquí se abriría un input de tipo file para que el usuario suba un archivo.
     });
 
     // Delegación de eventos para los botones de Editar y Eliminar dentro de la tabla
-    // Esto es eficiente porque un solo event listener maneja los clics en todos los botones de la tabla,
-    // incluso los que se añaden dinámicamente.
     tournamentsTableBody.addEventListener('click', (e) => {
         if (e.target.classList.contains('edit-btn')) {
             const id = e.target.dataset.id; // Obtiene el ID del torneo del atributo data-id del botón
@@ -280,15 +275,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
     cancelDeleteBtn.addEventListener('click', closeAllModals); // Cierra el modal de confirmación
 
-    // Manejo de la configuración de BD (funcionalidad simulada)
+    // Manejo de la configuración de BD 
     connectDbBtn.addEventListener('click', () => {
-        // En un entorno real, aquí iría una solicitud HTTP al backend para intentar la conexión
-        alert('Intentando conectar a la Base de Datos... (Funcionalidad simulada en el frontend)');
+        alert('Intentando conectar a la Base de Datos... (en el frontend)');
     });
 
     downloadDbBtn.addEventListener('click', () => {
-        // En un entorno real, aquí iría una solicitud HTTP al backend para iniciar la descarga
-        alert('Iniciando descarga de la Base de Datos... (Funcionalidad simulada en el frontend)');
+        //solicitud al backend para iniciar la descarga
+        alert('Iniciando descarga de la Base de Datos... (en el frontend)');
     });
 
     cancelDbConfigBtn.addEventListener('click', (e) => {

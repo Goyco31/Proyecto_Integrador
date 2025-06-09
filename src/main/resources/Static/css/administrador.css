@@ -3,7 +3,7 @@
 @import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Monda:wght@400;700&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Anton&display=swap');
 
-/* === VARIABLES GLOBALES (Puedes copiar las que ya tienes en style.css para consistencia) === */
+/* === VARIABLES GLOBALES === */
 /* Define variables CSS para colores, sombras, etc., facilitando la gestión y consistencia del diseño */
 :root {
     --main-purple: #5f0e8e;

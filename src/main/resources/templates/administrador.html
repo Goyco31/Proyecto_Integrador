@@ -3,28 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrador - SkillTourney</title>
+    <title>Administrador - SkillTourney</title> 
     <link rel="stylesheet" th:href="@{/css/administrador.css}">
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Monda:wght@400;700&display=swap" rel="stylesheet"/>
     <link rel="stylesheet" th:href="@{/css/header.css}" />
     <link rel="stylesheet" th:href="@{/css/footer.css}" />
 </head>
 <body>
+    <!-- Inserta el fragmento del header -->
     <div th:replace="~{fragments/header :: header}"></div>
-    <div class="admin-container"> <aside class="admin-sidebar"> <div class="admin-logo">SkillTourney Admin</div> <nav class="admin-nav"> <ul>
+
+    <!-- Contenedor general de la interfaz de administrador -->
+    <div class="admin-container">
+        
+        <!-- Menú lateral con opciones de administración -->
+        <aside class="admin-sidebar"> 
+        <div class="admin-logo">SkillTourney Admin</div> 
+            <nav class="admin-nav"> 
+                <ul>
                     <li><a href="#" id="show-tournaments">Administrar Torneos</a></li>
-                    <li><a href="#" id="show-db-config">Configurar Base de Datos</a></li> </ul>
+                    <li><a href="#" id="show-db-config">Configurar Base de Datos</a></li> 
+                </ul>
             </nav>
         </aside>
 
+        <!-- Contenido principal del panel de administración -->
         <main class="admin-content-area">
-            <header class="admin-header"> <h1>Panel de Administración</h1> </header>
+            <!-- Encabezado del panel -->
 
+            <header class="admin-header"> 
+                <h1>Panel de Administración</h1> 
+            </header>
+
+            <!-- Botones de acción para los torneos -->
             <section id="tournaments-section" class="admin-section active"> <h2>Administrar Torneos</h2> <div class="tournament-actions"> <button id="new-tournament-btn" class="btn-primary">Nuevo Torneo</button>
                     <button id="export-btn" class="btn-secondary">EXPORTAR</button>
                     <button id="import-btn" class="btn-secondary">IMPORTAR</button>
                 </div>
-                
+
+                <!-- Tabla para listar los torneos registrados -->
                 <div class="table-container">
                     <table class="tournaments-table"> <thead>
                             <tr>
@@ -43,12 +60,17 @@
                             </tbody>
                     </table>
                 </div>
+
+                <!-- Mensaje que se muestra cuando no hay torneos -->
                 <div id="no-tournaments-message" class="info-message" style="display: none;"> No hay torneos registrados. Haz clic en "Nuevo Torneo" para agregar uno. 
                 </div>
             </section>
 
+            <!-- Sección para mostrar información de configuración de la base de datos -->
             <section id="db-config-section" class="admin-section">
                 <h2>Configurar Base de Datos</h2>
+
+                <!-- Formulario con datos de conexión a la base de datos -->
                 <form id="db-config-form" class="admin-form">
                     <div class="form-group">
                         <label for="db-server">Servidor:</label>
@@ -70,6 +92,8 @@
                         <label for="db-password">Contraseña:</label>
                         <input type="password" id="db-password" name="password" value="root" readonly>
                     </div>
+
+                    <!-- Botones para acciones relacionadas a la base de datos -->
                     <div class="form-actions">
                         <button type="button" class="btn-primary" id="connect-db-btn">Conectar BD</button>
                         <button type="button" class="btn-secondary" id="download-db-btn">Descargar BD</button>
@@ -80,16 +104,21 @@
         </main>
     </div>
 
+    <!-- Modal para crear o editar un torneo -->
     <div id="tournament-modal" class="modal" style="display: none;">
         <div class="modal-content">
-            <span class="close-button">&times;</span>
+            <span class="close-button">&times;</span> <!-- Botón para cerrar el modal -->
             <h2 id="modal-title">Nuevo Torneo</h2>
+
+            <!-- Formulario con campos del torneo -->
             <form id="tournament-form" class="admin-form">
                 <input type="hidden" id="tournament-id">
                 <div class="form-group">
                     <label for="tournament-name">Nombre:</label>
                     <input type="text" id="tournament-name" required>
                 </div>
+
+                <!-- Campos para los detalles del torneo -->
                 <div class="form-group">
                     <label for="tournament-description">Descripción:</label>
                     <textarea id="tournament-description" rows="3" required></textarea>
@@ -138,6 +167,8 @@
                         <option value="cancelado">Cancelado</option>
                     </select>
                 </div>
+
+                <!-- Botones de acción del modal -->
                 <div class="form-actions">
                     <button type="submit" class="btn-primary">Guardar</button>
                     <button type="button" class="btn-cancel" id="cancel-tournament-modal">Cancelar</button>
@@ -146,6 +177,7 @@
         </div>
     </div>
 
+    <!-- Modal de confirmación para eliminar torneo -->
     <div id="confirm-modal" class="modal" style="display: none;">
         <div class="modal-content small-modal">
             <p>¿Seguro que desea eliminar este torneo?😕</p>
@@ -156,6 +188,7 @@
         </div>
     </div>
     
+    <!-- Script de JavaScript con lógica para el panel de administración -->
     <script th:src="@{/jscript/administrador.js}"></script>
 </body>
 </html>
