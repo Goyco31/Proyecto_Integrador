@@ -13,6 +13,10 @@ import org.springframework.data.jpa.repository.JpaRepository;
 public interface UserDAO extends JpaRepository<User,Integer>{
     // Método personalizado para buscar un usuario por su nickname
     Optional<User> findByNickname(String nickname);
- 
-    
+    Optional<User> findByCorreo(String correo);
+    //verifica si un correo ya existe
+    public boolean existsByCorreo(String correo);
+    //elimina al usuario por su nickname
+    public void deleteByNickname(String nickname);
+    public boolean existsByContraseña(String contra);
 }

@@ -1,119 +1,69 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Abrir modal
-  document.querySelectorAll('[data-modal="login-modal"]').forEach(btn => {
-    btn.addEventListener('click', (e) => {
-      e.preventDefault();
-      document.getElementById('login-modal').style.display = 'flex';
-      // Limpiar mensajes previos al abrir el modal
-      const existingMessage = document.getElementById('login-message');
-      if(existingMessage) {
-        existingMessage.remove();
-      }
-    });
-  });
+  const loginForm = document.getElementById('loginForm');
+  if (!loginForm) return;
 
-  // Cerrar modal
-  document.getElementById('login-modal').querySelector('.close-modal').addEventListener('click', () => {
-    document.getElementById('login-modal').style.display = 'none';
-  });
-
-  // Alternar a registro
-  document.getElementById('abrir-registro').addEventListener('click', (e) => {
-    e.preventDefault();
-    document.getElementById('login-modal').style.display = 'none';
-  });
-
-  // Manejo del formulario
-  document.getElementById('loginForm').addEventListener('submit', async function(e) {
+  loginForm.addEventListener('submit', async function(e) {
     e.preventDefault();
     
-    // Mostrar loader o estado de carga
+    // Mostrar estado de carga
     const submitButton = this.querySelector('button[type="submit"]');
-    const originalButtonText = submitButton.innerHTML;
-    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Procesando...';
+    const originalText = submitButton.innerHTML;
+    submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verificando...';
     submitButton.disabled = true;
     
-    // 1. Obtener los datos del formulario
     const formData = {
-      nickname: this.querySelector('[name="nickname"]').value,
-      contraseña: this.querySelector('[name="contraseña"]').value
+      nickname: this.nickname.value,
+      contraseña: this.contraseña.value
     };
     
     try {
-      // 2. Enviar la petición al backend
       const response = await fetch('http://localhost:8080/control/login', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
 
-      // 3. Manejar la respuesta
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.message || 'Error en el servidor');
-      }
-
       const data = await response.json();
       
-      // 4. Si la autenticación fue exitosa
+      // Verificar si la respuesta requiere 2FA
+      if (data.requires2FA || data.twoFactorRequired) {
+        document.getElementById('login-modal').style.display = 'none';
+        document.getElementById('2fa-modal').style.display = 'flex';
+        
+        // Asegurarse de que el campo email exista en el formulario 2FA
+        const emailInput = document.querySelector('#2faForm [name="email"]');
+        if (emailInput) {
+          emailInput.value = data.email || formData.nickname;
+        }
+        return;
+      }
+      
+      // Si no requiere 2FA pero tiene token
       if (data.token) {
         localStorage.setItem('authToken', data.token);
-        
-        // Mostrar mensaje de éxito en lugar de redirigir
-        const form = document.getElementById('loginForm');
-        
-        // Limpiar mensajes previos
-        const existingMessage = document.getElementById('login-message');
-        if(existingMessage) {
-          existingMessage.remove();
-        }
-        
-        // Crear y mostrar mensaje de éxito
-        const successMessage = document.createElement('div');
-        successMessage.id = 'login-message';
-        successMessage.className = 'success-message';
-        successMessage.innerHTML = `
-          <i class="fas fa-check-circle"></i> Inicio de sesión exitoso
-          <p>Bienvenido, ${data.nickname || 'usuario'}!</p>
-        `;
-        
-        // Insertar después del formulario
-        form.parentNode.insertBefore(successMessage, form.nextSibling);
-        
-        // Opcional: cerrar el modal después de 3 segundos
-        setTimeout(() => {
-          document.getElementById('login-modal').style.display = 'none';
-        }, 3000);
-        
-        // Limpiar el formulario
-        form.reset();
-      } else {
-        throw new Error('No se recibió token de autenticación');
+        window.location.href = data.redirectUrl || '/';
+        return;
       }
+      
+      // Si no cumple con ninguno de los casos anteriores
+      throw new Error(data.message || 'Respuesta inesperada del servidor');
       
     } catch (error) {
-      console.error('Error en el login:', error);
+      console.error('Login error:', error);
       
-      // Mostrar mensaje de error en el modal
-      const form = document.getElementById('loginForm');
-      const existingMessage = document.getElementById('login-message');
+      // Mostrar mensaje de error debajo del formulario
+      const errorDiv = document.createElement('div');
+      errorDiv.id = 'login-message';
+      errorDiv.className = 'error-message';
+      errorDiv.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${error.message}`;
       
-      if(existingMessage) {
-        existingMessage.remove();
-      }
+      const existingMsg = document.getElementById('login-message');
+      if (existingMsg) existingMsg.remove();
       
-      const errorMessage = document.createElement('div');
-      errorMessage.id = 'login-message';
-      errorMessage.className = 'error-message';
-      errorMessage.innerHTML = `<i class="fas fa-exclamation-circle"></i> ${error.message}`;
-      
-      form.parentNode.insertBefore(errorMessage, form.nextSibling);
+      loginForm.parentNode.insertBefore(errorDiv, loginForm.nextSibling);
       
     } finally {
-      // Restaurar el botón a su estado original
-      submitButton.innerHTML = originalButtonText;
+      submitButton.innerHTML = originalText;
       submitButton.disabled = false;
     }
   });

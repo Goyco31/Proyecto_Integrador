@@ -1,43 +1,28 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Alternar entre login y registro
-  document.getElementById('abrir-registro')?.addEventListener('click', function(e) {
+  // Abrir modal de login
+  document.querySelectorAll('[data-modal="login-modal"]').forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      e.preventDefault();
+      document.getElementById('login-modal').style.display = 'flex';
+      // Limpiar formulario y mensajes
+      document.getElementById('loginForm').reset();
+      const existingMessage = document.getElementById('login-message');
+      if(existingMessage) existingMessage.remove();
+    });
+  });
+
+  // Cerrar modales (genérico para todos)
+  document.querySelectorAll('.close-modal').forEach(btn => {
+    btn.addEventListener('click', () => {
+      document.getElementById('login-modal').style.display = 'none';
+      document.getElementById('2fa-modal').style.display = 'none';
+    });
+  });
+
+  // Alternar a registro
+  document.getElementById('abrir-registro')?.addEventListener('click', (e) => {
     e.preventDefault();
     document.getElementById('login-modal').style.display = 'none';
     document.getElementById('register-modal').style.display = 'flex';
-  });
-
-  // Manejo del formulario de login
-  document.getElementById('loginForm')?.addEventListener('submit', function(e) {
-    e.preventDefault();
-    
-    const formData = {
-      username: this.username.value,
-      password: this.password.value,
-      remember: this.remember.checked
-    };
-
-    // Aquí iría tu lógica de autenticación
-    console.log('Datos de login:', formData);
-    
-    // Ejemplo de envío con fetch:
-    fetch('/login', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-      },
-      body: JSON.stringify(formData)
-    })
-    .then(response => response.json())
-    .then(data => {
-      if(data.success) {
-        window.location.reload();
-      } else {
-        alert(data.message || 'Error al iniciar sesión');
-      }
-    })
-    .catch(error => {
-      console.error('Error:', error);
-      alert('Error al conectar con el servidor');
-    });
   });
 });

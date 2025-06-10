@@ -12,6 +12,9 @@ import lombok.Builder;// Permite usar el patrón Builder para crear instancias
 @AllArgsConstructor
 @NoArgsConstructor
 public class ControladorResponse {
+    String mensaje;
     // Campo que representa el token JWT generado y devuelto al usuario tras autenticarse
     String token;
+    boolean requires2fa; // Nuevo campo para indicar si requiere segundo factor
+    String tempToken; // Token temporal para mantener la sesión durante 2FA
 }

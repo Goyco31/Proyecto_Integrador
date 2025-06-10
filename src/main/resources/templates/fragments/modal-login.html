@@ -7,71 +7,71 @@
     <link rel="stylesheet" th:href="@{/css/modal-login.css}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 </head>
-<body>
-<!-- Modal de Login -->
-<div th:fragment="login-modal" id="login-modal" class="modal" style="display: none;">
-  <div class="formulario-contenedor">
-    <!-- Botón para cerrar (X) -->
-    <button class="close-modal">&times;</button>
-    
-    <!-- Título principal -->
-    <h1>INICIAR SESIÓN</h1>
-    
-    <!-- Enlace alternativo a registro -->
-    <p>¿No tienes cuenta? <a href="#" id="abrir-registro">Regístrate aquí</a></p>
-
-    <!-- Formulario de login -->
-    <form id="loginForm" th:action="@{/login}" method="post" class="formulario">
-      <!-- Campo de usuario -->
-      <div class="input-group">
-        <i class="fas fa-user"></i>
-        <input type="text" name="nickname" placeholder="Nombre de usuario" required>
-      </div>
-      
-      <!-- Campo de contraseña -->
-      <div class="input-group">
-        <i class="fas fa-lock"></i>
-        <input type="password" name="contraseña" placeholder="Contraseña" required>
-      </div>
-      
-      <!-- Recordar sesión -->
-      <div class="remember-me">
-        <input type="checkbox" id="remember" name="remember-me">
-        <label for="remember">Recordar mi sesión</label>
-      </div>
-      
-      <!-- Botón de submit -->
-      <button type="submit" class="btn-login">
-        <i class="fas fa-sign-in-alt"></i> INGRESAR
-      </button>
-      
-      <!-- Separador -->
-      <div class="separator">
-        <span>o ingresa con</span>
-      </div>
-      
-      <!--División-->
-        <hr>
+  <body>
+  <!-- Modal de Login -->
+    <div th:fragment="login-modal" id="login-modal" class="modal" style="display: none;">
+      <div class="formulario-contenedor">
+        <!-- Botón para cerrar (X) -->
+        <button class="close-modal">&times;</button>
         
-      <!-- Botones sociales -->
-      <div class="social-buttons">
-        <button type="button" class="btn-social-discord">
-          <i class="fab fa-discord"></i> Discord
-        </button>
-        <button type="button" class="btn-social-google">
-          <i class="fab fa-google"></i> Google
-        </button>
-      </div>
-            
-      <!-- Enlace de recuperación -->
-      <div class="forgot-password">
-        <a href="#">¿Olvidaste tu contraseña?</a>
-      </div>
-    </form>
-  </div>
-</div>
+        <!-- Título principal -->
+        <h1>INICIAR SESIÓN</h1>
+        
+        <!-- Enlace alternativo a registro -->
+        <p>¿No tienes cuenta? <a href="#" id="abrir-registro">Regístrate aquí</a></p>
 
-<!-- Script específico para el login -->
-<script th:src="@{/jscript/login.js}" defer></script>
-</body>
+        <!-- Formulario de login -->
+        <form id="loginForm" th:action="@{/login}" method="post" class="formulario">
+          <!-- Campo de usuario -->
+          <div class="input-group">
+            <i class="fas fa-user"></i>
+            <input type="text" name="nickname" placeholder="Nombre de usuario" required>
+          </div>
+          
+          <!-- Campo de contraseña -->
+          <div class="input-group">
+            <i class="fas fa-lock"></i>
+            <input type="password" name="contraseña" placeholder="Contraseña" required>
+          </div>
+          
+          <!-- Recordar sesión -->
+          <div class="remember-me">
+            <input type="checkbox" id="remember" name="remember-me">
+            <label for="remember">Recordar mi sesión</label>
+          </div>
+          
+          <!-- Botón de submit -->
+          <button type="submit" class="btn-login">
+            <i class="fas fa-sign-in-alt"></i> INGRESAR
+          </button>
+          
+          <!-- Separador -->
+          <div class="separator">
+            <span>o ingresa con</span>
+          </div>
+          
+          <!--División-->
+            <hr>
+            
+          <!-- Botones sociales -->
+          <div class="social-buttons">
+            <button type="button" class="btn-social-discord">
+              <i class="fab fa-discord"></i> Discord
+            </button>
+            <button type="button" class="btn-social-google">
+              <i class="fab fa-google"></i> Google
+            </button>
+          </div>
+                
+          <!-- Enlace de recuperación -->
+          <div class="forgot-password">
+            <a href="#">¿Olvidaste tu contraseña?</a>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- Script específico para el login -->
+    <script th:src="@{/jscript/login.js}" defer></script>
+  </body>
 </html>

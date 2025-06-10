@@ -1,10 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
 </head>
+
 <body>
     <header class="navbar" th:fragment="header">
         <div class="logo">
@@ -20,9 +22,23 @@
             <li><a href="/noticias">NOTICIAS</a></li>
             <li><a href="/paginaTorneo">TORNEOS</a></li>
             <li><a href="/administrador">Administrador</a></li>
+          
+            <!-- PANEL DE USUARIO visible solo si está autenticado -->
+            <li sec:authorize="isAuthenticated()">
+                <div class="user-panel">
+                    <a th:href="@{/usuario}" class="user-link">
+                        <div class="user-avatar">
+                            <img th:src="@{${#authentication.principal.fotoPerfil}}" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%;" />
+                        </div>
+                        <div class="user-name" th:text="${#authentication.principal.nickname}">USER</div>
+                    </a>
+                </div>
+            </li>
+
         </ul>
 
-        <div class="right-menu">
+        <!-- BOTONES LOGIN/REGISTRO solo si NO está autenticado -->
+        <div class="right-menu" sec:authorize="!isAuthenticated()">
             <a href="#" data-modal="login-modal">INICIAR SESIÓN</a>
             <a href="#" data-modal="register-modal">REGISTRAR</a>
         </div>
@@ -32,7 +48,7 @@
             <span></span>
             <span></span>
         </div>
-</header>
+    </header>
 
     <div class="mobile-menu" id="mobileMenu">
         <ul>
@@ -42,6 +58,7 @@
             <li><a href="#noticias">NOTICIAS</a></li>
             <li><a href="#administrador">ADMNISTRADOR</a></li>
         </ul>
-</div>
+    </div>
 </body>
+
 </html>
