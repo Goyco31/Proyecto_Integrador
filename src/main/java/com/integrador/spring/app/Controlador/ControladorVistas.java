@@ -40,5 +40,10 @@ public class ControladorVistas {
     @GetMapping("/noticias")
     public String noticias(){
         return "/noticias";
-    }    
+    } 
+
+    @GetMapping("/administrador")
+    public String administrador(){
+        return "administrador";
+    }   
 }
