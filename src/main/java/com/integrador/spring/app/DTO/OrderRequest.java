@@ -1,4 +1,4 @@
-package com.integrador.spring.app.Controlador;
+package com.integrador.spring.app.DTO;
 
 public class OrderRequest {
     private String amount;

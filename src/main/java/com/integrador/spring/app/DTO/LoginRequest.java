@@ -1,4 +1,4 @@
-package com.integrador.spring.app.Controlador;
+package com.integrador.spring.app.DTO;
 
 // Importaciones de Lombok para reducir la escritura de código repetitivo
 import lombok.AllArgsConstructor;

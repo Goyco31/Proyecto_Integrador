@@ -1,45 +1,50 @@
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener('DOMContentLoaded', function () {
   const twoFAForm = document.getElementById('2faForm');
   if (!twoFAForm) return;
 
-  twoFAForm.addEventListener('submit', async function(e) {
+  twoFAForm.addEventListener('submit', async function (e) {
     e.preventDefault();
-    
-    // Mostrar estado de carga
+
     const submitButton = this.querySelector('button[type="submit"]');
     const originalText = submitButton.innerHTML;
     submitButton.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Verificando...';
     submitButton.disabled = true;
-    
+
     const formData = {
-      email: this.email.value,
-      twoFactorCode: this.twoFactorCode.value
+      twoFactorCode: this.querySelector('[name="twoFactorCode"]')?.value || '',
+      tempToken: localStorage.getItem('tempToken') || ''
     };
 
     try {
-      const response = await fetch('/verify-2fa', {
+      const response = await fetch('/control/validate-2fa', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(formData)
       });
 
-      const data = await response.json();
-      
+      const text = await response.text();
+      let data;
+      try {
+        data = JSON.parse(text);
+      } catch (e) {
+        console.error('❌ JSON inválido:', text);
+        throw new Error('Respuesta inesperada del servidor');
+      }
+
       if (!response.ok) {
         throw new Error(data.message || 'Código inválido');
       }
 
-      // Si la verificación es exitosa
       if (data.token) {
         localStorage.setItem('authToken', data.token);
-        window.location.href = data.redirectUrl || '/';
+        localStorage.removeItem('tempToken');
+        window.location.href = '/';
       } else {
         throw new Error('Autenticación incompleta');
       }
-      
     } catch (error) {
       console.error('2FA error:', error);
-      alert(error.message); // O mostrar en el modal como en login
+      alert(error.message);
     } finally {
       submitButton.innerHTML = originalText;
       submitButton.disabled = false;
@@ -47,9 +52,9 @@ document.addEventListener('DOMContentLoaded', function() {
   });
 
   // Reenviar código
-  document.getElementById('resend-code')?.addEventListener('click', async function(e) {
+  document.getElementById('resend-code')?.addEventListener('click', async function (e) {
     e.preventDefault();
-    
+
     const email = document.querySelector('#2faForm [name="email"]')?.value;
     if (!email) {
       alert('No hay email asociado');
@@ -57,7 +62,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     try {
-      const response = await fetch('/resend-2fa', {
+      const response = await fetch('/control/resend-2fa', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ email })
