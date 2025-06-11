@@ -12,11 +12,6 @@ public class ControladorVistas {
         return "paginaPrincipal";
     }
 
-    @GetMapping("/index")
-    public String mostrarRegistro() {
-        return "index";
-    }
-
     @GetMapping("/paginaTorneo")
     public String paginatorneo() {
         return "paginaTorneo";

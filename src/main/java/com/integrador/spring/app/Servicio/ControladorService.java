@@ -16,11 +16,11 @@ import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
 import com.google.common.collect.Lists;
 import com.integrador.spring.app.Controlador.ControladorResponse;
-import com.integrador.spring.app.Controlador.LoginRequest;
-import com.integrador.spring.app.Controlador.RegisterRequest;
-import com.integrador.spring.app.Controlador.Validate2FARequest;
 // Importaciones de clases del proyecto
 import com.integrador.spring.app.DAO.UserDAO;
+import com.integrador.spring.app.DTO.LoginRequest;
+import com.integrador.spring.app.DTO.RegisterRequest;
+import com.integrador.spring.app.DTO.Validate2FARequest;
 import com.integrador.spring.app.Modelo.User;
 import com.integrador.spring.app.Modelo.role;
 
@@ -74,6 +74,10 @@ public class ControladorService {
             // Si ya viene con código, verificar
             if (request.getTokenVerificacion() != null) {
                 if (twoFactorAuthService.verify2FACode(user.getCorreo(), request.getTokenVerificacion())) {
+                    user.setTwoFactorCode(null);
+                    user.setTwoFactorExpiry(null);
+                    userDAO.save(user);
+                    
                     String token = jwtService.getToken(user);
                     return ControladorResponse.builder()
                         .mensaje("Autenticación exitosa")
@@ -159,23 +163,38 @@ public class ControladorService {
     }
 
     public ControladorResponse validate2FA(Validate2FARequest request) {
-        boolean isValid = twoFactorAuthService.verify2FACode(request.getEmail(), request.getTwoFactorCode());
+        // 1. Verificar que el tempToken sea válido y no esté expirado
+        if (!jwtService.isTempTokenValid(request.getTempToken())) {
+            throw new RuntimeException("Token temporal inválido o expirado");
+        }
+
+        // 2. Extraer nickname desde el tempToken
+        String nicknameFromToken = jwtService.getUsernameFromToken(request.getTempToken());
+
+        // 3. Buscar al usuario por su correo y validar que coincida con el token
+        User user = userDAO.findByNickname(nicknameFromToken)
+            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
+
+        if (!user.getNickname().equals(nicknameFromToken)) {
+            throw new RuntimeException("Token no pertenece al usuario indicado");
+        }
+
+        // 4. Verificar código 2FA
+        boolean isValid = twoFactorAuthService.verify2FACode(user.getCorreo(), request.getTwoFactorCode());
         if (!isValid) {
             throw new RuntimeException("Código 2FA inválido");
         }
-        
-        User user = userDAO.findByCorreo(request.getEmail())
-            .orElseThrow(() -> new RuntimeException("Usuario no encontrado"));
-        
-        String token = jwtService.getToken(user);
-        
-        // Limpiar código 2FA
+
+        // 5. Limpiar código 2FA para que no se vuelva a usar
         user.setTwoFactorCode(null);
         user.setTwoFactorExpiry(null);
         userDAO.save(user);
-        
+
+        // 6. Generar token final
+        String jwt = jwtService.getToken(user);
+
         return ControladorResponse.builder()
-            .token(token)
+            .token(jwt) // ✅ Token real, no nickname
             .mensaje("Autenticación exitosa")
             .build();
     }

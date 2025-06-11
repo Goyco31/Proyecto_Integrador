@@ -4,6 +4,7 @@ package com.integrador.spring.app.Controlador;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import com.integrador.spring.app.DTO.OrderRequest;
 import com.integrador.spring.app.Servicio.PayPalService;
 
 @RestController
