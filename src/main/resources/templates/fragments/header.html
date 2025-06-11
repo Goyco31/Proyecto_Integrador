@@ -7,58 +7,63 @@
     <title>Document</title>
 </head>
 
-<body>
-    <header class="navbar" th:fragment="header">
-        <div class="logo">
-            <a href="/">
-                <img th:src="@{/Imagenes/Logo.png}" alt="Logo Skill Tourney">
-            </a>
+    <body>
+        <header class="navbar" th:fragment="header">
+            <div class="logo">
+                <a href="/">
+                    <img th:src="@{/Imagenes/Logo.png}" alt="Logo Skill Tourney">
+                </a>
+            </div>
+
+            <ul class="nav-menu">
+                <li><a href="/">INICIO</a></li>
+                <li><a href="#juegos">JUEGOS</a></li>
+                <li><a href="#premios">PREMIOS</a></li>
+                <li><a href="/noticias">NOTICIAS</a></li>
+                <li><a href="/paginaTorneo">TORNEOS</a></li>
+                <li id="admin-link" style="display: none;"><a href="/administrador">Administrador</a></li>
+            
+                <!-- PANEL DE USUARIO visible solo si está autenticado -->
+                <li id="user-logged" style="display: none;">
+                    <div class="user-panel">
+                        <a href="/usuario" class="user-link">
+                            <div class="user-avatar">
+                                <img id="user-avatar" src="" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%;" />
+                            </div>
+                            <div class="user-name" id="user-nickname">USER</div>
+                        </a>
+                        <button id="logout-btn" class="logout-btn">Cerrar sesión</button>
+                    </div>
+                </li>
+
+            </ul>
+
+            <!-- BOTONES LOGIN/REGISTRO solo si NO está autenticado -->
+            <div class="right-menu" id="login-buttons" style="display: flex;">
+                <a href="#" data-modal="login-modal">INICIAR SESIÓN</a>
+                <a href="#" data-modal="register-modal">REGISTRAR</a>
+            </div>
+
+            <div class="hamburger" id="hamburger">
+                <span></span>
+                <span></span>
+                <span></span>
+            </div>
+        </header>
+
+        <div class="mobile-menu" id="mobileMenu">
+            <ul>
+                <li><a href="#inicio">INICIO</a></li>
+                <li><a href="#juegos">JUEGOS</a></li>
+                <li><a href="#premios">PREMIOS</a></li>
+                <li><a href="#noticias">NOTICIAS</a></li>
+                <li><a href="#administrador">ADMNISTRADOR</a></li>
+            </ul>
         </div>
 
-        <ul class="nav-menu">
-            <li><a href="/">INICIO</a></li>
-            <li><a href="#juegos">JUEGOS</a></li>
-            <li><a href="#premios">PREMIOS</a></li>
-            <li><a href="/noticias">NOTICIAS</a></li>
-            <li><a href="/paginaTorneo">TORNEOS</a></li>
-            <li><a href="/administrador">Administrador</a></li>
-          
-            <!-- PANEL DE USUARIO visible solo si está autenticado -->
-            <li sec:authorize="isAuthenticated()">
-                <div class="user-panel">
-                    <a th:href="@{/usuario}" class="user-link">
-                        <div class="user-avatar">
-                            <img th:src="@{${#authentication.principal.fotoPerfil}}" alt="Avatar" style="width: 30px; height: 30px; border-radius: 50%;" />
-                        </div>
-                        <div class="user-name" th:text="${#authentication.principal.nickname}">USER</div>
-                    </a>
-                </div>
-            </li>
+        <div th:insert="fragments/login-modal :: login-modal"></div>
+        <div th:insert="fragments/2fa-modal :: 2fa-modal"></div>
 
-        </ul>
-
-        <!-- BOTONES LOGIN/REGISTRO solo si NO está autenticado -->
-        <div class="right-menu" sec:authorize="!isAuthenticated()">
-            <a href="#" data-modal="login-modal">INICIAR SESIÓN</a>
-            <a href="#" data-modal="register-modal">REGISTRAR</a>
-        </div>
-
-        <div class="hamburger" id="hamburger">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-    </header>
-
-    <div class="mobile-menu" id="mobileMenu">
-        <ul>
-            <li><a href="#inicio">INICIO</a></li>
-            <li><a href="#juegos">JUEGOS</a></li>
-            <li><a href="#premios">PREMIOS</a></li>
-            <li><a href="#noticias">NOTICIAS</a></li>
-            <li><a href="#administrador">ADMNISTRADOR</a></li>
-        </ul>
-    </div>
-</body>
+    </body>
 
 </html>

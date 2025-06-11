@@ -12,6 +12,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.integrador.spring.app.DTO.LoginRequest;
+import com.integrador.spring.app.DTO.RegisterRequest;
+import com.integrador.spring.app.DTO.Validate2FARequest;
 import com.integrador.spring.app.Servicio.ControladorService;
 import com.integrador.spring.app.Servicio.JwtService;
 

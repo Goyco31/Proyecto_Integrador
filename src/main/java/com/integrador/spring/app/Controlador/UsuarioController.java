@@ -13,7 +13,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.security.core.Authentication;
 
+import com.integrador.spring.app.DTO.UsuarioDTO;
 import com.integrador.spring.app.Modelo.Equipo;
 import com.integrador.spring.app.Modelo.User;
 import com.integrador.spring.app.Servicio.EquipoServices;
@@ -29,6 +31,20 @@ public class UsuarioController {
 
     @Autowired
     private EquipoServices services_equipo;
+
+    // Obtener el usuario actualmente autenticado
+    @GetMapping("/me")
+    public ResponseEntity<UsuarioDTO> getAuthenticatedUser(Authentication authentication) {
+        String nickname = authentication.getName();
+
+        Optional<User> userOpt = service_user.buscarNickname(nickname);
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+        }
+
+        UsuarioDTO dto = UsuarioDTO.from(userOpt.get());
+        return ResponseEntity.ok(dto);
+    }
 
     // Mostar todos los usuarios existentes
     @GetMapping("")

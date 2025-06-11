@@ -1,5 +1,6 @@
 package com.integrador.spring.app.Controlador;
 
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 
@@ -10,11 +11,6 @@ public class ControladorVistas {
     @GetMapping("/")
     public String inicio() {
         return "paginaPrincipal";
-    }
-
-    @GetMapping("/index")
-    public String mostrarRegistro() {
-        return "index";
     }
 
     @GetMapping("/paginaTorneo")
@@ -39,11 +35,12 @@ public class ControladorVistas {
     
     @GetMapping("/noticias")
     public String noticias(){
-        return "/noticias";
+        return "noticias";
     } 
 
     @GetMapping("/administrador")
-    public String administrador(){
-        return "administrador";
-    }   
+    @PreAuthorize("hasRole('ADMIN')")
+    public String vistaAdmin() {
+        return "administrador"; // nombre de tu template
+    }  
 }

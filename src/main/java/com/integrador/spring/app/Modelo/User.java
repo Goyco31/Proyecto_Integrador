@@ -91,6 +91,13 @@ public class User implements UserDetails{
     @JsonBackReference
     private Equipo equipo;
     
+    public String getFotoPerfil() {
+        return (fotoPerfil != null && !fotoPerfil.isBlank())
+        ? "/Imagenes/perfil/" + fotoPerfil
+        : "/Imagenes/perfil/default.png";
+    }
+
+
     // Retorna una colección de autoridades (roles) del usuario para Spring Security
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
@@ -126,7 +133,5 @@ public class User implements UserDetails{
         return this.nickname; // Retorna el nombre de usuario
     }
 
-    public String getFotoPerfil() {
-        return fotoPerfil != null ? fotoPerfil : "/imagenes/perfil/default.png";
-    }
+    
 }
