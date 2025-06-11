@@ -131,6 +131,7 @@ public class ControladorService {
                 .correo(request.getCorreo())
                 .contraseña(passwordEncoder.encode(request.getContraseña()))
                 .role(isAdminEmail ? role.ADMIN : role.USER)
+                .fotoPerfil("default.png")
                 .is2faEnabled(true)
                 .build();
 

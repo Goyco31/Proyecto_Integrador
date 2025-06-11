@@ -92,7 +92,9 @@ public class User implements UserDetails{
     private Equipo equipo;
     
     public String getFotoPerfil() {
-        return fotoPerfil != null ? fotoPerfil : "/imagenes/perfil/default.png";
+        return (fotoPerfil != null && !fotoPerfil.isBlank())
+        ? "/Imagenes/perfil/" + fotoPerfil
+        : "/Imagenes/perfil/default.png";
     }
 
 
