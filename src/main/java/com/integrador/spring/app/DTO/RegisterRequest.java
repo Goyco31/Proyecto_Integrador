@@ -1,4 +1,4 @@
-package com.integrador.spring.app.Controlador;
+package com.integrador.spring.app.DTO;
 
 import com.google.common.base.Preconditions;
 import org.apache.commons.lang3.StringUtils;

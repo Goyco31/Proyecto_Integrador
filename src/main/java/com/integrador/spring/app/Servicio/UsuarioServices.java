@@ -50,4 +50,14 @@ public class UsuarioServices {
         repo_usuario.deleteByNickname(nick);
     }
 
+    public void asignarImagenPorDefectoSiNoTiene() {
+        List<User> usuarios = repo_usuario.findAll();
+        for (User u : usuarios) {
+            if (u.getFotoPerfil() == null || u.getFotoPerfil().isBlank()) {
+                u.setFotoPerfil("default.png");
+                repo_usuario.save(u);
+            }
+        }
+    }
+
 }
