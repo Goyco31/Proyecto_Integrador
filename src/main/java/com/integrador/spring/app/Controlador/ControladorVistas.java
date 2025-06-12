@@ -44,11 +44,7 @@ public class ControladorVistas {
     }    
 
     @GetMapping("/canjes")
-    public String mostrarRecompensas(Model model) {
-        // Se pueden enviar datos simples como título o nombre del sitio
-        model.addAttribute("pageTitle", "SkillTourney | Premios para Canjear");
-        model.addAttribute("siteName", "SkillTourney");
-
-        return "canjes";
+    public String mostrarRecompensas() {
+      return "canjes";
     }
 }
