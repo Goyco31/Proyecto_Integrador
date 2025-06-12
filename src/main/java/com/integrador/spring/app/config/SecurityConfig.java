@@ -51,7 +51,7 @@ public class SecurityConfig {
                     "/favicon.ico",
                     "/skill",
                     "/explorar",
-                     "/usuario",
+                    "/usuario",
                     "/noticias",
                     "/paginaTorneo",
                     "/clasificacion",
