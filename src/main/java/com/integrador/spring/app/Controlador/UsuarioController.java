@@ -1,7 +1,13 @@
 package com.integrador.spring.app.Controlador;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.nio.file.StandardCopyOption;
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -9,10 +15,13 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.security.core.Authentication;
 
 import com.integrador.spring.app.DTO.UsuarioDTO;
@@ -45,6 +54,47 @@ public class UsuarioController {
         UsuarioDTO dto = UsuarioDTO.from(userOpt.get());
         return ResponseEntity.ok(dto);
     }
+
+    @PutMapping("/me")
+    public ResponseEntity<UsuarioDTO> actualizarPerfil(@RequestBody UsuarioDTO dto, Authentication auth) {
+        String nicknameActual = auth.getName();
+        Optional<User> userOpt = service_user.buscarNickname(nicknameActual);
+
+        if (userOpt.isEmpty()) return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+
+        User user = userOpt.get();
+
+        // Actualiza los campos si vienen no nulos
+        if (dto.nombre() != null) user.setNombre(dto.nombre());
+        if (dto.apellido() != null) user.setApellido(dto.apellido());
+        if (dto.nickname() != null) user.setNickname(dto.nickname());
+        if (dto.correo() != null) user.setCorreo(dto.correo());
+        if (dto.fotoPerfil() != null) user.setFotoPerfil(dto.fotoPerfil());
+
+        User actualizado = service_user.guardar(user);
+        return ResponseEntity.ok(UsuarioDTO.from(actualizado));
+    }
+
+
+    @PostMapping("/api/usuarios/upload-foto")
+    public ResponseEntity<String> uploadFoto(@RequestParam("file") MultipartFile file) {
+        try {
+            String originalName = file.getOriginalFilename();
+            if (originalName == null || !originalName.matches(".*\\.(jpg|jpeg|png)$")) {
+                return ResponseEntity.badRequest().body("Formato no permitido");
+            }
+
+            String filename = UUID.randomUUID() + "_" + originalName;
+            Path path = Paths.get("uploads/perfil/" + filename);
+            Files.createDirectories(path.getParent());
+            Files.copy(file.getInputStream(), path, StandardCopyOption.REPLACE_EXISTING);
+
+            return ResponseEntity.ok(filename); // <--- lo guardarás en la BD
+        } catch (IOException e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Error al subir imagen");
+        }
+    }
+
 
     // Mostar todos los usuarios existentes
     @GetMapping("")
