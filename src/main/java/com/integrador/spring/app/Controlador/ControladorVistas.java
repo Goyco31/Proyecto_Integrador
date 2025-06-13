@@ -1,6 +1,7 @@
 package com.integrador.spring.app.Controlador;
 
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 
@@ -40,6 +41,7 @@ public class ControladorVistas {
     @GetMapping("/noticias")
     public String noticias(){
         return "/noticias";
+<<<<<<< HEAD
     } 
     
     @GetMapping("/canjear")
@@ -47,4 +49,17 @@ public class ControladorVistas {
         return "/canjear";
     } 
     
+=======
+    }    
+
+    @GetMapping("/canjes")
+    public String mostrarRecompensas() {
+      return "canjes";
+    }
+
+    @GetMapping("/ComprarMonedas")
+    public String ComprarMonedas() {
+      return "ComprarMonedas";
+    }
+>>>>>>> 643f6237e7593699cc1afdbb5754d12ab03d0ea6
 }

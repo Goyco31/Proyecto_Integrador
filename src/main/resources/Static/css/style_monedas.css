@@ -1,0 +1,98 @@
+/* Fuentes */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Orbitron', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #380dd4, #004d40); /* Fondo degradado morado-verde */
+  color: #f0f0f0;
+}
+
+/* Sección principal de compra */
+.comprar-monedas {
+  padding: 3rem 2rem;
+  background-color: rgba(139, 0, 255, 0.08); /* Fondo lila suave */
+  text-align: center;
+}
+
+.comprar-monedas h2 {
+  font-size: 2.5rem;
+  color: #d580ff; /* Título en morado pastel */
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
+
+.texto-secundario {
+  font-size: 1.2rem;
+  color: #e0ccff;
+  margin-bottom: 2.5rem;
+}
+
+/* Contenedor de tarjetas */
+.packs-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 2rem;
+}
+
+/* Tarjetas de packs */
+.pack-card {
+  background: #6a0dad;
+  border-radius: 15px;
+  box-shadow: 0 8px 15px rgba(123, 47, 247, 0.4);
+  width: 260px;
+  padding: 2rem 1.5rem;
+  color: #f0e9ff;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  transition: transform 0.3s ease;
+}
+
+.pack-card:hover {
+  transform: scale(1.05);
+}
+
+.pack-card h3 {
+  font-size: 1.5rem;
+  margin-bottom: 0.8rem;
+  color: #ffffff;
+}
+
+.precio {
+  font-size: 1.2rem;
+  font-weight: bold;
+  color: #ffb3ff;
+  margin-bottom: 1.2rem;
+}
+
+/* Botón de PayPal */
+.paypal-button {
+  background-color: #9d4edd;
+  color: #f0e9ff;
+  border: none;
+  padding: 0.8rem 1.2rem;
+  border-radius: 10px;
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.paypal-button:hover {
+  background-color: #7b2ff7;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .packs-container {
+    flex-direction: column;
+    align-items: center;
+  }
+}
