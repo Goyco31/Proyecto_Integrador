@@ -26,3 +26,13 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('register-modal').style.display = 'flex';
   });
 });
+
+document.getElementById("abrir-recuperar").addEventListener("click", function (e) {
+    e.preventDefault();
+
+    // Oculta el modal de login
+    document.getElementById("login-modal").style.display = "none";
+
+    // Muestra el modal de recuperar
+    document.getElementById("recuperarConta").style.display = "flex";
+  });

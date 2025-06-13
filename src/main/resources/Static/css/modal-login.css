@@ -246,3 +246,18 @@ hr {
 .fa-spinner {
   margin-right: 8px;
 }
+
+
+/*Estilo para el recuperar contraseña*/
+.recordar {
+  display: block;
+  text-align: right;
+  font-size: 0.9em;
+  text-decoration: none;
+  margin-top: 5px;
+  cursor: pointer; 
+}
+
+.recordar:hover {
+  text-decoration: underline;
+}
