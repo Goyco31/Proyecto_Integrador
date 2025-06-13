@@ -47,4 +47,9 @@ public class ControladorVistas {
     public String mostrarRecompensas() {
       return "canjes";
     }
+
+    @GetMapping("/ComprarMonedas")
+    public String ComprarMonedas() {
+      return "ComprarMonedas";
+    }
 }

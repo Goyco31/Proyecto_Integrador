@@ -54,7 +54,8 @@ public class SecurityConfig {
                     "/noticias",
                     "/canjes",
                     "/paginaTorneo",
-                    "/clasificacion").permitAll()
+                    "/clasificacion",
+                    "/ComprarMonedas").permitAll()
                     // Permitir acceso a las rutas de control
                     .requestMatchers("/control/**").permitAll()
                     // Requiere autenticación para todo lo demás
