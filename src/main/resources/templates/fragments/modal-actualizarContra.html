@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Modal de Login</title>
+    <!-- Usa el mismo CSS del modal de registro -->
+    <link rel="stylesheet" th:href="@{/css/modal-login.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+
+<body>
+    <!-- Modal de Verificación 2FA -->
+    <div th:fragment="actualizarContra" id="actualizarContra" class="modal" style="display: none;">
+        <div class="formulario-contenedor">
+            <!-- Botón para cerrar (X) -->
+            <button class="close-modal">&times;</button>
+
+            <!-- Título principal -->
+            <h1>ACTUALIZAR CONTRASEÑA</h1>
+
+            <!-- Formulario de verificación -->
+            <form method="post" class="formulario">
+                <!-- Campo para contraseña -->
+                <div class="input-group">
+                    <i class="fas fa-lock" style="color: white;"></i>
+                    <input type="password" name="contrasena" placeholder="Contraseña" required>
+                </div>
+
+                <!-- Campo para confirmar la contraseña -->
+                <div class="input-group">
+
+                    <input type="password" name="confirmar_contrasena" placeholder="Confirmar contraseña" required>
+                </div>
+
+
+
+                <!-- Botón de para actualizar la contraseña -->
+                <button type="submit" class="btn-login">
+                    <i class="fas fa-arrow-right"></i>
+                    Actualizar
+                </button>
+            </form>
+        </div>
+    </div>
+</body>
+
+</html>
