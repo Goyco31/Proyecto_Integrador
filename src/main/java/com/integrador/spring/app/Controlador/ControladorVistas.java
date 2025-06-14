@@ -46,5 +46,10 @@ public class ControladorVistas {
     @PreAuthorize("hasRole('ADMIN')")
     public String vistaAdmin() {
         return "administrador"; // nombre de tu template
-    }  
+    }
+    
+    @GetMapping("/canjes")
+    public String mostrarRecompensas() {
+      return "canjes";
+    }
 }
