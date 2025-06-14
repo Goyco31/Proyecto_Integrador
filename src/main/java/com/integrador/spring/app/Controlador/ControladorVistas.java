@@ -37,6 +37,10 @@ public class ControladorVistas {
     public String noticias(){
         return "noticias";
     } 
+    @GetMapping("/equipos")
+    public String equipos(){
+        return "equipos";
+    }
 
     @GetMapping("/administrador")
     @PreAuthorize("hasRole('ADMIN')")
