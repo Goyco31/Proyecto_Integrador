@@ -55,6 +55,7 @@ public class SecurityConfig {
                     "/noticias",
                     "/equipos",
                     "/canjes",
+                    "/crearequipo",
                     "/paginaTorneo",
                     "/clasificacion",
                     "/administrador").permitAll()

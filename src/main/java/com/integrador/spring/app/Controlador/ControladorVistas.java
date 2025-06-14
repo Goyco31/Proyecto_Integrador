@@ -52,4 +52,9 @@ public class ControladorVistas {
     public String mostrarRecompensas() {
       return "canjes";
     }
+
+    @GetMapping("/crearequipo")
+    public String crearequipo() {
+      return "crearequipo";
+    }
 }
