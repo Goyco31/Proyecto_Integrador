@@ -57,4 +57,9 @@ public class ControladorVistas {
     public String crearequipo() {
       return "crearequipo";
     }
+
+   @GetMapping("/torneoinscrito")
+    public String torneoinscrito() {
+      return "torneoinscrito";
+    }
 }

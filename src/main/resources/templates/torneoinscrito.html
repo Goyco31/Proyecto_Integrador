@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkillTourney - Crear Equipo</title>
+    <link rel="stylesheet" th:href="@{/css/torneoinscrito.css}">
+    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Monda:wght@400;700&display=swap"
+        rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/header.css}" />
+    <link rel="stylesheet" th:href="@{/css/footer.css}" />
+</head>
+
+<body>
+    <!-- Overlay que oscurecerá el fondo -->
+    <div class="overlay" id="overlay"></div>
+
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <div class="volver-atras">
+        <a href="/paginaTorneo" class="back-volver"><i class="fas fa-arrow-left"></i> Volver</a>
+    </div>
+
+    <div class="teams-list-page-container">
+        <h2 class="section-title">EQUIPOS REGISTRADOS</h2>
+        <p class="context-text">Explora los equipos que participarán en el torneo y sus integrantes.</p>
+
+        <div class="teams-grid-layout">
+            </div>
+    </div>
+
+
+    <div th:replace="~{fragments/footer}"></div>
+    <script th:src="@{/jscript/torneoinscrito.js}" defer></script>
+    <script src="/jscript/header.js" defer></script>
+</body>
+
+</html>
