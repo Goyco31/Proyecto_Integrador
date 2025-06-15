@@ -201,6 +201,7 @@
 
 /*Estilo para el logout*/
 .logout-btn {
+    margin-left: 50px;
   background-color: #e74c3c;
   color: #fff;
   border: none;

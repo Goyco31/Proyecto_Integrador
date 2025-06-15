@@ -59,6 +59,8 @@ public class SecurityConfig {
                     "/torneoinscrito",
                     "/cuadrotorneo",
                     "/paginaTorneo",
+                    "/pdfDota2",
+                    "/pdfCSGO2",
                     "/clasificacion",
                     "/administrador").permitAll()
                     // Permitir acceso a las rutas de control

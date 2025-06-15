@@ -22,8 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
             slots: "16/32 equipos",
             format: "Eliminación Doble, Bo3",
             // Las rutas de PDF (ReglamentoenDoc) son correctas según tu estructura de carpetas mostrada
-            rulesLink: "/ReglamentoenDoc/reglamentodeDota2.pdf",
-            registerLink: "/inscripcion-dota.html",
+            rulesLink: "/pdfDota2",
+            registerLink: "/torneoinscrito",
             status: "activo"
         },
         "dota-agosto-pro": {
@@ -37,8 +37,8 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Sube de nivel y compite contra profesionales. Grandes premios y la oportunidad de hacerte un nombre en la escena.",
             slots: "8/16 equipos",
             format: "Eliminación Directa, Bo5 Finales",
-            rulesLink: "/ReglamentoenDoc/reglamentodeDota2.pdf",
-            registerLink: "/inscripcion-dota.html",
+            rulesLink: "/pdfDota2",
+            registerLink: "/torneoinscrito",
             status: "activo"
         },
         "csgo-julio-open": {
@@ -52,8 +52,8 @@ document.addEventListener('DOMContentLoaded', () => {
             description: "Demuestra tu puntería y tácticas en el CS:GO Open. Abierto a todos los niveles. ¡No te quedes fuera!",
             slots: "24/32 equipos",
             format: "Sistema Suizo + Playoffs",
-            rulesLink: "/ReglamentoenDoc/reglamentodeCSGO2.pdf",
-            registerLink: "/registro-torneo-csgo.html",
+            rulesLink: "/pdfCSGO2",
+            registerLink: "/torneoinscrito",
             status: "activo"
         },
         // Los datos de localStorage se expanden aquí, sobrescribiendo los IDs duplicados de arriba

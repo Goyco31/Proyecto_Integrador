@@ -107,7 +107,164 @@ document.addEventListener('DOMContentLoaded', () => {
             rank: "Diamond",
             region: "North America",
             description: "Sigilosos y letales. Los ninjas del ciberespacio dominan el campo de batalla."
+        },
+        team4: {
+            id: 'team4',
+            name: "PixelRaiders",
+            logo: "https://cdn.pixabay.com/photo/2023/01/29/12/51/e-sports-7752695_960_720.png",
+            members: [
+                { name: "Hex", avatar: "https://img.freepik.com/fotos-premium/avatar-logotipo-juego-canal_327483-16513.jpg" },
+                { name: "BitStorm", avatar: "https://img.freepik.com/fotos-premium/avatar-gamer-logotipo-juego_327483-16615.jpg" },
+                { name: "ByteGirl", avatar: "https://img.freepik.com/vector-premium/avatar-estilo-dibujos-animados-logotipo-mascota-esports_530689-391.jpg" }
+            ],
+            wins: 10,
+            losses: 4,
+            kdRatio: 3.5,
+            matches: 14,
+            rank: "Legendary Eagle",
+            region: "NA",
+            description: "Expertos en ataques digitales rápidos. Domadores de píxeles y estrategas del caos."
+        },
+
+        team5: {
+            id: 'team5',
+            name: "DarkVoltage",
+            logo: "https://img.freepik.com/premium-vector/dark-gamer-mascot-logo_92086-609.jpg",
+            members: [
+                { name: "Volt", avatar: "https://img.freepik.com/fotos-premium/avatar-logotipo-juego-canal_327483-16508.jpg" },
+                { name: "Sparkz", avatar: "https://img.freepik.com/vector-premium/diseno-logotipo-juego-avatar-esport_812892-22.jpg" },
+                { name: "Shock", avatar: "https://img.freepik.com/vector-premium/logotipo-juego-gamer-avatar-cara-hombre-barba-esport_623506-478.jpg" }
+            ],
+            wins: 7,
+            losses: 5,
+            kdRatio: 2.8,
+            matches: 12,
+            rank: "Supreme",
+            region: "LATAM",
+            description: "Energía pura en cada partida. Jugamos con voltaje oscuro en cada enfrentamiento."
+        },
+
+        team6: {
+            id: 'team6',
+            name: "GhostOps",
+            logo: "https://img.freepik.com/premium-vector/ghost-mascot-esport-logo-design_147932-18.jpg",
+            members: [
+                { name: "Wraith", avatar: "https://img.freepik.com/fotos-premium/avatar-estilo-mascota-esports_1040459-5664.jpg" },
+                { name: "Silent", avatar: "https://img.freepik.com/fotos-premium/avatar-cool-gamer-3d_118019-2066.jpg" }
+            ],
+            wins: 6,
+            losses: 6,
+            kdRatio: 1.9,
+            matches: 12,
+            rank: "Gold Nova",
+            region: "Europe",
+            description: "Operaciones silenciosas, pero letales. Desaparecemos tan rápido como llegamos."
+        },
+
+        team7: {
+            id: 'team7',
+            name: "RageQuitters",
+            logo: "https://cdn-icons-png.flaticon.com/512/2106/2106849.png",
+            members: [
+                { name: "AngryBoy", avatar: "https://img.freepik.com/vector-premium/avatar-gamer-logotipo-juego-esport_1102330-418.jpg" },
+                { name: "TiltQueen", avatar: "https://img.freepik.com/vector-premium/ilustracion-personaje-avatar-jugador-estilo-esports_698401-837.jpg" },
+                { name: "Rage", avatar: "https://img.freepik.com/fotos-premium/avatar-esports-gamer-furia-juegos_104785-697.jpg" }
+            ],
+            wins: 3,
+            losses: 9,
+            kdRatio: 1.3,
+            matches: 12,
+            rank: "Silver Elite",
+            region: "Asia",
+            description: "Conocidos por nuestras salidas dramáticas. Pero cuando no nos tilteamos... somos peligrosos."
+        },
+
+        team8: {
+            id: 'team8',
+            name: "HeadshotHunters",
+            logo: "https://img.freepik.com/vector-premium/logotipo-jugador-avatar-cabeza-chico-esports_526569-693.jpg",
+            members: [
+                { name: "Sn1per", avatar: "https://img.freepik.com/fotos-premium/avatar-logotipo-juego-esports_818261-2927.jpg" },
+                { name: "HSQueen", avatar: "https://img.freepik.com/fotos-premium/gamer-avatar-esport-logo_745528-337.jpg" },
+                { name: "DeadEye", avatar: "https://img.freepik.com/vector-premium/mascota-avatar-logotipo-esports_1102330-386.jpg" }
+            ],
+            wins: 14,
+            losses: 1,
+            kdRatio: 6.9,
+            matches: 15,
+            rank: "Global Elite",
+            region: "NA",
+            description: "Una bala, una baja. Vivimos por el sonido del headshot."
+        },
+
+        team9: {
+            id: 'team9',
+            name: "CritSquad",
+            logo: "https://img.freepik.com/vector-premium/jugador-avatar-esports-logotipo-mascota_780895-191.jpg",
+            members: [
+                { name: "Critter", avatar: "https://img.freepik.com/fotos-premium/avatar-logotipo-juego-canal-streaming-juegos-o-blogger_327483-16551.jpg" },
+                { name: "Lucky", avatar: "https://img.freepik.com/vector-premium/personaje-avatar-esports-diseno-logotipo-juego_698401-803.jpg" }
+            ],
+            wins: 9,
+            losses: 3,
+            kdRatio: 3.7,
+            matches: 12,
+            rank: "Distinguished Master Guardian",
+            region: "Oceania",
+            description: "Especialistas en golpes críticos y jugadas inesperadas."
+        },
+
+        team10: {
+            id: 'team10',
+            name: "TheLaggers",
+            logo: "https://cdn-icons-png.flaticon.com/512/2107/2107796.png",
+            members: [
+                { name: "PingLord", avatar: "https://img.freepik.com/vector-premium/personaje-avatar-estilo-esports_698401-1072.jpg" },
+                { name: "Delay", avatar: "https://img.freepik.com/fotos-premium/jugador-avatar-esport-mascota_772740-25.jpg" }
+            ],
+            wins: 2,
+            losses: 13,
+            kdRatio: 0.9,
+            matches: 15,
+            rank: "Silver I",
+            region: "LATAM",
+            description: "Dicen que perdemos por lag... pero tú sabes que no. ¿Cierto?"
+        },
+
+        team11: {
+            id: 'team11',
+            name: "N00bDestroyers",
+            logo: "https://img.freepik.com/vector-premium/mascota-avatar-logotipo-esports_1102330-296.jpg",
+            members: [
+                { name: "TryHard", avatar: "https://img.freepik.com/vector-premium/avatar-gamer-logotipo-juego_327483-16507.jpg" },
+                { name: "EZWin", avatar: "https://img.freepik.com/vector-premium/personaje-avatar-logotipo-esports-juego_698401-861.jpg" }
+            ],
+            wins: 11,
+            losses: 4,
+            kdRatio: 4.2,
+            matches: 15,
+            rank: "Eagle Master",
+            region: "Europe",
+            description: "Destruimos noobs... con estilo y sin piedad."
+        },
+
+        team12: {
+            id: 'team12',
+            name: "FinalBosses",
+            logo: "https://img.freepik.com/premium-vector/boss-mascot-esport-logo_92086-435.jpg",
+            members: [
+                { name: "Overlord", avatar: "https://img.freepik.com/vector-premium/mascota-avatar-logotipo-juego-estilo-esports_698401-648.jpg" },
+                { name: "Oblivion", avatar: "https://img.freepik.com/vector-premium/avatar-gamer-esport-logotipo-mascota_659215-33.jpg" }
+            ],
+            wins: 13,
+            losses: 1,
+            kdRatio: 6.1,
+            matches: 14,
+            rank: "Global Elite",
+            region: "Asia",
+            description: "Somos el último obstáculo. Si nos enfrentas, prepárate para el game over."
         }
+
         // Puedes añadir más equipos aquí en este objeto 'teamsData'.
     };
 
