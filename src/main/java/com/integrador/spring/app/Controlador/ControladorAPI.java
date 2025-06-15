@@ -2,21 +2,28 @@ package com.integrador.spring.app.Controlador;
 
 
 
+import java.util.Map;
+import java.util.Optional;
+
 // Importaciones necesarias para manejar respuestas HTTP y anotaciones de Spring
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.integrador.spring.app.DAO.UserDAO;
 import com.integrador.spring.app.DTO.LoginRequest;
 import com.integrador.spring.app.DTO.RegisterRequest;
 import com.integrador.spring.app.DTO.Validate2FARequest;
+import com.integrador.spring.app.Modelo.User;
 import com.integrador.spring.app.Servicio.ControladorService;
 import com.integrador.spring.app.Servicio.JwtService;
+import com.integrador.spring.app.Servicio.TwoFactorAuthService;
 
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
@@ -37,6 +44,9 @@ public class ControladorAPI {
     private final ControladorService authService;
     private final JwtService jwtService; // Inyectar JwtService
     private final UserDetailsService userDetailsService; // Inyectar UserDetailsService
+    private final UserDAO userDAO;
+    private final TwoFactorAuthService twoFactorAuthService;
+    private final PasswordEncoder passwordEncoder;
 
     // Recibe los datos de login en el cuerpo de la solicitud y los pasa al servicio
     @PostMapping("/login")
@@ -89,5 +99,58 @@ public class ControladorAPI {
     public ResponseEntity<ControladorResponse> validate2FA(@RequestBody Validate2FARequest request) {
         return ResponseEntity.ok(authService.validate2FA(request));
     }
-  
+    
+
+    @PostMapping("/forgot-password")
+    public ResponseEntity<?> forgotPassword(@RequestBody Map<String, String> body) {
+        String correo = body.get("correo");
+        Optional<User> userOpt = userDAO.findByCorreo(correo);
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(404).body(Map.of("message", "Correo no encontrado"));
+        }
+
+        // Generar código (puedes usar el servicio que ya tienes)
+        twoFactorAuthService.generateAndSend2FACode(correo);
+
+        return ResponseEntity.ok(Map.of("message", "Código enviado al correo"));
+    }
+
+    @PostMapping("/validate-reset-code")
+    public ResponseEntity<?> validateResetCode(@RequestBody Map<String, String> body) {
+        String correo = body.get("correo");
+        String code = body.get("code");
+
+        Optional<User> userOpt = userDAO.findByCorreo(correo);
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(404).body(Map.of("message", "Usuario no encontrado"));
+        }
+
+        boolean valido = twoFactorAuthService.verify2FACode(correo, code);
+        if (!valido) {
+            return ResponseEntity.status(400).body(Map.of("message", "Código incorrecto o expirado"));
+        }
+
+        return ResponseEntity.ok(Map.of("message", "Código verificado"));
+    }
+
+    @PostMapping("/reset-password")
+    public ResponseEntity<?> resetPassword(@RequestBody Map<String, String> body) {
+        String correo = body.get("correo");
+        String nueva = body.get("nueva");
+
+        Optional<User> userOpt = userDAO.findByCorreo(correo);
+        if (userOpt.isEmpty()) {
+            return ResponseEntity.status(404).body(Map.of("message", "Usuario no encontrado"));
+        }
+
+        User user = userOpt.get();
+        user.setContraseña(passwordEncoder.encode(nueva));
+        user.setTwoFactorCode(null); // Limpieza si es que se reutilizó el campo
+        user.setTwoFactorExpiry(null);
+        userDAO.save(user);
+
+        return ResponseEntity.ok(Map.of("message", "Contraseña actualizada correctamente"));
+    }
+
+
 }

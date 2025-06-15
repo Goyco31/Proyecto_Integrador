@@ -64,7 +64,8 @@ public class SecurityConfig {
                     "/clasificacion",
                     "/administrador").permitAll()
                     // Permitir acceso a las rutas de control
-                    .requestMatchers("/control/login", "/control/registro", "/control/refresh-token", "/control/toggle-2fa", "/control/validate-2fa").permitAll()
+                    .requestMatchers("/control/login", "/control/registro", "/control/refresh-token", "/control/toggle-2fa","/control/forgot-password",
+                    "/control/validate-reset-code", "/control/reset-password", "/control/validate-2fa").permitAll()
                     // Requiere autenticación para todo lo demás
                     .requestMatchers("/api/**").authenticated()
             )
