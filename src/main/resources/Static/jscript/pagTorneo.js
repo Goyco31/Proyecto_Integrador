@@ -61,17 +61,18 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // 2. Obtener referencias a elementos del DOM
-    const tournamentsContainer = document.getElementById('tournaments-cards-container');
+    // Usamos las clases que definimos en el HTML y CSS
+    const tournamentsContainer = document.querySelector('.lista-torneos'); 
     const noActiveTournamentsMessage = document.getElementById('no-active-tournaments-message');
     const carouselModal = document.querySelector('.carousel-modal');
     const closeCarouselModalBtn = document.querySelector('.close-modal');
     const modalTournamentContentArea = document.querySelector('.modal-tournament-content-area');
-    const overlay = document.getElementById('overlay'); // El overlay oscuro
+    const overlay = document.querySelector('.overlay'); 
 
     // 3. Función para renderizar dinámicamente las tarjetas de torneos
     const renderTournamentCards = () => {
         if (!tournamentsContainer) {
-            console.error("Error: El contenedor de torneos (#tournaments-cards-container) no se encontró en el HTML. Asegúrate de que el elemento exista y su ID sea correcto.");
+            console.error("Error: El contenedor de torneos (.lista-torneos) no se encontró en el HTML. Asegúrate de que el elemento exista y su clase sea correcta.");
             return; // No podemos renderizar si no hay contenedor
         }
 
@@ -82,8 +83,6 @@ document.addEventListener('DOMContentLoaded', () => {
         if (activeTournaments.length === 0) {
             if (noActiveTournamentsMessage) {
                 noActiveTournamentsMessage.style.display = 'block';
-                // Si el contenedor está vacío y no hay mensaje, aquí se vería vacío.
-                // Es crucial que 'noActiveTournamentsMessage' exista y tenga estilos para ser visible.
             }
             return;
         } else {
@@ -95,24 +94,27 @@ document.addEventListener('DOMContentLoaded', () => {
         // Crear una tarjeta HTML para cada torneo activo
         activeTournaments.forEach(tournament => {
             const tournamentCard = document.createElement('div');
-            tournamentCard.classList.add('tournament-card');
+            // Usamos la clase 'carta-torneo' como en tu HTML y CSS
+            tournamentCard.classList.add('carta-torneo');
             tournamentCard.dataset.tournamentId = tournament.id; // Almacena el ID del torneo
 
+            // Normalizar el tipo de torneo para la clase CSS (ej: "Premium" -> "premium")
+            const typeClass = tournament.type ? tournament.type.toLowerCase().replace(/\s/g, '') : 'default';
+
             // --- Estructura HTML para cada tarjeta ---
-            // Este HTML es generado por JS y necesita CSS para verse bien.
             tournamentCard.innerHTML = `
-                <div class="card-image-wrapper">
-                    <img src="${tournament.gameImage}" alt="${tournament.title}" class="card-game-banner">
-                    <span class="type-badge type-${tournament.type ? tournament.type.toLowerCase().replace(/\s/g, '') : 'default'}">
+                <div class="img-torneo">
+                    <img src="${tournament.gameImage}" alt="${tournament.title}" class="banner-torneo">
+                    <span class="type-badge type-${typeClass}">
                         ${tournament.type ? tournament.type.toUpperCase() : ''}
                     </span>
-                    <img src="${tournament.gameIcon}" alt="${tournament.title} Icon" class="card-game-icon">
+                    <img src="${tournament.gameIcon}" alt="${tournament.title} Icon" class="juego-torneo">
                 </div>
-                <div class="card-info">
-                    <h3 class="card-title">${tournament.title}</h3>
-                    <p class="card-schedule"><i class="fas fa-calendar-alt"></i> ${tournament.date}</p>
-                    <p class="card-prize"><i class="fas fa-trophy"></i> ${tournament.prize}</p>
-                    <p class="card-slots"><i class="fas fa-users"></i> ${tournament.slots}</p>
+                <div class="contenido-torneo">
+                    <h3>${tournament.title}</h3>
+                    <p><i class="fas fa-calendar-alt"></i> ${tournament.date}</p>
+                    <p><i class="fas fa-trophy"></i> ${tournament.prize}</p>
+                    <p><i class="fas fa-users"></i> ${tournament.slots}</p>
                 </div>
             `;
             tournamentsContainer.appendChild(tournamentCard); // Añadir la tarjeta al contenedor
@@ -120,7 +122,6 @@ document.addEventListener('DOMContentLoaded', () => {
     };
 
     // --- Funcionalidad de Carrusel de Imágenes en las secciones de juegos destacados ---
-    // (Asumo que esta parte es para un carrusel de imágenes genérico en la página, no directamente de torneos)
     const initGameCarousels = () => {
         const gameCards = document.querySelectorAll('.game-card'); // Contenedores individuales de carrusel
         gameCards.forEach(card => {
@@ -128,6 +129,7 @@ document.addEventListener('DOMContentLoaded', () => {
             let currentIndex = 0;
 
             if (carouselImages.length > 1) {
+                // Asegurarse de que solo la primera imagen esté activa al inicio
                 carouselImages.forEach((img, index) => {
                     if (index === 0) {
                         img.classList.add('active');
@@ -136,11 +138,12 @@ document.addEventListener('DOMContentLoaded', () => {
                     }
                 });
 
+                // Establecer el intervalo para cambiar las imágenes
                 setInterval(() => {
                     carouselImages[currentIndex].classList.remove('active');
                     currentIndex = (currentIndex + 1) % carouselImages.length;
                     carouselImages[currentIndex].classList.add('active');
-                }, 3000);
+                }, 3000); // Cambia cada 3 segundos
             }
         });
     };
@@ -179,21 +182,11 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
-    // Event listener para abrir el modal al hacer clic en cualquier tarjeta de torneo
-    // Usamos delegación de eventos en el contenedor padre para eficiencia
-    if (tournamentsContainer) {
-        tournamentsContainer.addEventListener('click', (e) => {
-            const card = e.target.closest('.tournament-card'); // Encuentra la tarjeta de torneo más cercana al clic
-            if (card) {
-                const tournamentId = card.dataset.tournamentId; // Obtiene el ID del torneo de la tarjeta
-                if (tournamentId) {
-                    loadModalContent(tournamentId); // Carga el contenido en el modal
-                    if (carouselModal) carouselModal.style.display = 'flex'; // Muestra el modal
-                    if (overlay) overlay.style.display = 'block'; // Muestra el overlay
-                    document.body.style.overflow = 'hidden'; // Evita el scroll del cuerpo mientras el modal está abierto
-                }
-            }
-        });
+    // Función para abrir el modal
+    const openTheModal = () => {
+        if (carouselModal) carouselModal.style.display = 'flex'; // Muestra el modal (CSS display: flex para centrar)
+        if (overlay) overlay.style.display = 'block'; // Muestra el overlay
+        document.body.style.overflow = 'hidden'; // Evita el scroll del cuerpo mientras el modal está abierto
     }
 
     // Función para cerrar el modal y limpiar su contenido
@@ -206,19 +199,38 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     };
 
+    // Event listener para abrir el modal al hacer clic en cualquier tarjeta de torneo
+    // Usamos delegación de eventos en el contenedor padre para eficiencia
+    if (tournamentsContainer) {
+        tournamentsContainer.addEventListener('click', (e) => {
+            const card = e.target.closest('.carta-torneo'); // Encuentra la tarjeta de torneo más cercana al clic (usando la clase correcta)
+            if (card) {
+                const tournamentId = card.dataset.tournamentId; // Obtiene el ID del torneo de la tarjeta
+                if (tournamentId) {
+                    loadModalContent(tournamentId); // Carga el contenido en el modal
+                    openTheModal(); // Abre el modal
+                }
+            }
+        });
+    }
+
     // Event listener para cerrar el modal al hacer clic en el botón de cerrar
     if (closeCarouselModalBtn) closeCarouselModalBtn.addEventListener('click', closeTheModal);
 
-    // Event listener para cerrar el modal al hacer clic fuera del contenido del modal (en el overlay)
-    // Se verifica si el evento fue en el overlay o en el modal mismo (su fondo)
+    // Event listener para cerrar el modal al hacer clic fuera del contenido del modal (en el overlay o el propio fondo del modal)
     if (overlay) {
         overlay.addEventListener('click', (e) => {
+            // Solo cierra si el clic es directamente en el overlay y no en un elemento dentro del modal-content
+            // O si el clic es directamente en el fondo del modal (si el modal mismo es el target)
             if (e.target === overlay || e.target === carouselModal) {
                 closeTheModal();
             }
         });
     }
+
     // Asegura que también se cierre si se hace clic directamente en el fondo del modal (si no es el overlay)
+    // Esto es un fallback, ya que el evento en 'overlay' ya debería capturar esto si el modal está contenido en el overlay.
+    // Sin embargo, mantenerlo no hace daño.
     if (carouselModal) {
         carouselModal.addEventListener('click', (e) => {
             if (e.target === carouselModal) {
@@ -226,6 +238,7 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         });
     }
+
 
     // --- Inicialización al cargar la página ---
     renderTournamentCards(); // Renderiza los torneos activos al cargar la página
