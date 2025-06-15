@@ -277,3 +277,34 @@ body {
   padding: 12px 15px;
  }
 }
+
+/* Botón de crear equipo*/
+.create-team-btn {
+    background: linear-gradient(90deg, #8A2BE2, #6a00b0); /* purple-accent */
+    color: #FFFFFF; /* pure-white */
+    padding: 5px 10px;
+    font-size: 1.1em;
+    border-radius: 10px;
+    box-shadow: 0 3px 15px rgba(138, 43, 226, 0.4); /* button-shadow-purple */
+    text-transform: uppercase;
+    letter-spacing: 0.8px;
+    text-decoration: none;
+    display: inline-flex; /* Usar flexbox para alinear icono y texto */
+    align-items: center; /* Centrar verticalmente icono y texto */
+    gap: 8px; /* Espacio entre el icono y el texto */
+    margin-left: 800px;
+    margin-bottom: 10px;
+}
+
+.create-team-btn:hover {
+    background: linear-gradient(90deg, #9a3bed, #7a10c0); /* button-hover-purple */
+    transform: translateY(-2px);
+    box-shadow: 0 5px 20px rgba(138, 43, 226, 0.8);
+}
+
+/* Sección que contiene el botón "Crear Nuevo Equipo" */
+.create-team-section {
+    text-align: right; /* ¡Pega el botón a la derecha! */
+    margin-top: 40px;
+    margin-bottom: 20px;
+}

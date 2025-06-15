@@ -62,4 +62,9 @@ public class ControladorVistas {
     public String torneoinscrito() {
       return "torneoinscrito";
     }
+
+    @GetMapping("/cuadrotorneo")
+    public String cuadrotorneo() {
+      return "cuadrotorneo";
+    }
 }
