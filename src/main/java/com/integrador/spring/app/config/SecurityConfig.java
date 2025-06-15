@@ -51,11 +51,12 @@ public class SecurityConfig {
                     "/favicon.ico",
                     "/skill",
                     "/explorar",
-                     "/usuario",
+                    "/usuario",
                     "/noticias",
                     "/paginaTorneo",
                     "/clasificacion",
-                    "/administrador").permitAll()
+                    "/administrador",
+                    "/ReglamentoenDoc/**").permitAll()
                     // Permitir acceso a las rutas de control
                     .requestMatchers("/control/login", "/control/registro", "/control/refresh-token", "/control/toggle-2fa", "/control/validate-2fa").permitAll()
                     // Requiere autenticación para todo lo demás
