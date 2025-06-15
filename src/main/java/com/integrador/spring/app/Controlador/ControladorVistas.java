@@ -41,16 +41,13 @@ public class ControladorVistas {
     @GetMapping("/noticias")
     public String noticias(){
         return "/noticias";
-<<<<<<< HEAD
     } 
     
     @GetMapping("/canjear")
     public String canjear(){
         return "/canjear";
     } 
-    
-=======
-    }    
+      
 
     @GetMapping("/canjes")
     public String mostrarRecompensas() {
@@ -61,5 +58,4 @@ public class ControladorVistas {
     public String ComprarMonedas() {
       return "ComprarMonedas";
     }
->>>>>>> 643f6237e7593699cc1afdbb5754d12ab03d0ea6
 }

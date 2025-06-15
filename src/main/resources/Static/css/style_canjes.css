@@ -124,3 +124,102 @@ body {
         flex-direction: column;
     }
 }
+
+ 
+.panel-wrapper {
+    width: 100%; /* O el ancho de tu contenido principal */
+    max-width: 1200px; /* Si tu contenido principal tiene un ancho máximo, el wrapper también */
+    margin: 20px auto; /* Centra el wrapper y le da un margen superior/inferior */
+    padding: 0 20px; /* Añade padding para que el panel no se pegue al borde de la pantalla */
+
+    display: flex; /* Habilita Flexbox para alinear los elementos hijos */
+    justify-content: flex-end; /* **Esto es lo que pega el floating-currency-panel a la derecha** */
+    /* align-items: flex-start;  Podrías usar esto si quieres que el panel se alinee en la parte superior del wrapper */
+}
+
+/* --- Estilos para el Panel de Moneda/Gema con el '+' (sin position: fixed) --- */
+.floating-currency-panel {
+    /* position: fixed; <--- ELIMINAR ESTA LÍNEA */
+    /* bottom: 30px; <--- ELIMINAR ESTA LÍNEA */
+    /* right: 30px; <--- ELIMINAR ESTA LÍNEA */
+
+    display: flex;
+    align-items: center;
+    background-color: #2a2a4a; /* Fondo oscuro similar a tu diseño */
+    border: 1px solid #3a3a5a;
+    border-radius: 25px; /* Bordes muy redondeados */
+    padding: 5px 10px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.4);
+    z-index: 1000; /* Asegura que esté por encima de la mayoría del contenido adyacente */
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    
+    /* Si lo quieres ligeramente separado de la derecha del contenedor */
+    /* margin-right: 20px; */ 
+}
+
+.floating-currency-panel:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.5), 0 0 15px rgba(255, 215, 0, 0.7);
+}
+
+.floating-currency-value {
+    display: flex;
+    align-items: center;
+    padding-right: 10px;
+}
+
+.floating-currency-icon {
+    font-size: 1.6em;
+    color: #00bcd4;
+    margin-right: 6px;
+    text-shadow: 0 0 7px rgba(0, 188, 212, 0.6);
+}
+
+.floating-currency-amount {
+    font-family: 'Oswald', sans-serif;
+    font-size: 1.4em;
+    font-weight: 700;
+    color: #ffd700;
+}
+
+.floating-add-button {
+    background-color: #4a4a7a;
+    border-radius: 50%;
+    width: 35px;
+    height: 35px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-decoration: none;
+    color: #fff;
+    font-size: 1.5em;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+.floating-add-button:hover {
+    background-color: #6a6ad0;
+    transform: scale(1.1);
+}
+
+/* Responsive para el panel */
+@media (max-width: 768px) {
+    .panel-wrapper {
+        padding: 0 15px; /* Ajusta padding en móviles */
+    }
+    .floating-currency-panel {
+        /* No se necesitan cambios drásticos aquí, ya que fluirá con el contenedor */
+        padding: 4px 8px;
+    }
+    .floating-currency-icon {
+        font-size: 1.4em;
+    }
+    .floating-currency-amount {
+        font-size: 1.2em;
+    }
+    .floating-add-button {
+        width: 30px;
+        height: 30px;
+        font-size: 1.3em;
+    }
+}
