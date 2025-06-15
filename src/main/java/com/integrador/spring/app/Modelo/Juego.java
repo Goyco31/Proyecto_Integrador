@@ -20,8 +20,6 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Entity
 public class Juego {
-
-    //id autoincrementable
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idJuego;
@@ -32,6 +30,16 @@ public class Juego {
     private String generoJuego;
     @Lob
     private byte[] imgJuego;
+
+    private String imgJuegoBase64;
+
+    public String getImgJuegoBase64() {
+        return imgJuegoBase64;
+    }
+
+    public void setImgJuegoBase64(String imgJuegoBase64) {
+        this.imgJuegoBase64 = imgJuegoBase64;
+    }
 
     //Relacion uno a muchos con la tabla torneo
     @OneToMany(mappedBy = "juego", cascade = CascadeType.ALL, orphanRemoval = true)

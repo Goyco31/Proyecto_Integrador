@@ -89,5 +89,10 @@ public class ControladorAPI {
     public ResponseEntity<ControladorResponse> validate2FA(@RequestBody Validate2FARequest request) {
         return ResponseEntity.ok(authService.validate2FA(request));
     }
-  
+
+    @org.springframework.web.bind.annotation.DeleteMapping("/api/usuarios/eliminar/{id}")
+    public ResponseEntity<String> eliminarUsuario(@org.springframework.web.bind.annotation.PathVariable Integer id) {
+        authService.eliminarUsuario(id);
+        return ResponseEntity.ok("Usuario eliminado correctamente");
+    }
 }

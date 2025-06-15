@@ -1,5 +1,6 @@
 package com.integrador.spring.app.Controlador;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -29,9 +30,17 @@ public class RecompensaController {
     @Autowired
     private RecompensaServices services_recompensa;
 
-    @GetMapping("")
+    @GetMapping("/lista")
     public ResponseEntity<List<Recompensa>> listar() {
         List<Recompensa> todos = services_recompensa.listarTodas();
+
+        for(Recompensa recompensa : todos){
+            if (recompensa.getImgRecompensa() != null) {
+                byte[] imgRecompensa = recompensa.getImgRecompensa();
+                String imgRecompensaBase64 = Base64.getEncoder().encodeToString(imgRecompensa);
+                recompensa.setImgRecompensaBase64(imgRecompensaBase64);
+            }
+        }
         return new ResponseEntity<>(todos, HttpStatus.OK);
     }
 
@@ -83,6 +92,8 @@ public class RecompensaController {
             actualizar.setCantidad(cantidad);
             if (cantidad > 0) {
                 actualizar.setDisponible(true);
+            } else {
+                actualizar.setDisponible(false);
             }
             actualizar.setImgRecompensa(imagen.getBytes());
             return new ResponseEntity<>(services_recompensa.guardar(actualizar), HttpStatus.OK);
@@ -91,8 +102,8 @@ public class RecompensaController {
         }
     }
 
-    @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<Void> eliminarRecompensa(Integer id) {
+    @DeleteMapping("/eliminar/id/{id}")
+    public ResponseEntity<Void> eliminarRecompensa(@PathVariable Integer id) {
         try {
             services_recompensa.eliminar(id);
             return ResponseEntity.noContent().build();

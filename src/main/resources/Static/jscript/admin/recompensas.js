@@ -1,0 +1,334 @@
+function listarRecompensas() {
+  const token = localStorage.getItem("authToken");
+  fetch("/api/recompensas/lista", {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((r) => r.json())
+    .then((data) => {
+      let tabla = `
+        <div class="tournament-actions">
+            <button id="new-tournament-btn" class="btn-primary"  onclick="registrarRecompensas()">
+              Nueva Recompensa
+            </button>
+        </div>
+
+        <table class="tournaments-table">
+                          <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Descripcion</th>
+                                <th>Costo</th>
+                                <th>Disponible</th>
+                                <th>Cantidad</th>
+                                <th>Imagen</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>`;
+      data.forEach((l) => {
+        tabla += `<tbody class="tournaments-table-body">
+                          <td>${l.idRecompensa}</td>
+                                <td>${l.nombre}</td>
+                                <td>${l.descripcion}</td>
+                                <td>${l.costo} monedas</td>
+                                <td>${l.disponible}</td>
+                                <td>${l.cantidad}</td>
+                                <td>
+                                    <img src="data:image/png;base64,${l.imgRecompensaBase64}" alt="${l.nombre}" style="width: 100px; height: 100px;">
+                                </td>
+                                </td>
+                                <td>
+                                    <button class="btn-secondary edit-btn" data-id="${l.idRecompensa}" onclick="actualizarRecompensa(${l.idRecompensa})">Editar</button>
+                                    <button class="btn-danger delete-btn" data-recompensa-id="${l.idRecompensa}" onclick="eliminarRecompensa(${l.idRecompensa})">Eliminar</button>
+                                </td>
+                        </tbody>`;
+      });
+      tabla += `</table>`;
+      document.getElementById("contenedor-tablas").innerHTML = tabla;
+    });
+}
+
+
+function actualizarRecompensa(id) {
+  const token = localStorage.getItem("authToken");
+  fetch(`/api/recompensas/id/${id}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((r) => r.json())
+    .then((data) => {
+      const modalContainer = document.createElement("div");
+      modalContainer.id = "tournament-modal";
+      modalContainer.classList.add("modal");
+
+      modalContainer.innerHTML = `
+        <div class="modal-content">
+          <span class="close">&times;</span>
+          <h2>Actualizar Recompensa</h2>
+          <form id="tournament-form" class="admin-form">
+            <div class="form-group">
+              <label for="tournament-name">Nombre:</label>
+              <input type="text" id="tournament-name" value="${data.nombre}" required />
+            </div>
+            <div class="form-group">
+              <label for="tournament-description">Descripcion:</label>
+              <textarea id="tournament-description" rows="3" required>${data.descripcion}</textarea>
+            </div>
+            <div class="form-group">
+              <label for="tournament-costo">Costo:</label>
+              <input
+                type="number"
+                id="tournament-costo"
+                value="${data.costo}"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="tournament-cantidad">Cantidad:</label>
+              <input
+                type="number"
+                id="tournament-cantidad"
+                value="${data.cantidad}"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="tournament-game-image">Imagen de la recompensa:</label>
+              <input type="file" id="tournament-game-image" />
+              <img src="data:image/png;base64,${data.imgRecompensaBase64}" alt="${data.nombre}" style="width: 100px; height: 100px;">
+            </div>
+            
+            <div class="form-actions">
+              <button type="submit" class="btn-primary" id="btnGuardarRecompensa">Guardar</button>
+              <button
+                type="button"
+                class="btn-cancel"
+                id="cancel-tournament-modal"
+              >
+                Cancelar
+              </button>
+            </div>
+          </form>
+        </div>
+      `;
+
+      document.body.appendChild(modalContainer);
+
+      const btnCerrarModal = document.getElementById("cancel-tournament-modal");
+      btnCerrarModal.addEventListener("click", () => {
+        modalContainer.remove();
+      });
+
+      const guardarRecompensa = document.getElementById("btnGuardarRecompensa");
+      guardarRecompensa.addEventListener("click", async (event) => {
+        event.preventDefault();
+        const nombre = document.getElementById("tournament-name").value;
+        const descripcion = document.getElementById(
+          "tournament-description"
+        ).value;
+        const costo = parseInt(
+          document.getElementById("tournament-costo").value
+        );
+        const cantidad = parseInt(
+          document.getElementById("tournament-cantidad").value
+        );
+        const imagen = document.getElementById("tournament-game-image")
+          .files[0];
+        let disponible = cantidad > 0;
+
+        const dataSave = new FormData();
+        dataSave.append("nombre", nombre);
+        dataSave.append("descripcion", descripcion);
+        dataSave.append("costo", costo);
+        dataSave.append("cantidad", cantidad);
+        dataSave.append("disponible", disponible);
+        dataSave.append("imagen", imagen);
+
+        const token = localStorage.getItem("authToken");
+        try {
+          const res = await fetch(`/api/recompensas/actualizar/id/${id}`, {
+            method: "PUT",
+            headers: {
+              Authorization: `Bearer ${token}`,
+            },
+            body: dataSave,
+          });
+          if (!res.ok) throw new Error();
+          Swal.fire("Exito", "Recompensa actualizada", "success");
+          listarRecompensas();
+          modalContainer.remove();
+        } catch (error) {
+          Swal.fire("Error", errorMessage, "error");
+        }
+      });
+    });
+}
+
+function registrarRecompensas() {
+  const modalContainer = document.createElement("div");
+  modalContainer.id = "tournament-modal";
+  modalContainer.classList.add("modal");
+
+  const modalTitle = "Registrar Recompensa";
+  const fetchUrl = "/api/recompensas/registrar";
+  const fetchMethod = "POST";
+  const successMessage = "Recompensa registrado";
+  const errorMessage = "No se pudo registrar la recompensa";
+
+  modalContainer.innerHTML = `
+    <div class="modal-content">
+      <span class="close">&times;</span>
+      <h2>Registrar Recompensa</h2>
+      <form id="tournament-form" class="admin-form">
+        <div class="form-group">
+          <label for="tournament-name">Nombre:</label>
+          <input type="text" id="tournament-name" required />
+        </div>
+        <div class="form-group">
+          <label for="tournament-description">Descripcion:</label>
+          <textarea id="tournament-description" rows="3" required></textarea>
+        </div>
+        <div class="form-group">
+          <label for="tournament-costo">Costo:</label>
+          <input
+            type="number"
+            id="tournament-costo"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="tournament-cantidad">Cantidad:</label>
+          <input
+            type="number"
+            id="tournament-cantidad"
+            required
+          />
+        </div>
+        <div class="form-group">
+          <label for="tournament-game-image">Imagen de la recompensa:</label>
+          <input type="file" id="tournament-game-image" required />
+        </div>
+        
+        <div class="form-actions">
+            <button type="submit" class="btn-primary" id="btnGuardarRecompensa">Guardar</button>
+            <button
+              type="button"
+              class="btn-cancel"
+              id="cancel-tournament-modal"
+            >
+              Cancelar
+            </button>
+        </div>
+      </form>
+    </div>
+  `;
+  document.body.appendChild(modalContainer);
+
+  const btnCerrarModal = document.getElementById("cancel-tournament-modal");
+  btnCerrarModal.addEventListener("click", () => {
+    modalContainer.remove();
+  });
+
+  const guardarRecompensa = document.getElementById("btnGuardarRecompensa");
+  guardarRecompensa.addEventListener("click", async (event) => {
+    event.preventDefault();
+    const nombre = document.getElementById("tournament-name").value;
+    const descripcion = document.getElementById("tournament-description").value;
+    const costo = parseInt(document.getElementById("tournament-costo").value);
+    const cantidad = parseInt(
+      document.getElementById("tournament-cantidad").value
+    );
+    let disponible;
+    if (cantidad > 0) {
+      disponible = true;
+    } else {
+      disponible = false;
+    }
+    const imagen = document.getElementById("tournament-game-image").files[0];
+
+    const dataSave = new FormData();
+    dataSave.append("nombre", nombre);
+    dataSave.append("descripcion", descripcion);
+    dataSave.append("costo", costo);
+    dataSave.append("cantidad", cantidad);
+    dataSave.append("disponible", disponible);
+    dataSave.append("imagen", imagen);
+
+    const token = localStorage.getItem("authToken");
+    try {
+      const res = await fetch(fetchUrl, {
+        method: fetchMethod,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+        body: dataSave,
+      });
+      if (!res.ok) throw new Error();
+      Swal.fire("Exito", successMessage, "success");
+      listarRecompensas();
+      modalContainer.remove();
+    } catch (error) {
+      Swal.fire("Error", errorMessage, "error");
+    }
+  });
+}
+
+function eliminarRecompensa(idRecompensa) {
+  const modalContainer = document.createElement("div");
+  modalContainer.id = "confirm-modal";
+  modalContainer.classList.add("modal");
+
+  modalContainer.innerHTML = `
+        <div class="modal-content small-modal">
+          <p>¿Seguro que desea eliminar esta recompensa?😕</p>
+          <div class="form-actions">
+            <button
+              id="confirm-delete-btn"
+              class="btn-danger"
+              
+            >
+              Eliminar
+            </button>
+            <button
+              id="cancel-delete-btn"
+              class="btn-secondary"
+            >
+              Cancelar
+            </button>
+          </div>
+        </div>`;
+
+  document.body.appendChild(modalContainer);
+
+  // Botón Cancelar (buscar dentro del modal)
+  const btnCerrarModal = modalContainer.querySelector("#cancel-delete-btn");
+  btnCerrarModal.addEventListener("click", () => {
+    modalContainer.remove();
+  });
+
+  // Botón Eliminar
+  const btnConfirmar = modalContainer.querySelector("#confirm-delete-btn");
+  btnConfirmar.addEventListener("click", async function (event) {
+    event.preventDefault();
+    const token = localStorage.getItem("authToken");
+    console.log("Token:", token); // Add this line
+    try {
+      const res = await fetch(`/api/recompensas/eliminar/id/${idRecompensa}`, {
+        method: "DELETE",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      });
+
+      if (!res.ok) throw new Error();
+      Swal.fire("Éxito", "Recompensa eliminada", "success");
+      listarRecompensas();
+      modalContainer.remove();
+    } catch (error) {
+      Swal.fire("Error", "No se pudo eliminar la recompensa", "error");
+    }
+  });
+}

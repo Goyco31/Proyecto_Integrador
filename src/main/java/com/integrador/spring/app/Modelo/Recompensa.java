@@ -23,5 +23,8 @@ public class Recompensa {
     private Integer cantidad;
     @Lob
     private byte[] imgRecompensa;
+
+    private String imgRecompensaBase64;
+
 }
 
