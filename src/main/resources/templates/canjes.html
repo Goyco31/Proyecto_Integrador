@@ -35,7 +35,7 @@
           />
           <div class="card-content">
             <h3 th:text="${recompensas.nombre}">Tarjeta Steam $10</h3>
-            <p class="reward-description" th:text="recompensas.descripcion">
+            <p class="reward-description" th:text="${recompensas.descripcion}">
               Ideal para juegos, DLCs y más en Steam.
             </p>
             <div class="reward-cost" th:text="${recompensas.costo}">2,000 monedas</div>
