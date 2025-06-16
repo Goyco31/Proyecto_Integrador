@@ -16,6 +16,10 @@
     <section class="hero-banner">
         <div class="slogan-container">
             <h1 class="main-slogan">Impulsa tu juego<br>Atrae a tu audiencia<br>Haz historia</h1>
+            <div class="inscribir-equipo">
+                <p class="">Si quieres inscribirte a un torneo, debes tener un equipo primero.</p>
+                <a href="/equipos" class="unirse-equipo">Unirte a equipo</a>
+            </div>
         </div>
     </section>
 
@@ -23,7 +27,8 @@
         <div class="game-card">
             <div class="game-info">
                 <h2 class="game-title">DOTA 2</h2>
-                <p class="game-description">Torneos profesionales con premios en efectivo. Forma tu equipo y compite. Haz historia, únete y participa, sé el mejor y alcanza tu máximo nivel.</p>
+                <p class="game-description">Torneos profesionales con premios en efectivo. Forma tu equipo y compite.
+                    Haz historia, únete y participa, sé el mejor y alcanza tu máximo nivel.</p>
                 <div class="game-specs">
                     <span>5vs5</span>
                     <span>Premio: 💰 Variable</span>
@@ -43,12 +48,14 @@
             </div>
             <div class="game-info">
                 <h2 class="game-title">CS:GO 2</h2>
-                <p class="game-description">Demuestra tu precisión en el shooter táctico más popular, en uno de los juegos clásicos y preferidos por la mayoría de jugadores.</p>
+                <p class="game-description">Demuestra tu precisión en el shooter táctico más popular, en uno de los
+                    juegos clásicos y preferidos por la mayoría de jugadores.</p>
                 <div class="game-specs">
                     <span>5vs5</span>
                     <span>Premio: 💰 Variable</span>
                     <span>Modo: Defusal</span>
-                T</div>
+                    T
+                </div>
             </div>
         </div>
     </section>
@@ -56,16 +63,18 @@
     <section class="tournaments-section" id="eventos">
         <h2 class="section-title">TORNEOS ACTIVOS</h2>
         <div class="cards-container" id="tournaments-cards-container">
-            </div>
-        <p id="no-active-tournaments-message" class="info-message" style="display: none;">No hay torneos activos en este momento. ¡Vuelve pronto!</p>
+        </div>
+        <p id="no-active-tournaments-message" class="info-message" style="display: none;">No hay torneos activos en este
+            momento. ¡Vuelve pronto!</p>
     </section>
 
     <div class="carousel-modal">
         <div class="modal-content">
-            <span class="close-modal">&times;</span> <div class="modal-tournament-content-area"></div>
+            <span class="close-modal">&times;</span>
+            <div class="modal-tournament-content-area"></div>
         </div>
     </div>
-    
+
     <div th:replace="~{fragments/footer}"></div>
     <div th:replace="~{fragments/modal-registro}"></div>
     <div th:replace="~{fragments/modal-login}"></div>
@@ -77,4 +86,5 @@
     <script src="/jscript/header.js" defer></script>
     <script src="/jscript/logout.js" defer></script>
 </body>
+
 </html>

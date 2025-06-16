@@ -152,7 +152,8 @@
       <div th:replace="~{fragments/modal-login :: login-modal}"></div>
       <!-- Modal 2FA -->
       <div th:replace="~{fragments/modal-2FA :: 2fa-modal}"></div>
-
+      <!-- Modal 2FA recuperar-->
+      <div th:replace="~{fragments/modal-2fa-recuperar}"></div>
       </div>
     </main>
 
@@ -161,9 +162,16 @@
   <div th:replace="~{fragments/modal-registro}"></div>
   <div th:replace="~{fragments/modal-login}"></div>
   <div th:replace="~{fragments/modal-2FA}"></div>
+  <div th:replace="~{fragments/modal-recuperarContra}"></div>
+  <div th:replace="~{fragments/modal-actualizarContra}"></div>
   <div th:replace="~{fragments/footer}"></div>
+
+  
   <script th:src="@{/jscript/pagPrincipal.js}"></script>
   <script th:src="@{/jscript/modal-registro.js}"></script>
+  <script th:src="@{/jscript/modal-recuperarContra.js}" defer></script>
+  <script th:src="@{/jscript/modal-2fa-recuperacion.js}" defer></script>
+  <script th:src="@{/jscript/modal-actualizarContra.js}" defer></script>
   <script th:src="@{/jscript/modal-login.js}"></script>
   <script th:src="@{/jscript/modal-2FA.js}"></script>
   <script src="/jscript/header.js" defer></script>

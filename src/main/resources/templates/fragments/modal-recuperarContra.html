@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Recuperar Contraseña</title>
+    <link rel="stylesheet" th:href="@{/css/modal-login.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div th:fragment="recuperarConta" id="recuperarConta" class="modal" style="display: none;">
+  <div class="formulario-contenedor">
+    <button class="close-modal">&times;</button>
+    <h1>RECUPERAR CONTRASEÑA</h1>
+    <p style="color: white;">El correo con el que creó su cuenta</p>
+
+    <form method="post" class="formulario">
+      <div class="input-group">
+        <i class="fas fa-envelope" style="color: white;"></i>
+        <input type="email" id="correo-recuperar" placeholder="Ingrese su correo para recuperar la contraseña" required>
+
+      </div>
+
+      <button type="submit" class="btn-login">
+        <i class="fas fa-arrow-right"></i> CONTINUAR
+      </button>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>
