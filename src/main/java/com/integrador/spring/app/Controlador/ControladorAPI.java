@@ -115,16 +115,6 @@ public class ControladorAPI {
         return ResponseEntity.ok(Map.of("message", "Código enviado al correo"));
     }
 
-
-    @org.springframework.web.bind.annotation.DeleteMapping("/api/usuarios/eliminar/{id}")
-    public ResponseEntity<String> eliminarUsuario(@org.springframework.web.bind.annotation.PathVariable Integer id) {
-        authService.eliminarUsuario(id);
-        return ResponseEntity.ok("Usuario eliminado correctamente");
-    }
-
-
-
-
     @PostMapping("/validate-reset-code")
     public ResponseEntity<?> validateResetCode(@RequestBody Map<String, String> body) {
         String correo = body.get("correo");
