@@ -43,6 +43,7 @@
             alt="Dota 2 gameplay 1"
           />
           <img th:src="@{/Imagenes/torneodota2.jpg}" alt="Dota 2 gameplay 2" />
+
         </div>
       </div>
 
@@ -75,6 +76,7 @@
     </section>
 
     <section class="tournaments-section" id="eventos">
+
       <h2 class="section-title">TORNEOS ACTIVOS</h2>
       <div class="lista-torneos">
         <div class="carta-torneo" th:each="torneo : ${torneos}">
@@ -119,6 +121,7 @@
         <span class="close-modal">&times;</span>
         <div class="modal-tournament-content-area"></div>
       </div>
+
     </div>
 
     <div th:replace="~{fragments/footer}"></div>
@@ -133,3 +136,4 @@
     <script src="/jscript/logout.js" defer></script>
   </body>
 </html>
+

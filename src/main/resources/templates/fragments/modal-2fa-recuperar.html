@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Verificar Código</title>
+    <link rel="stylesheet" th:href="@{/css/modal-login.css}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+</head>
+<body>
+<div th:fragment="2fa-recuperacion-modal" id="2fa-recuperacion-modal" class="modal" style="display: none;">
+  <div class="formulario-contenedor">
+    <button class="close-modal">&times;</button>
+    <h1>RECUPERACIÓN DE CONTRASEÑA</h1>
+    <p>Hemos enviado un código para recuperar tu contraseña.</p>
+
+    <form id="2fa-recuperacion-form" class="formulario">
+      <div class="input-group">
+        <i class="fas fa-shield-alt"></i>
+        <input
+          type="text"
+          name="twoFactorCode"
+          placeholder="Código de verificación (6 dígitos)"
+          required
+          pattern="\d{6}"
+          maxlength="6"
+          title="Por favor ingresa un código de 6 dígitos"
+        />
+      </div>
+
+      <button type="submit" class="btn-login">
+        <i class="fas fa-check-circle"></i> VERIFICAR CÓDIGO
+      </button>
+
+      <div class="forgot-password">
+        <a href="#" id="resend-code">¿No recibiste el código? Reenviar</a>
+      </div>
+    </form>
+  </div>
+</div>
+
+</body>
+</html>

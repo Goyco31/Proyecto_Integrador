@@ -1,0 +1,205 @@
+/* === FUENTES === */
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap');
+
+@font-face {
+  font-family: 'Sink';
+  src: url('../fonts/SinkDisplay.woff2') format('woff2'),
+       url('../fonts/SinkDisplay.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+*{
+    font-family: 'Orbitron', sans-serif;
+}
+
+/* === RESET Y ESTILOS BASE === */
+* {
+  margin: 0;
+  padding: 0;
+  font-family: 'Orbitron', sans-serif;
+  box-sizing: border-box;
+}
+
+
+.tournament-container {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.65), rgba(0, 0, 0, 0.65)),
+                  url('https://img.freepik.com/vector-premium/fondo-futbol-o-futbol-pelota-grande-colores-morados_444390-3413.jpg');
+background-repeat: no-repeat;
+background-size: cover;
+background-position: center;
+padding: 20px;
+color: white;
+
+    
+}
+
+.bracket-title {
+    text-align: center;
+    font-size: 4em;
+    color: #8a2be2;
+    margin-bottom: 50px;
+    text-shadow: 0 0 18px rgba(138, 43, 226, 0.9);
+}
+
+.bracket-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 40px;
+    position: relative;
+}
+
+.round {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.round-header {
+    background: #3a1996;
+    padding: 10px 20px;
+    border-radius: 25px;
+    font-weight: bold;
+    font-size: 0.9rem;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    border: 2px solid #2a0d5f;
+    box-shadow: 0 4px 15px rgba(69, 50, 90, 0.4);
+}
+
+.teams-column {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.team-box {
+    background: #41198b;
+    padding: 12px 20px;
+    border-radius: 8px;
+    min-width: 120px;
+    text-align: center;
+    font-weight: 500;
+    border: 2px solid #000000;
+    box-shadow: 0 4px 10px rgba(63, 3, 3, 0.5);
+    transition: all 0.3s ease;
+}
+
+.team-box:hover {
+    box-shadow: 0 6px 15px rgba(57, 11, 95, 0.6);
+    border-color: #2e2d2d;
+}
+
+.winner-box {
+    background: #2a0d5f;
+    border-color: #000000;
+    box-shadow: 0 2px 15px rgba(56, 32, 95, 0.4);
+}
+
+.champion-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 20px;
+}
+
+.champion-box {
+    background: #1a0246;
+    color: #000;
+    padding: 15px 25px;
+    border-radius: 10px;
+    font-weight: bold;
+    font-size: 1.1rem;
+    border: 3px solid #fff;
+}
+
+
+.finalist-box {
+    background: linear-gradient(135deg, #8b5cf6, #7c3aed);
+    padding: 12px 20px;
+    border-radius: 8px;
+    font-weight: 500;
+    border: 2px solid #a78bfa;
+    box-shadow: 0 4px 15px rgba(139, 92, 246, 0.4);
+}
+
+.trophy-icon {
+    font-size: 2rem;
+    margin-bottom: 10px;
+}
+
+.trophy-text {
+    font-size: 0.8rem;
+    color: #333;
+    font-weight: normal;
+}
+
+/* Líneas conectoras */
+.connector {
+    position: relative;
+    width: 60px;
+    height: 300px;
+}
+
+.connector::before {
+    content: '';
+    position: absolute;
+    top: 50%;
+    left: 0;
+    right: 0;
+    height: 2px;
+    background: linear-gradient(90deg, #4a90e2, #ff6b9d);
+    box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
+}
+
+.connector-vertical {
+    position: absolute;
+    width: 2px;
+    height: 100px;
+    background: linear-gradient(180deg, #4a90e2, #ff6b9d);
+    left: 50%;
+    top: 25%;
+    box-shadow: 0 0 10px rgba(74, 144, 226, 0.5);
+}
+
+/* Responsive */
+@media (max-width: 1200px) {
+    .bracket-container {
+        flex-wrap: wrap;
+        gap: 20px;
+    }
+
+    .title {
+        font-size: 2rem;
+    }
+
+    .connector {
+        width: 40px;
+        height: 200px;
+    }
+}
+
+@media (max-width: 768px) {
+    .bracket-container {
+        flex-direction: column;
+        gap: 30px;
+    }
+
+    .connector {
+        width: 200px;
+        height: 20px;
+    }
+
+    .connector::before {
+        top: 0;
+        left: 50%;
+        right: auto;
+        width: 2px;
+        height: 100%;
+    }
+
+    .title {
+        font-size: 1.5rem;
+    }
+}
