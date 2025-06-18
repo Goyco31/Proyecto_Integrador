@@ -75,7 +75,6 @@ body {
     justify-content: center;
     background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
         url('../Imagenes/hero-bg.jpg') no-repeat center center/cover;
-    /* Asegúrate que la ruta de hero-bg.jpg sea correcta */
     background-size: cover;
     background-position: center;
     text-align: center;
