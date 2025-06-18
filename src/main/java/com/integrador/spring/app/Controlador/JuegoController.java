@@ -1,5 +1,6 @@
 package com.integrador.spring.app.Controlador;
 
+import java.util.Base64;
 import java.util.List;
 import java.util.Optional;
 
@@ -30,10 +31,18 @@ public class JuegoController {
     private JuegoServices service_juego;
 
     //lista todos los juegos
-    @GetMapping("")
+    @GetMapping("/lista")
     public ResponseEntity<List<Juego>> listarTodo() {
-        List<Juego> juego = service_juego.listarJuegos();
-        return new ResponseEntity<>(juego, HttpStatus.OK);
+        List<Juego> lista = service_juego.listarJuegos();
+
+        for (Juego juego : lista) {
+            if (juego.getImgJuego() != null) {
+                byte[] imgJuegoBytes = juego.getImgJuego();
+                String imgJuegoBase64 = Base64.getEncoder().encodeToString(imgJuegoBytes);
+                juego.setImgJuegoBase64(imgJuegoBase64);
+            }
+        }
+        return new ResponseEntity<>(lista, HttpStatus.OK);
     }
 
     //busca el juego por su id

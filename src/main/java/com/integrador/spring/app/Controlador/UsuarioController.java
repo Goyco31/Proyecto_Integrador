@@ -97,7 +97,7 @@ public class UsuarioController {
 
 
     // Mostar todos los usuarios existentes
-    @GetMapping("")
+    @GetMapping("/lista")
     public ResponseEntity<List<User>> listarTodo() {
         List<User> user = service_user.listarUsuarios();
         return new ResponseEntity<>(user, HttpStatus.OK);

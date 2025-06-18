@@ -1,11 +1,13 @@
 package com.integrador.spring.app.Servicio;
 
+import java.io.IOException;
 import java.math.BigDecimal;
 import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.integrador.spring.app.DAO.ComprarMonedasRepo;
 import com.integrador.spring.app.Modelo.ComprarMonedas;
@@ -15,27 +17,48 @@ public class ComprarMonedasServices {
     @Autowired
     private ComprarMonedasRepo repo_comprar;
 
-    public List<ComprarMonedas> listar(){
+    public List<ComprarMonedas> listar() {
         return repo_comprar.findAll();
     }
 
-    public Optional<ComprarMonedas> buscarId(Integer id){
+    public Optional<ComprarMonedas> buscarId(Integer id) {
         return repo_comprar.findById(id);
     }
 
-    public ComprarMonedas añadirCompra(String nombre, Integer cantidad, BigDecimal precio){
+    public ComprarMonedas añadirCompra(String nombre, Integer cantidad, BigDecimal precio, MultipartFile imgMoneda)
+            throws IOException {
         ComprarMonedas opcion = new ComprarMonedas();
         opcion.setNombre(nombre);
         opcion.setCantidad(cantidad);
         opcion.setPrecioCompra(precio);
+        opcion.setImgMoneda(imgMoneda.getBytes());
         return repo_comprar.save(opcion);
     }
 
-    public ComprarMonedas guardar(ComprarMonedas comprarMonedas){
+    public ComprarMonedas actualizarCompra(Integer id, String nombre, Integer cantidad, BigDecimal precio,
+            MultipartFile imgMoneda) throws IOException {
+
+        Optional<ComprarMonedas> existe = repo_comprar.findById(id);
+        if (existe.isPresent()) {
+            ComprarMonedas actualizar = existe.get();
+            actualizar.setNombre(nombre);
+            actualizar.setCantidad(cantidad);
+            actualizar.setPrecioCompra(precio);
+            if (imgMoneda != null && !imgMoneda.isEmpty()) {
+                actualizar.setImgMoneda(imgMoneda.getBytes());
+            }
+            return repo_comprar.save(actualizar);
+        } else{
+            return null;
+        }
+
+    }
+
+    public ComprarMonedas guardar(ComprarMonedas comprarMonedas) {
         return repo_comprar.save(comprarMonedas);
     }
 
-    public void eliminar(Integer id){
+    public void eliminar(Integer id) {
         repo_comprar.deleteById(id);
     }
 }
