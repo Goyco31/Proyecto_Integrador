@@ -68,7 +68,8 @@ body {
 
 /* === HERO SECTION (Banner principal) === */
 .hero-banner {
-    height: 90vh;
+    padding-top: 120px;
+    padding-bottom: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -78,7 +79,6 @@ body {
     background-size: cover;
     background-position: center;
     text-align: center;
-    padding: 0 20px;
     position: relative;
     /* Si el header es fijo, puedes necesitar un padding-top para que el contenido no quede debajo */
     /* padding-top: 80px; */
@@ -110,6 +110,51 @@ body {
 
 .main-slogan:hover {
     transform: scale(1.05);
+}
+
+/*Estilos a unirse a equipo*/
+.inscribir-equipo {
+    margin-top: 20px;
+    text-align: right;
+}
+
+.inscribir-equipo p {
+    text-align: right;
+    color: #e0e0e0;
+    font-size: 25px;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.8), 0 0 10px #861aad, 0 0 20px #260336;
+}
+
+.unirse-equipo {
+    background: #5f0e8e;
+    /* Purple gradient button */
+    color: white;
+    border: none;
+    padding: 15px 35px;
+    /* Larger padding */
+    font-size: 1.3rem;
+    /* Larger font size */
+    font-weight: 600;
+    border-radius: 10px;
+    /* Rounded corners */
+    cursor: pointer;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    box-shadow: 0 5px 20px rgba(138, 43, 226, 0.4);
+    /* Stronger shadow */
+    transition: background 0.3s ease, transform 0.3s ease, box-shadow 0.3s ease;
+    text-decoration: none;
+    /* In case it's an anchor tag */
+    display: inline-block;
+    /* Allows padding and alignment */
+}
+
+.unirse-equipo:hover {
+    background: linear-gradient(90deg, #9a3bed, #7a10c0);
+    transform: translateY(-5px) scale(1.02);
+    /* Lift and slight scale on hover */
+    box-shadow: 0 8px 25px rgba(138, 43, 226, 0.8);
+    /* More intense glow */
 }
 
 /* === JUEGOS DESTACADOS (featured-games) === */
