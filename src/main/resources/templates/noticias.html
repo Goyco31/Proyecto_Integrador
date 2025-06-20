@@ -4,13 +4,16 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>SkillTourney - Noticias</title>
-    <link rel="stylesheet" th:href="@{/css/noticias.css}" />
+    
     <link
       href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Monda:wght@400;700&display=swap"
       rel="stylesheet"
     />
     <link rel="stylesheet" th:href="@{/css/header.css}" />
     <link rel="stylesheet" th:href="@{/css/footer.css}" />
+    <link rel="stylesheet" th:href="@{/css/noticias.css}" />
+    <link rel="stylesheet" th:href="@{/css/modal-registro.css}">
+    <link rel="stylesheet" th:href="@{/css/modal-login.css}">
   </head>
   <body>
     <!-- Overlay que oscurecerá el fondo -->
@@ -213,10 +216,18 @@
     <div th:replace="~{fragments/footer}"></div>
     <div th:replace="~{fragments/modal-registro}"></div>
     <div th:replace="~{fragments/modal-login}"></div>
-    <script th:src="@{/jscript/modal-registro.js}"></script>
-    <script th:src="@{/jscript/modal-login.js}"></script>
-    <script th:src="@{/jscript/pagTorneo.js}"></script>
+    <div th:replace="~{fragments/modal-2FA}"></div>
+    <div th:replace="~{fragments/modal-recuperarContra}"></div>
+    <div th:replace="~{fragments/modal-actualizarContra}"></div>
+    
     <script th:src="@{/jscript/pagPrincipal.js}"></script>
+    <script th:src="@{/jscript/modal-registro.js}"></script>
+    <script th:src="@{/jscript/modal-recuperarContra.js}" defer></script>
+    <script th:src="@{/jscript/modal-2fa-recuperacion.js}" defer></script>
+    <script th:src="@{/jscript/modal-actualizarContra.js}" defer></script>
+    <script th:src="@{/jscript/modal-login.js}"></script>
+    <script th:src="@{/jscript/modal-2FA.js}"></script>
     <script src="/jscript/header.js" defer></script>
+    <script src="/jscript/logout.js" defer></script>
   </body>
 </html>
