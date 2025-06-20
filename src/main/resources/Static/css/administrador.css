@@ -98,6 +98,7 @@ body {
     transition: background-color 0.3s ease, transform 0.2s ease; /* Transiciones suaves al hover */
     font-weight: bold;
     text-align: center;
+    cursor: pointer;
 }
 
 .admin-nav ul li a:hover {

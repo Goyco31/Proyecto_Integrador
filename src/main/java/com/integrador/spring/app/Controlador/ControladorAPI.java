@@ -152,5 +152,10 @@ public class ControladorAPI {
         return ResponseEntity.ok(Map.of("message", "Contraseña actualizada correctamente"));
     }
 
-
+    @org.springframework.web.bind.annotation.DeleteMapping("/api/usuarios/eliminar/{id}")
+    public ResponseEntity<String> eliminarUsuario(@org.springframework.web.bind.annotation.PathVariable Integer id) {
+        authService.eliminarUsuario(id);
+        return ResponseEntity.ok("Usuario eliminado correctamente");
+    }
 }
+

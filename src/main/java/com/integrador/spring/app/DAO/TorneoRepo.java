@@ -10,6 +10,6 @@ import com.integrador.spring.app.Modelo.Torneo;
 
 @Repository
 public interface TorneoRepo extends JpaRepository<Torneo, Integer>{
-    public Optional<Torneo> findByNombreTorneo(String nombreTorneo);
-    public void deleteByNombreTorneo(String nombreTorneo);
+    public Optional<Torneo> findByNombre(String nombreTorneo);
+    public void deleteByNombre(String nombreTorneo);
 }

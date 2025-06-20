@@ -1,211 +1,258 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Administrador - SkillTourney</title> 
-    <link rel="stylesheet" th:href="@{/css/administrador.css}">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap" rel="stylesheet">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Administrador - SkillTourney</title>
+    <link rel="stylesheet" th:href="@{/css/administrador.css}" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400..900&display=swap"
+      rel="stylesheet"
+    />
     <link rel="stylesheet" th:href="@{/css/header.css}" />
     <link rel="stylesheet" th:href="@{/css/footer.css}" />
-</head>
-<body>
+  </head>
+  <body>
     <!-- Inserta el fragmento del header -->
     <div th:replace="~{fragments/header :: header}"></div>
-<br>
-<br>
-<br>
+    <br />
+    <br />
+    <br />
     <!-- Contenedor general de la interfaz de administrador -->
     <div class="admin-container">
-        <br>
-        <br>
-        <br>
-        <!-- Menú lateral con opciones de administración -->
-        <aside class="admin-sidebar"> <br>
-            <br>
-            <br>
-            <br>
-            <br>
-            <br>
-        <div class="admin-logo">SkillTourney Admin</div> 
-            <nav class="admin-nav"> 
-                <ul>
-                    <li><a href="#" id="show-tournaments">ADMINISTRAR TORNEOS</a></li>
-                    <li><a href="#" id="show-db-config">Configurar Base de Datos</a></li> 
-                </ul>
-            </nav>
-        </aside>
+      <br />
+      <br />
+      <br />
+      <!-- Menú lateral con opciones de administración -->
+      <aside class="admin-sidebar">
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <div class="admin-logo">SkillTourney Admin</div>
+        <nav class="admin-nav">
+          <ul>
+            <li><a onclick="listarUsuarios()">Usuarios</a></li>
+            <li><a onclick="listarJuegos()">Juegos</a></li>
+            <li><a onclick="listarTorneos()">Torneos</a></li>
+            <!--<li><a >Equipos</a></li>-->
+            <li><a onclick="listarRecompensas()">Recompensas</a></li>
+            <li><a onclick="listarMonedas()">Compra de monedas</a></li>
+            <li>
+              <a href="#" id="show-db-config">Configurar Base de Datos</a>
+            </li>
+          </ul>
+        </nav>
+      </aside>
 
-        <!-- Contenido principal del panel de administración -->
-        <main class="admin-content-area">
-            <!-- Encabezado del panel -->
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-<br>
-            <header class="admin-header"> 
-                <h1>Panel de Administración</h1> 
-            </header>
+      <!-- Contenido principal del panel de administración -->
+      <main class="admin-content-area">
+        <!-- Encabezado del panel -->
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <br />
+        <header class="admin-header">
+          <h1>Panel de Administración</h1>
+        </header>
+        
+        <div id="contenedor-tablas" class="table-container"></div>
+      </main>
+    </div>
 
-            <!-- Botones de acción para los torneos -->
-            <section id="tournaments-section" class="admin-section active"> <h2>ADMINISTRAR TORNEOS</h2> <div class="tournament-actions"> <button id="new-tournament-btn" class="btn-primary">Nuevo Torneo</button>
-                    <button id="export-btn" class="btn-secondary">EXPORTAR</button>
-                    <button id="import-btn" class="btn-secondary">IMPORTAR</button>
-                </div>
+    <!--modal para eliminar usuarios-->
+    <div id="confirm-modal" class="modal" style="display: none">
+      <div class="modal-content small-modal">
+        <p>¿Seguro que desea eliminar este usuario?😕</p>
+        <div class="form-actions">
+          <button
+            id="confirm-delete-btn"
+            class="btn-danger"
+            onclick="confirmDeleteUser()"
+          >
+            Eliminar
+          </button>
+          <button
+            id="cancel-delete-btn"
+            class="btn-secondary"
+            onclick="closeDeleteModal()"
+          >
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </div>
 
-                <!-- Tabla para listar los torneos registrados -->
-                <div class="table-container">
-                    <table class="tournaments-table"> <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Tipo</th>
-                                <th>Inscripción</th>
-                                <th>Premio</th>
-                                <th>Modo de Juego</th>
-                                <th>Fecha Inicio</th>
-                                <th>Fecha Final</th>
-                                <th>Estado</th>
-                                <th>Acciones</th> 
-                            </tr>
-                        </thead>
-                        <tbody id="tournaments-table-body">
-                            </tbody>
-                    </table>
-                </div>
-
-                <!-- Mensaje que se muestra cuando no hay torneos -->
-                <div id="no-tournaments-message" class="info-message" style="display: none;"> No hay torneos registrados. Haz clic en "Nuevo Torneo" para agregar uno. 
-                </div>
-            </section>
-
-            <!-- Sección para mostrar información de configuración de la base de datos -->
-            <section id="db-config-section" class="admin-section">
-                <h2>Configurar Base de Datos</h2>
-
-                <!-- Formulario con datos de conexión a la base de datos -->
-                <form id="db-config-form" class="admin-form">
+    <div id="tournament-modal" class="modal" style="display: none"></div>
+    <!--<div class="modal fade" id="registroTorneoModal" tabindex="-1" role="dialog" aria-labelledby="registroTorneoModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="registroTorneoModalLabel">Registro de Torneo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="registroTorneoForm">
                     <div class="form-group">
-                        <label for="db-server">Servidor:</label>
-                        <input type="text" id="db-server" name="server" value="localhost" readonly>
+                        <label for="nombreTorneo">Nombre del Torneo:</label>
+                        <input type="text" class="form-control" id="nombreTorneo" required>
                     </div>
                     <div class="form-group">
-                        <label for="db-port">Puerto:</label>
-                        <input type="number" id="db-port" name="port" value="3306" readonly>
+                        <label for="juegoTorneo">Juego:</label>
+                        <select class="form-control" id="juegoTorneo" required>
+                            <option value="CSGO">Counter-Strike: Global Offensive</option>
+                            <option value="Dota2">Dota 2</option>
+                        </select>
                     </div>
                     <div class="form-group">
-                        <label for="db-name">Nombre de la Base de Datos:</label>
-                        <input type="text" id="db-name" name="dbName" value="SkillTourney" readonly>
+                        <label for="fechaTorneo">Fecha:</label>
+                        <input type="date" class="form-control" id="fechaTorneo" required>
                     </div>
                     <div class="form-group">
-                        <label for="db-user">Usuario:</label>
-                        <input type="text" id="db-user" name="user" value="root" readonly>
-                    </div>
-                    <div class="form-group">
-                        <label for="db-password">Contraseña:</label>
-                        <input type="password" id="db-password" name="password" value="root" readonly>
-                    </div>
-
-                    <!-- Botones para acciones relacionadas a la base de datos -->
-                    <div class="form-actions">
-                        <button type="button" class="btn-primary" id="connect-db-btn">Conectar BD</button>
-                        <button type="button" class="btn-secondary" id="download-db-btn">Descargar BD</button>
-                        <button type="button" class="btn-cancel" id="cancel-db-config">Cancelar</button>
+                        <label for="descripcionTorneo">Descripción:</label>
+                        <textarea class="form-control" id="descripcionTorneo" rows="3"></textarea>
                     </div>
                 </form>
-            </section>
-        </main>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                <button type="button" class="btn btn-primary" id="guardarTorneo">Guardar</button>
+            </div>
+        </div>
     </div>
+</div>-->
 
     <!-- Modal para crear o editar un torneo -->
-    <div id="tournament-modal" class="modal" style="display: none;">
-        <div class="modal-content">
-            <span class="close-button">&times;</span> <!-- Botón para cerrar el modal -->
-            <h2 id="modal-title">Nuevo Torneo</h2>
+    <!--<div id="tournament-modal" class="modal" style="display: none">
+      <div class="modal-content">
+        <span class="close-button">&times;</span>
+        <h2 id="modal-title">Nuevo Torneo</h2>
 
-            <!-- Formulario con campos del torneo -->
-            <form id="tournament-form" class="admin-form">
-                <input type="hidden" id="tournament-id">
-                <div class="form-group">
-                    <label for="tournament-name">Nombre:</label>
-                    <input type="text" id="tournament-name" required>
-                </div>
+        <form id="tournament-form" class="admin-form">
+          <input type="hidden" id="tournament-id" />
+          <div class="form-group">
+            <label for="tournament-name">Nombre:</label>
+            <input type="text" id="tournament-name" required />
+          </div>
 
-                <!-- Campos para los detalles del torneo -->
-                <div class="form-group">
-                    <label for="tournament-description">Descripción:</label>
-                    <textarea id="tournament-description" rows="3" required></textarea>
-                </div>
-                <div class="form-group">
-                    <label for="tournament-type">Tipo:</label>
-                    <input type="text" id="tournament-type" required placeholder="Ej: Premium, Pro, Open">
-                </div>
-                <div class="form-group">
-                    <label for="tournament-game-image">URL Imagen del Juego (Banner):</label>
-                    <input type="text" id="tournament-game-image" required>
-                </div>
-                <div class="form-group">
-                    <label for="tournament-game-icon">URL Icono del Juego:</label>
-                    <input type="text" id="tournament-game-icon" required>
-                </div>
-                <div class="form-group">
-                    <label for="tournament-date">Fecha:</label>
-                    <input type="text" id="tournament-date" required placeholder="Ej: 📅 00 Mes | 🕒 0:00 PM/AM">
-                </div>
-                <div class="form-group">
-                    <label for="tournament-prize">Premio:</label>
-                    <input type="text" id="tournament-prize" required placeholder="Ej: 🏆 $00 PEN">
-                </div>
-                <div class="form-group">
-                    <label for="tournament-slots">Cupos:</label>
-                    <input type="text" id="tournament-slots" required placeholder="Ej: 00/00 equipos">
-                </div>
-                <div class="form-group">
-                    <label for="tournament-format">Formato:</label>
-                    <input type="text" id="tournament-format" required placeholder="Ej: Eliminación Doble, Bo3">
-                </div>
-                <div class="form-group">
-                    <label for="tournament-rules-link">Enlace Reglamento::</label>
-                    <input type="text" id="tournament-rules-link" required>
-                </div>
-                <div class="form-group">
-                    <label for="tournament-register-link">Enlace Inscripción:</label>
-                    <input type="text" id="tournament-register-link" required>
-                </div>
-                <div class="form-group">
-                    <label for="tournament-status">Estado:</label>
-                    <select id="tournament-status">
-                        <option value="activo">Activo</option>
-                        <option value="finalizado">Finalizado</option>
-                        <option value="cancelado">Cancelado</option>
-                    </select>
-                </div>
+          <div class="form-group">
+            <label for="tournament-description">Descripción:</label>
+            <textarea id="tournament-description" rows="3" required></textarea>
+          </div>
+          <div class="form-group">
+            <label for="tournament-type">Tipo:</label>
+            <select name="" id="tournament-type">
+              <option value="Premium">Premium</option>
+              <option value="Pro">Pro</option>
+              <option value="Open">Open</option>
+            </select>
+            
+          </div>
+          <div class="form-group">
+            <label for="tournament-game-image"
+              >Imagen del Juego (Banner):</label
+            >
+            <input type="file" id="tournament-game-image" required />
+          </div>
+          <div class="form-group">
+            <label for="tournament-game-icon">Icono del Juego:</label>
+            <input type="file" id="tournament-game-icon" required />
+          </div>
+          <div class="form-group">
+            <label for="tournament-date">Fecha:</label>
+            <input type="file" name="" id="tournament-date" />
+            
+          </div>
+          <div class="form-group">
+            <label for="tournament-prize">Premio:</label>
+            <input
+              type="number"
+              id="tournament-prize"
+              required
+              placeholder="Ej: 🏆 00 monedas"
+            />
+          </div>
+          <div class="form-group">
+            <label for="tournament-slots">Cupos:</label>
+            <input
+              type="number"
+              id="tournament-slots"
+              required
+              placeholder="Ej: 00/00 equipos"
+            />
+          </div>
+          <div class="form-group">
+            <label for="tournament-format">Formato:</label>
+            <input
+              type="text"
+              id="tournament-format"
+              required
+              placeholder="Ej: Eliminación Doble, Bo3"
+            />
+          </div>
+          <div class="form-group">
+            <label for="tournament-rules-link">Archivo de Reglamento:</label>
+            <input type="file" id="tournament-rules-link" required />
+          </div>
+          <div class="form-group">
+            <label for="tournament-register-link">Enlace Inscripción:</label>
+            <input type="text" id="tournament-register-link" required />
+          </div>
+          <div class="form-group">
+            <label for="tournament-status">Estado:</label>
+            <select id="tournament-status">
+              <option value="Activo">Activo</option>
+              <option value="Finalizado">Finalizado</option>
+              <option value="Cancelado">Cancelado</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="tournament-juego">ID del juego</label>
+            <input type="text" id="tournament-juego">
+          </div>
 
-                <!-- Botones de acción del modal -->
-                <div class="form-actions">
-                    <button type="submit" class="btn-primary">Guardar</button>
-                    <button type="button" class="btn-cancel" id="cancel-tournament-modal">Cancelar</button>
-                </div>
-            </form>
-        </div>
-    </div>
+          <div class="form-actions">
+            <button type="submit" class="btn-primary">Guardar</button>
+            <button
+              type="button"
+              class="btn-cancel"
+              id="cancel-tournament-modal"
+            >
+              Cancelar
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>-->
 
-    <!-- Modal de confirmación para eliminar torneo -->
-    <div id="confirm-modal" class="modal" style="display: none;">
-        <div class="modal-content small-modal">
-            <p>¿Seguro que desea eliminar este torneo?😕</p>
-                <div class="form-actions">
-                    <button id="confirm-delete-btn" class="btn-danger">Eliminar</button>
-                    <button id="cancel-delete-btn" class="btn-secondary">Cancelar</button>
-                </div>
-        </div>
-    </div>
-    
     <!-- Script de JavaScript con lógica para el panel de administración -->
-    <script th:src="@{/jscript/administrador.js}"></script>
+
+    <script th:src="@{/jscript/admin/usuarios.js}"></script>
+    <script th:src="@{/jscript/admin/torneos.js}"></script>
+    <script th:src="@{/jscript/admin/juegos.js}"></script>
+    <script th:src="@{/jscript/admin/recompensas.js}"></script>
+    <script th:src="@{/jscript/admin/monedas.js}"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script th:src="@{/jscript/pagPrincipal.js}"></script>
+    <script th:src="@{/jscript/modal-registro.js}"></script>
+    <script th:src="@{/jscript/modal-recuperarContra.js}" defer></script>
+    <script th:src="@{/jscript/modal-2fa-recuperacion.js}" defer></script>
+    <script th:src="@{/jscript/modal-actualizarContra.js}" defer></script>
+    <script th:src="@{/jscript/modal-login.js}"></script>
+    <script th:src="@{/jscript/modal-2FA.js}"></script>
+    <script src="/jscript/header.js" defer></script>
+    <script src="/jscript/logout.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 </body>
 </html>
+

@@ -4,12 +4,11 @@
 @font-face {
     font-family: 'Sink';
     src: url('../fonts/SinkDisplay.woff2') format('woff2'),
-        url('../fonts/SinkDisplay.woff') format('woff');
+         url('../fonts/SinkDisplay.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
-
-* {
+*{
     font-family: 'Orbitron', sans-serif;
     margin: 0;
     padding: 0;
@@ -30,10 +29,8 @@
     --hover-glow: rgba(154, 126, 169, 0.5);
     --light-glow-color: rgba(220, 180, 255, 0.7);
     --main-purple-glow: rgba(95, 14, 142, 0.5);
-    --accent-cyan: #00bcd4;
-    /* Color de acento para algunos textos y botones */
-    --gold-prize: #FFD700;
-    /* Color oro para premios */
+    --accent-cyan: #00bcd4; /* Color de acento para algunos textos y botones */
+    --gold-prize: #FFD700; /* Color oro para premios */
 }
 
 /* === ESTRUCTURA PRINCIPAL === */
@@ -43,6 +40,10 @@ body {
     line-height: 1.6;
     font-size: 16px;
     overflow-x: hidden;
+    /* Asegura que el footer esté al final si no hay suficiente contenido */
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
 }
 
 /* Contenedor principal de la página, si lo usas para centrar todo el contenido */
@@ -50,11 +51,11 @@ body {
     max-width: 1200px;
     margin: 0 auto;
     padding: 20px;
+    flex-grow: 1; /* Permite que este contenedor ocupe el espacio disponible */
 }
 
 /* Overlay que cubre la pantalla cuando un modal está abierto */
-#overlay {
-    /* Usamos el ID como en el JS */
+.overlay { /* Usamos la clase 'overlay' como en tu HTML */
     display: none;
     position: fixed;
     top: 0;
@@ -62,24 +63,25 @@ body {
     width: 100%;
     height: 100%;
     background-color: rgba(0, 0, 0, 0.6);
-    z-index: 999;
-    /* Menor que el modal, pero mayor que el contenido */
+    z-index: 999; /* Menor que el modal, pero mayor que el contenido */
 }
 
 /* === HERO SECTION (Banner principal) === */
 .hero-banner {
-    padding-top: 150px;
-    padding-bottom: 50px;
+    padding-top: 120px;
+    padding-bottom: 20px;
     display: flex;
     align-items: center;
     justify-content: center;
-    background: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)),
-        url('../Imagenes/hero-bg.jpg') no-repeat center center/cover;
     /* Asegúrate que la ruta de hero-bg.jpg sea correcta */
+    background: linear-gradient(rgba(0,0,0,0.6), rgba(0,0,0,0.6)),
+                url('../Imagenes/hero-bg.jpg') no-repeat center center/cover;
     background-size: cover;
     background-position: center;
     text-align: center;
     position: relative;
+    /* Si el header es fijo, puedes necesitar un padding-top para que el contenido no quede debajo */
+    /* padding-top: 80px; */
 }
 
 .slogan-container {
@@ -89,6 +91,8 @@ body {
     background-color: rgba(0, 0, 0, 0.5);
     padding: 20px 40px;
     border-radius: 10px;
+    box-shadow: 0 0 20px var(--main-purple-glow);
+    border: 1px solid var(--main-purple);
 }
 
 .main-slogan {
@@ -153,16 +157,18 @@ body {
     /* More intense glow */
 }
 
-/* === JUEGOS DESTACADOS (Si tienes esta sección en tu página) === */
+/* === JUEGOS DESTACADOS (featured-games) === */
 .featured-games {
     padding: 4rem 5%;
     background-color: var(--dark-blue);
+    border-top: 1px solid var(--main-purple);
+    border-bottom: 1px solid var(--main-purple);
 }
 
-.game-card {
-    /* Esta clase es para los contenedores de los juegos destacados, no para las tarjetas de torneos */
+.game-card { /* Contenedores individuales de los juegos destacados */
     display: grid;
     grid-template-columns: 1fr 1fr;
+    align-items: center;
     margin-bottom: 4rem;
     background: var(--medium-blue);
     border-radius: 15px;
@@ -171,6 +177,15 @@ body {
     transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
     box-shadow: 0 8px 20px var(--card-shadow);
 }
+
+.game-card.reverse {
+    grid-template-columns: 1fr 1fr; /* Mantiene la cuadrícula, pero el contenido se invierte visualmente */
+    direction: rtl; /* Invierte el orden visual de los elementos flex/grid */
+}
+.game-card.reverse .game-info {
+    direction: ltr; /* Restaura la dirección del texto dentro de game-info */
+}
+
 
 .game-card:hover {
     transform: scale(1.02);
@@ -183,6 +198,7 @@ body {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    text-align: center; /* Centra el texto */
 }
 
 .game-title {
@@ -202,17 +218,22 @@ body {
     margin-bottom: 1.5rem;
 }
 
+.game-specs {
+    display: flex;
+    justify-content: center; /* Centra las especificaciones */
+    flex-wrap: wrap;
+    gap: 0.7em; /* Espacio entre los spans */
+}
+
 .game-specs span {
     display: inline-block;
     background-color: var(--main-purple);
     color: var(--pure-white);
     padding: 0.6em 1.2em;
     border-radius: 5px;
-    margin-right: 0.7em;
-    margin-bottom: 0.7em;
     font-size: 0.85rem;
     text-transform: uppercase;
-    border: 1px solid rgba(255, 255, 255, 0.2);
+    border: 1px solid rgba(255,255,255,0.2);
     box-shadow: 0 0 8px var(--main-purple-glow);
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
 }
@@ -227,6 +248,7 @@ body {
     min-height: 300px;
     height: 100%;
     background-color: #000;
+    overflow: hidden; /* Asegura que las imágenes no se salgan */
 }
 
 .game-carousel img {
@@ -246,38 +268,36 @@ body {
 
 /* === TORNEOS ACTIVOS SECTION === */
 .tournaments-section {
-    padding: 30px 5%;
+    padding: 60px 5%; /* Ajustado para más espacio superior */
     background-color: var(--dark-blue);
+    text-align: center; /* Para centrar el título de la sección */
 }
 
-h2 {
-    /* Estilo para el título H2 "TORNEOS ACTIVOS" */
+.section-title { /* Tu H2 de "TORNEOS ACTIVOS" ahora tiene esta clase en HTML */
     font-size: clamp(2.5rem, 5vw, 4rem);
     font-family: 'Orbitron', sans-serif;
     color: var(--light-purple);
-    text-align: center;
     margin-bottom: 40px;
     text-transform: uppercase;
     text-shadow: 1px 1px 6px var(--main-purple-glow);
+    display: inline-block; /* Para que el texto no ocupe todo el ancho */
+    padding-bottom: 10px;
+    border-bottom: 3px solid var(--main-purple);
 }
 
-/* === CONTENEDOR DE TARJETAS DE TORNEO (ID usado en JS) === */
-#tournaments-cards-container {
-    /* **IMPORTANTE:** Usamos el ID '#tournaments-cards-container' como en tu HTML y JS */
+/* === CONTENEDOR DE TARJETAS DE TORNEO  === */
+.lista-torneos { /* Usamos la clase 'lista-torneos'  */
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-    /* Columnas responsivas */
-    gap: 30px;
-    /* Espacio entre tarjetas */
-    justify-items: center;
-    /* Centrar tarjetas */
+    grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Columnas responsivas */
+    gap: 30px; /* Espacio entre tarjetas */
+    justify-items: center; /* Centrar tarjetas */
     padding: 0 10px;
     max-width: 1200px;
     margin: 0 auto;
 }
 
-/* === ESTILO DE CADA TARJETA DE TORNEO (Clase usada en JS) === */
-.tournament-card {
+/* === ESTILO DE CADA TARJETA DE TORNEO (carta-torneo del HTML) === */
+.carta-torneo { 
     background-color: var(--medium-blue);
     border-radius: 10px;
     overflow: hidden;
@@ -288,63 +308,51 @@ h2 {
     display: flex;
     flex-direction: column;
     width: 100%;
-    max-width: 520px;
-    /* Ancho máximo de cada tarjeta */
+    max-width: 520px; /* Ancho máximo de cada tarjeta */
     border: 2px solid var(--accent-blue);
     cursor: pointer;
-    min-height: 250px;
-    /* Asegura una altura mínima para la tarjeta */
+    min-height: 250px; /* Asegura una altura mínima para la tarjeta */
 }
 
-.tournament-card:hover {
+.carta-torneo:hover {
     transform: translateY(-10px) scale(1.03);
     box-shadow: 0 12px 25px var(--hover-glow), 0 8px 15px var(--card-shadow);
     border-color: var(--main-purple);
 }
 
 /* Estructura de imagen y superposiciones en la tarjeta */
-.card-image-wrapper {
+.img-torneo { /* Contenedor de imágenes de la tarjeta */
     position: relative;
     width: 100%;
-    padding-bottom: 56.25%;
-    /* Relación de aspecto 16:9 para la imagen */
+    padding-bottom: 56.25%; /* Relación de aspecto 16:9 para la imagen */
     overflow: hidden;
 }
 
-.card-game-banner {
-    /* Imagen de fondo del juego en la tarjeta */
+.banner-torneo { /* Imagen del banner del torneo */
     position: absolute;
     top: 0;
     left: 0;
     width: 100%;
     height: 100%;
-    object-fit: cover;
-    /* Cubre el área sin distorsionar la imagen */
-    object-position: center;
-    /* Asegura que el centro de la imagen sea visible */
+    object-fit: cover; /* Cubre el área sin distorsionar la imagen */
+    object-position: center; /* Asegura que el centro de la imagen sea visible */
 }
 
-.card-game-icon {
-    /* Icono del juego en la tarjeta */
+.juego-torneo { /* Icono del juego en la tarjeta */
     position: absolute;
     bottom: 15px;
     left: 15px;
     width: 60px;
     height: 60px;
-    border-radius: 50%;
-    /* Icono circular */
-    border: 3px solid var(--medium-blue);
-    /* Borde alrededor del icono, que coincide con el fondo de la tarjeta */
-    z-index: 2;
-    /* Para que esté por encima del banner */
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.5);
+    border-radius: 50%; /* Icono circular */
+    border: 3px solid var(--medium-blue); /* Borde alrededor del icono, que coincide con el fondo de la tarjeta */
+    z-index: 2; /* Para que esté por encima del banner */
+    box-shadow: 0 0 10px rgba(0,0,0,0.5);
     object-fit: cover;
 }
 
-/* CLASES DINÁMICAS PARA LAS INSIGNIAS DE TIPO DE TORNEO (GENERADAS POR JS) */
 .type-badge {
-    position: absolute;
-    /* Posicionamiento absoluto sobre el banner */
+    position: absolute; /* Posicionamiento absoluto sobre el banner */
     top: 15px;
     right: 15px;
     padding: 5px 10px;
@@ -354,104 +362,92 @@ h2 {
     color: var(--pure-white);
     text-transform: uppercase;
     white-space: nowrap;
-    box-shadow: 0 0 5px rgba(0, 0, 0, 0.5);
-    z-index: 2;
-    /* Para que esté por encima del banner */
+    box-shadow: 0 0 5px rgba(0,0,0,0.5);
+    z-index: 2; /* Para que esté por encima del banner */
 }
 
-.type-badge.type-premium {
-    /* Clase generada por JS: type-premium */
+.type-badge.type-premium { /* Clase generada por JS: type-premium */
     background-color: var(--gold-prize);
     box-shadow: 0 0 8px rgba(255, 215, 0, 0.6);
 }
 
-.type-badge.type-pro {
-    /* Clase generada por JS: type-pro */
-    background-color: #007bff;
-    /* Color para torneos Pro */
+.type-badge.type-pro { /* Clase generada por JS: type-pro */
+    background-color: #007bff; /* Color para torneos Pro */
     box-shadow: 0 0 8px rgba(0, 123, 255, 0.6);
 }
 
-.type-badge.type-open {
-    /* Clase generada por JS: type-open */
-    background-color: #28a745;
-    /* Color para torneos Open */
+.type-badge.type-open { /* Clase generada por JS: type-open */
+    background-color: #28a745; /* Color para torneos Open */
     box-shadow: 0 0 8px rgba(40, 167, 69, 0.6);
 }
-
-.type-badge.type-default {
-    /* Para tipos no definidos */
+.type-badge.type-default { /* Para tipos no definidos */
     background-color: #95a5a6;
     box-shadow: 0 0 8px rgba(149, 165, 166, 0.6);
 }
 
 
-/* Info de la tarjeta (generada por JS) */
-.card-info {
-    /* Contiene título y detalles */
+/* Info de la tarjeta (contenido-torneo del HTML) */
+.contenido-torneo { /* Contiene título y detalles */
     padding: 15px;
     flex-grow: 1;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
+    text-align: left; /* Alinea el texto a la izquierda como en tu HTML */
 }
 
-.card-title {
-    /* Título H3 dentro de .card-info */
+.contenido-torneo h3 { /* Título H3 dentro de .contenido-torneo */
     font-size: 1.4rem;
     margin: 0 0 10px 0;
     color: var(--light-purple);
-    text-align: center;
     font-family: 'Orbitron', sans-serif;
+    text-shadow: 0 0 5px var(--main-purple-glow);
 }
 
-.card-info p {
-    /* Párrafos con detalles (fecha, premio, cupos) */
+.contenido-torneo p, .contenido-torneo time { /* Párrafos con detalles (fecha, premio, cupos) */
     font-size: 1rem;
     color: var(--text-light-gray);
     margin-bottom: 0.5em;
     line-height: 1.4;
-    display: flex;
-    /* Para alinear icono y texto */
+    display: flex; /* Para alinear icono y texto  */
     align-items: center;
-    gap: 8px;
-    /* Espacio entre el icono y el texto */
+    gap: 8px; /* Espacio entre el icono y el texto */
 }
 
-.card-info p i {
-    /* Iconos de Font Awesome */
-    color: var(--accent-cyan);
-    font-size: 1.1em;
-}
-
-.card-info p:last-child {
-    margin-bottom: 0;
-}
-
-.card-schedule {
+/* Clases específicas para el color de los detalles */
+.contenido-torneo time {
     font-weight: 700;
     color: var(--accent-cyan);
 }
 
-.card-prize {
+.contenido-torneo p:nth-of-type(2) { /* Premio  */
     font-weight: 700;
     color: var(--gold-prize);
 }
 
+/* Estilos para el mensaje de "No hay torneos activos" */
+#no-active-tournaments-message {
+    text-align: center;
+    padding: 40px;
+    font-size: 1.2em;
+    color: var(--text-light-gray);
+    background-color: var(--medium-blue);
+    border-radius: 8px;
+    margin-top: 40px;
+    box-shadow: 0 4px 15px var(--card-shadow);
+    border: 1px solid var(--accent-blue);
+}
+
 
 /* === MODAL DE DETALLES DEL TORNEO === */
-.carousel-modal {
-    /* Contenedor principal del modal (overlay) */
+.carousel-modal { /* Contenedor principal del modal (overlay) */
     display: none;
     position: fixed;
-    z-index: 1001;
-    /* Mayor que el overlay */
-    left: 0;
-    top: 0;
-    width: 100%;
-    height: 100%;
+    z-index: 1001; /* Mayor que el overlay */
+    left: 0; top: 0;
+    width: 100%; height: 100%;
     overflow-y: auto;
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0,0,0,0.7);
     justify-content: center;
     align-items: center;
     backdrop-filter: blur(5px);
@@ -459,8 +455,7 @@ h2 {
     padding: 20px;
 }
 
-.carousel-modal .modal-content {
-    /* El cuadro del modal */
+.carousel-modal .modal-content { /* El cuadro del modal */
     background-color: var(--medium-blue);
     padding: 0;
     border: 1px solid var(--main-purple);
@@ -468,15 +463,14 @@ h2 {
     width: 90%;
     max-width: 700px;
     position: relative;
-    box-shadow: 0 5px 25px rgba(0, 0, 0, 0.5);
+    box-shadow: 0 5px 25px rgba(0,0,0,0.5);
     display: flex;
     flex-direction: column;
     max-height: 90vh;
-    overflow: auto;
+    overflow: hidden;
     transform: translateY(-50px);
     opacity: 0;
     animation: fadeInModal 0.3s forwards;
-
 }
 
 @keyframes fadeInModal {
@@ -486,8 +480,7 @@ h2 {
     }
 }
 
-.close-modal {
-    /* Botón de cerrar del modal */
+.close-modal { /* Botón de cerrar del modal */
     color: var(--text-light-gray);
     position: absolute;
     top: 15px;
@@ -506,15 +499,13 @@ h2 {
     text-decoration: none;
 }
 
-/* Estilos específicos del área de contenido del modal de torneo (GENERADO POR JS) */
+/* Estilos específicos del área de contenido del modal de torneo (GENERADO POR ADMOINISTRADOR) */
 .modal-tournament-content-area {
     /* Este div es el contenedor general donde se inserta todo el HTML del modal */
-    padding-top: 20px;
-    /* Para que el contenido no quede debajo del botón de cerrar */
+    padding-top: 20px; /* Para que el contenido no quede debajo del botón de cerrar */
 }
 
-.modal-header {
-    /* Header del modal con banner e icono */
+.modal-header { /* Header del modal con banner e icono */
     position: relative;
     width: 100%;
     height: 200px;
@@ -523,64 +514,52 @@ h2 {
     border-top-right-radius: 8px;
 }
 
-.modal-banner-image {
-    /* Imagen del banner dentro del modal */
+.modal-banner-image { /* Imagen del banner dentro del modal */
     width: 100%;
     height: 100%;
     object-fit: cover;
 }
 
-.modal-game-icon-lg {
-    /* Icono grande del juego dentro del modal */
+.modal-game-icon-lg { /* Icono grande del juego dentro del modal */
     position: absolute;
-    bottom: -40px;
-    /* Desplaza el icono para superponerse al cuerpo */
+    bottom: -40px; /* Desplaza el icono para superponerse al cuerpo */
     left: 20px;
     width: 100px;
     height: 100px;
     border-radius: 50%;
-    border: 5px solid var(--medium-blue);
-    /* Borde que coincide con el fondo del modal */
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.5);
+    border: 5px solid var(--medium-blue); /* Borde que coincide con el fondo del modal */
+    box-shadow: 0 5px 15px rgba(0,0,0,0.5);
     z-index: 1;
     object-fit: cover;
 }
 
-.modal-body {
-    /* Cuerpo del modal con título, descripción y detalles */
-    padding: 60px 30px 20px 30px;
-    /* Espacio superior para el icono superpuesto */
+.modal-body { /* Cuerpo del modal con título, descripción y detalles */
+    padding: 60px 30px 20px 30px; /* Espacio superior para el icono superpuesto */
     flex-grow: 1;
-    overflow-y: auto;
-    /* Permite scroll solo en el cuerpo del modal si es necesario */
+    overflow-y: auto; /* Permite scroll solo en el cuerpo del modal si es necesario */
 }
 
-.modal-title {
-    /* Título H2 dentro del modal */
+.modal-title { /* Título H2 dentro del modal */
     font-family: 'Orbitron', sans-serif;
     font-size: 2.2em;
     color: var(--main-purple);
     margin-bottom: 15px;
-    padding-left: 100px;
-    /* Ajusta el espacio para el icono superpuesto */
+    padding-left: 100px; /* Ajusta el espacio para el icono superpuesto */
 }
 
-.modal-description {
-    /* Descripción del torneo en el modal */
+.modal-description { /* Descripción del torneo en el modal */
     font-size: 1.1em;
     color: var(--text-light-gray);
     margin-bottom: 25px;
     text-align: justify;
 }
 
-.modal-details-grid {
-    /* Cuadrícula de detalles del torneo en el modal */
+.modal-details-grid { /* Cuadrícula de detalles del torneo en el modal */
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
     gap: 15px 30px;
     margin-bottom: 30px;
-    background-color: var(--dark-blue);
-    /* Fondo para el grid de detalles */
+    background-color: var(--dark-blue); /* Fondo para el grid de detalles */
     padding: 15px;
     border-radius: 8px;
     border: 1px solid var(--accent-blue);
@@ -598,25 +577,21 @@ h2 {
 }
 
 .modal-details-grid span {
-    display: block;
-    /* Mantiene el valor en una nueva línea para mayor claridad */
+    display: block; /* Mantiene el valor en una nueva línea para mayor claridad */
     font-size: 0.95em;
     color: var(--pure-white);
 }
 
-.modal-footer {
-    /* Pie del modal con botones */
+.modal-footer { /* Pie del modal con botones */
     padding: 20px 30px;
-    border-top: 1px solid var(--dark-blue);
-    /* Borde para separar el footer */
+    border-top: 1px solid var(--dark-blue); /* Borde para separar el footer */
     display: flex;
     justify-content: flex-end;
     gap: 15px;
 }
 
 /* Estilos de botones (usados en modal y potencialmente en otras partes) */
-.btn {
-    /* Clase general para botones */
+.btn { /* Clase general para botones */
     padding: 12px 25px;
     border: none;
     border-radius: 8px;
@@ -633,8 +608,7 @@ h2 {
     color: var(--pure-white);
 }
 
-.btn-primary {
-    /* Clase para el botón principal (Inscribirse) */
+.btn-primary { /* Clase para el botón principal (Inscribirse) */
     background-color: var(--main-purple);
 }
 
@@ -643,29 +617,13 @@ h2 {
     transform: translateY(-2px);
 }
 
-.btn-secondary {
-    /* Clase para el botón secundario (Reglamento) */
+.btn-secondary { /* Clase para el botón secundario (Reglamento) */
     background-color: var(--accent-blue);
 }
 
 .btn-secondary:hover {
-    background-color: #3a5f9e;
-    /* Un azul más oscuro */
+    background-color: #3a5f9e; /* Un azul más oscuro */
     transform: translateY(-2px);
-}
-
-/* Mensaje "No hay torneos activos" */
-#no-active-tournaments-message {
-    /* Usamos el ID del HTML */
-    text-align: center;
-    padding: 40px;
-    font-size: 1.2em;
-    color: var(--text-light-gray);
-    background-color: var(--medium-blue);
-    border-radius: 8px;
-    margin-top: 40px;
-    box-shadow: 0 4px 15px var(--card-shadow);
-    border: 1px solid var(--accent-blue);
 }
 
 
@@ -682,43 +640,46 @@ h2 {
 
     .game-card {
         grid-template-columns: 1fr;
+        direction: ltr; /* Resetear la dirección para apilar correctamente */
+    }
+    .game-card.reverse .game-info {
+        order: -1; /* Pone la info primero en modo columna invertida */
     }
 
     .tournaments-section {
         padding: 20px 3%;
     }
 
-    #tournaments-cards-container {
+    .section-title {
+        font-size: clamp(2rem, 6vw, 3rem);
+    }
+
+    .lista-torneos {
         grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
     }
 
-    .tournament-card {
+    .carta-torneo {
         max-width: 400px;
     }
 
     /* Responsive para el modal en pantallas más pequeñas */
     .carousel-modal {
-        padding: 10px;
-        /* Reduce el padding del overlay del modal */
+        padding: 10px; /* Reduce el padding del overlay del modal */
     }
 
     .carousel-modal .modal-content {
-        padding: 10px;
-        /* Reduce el padding del contenido del modal */
-        width: 98%;
-        /* Ocupa más ancho */
+        padding: 10px; /* Reduce el padding del contenido del modal */
+        width: 98%; /* Ocupa más ancho */
     }
 
     .close-modal {
         top: 10px;
         right: 15px;
-        font-size: 1.8rem;
-        /* Tamaño más pequeño para el botón de cerrar */
+        font-size: 1.8rem; /* Tamaño más pequeño para el botón de cerrar */
     }
 
     .modal-body {
-        padding: 50px 15px 15px 15px;
-        /* Ajustar padding para móviles */
+        padding: 50px 15px 15px 15px; /* Ajustar padding para móviles */
     }
 
     .modal-title {
@@ -753,9 +714,71 @@ h2 {
         padding: 15px;
     }
 
-    .btn,
-    .btn-primary,
-    .btn-secondary {
+    .btn, .btn-primary, .btn-secondary {
         width: 100%;
     }
 }
+
+/* Para pantallas muy pequeñas */
+@media (max-width: 480px) {
+    .main-slogan {
+        font-size: clamp(1.8rem, 10vw, 2.5rem);
+    }
+
+    .game-title {
+        font-size: clamp(1.6rem, 5vw, 2rem);
+    }
+
+    .game-info {
+        padding: 1.5rem;
+    }
+
+    .game-specs span {
+        font-size: 0.75rem;
+        padding: 0.5em 1em;
+    }
+
+    .section-title {
+        font-size: clamp(1.8rem, 7vw, 2.5rem);
+        margin-bottom: 30px;
+    }
+
+    .carta-torneo {
+        min-height: 220px;
+    }
+
+    .img-torneo {
+        padding-bottom: 65%; /* Para hacer el banner un poco más alto en móviles */
+    }
+
+    .juego-torneo {
+        width: 50px;
+        height: 50px;
+        bottom: 10px;
+        left: 10px;
+    }
+
+    .contenido-torneo {
+        padding: 10px;
+    }
+
+    .contenido-torneo h3 {
+        font-size: 1.2rem;
+        margin-bottom: 5px;
+    }
+
+    .contenido-torneo p, .contenido-torneo time {
+        font-size: 0.9rem;
+        margin-bottom: 0.3em;
+        gap: 5px;
+    }
+
+    .modal-title {
+        font-size: 1.5em;
+    }
+
+    .modal-description {
+        font-size: 1em;
+    }
+}
+

@@ -23,6 +23,7 @@ import com.integrador.spring.app.DTO.RegisterRequest;
 import com.integrador.spring.app.DTO.Validate2FARequest;
 import com.integrador.spring.app.Modelo.User;
 import com.integrador.spring.app.Modelo.role;
+import org.springframework.beans.factory.annotation.Autowired;
 
 // Importación de Lombok para constructor con argumentos requeridos (final)
 import lombok.RequiredArgsConstructor;
@@ -41,6 +42,8 @@ public class ControladorService {
     private final AuthenticationManager authenticationManager;
     private final EmailService emailService;
     private final TwoFactorAuthService twoFactorAuthService;
+    @Autowired
+    private  UsuarioServices usuarioServices;
 
     public List<List<User>> getUsersInBatches(int batchSize) {
         Preconditions.checkArgument(batchSize > 0, "El tamaño del lote debe ser mayor a 0");
@@ -198,5 +201,9 @@ public class ControladorService {
             .token(jwt) // ✅ Token real, no nickname
             .mensaje("Autenticación exitosa")
             .build();
+    }
+
+    public void eliminarUsuario(Integer id) {
+        usuarioServices.eliminarId(id);
     }
 }
