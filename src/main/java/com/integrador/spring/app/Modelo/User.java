@@ -37,12 +37,13 @@ import lombok.NoArgsConstructor;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-// Indica que esta clase es una entidad JPA y se mapeará a una tabla llamada "usuario"
+// Indica que esta clase es una entidad JPA y se mapeará a una tabla llamada
+// "usuario"
 @Entity
-@Table(name="usuario", uniqueConstraints = {@UniqueConstraint(columnNames = {"nickname"})})
-public class User implements UserDetails{
-    @Id //Clave primaria
-    @GeneratedValue //Valor generado automaticamente
+@Table(name = "usuario", uniqueConstraints = { @UniqueConstraint(columnNames = { "nickname" }) })
+public class User implements UserDetails {
+    @Id // Clave primaria
+    @GeneratedValue // Valor generado automaticamente
     @Basic
     @Column(nullable = false)
     Integer id_usuario;
@@ -65,10 +66,10 @@ public class User implements UserDetails{
     @Column(name = "is_2fa_enabled") // Exactamente como en la BD
     @Builder.Default
     private boolean is2faEnabled = false;
-    
+
     @Column(name = "two_factor_code", length = 6)
     private String twoFactorCode;
-    
+
     @Column(name = "two_factor_expiry")
     private LocalDateTime twoFactorExpiry;
 
@@ -80,7 +81,7 @@ public class User implements UserDetails{
     private List<Recarga> recarga;
 
     @OneToMany
-    //@JsonManagedReference
+    // @JsonManagedReference
     private List<CanjeRecompensa> canje;
     // Relacion uno a muchos con la tabla mensajes
     @OneToMany
@@ -90,13 +91,12 @@ public class User implements UserDetails{
     @ManyToOne
     @JsonBackReference
     private Equipo equipo;
-    
+
     public String getFotoPerfil() {
         return (fotoPerfil != null && !fotoPerfil.isBlank())
-        ? "/Imagenes/perfil/" + fotoPerfil
-        : "/Imagenes/perfil/default.png";
+                ? "/Imagenes/perfil/" + fotoPerfil
+                : "/Imagenes/perfil/default.png";
     }
-
 
     // Retorna una colección de autoridades (roles) del usuario para Spring Security
     @Override
@@ -104,7 +104,8 @@ public class User implements UserDetails{
         return List.of(new SimpleGrantedAuthority(role.name()));
     }
 
-    // Los siguientes métodos indican el estado de la cuenta del usuario para control de acceso
+    // Los siguientes métodos indican el estado de la cuenta del usuario para
+    // control de acceso
     @Override
     public boolean isAccountNonExpired() {
         return true;
@@ -124,14 +125,19 @@ public class User implements UserDetails{
     public boolean isEnabled() {
         return true;
     }
+
     @Override
     public String getPassword() {
         return this.contraseña; // Retorna la contraseña
     }
+
     @Override
     public String getUsername() {
         return this.nickname; // Retorna el nombre de usuario
     }
 
-    
+    public Integer getId() {
+        return id_usuario;
+    }
+
 }

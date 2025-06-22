@@ -19,8 +19,10 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
+import com.integrador.spring.app.Modelo.ComprarMonedas;
 import com.integrador.spring.app.Modelo.Recompensa;
 import com.integrador.spring.app.Modelo.Torneo;
+import com.integrador.spring.app.Servicio.ComprarMonedasServices;
 import com.integrador.spring.app.Servicio.RecompensaServices;
 import com.integrador.spring.app.Servicio.TorneoServices;
 
@@ -32,6 +34,9 @@ public class ControladorVistas {
 
     @Autowired
     private RecompensaServices services_recompensa;
+
+    @Autowired
+    private ComprarMonedasServices services_compra;
 
     @GetMapping("/")
     public String inicio() {
@@ -82,20 +87,35 @@ public class ControladorVistas {
     @GetMapping("/canjes")
     public String recompensas(Model model) {
         List<Recompensa> lista = services_recompensa.listarTodas();
-        for(Recompensa recompensa: lista){
+        for (Recompensa recompensa : lista) {
             if (recompensa.getImgRecompensa() != null) {
-            byte[] imgRecompensaByte = recompensa.getImgRecompensa();
-            String imgRecompensaBase64 = Base64.getEncoder().encodeToString(imgRecompensaByte);
-            recompensa.setImgRecompensaBase64(imgRecompensaBase64);                
+                byte[] imgRecompensaByte = recompensa.getImgRecompensa();
+                String imgRecompensaBase64 = Base64.getEncoder().encodeToString(imgRecompensaByte);
+                recompensa.setImgRecompensaBase64(imgRecompensaBase64);
             }
 
         }
         model.addAttribute("recompensas", lista);
         return "canjes";
-    } 
-  
+    }
+
+    @GetMapping("/opcionesRecarga")
+    public String opcionesRecarga(Model model) {
+        List<ComprarMonedas> lista = services_compra.listar();
+
+        for (ComprarMonedas opcion : lista) {
+            if (opcion.getImgMoneda() != null) {
+                byte[] imgMonedasBytes = opcion.getImgMoneda();
+                String imgMonedasBase64 = Base64.getEncoder().encodeToString(imgMonedasBytes);
+                opcion.setImgimgMonedaBase64(imgMonedasBase64);
+            }
+        }
+        model.addAttribute("opcionesRecarga", lista);
+        return "opcionesRecarga";
+    }
+
     @GetMapping("/equipos")
-    public String equipos(){
+    public String equipos() {
         return "equipos";
     }
 
@@ -107,17 +127,17 @@ public class ControladorVistas {
 
     @GetMapping("/crearequipo")
     public String crearequipo() {
-      return "crearequipo";
+        return "crearequipo";
     }
 
-   @GetMapping("/torneoinscrito")
+    @GetMapping("/torneoinscrito")
     public String torneoinscrito() {
-      return "torneoinscrito";
+        return "torneoinscrito";
     }
 
     @GetMapping("/cuadrotorneo")
     public String cuadrotorneo() {
-      return "cuadrotorneo";
+        return "cuadrotorneo";
     }
 
     @GetMapping("/pdfDota2")

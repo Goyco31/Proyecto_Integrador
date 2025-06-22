@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" th:href="@{/css/header.css}" />
+    <link rel="stylesheet" th:href="@{/css/footer.css}" />
+    <style>
+        .lista-opcion-Recarga {
+            font-family: "Courier New", Courier, monospace;
+            margin: 0 auto;
+            border: 1px solid red;
+            width: 90%;
+            display: flex;
+            gap: 20px;
+        }
+
+        .opcion-recarga {
+            border: 1px solid black;
+            border-radius: 10px;
+            width: 300px;
+            padding: 30px;
+            text-align: center;
+        }
+
+        .opcion-recarga .img-opcion img {
+            width: 100%;
+            border: 1px solid orange;
+        }
+
+        .opcion-recarga .opcion-recarga-descripcion {
+            font-size: 20px;
+        }
+
+        .opcion-recarga .opcion-recarga-descripcion button {
+            width: 80%;
+            font-size: 20px;
+            padding: 20px 0 20px 0;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="overlay" id="overlay"></div>
+
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <div id="table-container">
+        <div class="opcion-recarga" th:each="opcion : ${opcionesRecarga}">
+            <div class="img-opcion">
+                <img th:src="'data:image/png;base64,' +${opcion.imgimgMonedaBase64}" alt="" />
+            </div>
+            <div class="opcion-recarga-descripcion">
+                <h3 th:text="${opcion.nombre}">${l.nombre}</h3>
+                <p th:text="${opcion.cantidad}">${l.cantidad} Monedas</p>
+                <p th:text="${opcion.precioCompra}">S/. ${l.precioCompra}</p>
+                <form method="post" action="/payment/create">
+                    <input type="hidden" name="precio" th:value="${opcion.precioCompra}" />
+                    <input type="hidden" name="idCompra" th:value="${opcion.idCompra}" />
+                    <input type="hidden" id="idUser" name="idUser" value="" />
+                    <button type="submit">Recargar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <div th:replace="~{fragments/footer}"></div>
+    <script>
+        function getParameterByName(name, url = window.location.href) {
+            name = name.replace(/[\[\]]/g, "\\$&");
+            var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+                results = regex.exec(url);
+            if (!results) return null;
+            if (!results[2]) return "";
+            return decodeURIComponent(results[2].replace(/\+/g, " "));
+        }
+
+        var idUser = localStorage.getItem("idUser");
+        var idUserElements = document.querySelectorAll("#idUser");
+        idUserElements.forEach(function (element) {
+            element.value = idUser;
+        });
+    </script>
+
+    <div th:replace="~{fragments/modal-registro}"></div>
+    <div th:replace="~{fragments/modal-login}"></div>
+    <div th:replace="~{fragments/modal-2FA}"></div>
+    <div th:replace="~{fragments/modal-recuperarContra}"></div>
+    <div th:replace="~{fragments/modal-actualizarContra}"></div>
+    <script th:src="@{/jscript/pagPrincipal.js}"></script>
+    <script th:src="@{/jscript/modal-registro.js}"></script>
+    <script th:src="@{/jscript/modal-login.js}"></script>
+    <script th:src="@{/jscript/modal-2FA.js}"></script>
+    <script src="/jscript/header.js" defer></script>
+    <script src="/jscript/logout.js" defer></script>
+</body>
+
+</html>

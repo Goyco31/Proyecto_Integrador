@@ -1,23 +1,25 @@
 package com.integrador.spring.app.config;
 
-import com.paypal.core.PayPalEnvironment;
-import com.paypal.core.PayPalHttpClient;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import com.paypal.base.rest.APIContext;
+
 @Configuration
 public class PayPalConfig {
 
-    @Value("${paypal.client-id}")
-    private String clientId;
+        @Value("${paypal.client.id}")
+    private String clienteId;
 
-    @Value("${paypal.client-secret}")
-    private String clientSecret;
+    @Value("${paypal.client.secret}")
+    private String clienteSecret;
+
+    @Value("${paypal.mode}")
+    private String modo;
 
     @Bean
-    public PayPalHttpClient PayPalClient() {
-        PayPalEnvironment environment = new PayPalEnvironment.Sandbox(clientId, clientSecret);
-        return new PayPalHttpClient(environment);
+    public APIContext apiContext() {
+        return new APIContext(clienteId, clienteSecret, modo);
     }
 }

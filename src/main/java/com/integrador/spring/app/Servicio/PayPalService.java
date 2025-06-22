@@ -1,48 +1,67 @@
 package com.integrador.spring.app.Servicio;
 
-import com.integrador.spring.app.Modelo.PayPalClient;
-import com.paypal.orders.*;
+import com.paypal.api.payments.Amount;
+import com.paypal.api.payments.Payer;
+import com.paypal.api.payments.Payment;
+import com.paypal.api.payments.PaymentExecution;
+import com.paypal.api.payments.RedirectUrls;
+import com.paypal.api.payments.Transaction;
+import com.paypal.base.rest.APIContext;
+import com.paypal.base.rest.PayPalRESTException;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
 @Service
 public class PayPalService {
 
-    @Autowired
-    private PayPalClient payPalClient;
+        @Autowired
+        private APIContext apiContext;
 
-    public String createOrder(String currencyCode, String amount) throws IOException {
-        OrderRequest orderRequest = new OrderRequest();
-        orderRequest.checkoutPaymentIntent("CAPTURE");
+        public Payment createPayment(BigDecimal total, String currency, String method, String intent,
+                        String description,
+                        String cancelUrl, String successsUrl) throws PayPalRESTException {
 
-        ApplicationContext applicationContext = new ApplicationContext()
-                .brandName("Mi App SpringBoot")
-                .landingPage("BILLING")
-                .cancelUrl("http://localhost:8080/paypal/cancel")
-                .returnUrl("http://localhost:8080/paypal/success")
-                .userAction("PAY_NOW");
+                Amount amount = new Amount();
+                amount.setCurrency(currency);
+                amount.setTotal(String.format("%.2f", total));
 
-        List<PurchaseUnitRequest> purchaseUnits = new ArrayList<>();
-        purchaseUnits.add(new PurchaseUnitRequest()
-                .amountWithBreakdown(new AmountWithBreakdown()
-                        .currencyCode(currencyCode)
-                        .value(amount)));
+                Transaction transaction = new Transaction();
+                transaction.setDescription(description);
+                transaction.setAmount(amount);
 
-        orderRequest.purchaseUnits(purchaseUnits);
-        orderRequest.applicationContext(applicationContext);
+                List<Transaction> transactions = new ArrayList<>();
+                transactions.add(transaction);
 
-        OrdersCreateRequest request = new OrdersCreateRequest()
-                .requestBody(orderRequest);
+                Payer payer = new Payer();
+                payer.setPaymentMethod(method);
 
-        Order order = payPalClient.getClient().execute(request).result();
-        return order.links().stream()
-                .filter(link -> "approve".equals(link.rel()))
-                .findFirst()
-                .map(LinkDescription::href)
-                .orElseThrow(() -> new RuntimeException("No se encontró el enlace de aprobación de PayPal"));
-    }
+                Payment payment = new Payment();
+                payment.setIntent(intent);
+                payment.setPayer(payer);
+                payment.setTransactions(transactions);
+
+                RedirectUrls redirectUrls = new RedirectUrls();
+                redirectUrls.setCancelUrl(cancelUrl);
+                redirectUrls.setReturnUrl(successsUrl);
+
+                payment.setRedirectUrls(redirectUrls);
+
+                return payment.create(apiContext);
+        }
+
+        public Payment execuPayment(String paymentId, String payerId) throws PayPalRESTException {
+                Payment payment = new Payment();
+                payment.setId(paymentId);
+
+                PaymentExecution paymentExecution = new PaymentExecution();
+                paymentExecution.setPayerId(payerId);
+
+                return payment.execute(apiContext, paymentExecution);
+        }
 }
