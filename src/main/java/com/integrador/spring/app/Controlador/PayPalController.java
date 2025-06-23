@@ -8,7 +8,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.view.RedirectView;
 
-import com.integrador.spring.app.DTO.OrderRequest;
 import com.integrador.spring.app.Servicio.PayPalService;
 import com.integrador.spring.app.Servicio.RecargaServices;
 import com.paypal.api.payments.Links;
@@ -28,8 +27,8 @@ public class PayPalController {
     @Autowired
     private RecargaServices service_recarga;
 
-    @PostMapping("/payment/create")
-    public RedirectView createPayment(
+    @PostMapping("/pago/crear")
+    public RedirectView crearPago(
             @RequestParam(value = "currency", defaultValue = "USD") String currency,
             @RequestParam("idCompra") Integer idCompra,
             @RequestParam("idUser") Integer idUser,
@@ -40,15 +39,15 @@ public class PayPalController {
                 Currency.getInstance(currency);
             } catch (IllegalArgumentException e) {
                 log.error("Invalid currency code: {}", currency);
-                return new RedirectView("/payment/error");
+                return new RedirectView("/pago/error");
             }
 
-            String cancelUrl = "http://localhost:8080/payment/cancel";
-            String successUrl = "http://localhost:8080/payment/success";
+            String cancelUrl = "http://localhost:8080/pago/cancel";
+            String successUrl = "http://localhost:8080/pago/exito";
             log.info(
                     "Creating payment with total: 10.0, currency: {}, method: paypal, intent: sale, description: Payment descripction, cancelUrl: {}, successUrl: {}",
                     currency, cancelUrl, successUrl);
-            Payment payment = services_paypal.createPayment(precio, currency, "paypal", "sale", "Payment descripction",
+            Payment payment = services_paypal.crearPago(precio, currency, "paypal", "sale", "Payment descripction",
                     cancelUrl, successUrl);
 
             for (Links links : payment.getLinks()) {
@@ -60,34 +59,34 @@ public class PayPalController {
                 }
             }
         } catch (PayPalRESTException e) {
-            log.error("Error creating payment", e);
+            log.error("Error en crear el pago", e);
         }
-        return new RedirectView("/payment/error");
+        return new RedirectView("/pago/error");
     }
 
-    @GetMapping("/payment/success")
-    public String paymjentSuccess(@RequestParam("paymentId") String paymentId,
+    @GetMapping("/pago/exito")
+    public String pagoExitoso(@RequestParam("paymentId") String paymentId,
             @RequestParam("PayerID") String payerId) {
         try {
-            Payment payment = services_paypal.execuPayment(paymentId, payerId);
+            Payment payment = services_paypal.ejecutarPago(paymentId, payerId);
             if (payment.getState().equals("approved")) {
 
-                return "paymentSuccess";
+                return "pagoExito";
             }
         } catch (PayPalRESTException e) {
             log.error("Error:: ", e);
         }
-        return "paymentSuccess";
+        return "pagoExito";
     }
 
-    @GetMapping("/payment/cancel")
-    public String paymentCancel() {
-        return "paymentCancel";
+    @GetMapping("/pago/cancel")
+    public String pagoCancel() {
+        return "pagoCancel";
     }
 
-    @GetMapping("/payment/error")
-    public String paymentError() {
-        return "paymentError";
+    @GetMapping("/pago/error")
+    public String pagoError() {
+        return "pagoError";
     }
 
 }

@@ -23,7 +23,7 @@ public class PayPalService {
         @Autowired
         private APIContext apiContext;
 
-        public Payment createPayment(BigDecimal total, String currency, String method, String intent,
+        public Payment crearPago(BigDecimal total, String currency, String method, String intent,
                         String description,
                         String cancelUrl, String successsUrl) throws PayPalRESTException {
 
@@ -55,7 +55,7 @@ public class PayPalService {
                 return payment.create(apiContext);
         }
 
-        public Payment execuPayment(String paymentId, String payerId) throws PayPalRESTException {
+        public Payment ejecutarPago(String paymentId, String payerId) throws PayPalRESTException {
                 Payment payment = new Payment();
                 payment.setId(paymentId);
 

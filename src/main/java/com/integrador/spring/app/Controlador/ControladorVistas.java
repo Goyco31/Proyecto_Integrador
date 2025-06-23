@@ -25,6 +25,7 @@ import com.integrador.spring.app.Modelo.Torneo;
 import com.integrador.spring.app.Servicio.ComprarMonedasServices;
 import com.integrador.spring.app.Servicio.RecompensaServices;
 import com.integrador.spring.app.Servicio.TorneoServices;
+import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
 public class ControladorVistas {
@@ -99,7 +100,26 @@ public class ControladorVistas {
         return "canjes";
     }
 
-    @GetMapping("/opcionesRecarga")
+    @GetMapping("/ComprarMonedas")
+    public String ComprarMonedas(Model model) {
+        List<ComprarMonedas> lista = services_compra.listar();
+
+        for (ComprarMonedas opcion : lista) {
+            if (opcion.getImgMoneda() != null) {
+                byte[] imgMonedasBytes = opcion.getImgMoneda();
+                String imgMonedasBase64 = Base64.getEncoder().encodeToString(imgMonedasBytes);
+                opcion.setImgimgMonedaBase64(imgMonedasBase64);
+            }
+        }
+        model.addAttribute("opcionesRecarga", lista);
+        return "ComprarMonedas";
+    }
+
+    public String getMethodName(@RequestParam String param) {
+        return new String();
+    }
+
+   /*@GetMapping("/opcionesRecarga")
     public String opcionesRecarga(Model model) {
         List<ComprarMonedas> lista = services_compra.listar();
 
@@ -112,7 +132,7 @@ public class ControladorVistas {
         }
         model.addAttribute("opcionesRecarga", lista);
         return "opcionesRecarga";
-    }
+    }*/
 
     @GetMapping("/equipos")
     public String equipos() {
