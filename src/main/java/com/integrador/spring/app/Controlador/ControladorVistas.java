@@ -187,4 +187,19 @@ public class ControladorVistas {
 
         return new ResponseEntity<>(contenido2, headers2, HttpStatus.OK);
     }
+    @GetMapping("/pagoCancel")
+public String pagoCancel() {
+    return "pagoCancel"; 
+}
+
+@GetMapping("/pagoError")
+public String pagoError() {
+    return "pagoError"; 
+}
+
+@GetMapping("/pagoExito")
+public String pagoExito() {
+    return "pagoExito"; 
+}
+
 }
