@@ -88,4 +88,26 @@ public class EmailService {
         throw new RuntimeException("Error al enviar correo de configuración 2FA", e);
     }
 }
+
+    public void sendRewardRedemptionEmail(String toEmail, String rewardName, String rewardDescription) {
+        try {
+            MimeMessage message = mailSender.createMimeMessage();
+            MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+            helper.setFrom(fromEmail);
+            helper.setTo(toEmail);
+            helper.setSubject("¡Recompensa Canjeada!");
+
+            Context context = new Context();
+            context.setVariable("rewardName", rewardName);
+            context.setVariable("rewardDescription", rewardDescription);
+
+            String htmlContent = templateEngine.process("email/reward-redemption", context);
+            helper.setText(htmlContent, true);
+
+            mailSender.send(message);
+        } catch (MessagingException e) {
+            throw new RuntimeException("Error al enviar correo electrónico de recompensa", e);
+        }
+    }
 }

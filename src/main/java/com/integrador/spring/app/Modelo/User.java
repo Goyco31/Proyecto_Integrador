@@ -140,4 +140,7 @@ public class User implements UserDetails {
         return id_usuario;
     }
 
+    public String getEmail() {
+        return correo;
+    }
 }
