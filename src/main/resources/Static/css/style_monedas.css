@@ -1,5 +1,7 @@
 /* Fuentes */
 @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Oswald:wght@400;700&family=Zen+Dots&display=swap');
+
 
 * {
    
@@ -12,9 +14,16 @@ body {
     padding: 0;
     background: linear-gradient(135deg, #380dd4, #004d40); /* morado profundo con verde azulado */
     color: #f0f0f0;
+    background-size: 400% 400%;
+    animation: gradientMove 10s ease infinite;
+    scroll-behavior: smooth;
 }
-
-
+/* Animación del fondo en movimiento */
+@keyframes gradientMove {
+    0% { background-position: 0% 50%; }
+    50% { background-position: 100% 50%; }
+    100% { background-position: 0% 50%; }
+}
 
 h1, h2, h3, h4, h5, h6 {
     font-family: 'Oswald', sans-serif;
@@ -470,7 +479,7 @@ a:hover {
     font-family: 'Oswald', sans-serif;
     font-size: 1.4em;
     font-weight: 700;
-    color: #a06ddb; /* Reemplazado de var(--blue-info) */
+    color: #e0e0e0; /* Reemplazado de var(--blue-info) */
     margin-top: 0;
     margin-bottom: 10px;
     text-align: left;
@@ -819,4 +828,65 @@ a:hover {
         font-size: 1.1em;
         padding: 12px 25px;
     }
+
+   .section-title::after {
+    content: '';
+    display: block;
+    margin: 10px auto 0;
+    width: 80px;
+    height: 4px;
+    background: linear-gradient(to right, #8a2be2, #ffd700);
+    border-radius: 5px;
+    animation: glowLine 2s infinite alternate;
+}
+.tagline {
+  font-family: 'Zen Dots', cursive;
+  font-size: 1.4em;
+  color: #ffd700;
+  text-shadow: 0 0 5px #8a2be2;
+}
+@keyframes flicker {
+  0%, 19%, 21%, 23%, 25%, 54%, 56%, 100% {
+    opacity: 1;
+  }
+  20%, 22%, 24%, 55% {
+    opacity: 0.4;
+  }
+}
+
+.section-title {
+  animation: flicker 3s infinite;
+}
+@keyframes pulse-glow {
+  0% {
+    box-shadow: 0 0 15px #ffd700;
+  }
+  50% {
+    box-shadow: 0 0 30px #ffd700;
+  }
+  100% {
+    box-shadow: 0 0 15px #ffd700;
+  }
+}
+
+.coin-card.selected {
+  animation: pulse-glow 1.5s infinite;
+}
+.coin-card:hover {
+  transform: perspective(600px) rotateY(4deg);
+}
+
+@keyframes gradientMove {
+  0% { background-position: 0% 50%; }
+  50% { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+.coin-card {
+  animation: floatCard 4s ease-in-out infinite;
+}
+
+@keyframes floatCard {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-5px); }
+}
 }
