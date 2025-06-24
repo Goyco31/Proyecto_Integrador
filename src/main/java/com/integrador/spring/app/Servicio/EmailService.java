@@ -89,20 +89,20 @@ public class EmailService {
     }
 }
 
-    public void sendRewardRedemptionEmail(String toEmail, String rewardName, String rewardDescription) {
+    public void recompensaEmail(String email, String nombreRecompensa, String recompensaDescripcion) {
         try {
             MimeMessage message = mailSender.createMimeMessage();
             MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
 
             helper.setFrom(fromEmail);
-            helper.setTo(toEmail);
+            helper.setTo(email);
             helper.setSubject("¡Recompensa Canjeada!");
 
             Context context = new Context();
-            context.setVariable("rewardName", rewardName);
-            context.setVariable("rewardDescription", rewardDescription);
+            context.setVariable("nombre", nombreRecompensa);
+            context.setVariable("descripcion", recompensaDescripcion);
 
-            String htmlContent = templateEngine.process("email/reward-redemption", context);
+            String htmlContent = templateEngine.process("email/recompensaCorreo", context);
             helper.setText(htmlContent, true);
 
             mailSender.send(message);

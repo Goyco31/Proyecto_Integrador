@@ -40,13 +40,11 @@ public class CanjeRecompensaController {
                 idRecompensa);
 
         if (result.getStatusCode() == HttpStatus.OK) {
-            // Get user and reward details
             User user = userRepository.findById(idUser).orElse(null);
             Recompensa recompensa = recompensaRepository.findById(idRecompensa).orElse(null);
 
             if (user != null && recompensa != null) {
-                // Send email
-                emailService.sendRewardRedemptionEmail(user.getEmail(),
+                emailService.recompensaEmail(user.getEmail(),
                         recompensa.getNombre(), recompensa.getDescripcion());
             }
         }
@@ -54,30 +52,4 @@ public class CanjeRecompensaController {
         return result;
     }
 
-    /*
-     * @PostMapping("/canejar/recompensa")
-     * public ResponseEntity<String> canjearRecompensa(@RequestParam("idUser")
-     * Integer idUser,
-     * 
-     * @RequestParam("idRecompensa") Integer idRecompensa) {
-     * ResponseEntity<String> result = services_canjes.canjear(idUser,
-     * idRecompensa);
-     * 
-     * if (result.getStatusCode() == HttpStatus.OK) {
-     * // Get user and reward details
-     * User user = userRepository.findById(idUser).orElse(null);
-     * Recompensa recompensa =
-     * recompensaRepository.findById(idRecompensa).orElse(null);
-     * 
-     * if (user != null && recompensa != null) {
-     * // Send email
-     * emailService.sendRewardRedemptionEmail(user.getEmail(),
-     * recompensa.getNombre(),
-     * recompensa.getDescripcion());
-     * }
-     * }
-     * 
-     * return result;
-     * }
-     */
 }
