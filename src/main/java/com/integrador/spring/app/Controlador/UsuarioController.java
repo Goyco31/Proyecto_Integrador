@@ -76,7 +76,7 @@ public class UsuarioController {
     }
 
 
-    @PostMapping("/api/usuarios/upload-foto")
+    @PostMapping("/upload-foto")
     public ResponseEntity<String> uploadFoto(@RequestParam("file") MultipartFile file) {
         try {
             String originalName = file.getOriginalFilename();
@@ -157,7 +157,7 @@ public class UsuarioController {
                 if (equipo.isPresent()) {
                     Equipo cant = equipo.get();
                     // si el equipo ya tiene 5 integrantes no le dejara unirse
-                    if (cant.getUsuario().size() >= 5) {
+                    if (cant.getIntegrantes().size() >= 5) {
                         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
                     }
                     // si aun no esta lleno se unira con exito
@@ -208,7 +208,7 @@ public class UsuarioController {
                 if (equipo.isPresent()) {
                     Equipo cant = equipo.get();
                     // si el equipo ya tiene 5 integrantes no podra unirce
-                    if (cant.getUsuario().size() >= 5) {
+                    if (cant.getIntegrantes().size() >= 5) {
                         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
                     }
                     // si el equipo no esta lleno se unira exitosamente

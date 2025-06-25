@@ -8,6 +8,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -31,9 +32,16 @@ public class Equipo {
 
     //Relacio uno a muchos con la tabla usuario
     @OneToMany
-    private List<User> usuario;
+    private List<User> integrantes;
 
     //Relacio uno a uno muchos la tabla Inscripciones
     @OneToMany
     private List<Inscripciones> inscripciones;
+
+    @ManyToOne
+    private User lider;
+
+    private String logoUrl;
+    private String region;
+    private String descripcion;
 }

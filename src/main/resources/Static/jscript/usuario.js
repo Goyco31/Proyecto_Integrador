@@ -82,36 +82,56 @@ document.addEventListener('DOMContentLoaded', () => {
     profilePictureUpload.addEventListener('change', async (event) => {
         const file = event.target.files[0];
         if (!file) return;
-        // Validación: tamaño máximo 5MB
+
+        // Validaciones
+        const validTypes = ['image/jpeg', 'image/png', 'image/gif'];
         const maxSize = 5 * 1024 * 1024; // 5MB
+
+        if (!validTypes.includes(file.type)) {
+            alert('Solo se permiten imágenes JPEG, PNG o GIF');
+            return;
+        }
+
         if (file.size > maxSize) {
-            alert("La imagen es demasiado grande (máximo 5MB)");
+            alert('La imagen no debe exceder 5MB');
             return;
         }
 
         const formData = new FormData();
         formData.append("file", file);
 
-        const token = localStorage.getItem("authToken"); // <-- ⚠️ Asegúrate de tener el token
-
         try {
+            // Mostrar loader
+            changePictureBtn.disabled = true;
+            changePictureBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Subiendo...';
+
             const res = await fetch("/api/usuarios/upload-foto", {
                 method: "POST",
                 headers: {
-                    "Authorization": "Bearer " + token
+                    "Authorization": "Bearer " + localStorage.getItem("authToken")
                 },
                 body: formData
             });
-            const filename = await res.text();
-            if (res.ok) {
-                // Mostrar imagen y guardar nombre para backend
-                document.getElementById("profile-picture").src = "/uploads/perfil/" + filename;
-                document.getElementById("profile-picture").dataset.filename = filename;
-            } else {
-                alert("Error al subir imagen: " + filename);
+
+            if (!res.ok) {
+                const error = await res.text();
+                throw new Error(error || "Error al subir imagen");
             }
+
+            const filename = await res.text();
+            
+            // Actualizar imagen en el frontend
+            profilePicture.src = `/uploads/perfil/${filename}?t=${Date.now()}`; // Cache busting
+            profilePicture.dataset.filename = filename;
+            
+            alert("Foto de perfil actualizada con éxito");
         } catch (err) {
-            console.error("Error subiendo imagen", err);
+            console.error("Error subiendo imagen:", err);
+            alert(err.message || "Error al subir la imagen");
+        } finally {
+            changePictureBtn.disabled = false;
+            changePictureBtn.innerHTML = 'Cambiar Imagen';
+            profilePictureUpload.value = ''; // Resetear input
         }
     });
 });
