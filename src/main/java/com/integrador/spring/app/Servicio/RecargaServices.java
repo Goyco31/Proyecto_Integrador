@@ -62,7 +62,7 @@ public class RecargaServices {
         nuevaRecarga.setUsuario(usuario);
         nuevaRecarga.setComprarMonedas(comprarMonedas);
         nuevaRecarga.setTipoPago(TipoPago.PAYPAL);
-        nuevaRecarga.setEstado(Estado.PENDIENTE);
+        nuevaRecarga.setEstado(Estado.CANCELADO);
         repo_recarga.save(nuevaRecarga);
 
         return ResponseEntity.ok("Recarga realizada");

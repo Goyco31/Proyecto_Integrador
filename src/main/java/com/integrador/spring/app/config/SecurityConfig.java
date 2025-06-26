@@ -69,9 +69,9 @@ public class SecurityConfig {
                     // Permitir acceso a las rutas de control
                     .requestMatchers("/control/login", "/control/registro", "/control/refresh-token", "/control/toggle-2fa","/control/forgot-password",
                     "/control/validate-reset-code", "/control/reset-password", "/control/validate-2fa").permitAll()
+                    .requestMatchers("/ver/excel/**").hasAnyRole("ADMIN")
                     // Requiere autenticación para todo lo demás
                     .requestMatchers("/api/**").authenticated()
-                    //.requestMatchers("/ver/usuarios/listar.xlsx").hasAnyRole("ADMIN")
             )
         .sessionManagement(sessionManager -> 
             // Configura la política de sesión como STATELESS (sin sesiones, solo JWT)
