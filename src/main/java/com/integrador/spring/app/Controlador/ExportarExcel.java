@@ -1,4 +1,4 @@
-package com.integrador.spring.app.Components;
+package com.integrador.spring.app.Controlador;
 
 import java.util.List;
 import java.util.Map;
@@ -32,7 +32,7 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Controller
 @RequestMapping("/ver/excel")
-public class ListarUsuariosExcelController extends AbstractXlsxView {
+public class ExportarExcel extends AbstractXlsxView {
 
     @Autowired
     private UsuarioServices services_user;

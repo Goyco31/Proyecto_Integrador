@@ -65,11 +65,11 @@ public class SecurityConfig {
                     "/pdfDota2",
                     "/pdfCSGO2",
                     "/clasificacion",
-                    "/administrador", "/canjes", "/ComprarMonedas", "/pago/**", "/pagoCancel", "pagoError").permitAll()
+                    "/administrador", "/canjes", "/ComprarMonedas", "/pago/**", "/pagoCancel", "pagoError", "/ver/excel/**").permitAll()
                     // Permitir acceso a las rutas de control
                     .requestMatchers("/control/login", "/control/registro", "/control/refresh-token", "/control/toggle-2fa","/control/forgot-password",
                     "/control/validate-reset-code", "/control/reset-password", "/control/validate-2fa").permitAll()
-                    .requestMatchers("/ver/excel/**").hasAnyRole("ADMIN")
+                    
                     // Requiere autenticación para todo lo demás
                     .requestMatchers("/api/**").authenticated()
             )
