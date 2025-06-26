@@ -47,19 +47,19 @@
                 <div class="profile-details">
                     <div class="detail-group">
                         <label for="name">Nombre:</label>
-                        <input type="text" id="name" value="Juan" disabled>
+                        <input type="text" id="name" disabled>
                     </div>
                     <div class="detail-group">
                         <label for="nickname">Nickname:</label>
-                        <input type="text" id="nickname" value="GamerPro" disabled>
+                        <input type="text" id="nickname" disabled>
                     </div>
                     <div class="detail-group">
-                        <label for="lastname">Apellido:</label>
-                        <input type="text" id="lastname" value="Pérez" disabled>
+                        <label for="apellido">Apellido:</label>
+                        <input type="text" id="apellido" disabled>
                     </div>
                     <div class="detail-group">
                         <label for="email">Correo:</label>
-                        <input type="email" id="email" value="juan.perez@example.com" disabled>
+                        <input type="email" id="email" disabled>
                     </div>
                     <div class="form-group remember-me-checkbox">
                         <label for="remember-me">¿Desea mantener la sesión?</label>
@@ -78,10 +78,14 @@
     <div th:replace="~{fragments/footer}"></div>
     <div th:replace="~{fragments/modal-registro}"></div>
     <div th:replace="~{fragments/modal-login}"></div>
+
+    <script th:src="@{/jscript/usuario.js}"></script>
     <script th:src="@{/jscript/modal-registro.js}"></script>
     <script th:src="@{/jscript/modal-login.js}"></script>
     <script th:src="@{/jscript/pagTorneo.js}"></script>
-    <script th:src="@{/jscript/usuario.js}"></script>
+    <script th:src="@{/jscript/pagPrincipal.js}"></script>
+    <script src="/jscript/header.js" defer></script>
+    <script src="/jscript/logout.js" defer></script>
 </body>
 
 </html>

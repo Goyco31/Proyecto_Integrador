@@ -6,6 +6,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Lob;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
@@ -20,4 +21,9 @@ public class ComprarMonedas {
     private String nombre;
     private Integer cantidad;
     private BigDecimal precioCompra;
+
+    @Lob
+    private byte[] imgMoneda;
+
+    private String imgimgMonedaBase64;
 }

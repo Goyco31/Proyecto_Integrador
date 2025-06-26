@@ -1,109 +1,150 @@
 <!DOCTYPE html>
 <html lang="es" xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8">
+  <head>
+    <meta charset="UTF-8" />
     <title>SkillTourney - Torneos Profesionales</title>
-    <link rel="stylesheet" th:href="@{/css/pagTorneo.css}">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Monda:wght@400;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" th:href="@{/css/header.css}">
-    <link rel="stylesheet" th:href="@{/css/footer.css}">
-</head>
-<body>
-    <!-- Overlay que oscurecerá el fondo -->
-  <div class="overlay" id="overlay"></div>
+    <link rel="stylesheet" th:href="@{/css/pagTorneo.css}" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="stylesheet" th:href="@{/css/header.css}" />
+    <link rel="stylesheet" th:href="@{/css/footer.css}" />
+  </head>
+  <body>
+    <div class="overlay" id="overlay"></div>
 
     <div th:replace="~{fragments/header :: header}"></div>
 
     <section class="hero-banner">
-        <div class="slogan-container">
-            <h1 class="main-slogan">Impulsa tu juego<br>Atrae a tu audiencia<br>Haz historia</h1>
-        </div>
+      <div class="slogan-container">
+        <h1 class="main-slogan">
+          Impulsa tu juego<br />Atrae a tu audiencia<br />Haz historia
+        </h1>
+        <div class="inscribir-equipo">
+                <p class="">Si quieres inscribirte a un torneo, debes tener un equipo primero.</p>
+                <a href="/equipos" class="unirse-equipo">Unirte a equipo</a>
+            </div>
+      </div>
     </section>
 
     <section class="featured-games">
-        <div class="game-card">
-            <div class="game-info">
-                <h2 class="game-title">DOTA 2</h2>
-                <p class="game-description">Torneos profesionales con premios en efectivo. Forma tu equipo y compite. Haz historia, únete y participa, sé el mejor y alcanza tu máximo nivel.</p>
-                <div class="game-specs">
-                    <span>5vs5</span>
-                    <span>Premio: 💰 Variable</span>
-                    <span>Modo: Competitivo</span>
-                </div>
-            </div>
-            <div class="game-carousel">
-                <img th:src="@{/Imagenes/dota2.webp}" class="active" alt="Dota 2 gameplay 1">
-                <img th:src="@{/Imagenes/torneodota2.jpg}" alt="Dota 2 gameplay 2">
-            </div>
+      <div class="game-card">
+        <div class="game-info">
+          <h2 class="game-title">DOTA 2</h2>
+          <p class="game-description">
+            Torneos profesionales con premios en efectivo. Forma tu equipo y
+            compite. Haz historia, únete y participa, sé el mejor y alcanza tu
+            máximo nivel.
+          </p>
+          <div class="game-specs">
+            <span>5vs5</span>
+            <span>Premio: 💰 Variable</span>
+            <span>Modo: Competitivo</span>
+          </div>
         </div>
+        <div class="game-carousel">
+          <img
+            th:src="@{/Imagenes/dota2.webp}"
+            class="active"
+            alt="Dota 2 gameplay 1"
+          />
+          <img th:src="@{/Imagenes/torneodota2.jpg}" alt="Dota 2 gameplay 2" />
 
-        <div class="game-card reverse">
-            <div class="game-carousel">
-                <img th:src="@{/Imagenes/counter-strike-2.webp}" class="active" alt="CSGO gameplay 1">
-                <img th:src="@{/Imagenes/torneo-counter-strike-esports.webp}" alt="CSGO gameplay 2">
-            </div>
-            <div class="game-info">
-                <h2 class="game-title">CS:GO 2</h2>
-                <p class="game-description">Demuestra tu precisión en el shooter táctico más popular, en uno de los juegos clásicos y preferidos por la mayoría de jugadores.</p>
-                <div class="game-specs">
-                    <span>5vs5</span>
-                    <span>Premio: 💰 Variable</span>
-                    <span>Modo: Defusal</span>
-                </div>
-            </div>
         </div>
+      </div>
+
+      <div class="game-card reverse">
+        <div class="game-carousel">
+          <img
+            th:src="@{/Imagenes/counter-strike-2.webp}"
+            class="active"
+            alt="CSGO gameplay 1"
+          />
+          <img
+            th:src="@{/Imagenes/torneo-counter-strike-esports.webp}"
+            alt="CSGO gameplay 2"
+          />
+        </div>
+        <div class="game-info">
+          <h2 class="game-title">CS:GO 2</h2>
+          <p class="game-description">
+            Demuestra tu precisión en el shooter táctico más popular, en uno de
+            los juegos clásicos y preferidos por la mayoría de jugadores.
+          </p>
+          <div class="game-specs">
+            <span>5vs5</span>
+            <span>Premio: 💰 Variable</span>
+            <span>Modo: Defusal</span>
+            T
+          </div>
+        </div>
+      </div>
     </section>
 
     <section class="tournaments-section" id="eventos">
-        <h2 class="section-title">TORNEOS ACTIVOS</h2>
-        <div class="cards-container">
-            <div class="tournament-card" data-tournament-id="dota-julio-premium">
-                <div class="card-header">
-                    <h3>Torneo DOTA 2</h3>
-                    <span class="premiun-badge">PREMIUM</span>
-                </div>
-                <div class="card-content">
-                    <p class="schedule">📅 20 Julio | 🕒 8:00 PM</p>
-                    <p class="prize">🏆 $100 PEN</p>
-                </div>
-            </div>
-            <div class="tournament-card" data-tournament-id="dota-agosto-pro">
-                <div class="card-header">
-                    <h3>Torneo DOTA 2</h3>
-                    <span class="premiun-badge">PRO</span>
-                </div>
-                <div class="card-content">
-                    <p class="schedule">📅 15 Agosto | 🕒 7:30 PM</p>
-                    <p class="prize">🏆 $200 PEN</p>
-                </div>
-            </div>
-            <div class="tournament-card" data-tournament-id="csgo-julio-open">
-                <div class="card-header">
-                    <h3>Torneo CSGO 2</h3>
-                    <span>OPEN</span>
-                </div>
-                <div class="card-content">
-                    <p class="schedule">📅 25 Julio | 🕒 9:00 PM</p>
-                    <p class="prize">🏆 $250 PEN</p>
-                </div>
-            </div>
+
+      <h2 class="section-title">TORNEOS ACTIVOS</h2>
+      <div class="lista-torneos">
+        <div class="carta-torneo" th:each="torneo : ${torneos}">
+          <div class="img-torneo">
+            <img
+              class="banner-torneo"
+              th:src="'data:image/png;base64,' + ${torneo.bannerBase64}"
+              th:alt="${torneo.nombre}"
+            />
+            <img
+              class="juego-torneo"
+              th:if="${torneo.juego != null and torneo.juego.imgJuegoBase64 != null}"
+              th:src="'data:image/png;base64,' + ${torneo.juego.imgJuegoBase64}"
+              th:alt="${torneo.juego.nombreJuego}"
+            />
+          </div>
+          <div class="contenido-torneo">
+            <h3 th:text="${torneo.nombre}">Nombre del torneo</h3>
+            <p th:text="${torneo.descripcion}">Descripcion del torneo</p>
+            <time
+              th:text="${#temporals.format(torneo.fecha, 'dd/MM/yyyy')}"
+            ></time>
+            <p th:text="${torneo.premio}+ ' monedas'"></p>
+            <p th:text="${torneo.cupos}"></p>
+            <p th:text="${torneo.formato}"></p>
+            <p th:text="${torneo.estado}"></p>
+          </div>
         </div>
+      </div>
+      <div class="cards-container" id="tournaments-cards-container"></div>
+      <p
+        id="no-active-tournaments-message"
+        class="info-message"
+        style="display: none"
+      >
+        No hay torneos activos en este momento. ¡Vuelve pronto!
+      </p>
     </section>
 
-    <div class="carousel-modal"> <div class="modal-content">
-            <span class="close-modal">&times;</span>
-            <div class="modal-tournament-content-area"></div> </div>
+    <div class="carousel-modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="modal-tournament-content-area"></div>
+      </div>
+
     </div>
-    
+
     <div th:replace="~{fragments/footer}"></div>
     <div th:replace="~{fragments/modal-registro}"></div>
     <div th:replace="~{fragments/modal-login}"></div>
-    <script th:src="@{/jscript/modal-registro.js}"></script>
-    <script th:src="@{/jscript/modal-login.js}"></script>
-    <script th:src="@{/jscript/pagTorneo.js}"></script>
+    <div th:replace="~{fragments/modal-2FA}"></div>
+    <div th:replace="~{fragments/modal-recuperarContra}"></div>
+    <div th:replace="~{fragments/modal-actualizarContra}"></div>
+
+    <!--<script th:src="@{/jscript/pagTorneo.js}"></script>-->
     <script th:src="@{/jscript/pagPrincipal.js}"></script>
-</body>
+    <script th:src="@{/jscript/modal-registro.js}"></script>
+    <script th:src="@{/jscript/modal-recuperarContra.js}" defer></script>
+    <script th:src="@{/jscript/modal-2fa-recuperacion.js}" defer></script>
+    <script th:src="@{/jscript/modal-actualizarContra.js}" defer></script>
+    <script th:src="@{/jscript/modal-login.js}"></script>
+    <script th:src="@{/jscript/modal-2FA.js}"></script>
+    <script src="/jscript/header.js" defer></script>
+    <script src="/jscript/logout.js" defer></script>
+  </body>
 </html>
+

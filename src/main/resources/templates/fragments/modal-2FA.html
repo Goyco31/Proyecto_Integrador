@@ -22,12 +22,6 @@
 
                 <!-- Formulario de verificación -->
                 <form id="2faForm" th:action="@{/verify-2fa}" method="post" class="formulario">
-                    <!-- Campo oculto para el email (si ya está autenticado) o visible si no -->
-                    <div class="input-group" th:unless="${#authentication.principal != null}">
-                        <i class="fas fa-envelope"></i>
-                        <input type="email" name="email" th:value="${email}" placeholder="Tu correo electrónico" required>
-                    </div>
-                    
                     <!-- Campo para el código -->
                     <div class="input-group">
                         <i class="fas fa-shield-alt"></i>
@@ -35,6 +29,9 @@
                             required pattern="\d{6}" maxlength="6" title="Por favor ingresa un código de 6 dígitos">
                     </div>
                     
+                    <input type="hidden" id="tempToken" name="tempToken" />
+
+
                     <!-- Botón de submit -->
                     <button type="submit" class="btn-login">
                         <i class="fas fa-check-circle"></i> VERIFICAR

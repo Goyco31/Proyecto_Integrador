@@ -1,5 +1,17 @@
 /*Importar fuente orbitron*/
-@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap');
+
+@font-face {
+  font-family: 'Sink';
+  src: url('../fonts/SinkDisplay.woff2') format('woff2'),
+       url('../fonts/SinkDisplay.woff') format('woff');
+  font-weight: normal;
+  font-style: normal;
+}
+*{
+    font-family: 'Orbitron', sans-serif;
+}
+
 
 /*Fondo con degradado neón animado*/
 body {

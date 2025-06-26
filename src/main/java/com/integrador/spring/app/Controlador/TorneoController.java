@@ -1,5 +1,6 @@
 package com.integrador.spring.app.Controlador;
 
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Optional;
 
@@ -11,16 +12,21 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.multipart.MultipartFile;
+
+import java.util.Base64;
 
 import com.integrador.spring.app.Modelo.Juego;
 import com.integrador.spring.app.Modelo.Torneo;
-import com.integrador.spring.app.Servicio.JuegoServices;
+import com.integrador.spring.app.Modelo.Torneo.EstadoTorneo;
+import com.integrador.spring.app.Modelo.Torneo.Tipo;
 import com.integrador.spring.app.Servicio.TorneoServices;
 
 import jakarta.persistence.EntityNotFoundException;
+
 
 @RestController
 @RequestMapping("/api/torneos")
@@ -29,11 +35,8 @@ public class TorneoController {
     @Autowired
     private TorneoServices services_torneo;
 
-    @Autowired
-    private JuegoServices services_juego;
-
     // listar todos los torneos
-    @GetMapping("")
+    @GetMapping("/lista")
     public ResponseEntity<List<Torneo>> listarTorneos() {
         List<Torneo> torneos = services_torneo.listarTorneo();
         return new ResponseEntity<>(torneos, HttpStatus.OK);
@@ -55,116 +58,75 @@ public class TorneoController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
-    //registrar un nuevo torneo
+    // registrar un nuevo torneo
     @PostMapping("/registrar")
-    public ResponseEntity<Torneo> registrarTorneo(@RequestBody Torneo torneo) {
-        Torneo registrar = services_torneo.guardar(torneo);
-        return new ResponseEntity<>(registrar, HttpStatus.CREATED);
-    }
+    public ResponseEntity<Torneo> registrarTorneo(
+            @RequestParam("nombre") String nombre,
+            @RequestParam("descripcion") String descripcion,
+            @RequestParam("tipo") Tipo tipo,
+            @RequestParam("banner") MultipartFile banner,
+            @RequestParam("fecha") LocalDate fecha,
+            @RequestParam("cupos") Integer cupos,
+            @RequestParam("premio") Integer premio,
+            @RequestParam("docReglamento") MultipartFile docReglamento,
+            @RequestParam("estado") EstadoTorneo estado,
+            @RequestParam("juego") Juego juego) throws java.io.IOException {
 
-    //actualizar el juego por su id
-    @PutMapping("/actualizar/id/{id}")
-    public ResponseEntity<Torneo> actualizarId(@PathVariable Integer id, @RequestBody Torneo torneo) {
-        //busca si el torneo existe
-        Optional<Torneo> existe = services_torneo.buscarId(id);
-        if (existe.isPresent()) {
-            Torneo actualizar = existe.get();
-            //si el campo no tiene nueva informacion se mantendra igual
-            if (torneo.getNombreTorneo() != null) {
-                actualizar.setNombreTorneo(torneo.getNombreTorneo());
-            }
-            if (torneo.getModoJuego() != null) {
-                actualizar.setModoJuego(torneo.getModoJuego());
-            }
-            if (torneo.getDescripcion() != null) {
-                actualizar.setDescripcion(torneo.getDescripcion());
-            }
-            if (torneo.getPrecioInscripcion() != null) {
-                actualizar.setPrecioInscripcion(torneo.getPrecioInscripcion());
-            }
-            if (torneo.getPremio() != null) {
-                actualizar.setPremio(torneo.getPremio());
-            }
-            if (torneo.getFechaFin() != null) {
-                actualizar.setFechaFin(torneo.getFechaFin());
-            }
-            if (torneo.getEstado() != null) {
-                actualizar.setEstado(torneo.getEstado());
-            }
-            if (torneo.getTipo() != null) {
-                actualizar.setTipo(torneo.getTipo());
-            }
-            //si el campo no tiene nueva informacion se mantendra igual
-            if (torneo.getJuego() != null && torneo.getJuego().getIdJuego() != null) {
-                //busca el juego del que se equiere hacer un toreno
-                Optional<Juego> juego = services_juego.buscarId(torneo.getJuego().getIdJuego());
-                //si existe se agregara a la lista de torneos del juego
-                if (juego.isPresent()) {
-                    actualizar.setJuego(juego.get());
-                } else {
-                    //si no existe el juego saldra un error
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-                }
-            }
-            //guardar la actualizacion realizarda
-            return new ResponseEntity<>(services_torneo.guardar(actualizar), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        try {
+            Torneo nueva = services_torneo.añadirTorneo(nombre, descripcion, tipo, banner, fecha, premio, cupos,
+                    descripcion, docReglamento, estado, juego);
+            return new ResponseEntity<>(nueva, HttpStatus.CREATED);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(null);
         }
     }
 
-    //actualiza el torneo por su nombre
-    @PutMapping("/actualizar/nombre/{nombre}")
-    public ResponseEntity<Torneo> actualizarnombreTorneo(@PathVariable String nombre, @RequestBody Torneo torneo) {
-        //busca si el torneo existe
-        Optional<Torneo> existe = services_torneo.buscarTorneoNombre(nombre);
-        if (existe.isPresent()) {
-            Torneo actualizar = existe.get();
-            //si el campo no tiene nueva informacion se mantendra igual
-            if (torneo.getNombreTorneo() != null) {
-                actualizar.setNombreTorneo(torneo.getNombreTorneo());
-            }
-            if (torneo.getModoJuego() != null) {
-                actualizar.setModoJuego(torneo.getModoJuego());
-            }
-            if (torneo.getDescripcion() != null) {
-                actualizar.setDescripcion(torneo.getDescripcion());
-            }
-            if (torneo.getPrecioInscripcion() != null) {
-                actualizar.setPrecioInscripcion(torneo.getPrecioInscripcion());
-            }
-            if (torneo.getPremio() != null) {
-                actualizar.setPremio(torneo.getPremio());
-            }
-            if (torneo.getFechaFin() != null) {
-                actualizar.setFechaFin(torneo.getFechaFin());
-            }
-            if (torneo.getEstado() != null) {
-                actualizar.setEstado(torneo.getEstado());
-            }
-            if (torneo.getTipo() != null) {
-                actualizar.setTipo(torneo.getTipo());
-            }
-            //si el campo no tiene nueva informacion se mantendra igual
-            if (torneo.getJuego() != null && torneo.getJuego().getNombreJuego() != null) {
-                //busca el juego del que se equiere hacer un toreno
-                Optional<Juego> juego = services_juego.buscarJuego(torneo.getJuego().getNombreJuego());
-                //si existe se agregara a la lista de torneos del juego
-                if (juego.isPresent()) {
-                    actualizar.setJuego(juego.get());
-                } else {
-                    //si no existe el juego saldra un error
-                    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
-                }
-            }
-            //guardar la actualizacion realizarda
-            return new ResponseEntity<>(services_torneo.guardar(actualizar), HttpStatus.OK);
-        } else {
-            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+    // actualizar el juego por su id
+   @PutMapping("actualizar/id/{id}")
+    public ResponseEntity<Torneo> actualizarTorneo(@PathVariable Integer id,
+            @RequestParam("nombre") String nombre,
+            @RequestParam("descripcion") String descripcion,
+            @RequestParam("tipo") Tipo tipo,
+            @RequestParam("banner") MultipartFile banner,
+            @RequestParam("fecha") LocalDate fecha,
+            @RequestParam("cupos") Integer cupos,
+            @RequestParam("premio") Integer premio,
+            @RequestParam("docReglamento") MultipartFile docReglamento,
+            @RequestParam("estado") EstadoTorneo estado,
+            @RequestParam("juego") Juego juego) throws java.io.IOException {
+
+        try {
+            Torneo actualizar = services_torneo.actualizarTorneo(id, nombre, descripcion, tipo, banner,
+                    fecha, premio,
+                    cupos, descripcion,
+                    docReglamento, estado, juego);
+            return ResponseEntity.ok(actualizar);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
         }
+
     }
 
-    //elimina el torneo por su id
+    @GetMapping("/downloadReglamento/{idTorneo}")
+    public ResponseEntity<String> downloadReglamento(@PathVariable Integer idTorneo) {
+        Optional<Torneo> torneo = services_torneo.buscarId(idTorneo);
+        if (!torneo.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        byte[] docReglamento = torneo.get().getDocReglamento();
+        if (docReglamento == null) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+
+        String fileName = "reglamento_" + torneo.get().getNombre() + ".pdf";
+        String base64Reglamento = Base64.getEncoder().encodeToString(docReglamento);
+
+        return ResponseEntity.ok()
+                .body(base64Reglamento);
+    }
+
+    // elimina el torneo por su id
     @DeleteMapping("/eliminar/id/{id}")
     public ResponseEntity<Void> eliminarTorneoId(@PathVariable Integer id) {
         try {
@@ -175,7 +137,7 @@ public class TorneoController {
         }
     }
 
-    //elimina el torneo por su nombre
+    // elimina el torneo por su nombre
     @DeleteMapping("/eliminar/torneo/{nombre}")
     public ResponseEntity<Void> eliminarTorneoNombre(@PathVariable String nombre) {
         try {

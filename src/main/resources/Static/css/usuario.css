@@ -15,11 +15,17 @@
   padding: 0;
   box-sizing: border-box;
 }
-.cont{
-    background-color: var(--dark-background);
+.cont {
+    background: 
+        linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)),
+        url('https://static.vecteezy.com/system/resources/previews/001/741/292/non_2x/blurred-shiny-purple-background-free-photo.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
     margin: 0;
-    padding: 0;
+    padding: 140px 0 60px 0;
 }
+
 /* Variables CSS - Es buena práctica tener estas variables definidas en un archivo CSS principal
    para consistencia en todo el proyecto. Si no tienes uno, puedes ponerlas aquí. */
 :root {

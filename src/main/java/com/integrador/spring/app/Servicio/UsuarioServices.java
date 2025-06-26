@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import com.integrador.spring.app.DAO.UserDAO;
@@ -48,6 +49,21 @@ public class UsuarioServices {
 
     public void eliminarNickname(String nick) {
         repo_usuario.deleteByNickname(nick);
+    }
+
+    public User obtenerPorNickname(String nick) {
+        return buscarNickname(nick).orElseThrow(() -> new UsernameNotFoundException("Usuario no encontrado"));
+    }
+
+
+    public void asignarImagenPorDefectoSiNoTiene() {
+        List<User> usuarios = repo_usuario.findAll();
+        for (User u : usuarios) {
+            if (u.getFotoPerfil() == null || u.getFotoPerfil().isBlank()) {
+                u.setFotoPerfil("default.png");
+                repo_usuario.save(u);
+            }
+        }
     }
 
 }

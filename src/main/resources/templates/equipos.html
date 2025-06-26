@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>SkillTourney - Equipos</title>
+  <link rel="stylesheet" th:href="@{/css/equipos.css}">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Monda:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link rel="stylesheet" th:href="@{/css/header.css}" />
+    <link rel="stylesheet" th:href="@{/css/footer.css}" />
+  </head>
+  <body>
+    <!-- Overlay que oscurecerá el fondo -->
+    <div class="overlay" id="overlay"></div>
+
+    <div th:replace="~{fragments/header :: header}"></div>
+
+    <div class="team-list-container">
+        <div class="context-text">
+            <p>Explora nuestra lista de equipos activos y encuentra a tu próximo compañero de juego. Puedes unirte a equipos existentes o crear el tuyo propio para competir en los próximos torneos. ¡Usa la barra de búsqueda para encontrar equipos específicos por nombre!</p>
+        </div>
+
+        <div class="search-bar-container">
+            <input type="text" id="teamSearchInput" placeholder="Buscar equipo por nombre...">
+            <button id="teamSearchButton"><i class="fas fa-search"></i></button>
+        </div>
+        <div class="create-team-section">
+            <a href="/crearequipo" class="btn create-team-btn">
+                <i class="fas fa-plus"></i> Crear Nuevo Equipo
+            </a>
+        </div>
+        <div class="team-grid" id="teamGrid">
+        </div>
+    </div>
+
+    <!-- Modal de Inspección -->
+    <div id="inspectModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3 id="inspectTeamName">Nombre del Equipo</h3>
+            <div class="modal-body">
+            <div class="team-details-section">
+                <h4>Miembros del Equipo (<span id="membersCount">0</span>)</h4>
+                <div id="teamMembersList" class="members-grid"></div>
+            </div>
+            <div class="team-details-section">
+                <h4>Información Adicional</h4>
+                <p id="teamDescription">Sin descripción</p>
+                <p id="teamRegion">Región: N/A</p>
+            </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Modal de Confirmación de Unión -->
+    <div id="joinConfirmModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h3>¿Confirmar unirse al equipo <span id="confirmTeamName">[Nombre]</span>?</h3>
+            <p>Al unirte, aceptas las reglas del equipo y de la plataforma.</p>
+            <div class="modal-actions">
+            <button class="btn confirm-join-btn">Sí, Unirme</button>
+            <button class="btn cancel-join-btn">Cancelar</button>
+            </div>
+        </div>
+    </div>
+        
+    
+
+    <div th:replace="~{fragments/footer}"></div>
+
+    <script th:src="@{/jscript/equipos.js}" defer></script>
+    <script th:src="@{/jscript/pagPrincipal.js}"></script>
+    <script th:src="@{/jscript/modal-registro.js}"></script>
+    <script th:src="@{/jscript/modal-recuperarContra.js}" defer></script>
+    <script th:src="@{/jscript/modal-2fa-recuperacion.js}" defer></script>
+    <script th:src="@{/jscript/modal-actualizarContra.js}" defer></script>
+    <script th:src="@{/jscript/modal-login.js}"></script>
+    <script th:src="@{/jscript/modal-2FA.js}"></script>
+    <script src="/jscript/header.js" defer></script>
+    <script src="/jscript/logout.js" defer></script>
+  </body>
+</html>

@@ -1,20 +1,21 @@
 /* === FUENTES === */
-@import url('https://fonts.googleapis.com/css2?family=Exo+2:wght@400;700&family=Monda:wght@400;700&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700&display=swap');
 
 @font-face {
-  font-family: 'Sink';
-  src: url('../fonts/SinkDisplay.woff2') format('woff2'),
-       url('../fonts/SinkDisplay.woff') format('woff');
-  font-weight: normal;
-  font-style: normal;
+    font-family: 'Sink';
+    src: url('../fonts/SinkDisplay.woff2') format('woff2'),
+        url('../fonts/SinkDisplay.woff') format('woff');
+    font-weight: normal;
+    font-style: normal;
 }
 
 * {
-    font-family: 'Anton', sans-serif;
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
+    font-family: 'Orbitron', sans-serif;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
 }
+
 
 /* === VARIABLES GLOBALES === */
 :root {
@@ -158,9 +159,12 @@ header {
     border-radius: 15px;
 }
 */
+
+
 .noticias {
     padding: 12px 16px;
     overflow-y: auto;
+    background-color: var(--dark-blue);
 }
 
 article {
@@ -168,20 +172,41 @@ article {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
     gap: 15px;
+
 }
 
 section {
     background-color: color-mix(in srgb, #1e1e1e, transparent 10%);
     margin-bottom: 14px;
-    border-radius: 8px;
+    border-radius: 0 0 8px 8px;
     box-shadow: 0 3px 8px rgb(0 0 0 / 0.7);
-    transition: transform 0.15s ease;
+    transition: transform 0.2s ease;
+    border: 2px solid var(--accent-blue);
+    
+}
+
+section .img2 {
+    display: none;
+    transition: 1s;
+}
+
+section:hover {
+    transform: scale(1.025);
+}
+
+section:hover .img1 {
+    display: none;
+}
+
+section:hover> .img2 {
+    display: block;
 }
 
 figure {
     margin: 0;
     padding: 0;
 }
+
 
 figure img,
 figure iframe {
@@ -201,9 +226,10 @@ figure iframe {
 
 .titulo {
     font-weight: 700;
-    color: #ff3c78;
+    color: var(--light-purple);
     font-size: 1.1rem;
     margin-bottom: 6px;
+    text-shadow: 2px 2px 20px rgba(95, 14, 142, 10);
 }
 
 .info .descripcion {
@@ -216,10 +242,12 @@ figure iframe {
 .info a {
     text-decoration: none;
     color: white;
+    transition: 0.3s;
 }
 
 .info a:hover {
     text-decoration: underline;
+    color: var(--main-purple);
 }
 
 .fecha {

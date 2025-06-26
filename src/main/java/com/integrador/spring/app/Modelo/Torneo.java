@@ -1,17 +1,13 @@
 package com.integrador.spring.app.Modelo;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-import org.hibernate.annotations.CreationTimestamp;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.EnumType;
-import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -20,6 +16,7 @@ import jakarta.persistence.ManyToOne;
 import jakarta.persistence.OneToMany;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import java.util.Base64;
 
 //Mapeo con la tabla Torneo de la base de datos
 @Data
@@ -32,41 +29,61 @@ public class Torneo {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer idTorneo;
 
-    //Entidades de la clase
-    @Column(unique = true)
-    private String nombreTorneo;
-    private String modoJuego;
+    private String nombre;
     @Lob
     private String descripcion;
-    private BigDecimal precioInscripcion, premio;
-    @CreationTimestamp
-    private LocalDate fechaInicio;
-    private LocalDate fechaFin;
-    @Enumerated(EnumType.STRING)
-    private EstadoTorneo estado;
-    @Enumerated(EnumType.STRING)
-    private TipoTorneo tipo;
 
-    //Relacion muchos a uno con la tabla Juego
+    private Tipo tipo;
+
+    @Lob
+    private byte[] banner;
+
+    private String bannerBase64;
+
+    /*public String getBannerBase64() {
+        return bannerBase64;
+    }
+
+    public void setBannerBase64(String bannerBase64) {
+        this.bannerBase64 = bannerBase64;
+    }*/
+
+    // private byte[] imgJuego;
+
+    private LocalDate fecha;
+    private Integer premio;
+    private Integer cupos;
+    private String formato;
+
+    @Lob
+    @Column(name = "reglamento", columnDefinition = "LONGBLOB")
+    private byte[] docReglamento;
+
+    public String getDocReglamentoBase64() {
+        if (docReglamento != null) {
+            return Base64.getEncoder().encodeToString(docReglamento);
+        }
+        return null;
+    }
+
+    public void setDocReglamento(byte[] docReglamento) {
+        this.docReglamento = docReglamento;
+    }
+
+    private EstadoTorneo estado;
+
+    @OneToMany //(mappedBy = "torneo", cascade = CascadeType.ALL, orphanRemoval = true)
+    //@JsonManagedReference
+    private List<Inscripciones> inscripciones;
+
+    public static enum Tipo {
+        Premium, Pro, Open;
+    }
+
+    public static enum EstadoTorneo{
+        Activo, Finalizado, Cancelado;
+    }
     @ManyToOne
     @JsonBackReference
     private Juego juego;
-
-    //Relacion uno a muchos con la tabla Inscripciones
-    @OneToMany
-    private List<Inscripciones> inscripciones;
-
-    //Relacion uno a muchos con la tabla Partida
-    @OneToMany
-    private List<Partida> partidas;
-
-    //Variables permitidas para el atributo estado del toreno
-    public static enum EstadoTorneo {
-        ACTIVO, FINALIZADO, CANCELADO;
-    }
-
-    //Variables permitidas para el atributo tipo de pago
-    public static enum TipoTorneo {
-        GRATIS, PAGO;
-    }
 }
