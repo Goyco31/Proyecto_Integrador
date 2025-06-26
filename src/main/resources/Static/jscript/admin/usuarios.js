@@ -7,7 +7,13 @@ function listarUsuarios() {
   })
     .then((r) => r.json())
     .then((data) => {
-      let tabla = `<table class="tournaments-table">
+      let tabla = `
+      <div class="tournament-actions">
+            <form method="get" action="/ver/excel/usuarios">
+              <button type="submit" class="btn-primary">Exportar un Excel</button>
+            </form>
+        </div>
+                      <table class="tournaments-table">
                           <thead>
                             <tr>
                                 <th>Id</th>
