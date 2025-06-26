@@ -1,5 +1,7 @@
 package com.integrador.spring.app.config;
 
+import javax.management.relation.Role;
+
 // Importaciones necesarias para configurar seguridad HTTP, sesiones y filtros
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +14,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 // Filtro personalizado para autenticación JWT
 import com.integrador.spring.app.JWT.JwtAuthenticationFilter;
+import com.integrador.spring.app.Modelo.role;
 
 // Para la inyección de dependencias por constructor
 import lombok.RequiredArgsConstructor;
@@ -68,6 +71,7 @@ public class SecurityConfig {
                     "/control/validate-reset-code", "/control/reset-password", "/control/validate-2fa").permitAll()
                     // Requiere autenticación para todo lo demás
                     .requestMatchers("/api/**").authenticated()
+                    //.requestMatchers("/ver/usuarios/listar.xlsx").hasAnyRole("ADMIN")
             )
         .sessionManagement(sessionManager -> 
             // Configura la política de sesión como STATELESS (sin sesiones, solo JWT)
