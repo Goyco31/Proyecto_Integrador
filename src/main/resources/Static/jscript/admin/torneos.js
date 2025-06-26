@@ -12,6 +12,9 @@ function listarTorneos() {
             <button id="new-tournament-btn" class="btn-primary"  onclick="registrarTorneo()">
               Nuevo Torneo
             </button>
+            <form method="get" action="/ver/excel/torneos">
+              <button type="submit" class="btn-primary">Exportar un Excel</button>
+            </form>
         </div>
                    <table class="tournaments-table">
                           <thead>
