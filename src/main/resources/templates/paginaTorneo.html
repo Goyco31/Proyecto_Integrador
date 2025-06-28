@@ -25,7 +25,57 @@
       </div>
     </section>
 
-    <section class="featured-games">
+    
+
+    <section class="tournaments-section" id="eventos">
+
+      <h2 class="section-title">TORNEOS ACTIVOS</h2>
+      <div class="lista-torneos">
+        <div class="carta-torneo" th:each="torneo : ${torneos}">
+          <div class="img-torneo">
+            <img
+              class="banner-torneo"
+              th:src="'data:image/png;base64,' + ${torneo.bannerBase64}"
+              th:alt="${torneo.nombre}"
+            />
+            <img
+              class="juego-torneo"
+              th:if="${torneo.juego != null and torneo.juego.imgJuegoBase64 != null}"
+              th:src="'data:image/png;base64,' + ${torneo.juego.imgJuegoBase64}"
+              th:alt="${torneo.juego.nombreJuego}"
+            />
+          </div>
+          <div class="contenido-torneo">
+            <h3 th:text="${torneo.nombre}">Nombre del torneo</h3>
+            <p th:text="${torneo.descripcion}">Descripcion del torneo</p>
+            <time
+              th:text="${#temporals.format(torneo.fecha, 'dd/MM/yyyy')}"
+            ></time>
+            <p th:text="${torneo.premio}+ ' monedas'"></p>
+            <p th:text="${torneo.cupos}"></p>
+            <p th:text="${torneo.formato}"></p>
+            <p th:text="${torneo.estado}"></p>
+          </div>
+        </div>
+      </div>
+      <div class="cards-container" id="tournaments-cards-container"></div>
+      <p
+        id="no-active-tournaments-message"
+        class="info-message"
+        style="display: none"
+      >
+        No hay torneos activos en este momento. ¡Vuelve pronto!
+      </p>
+    </section>
+
+    <div class="carousel-modal">
+      <div class="modal-content">
+        <span class="close-modal">&times;</span>
+        <div class="modal-tournament-content-area"></div>
+      </div>
+
+    </div>
+<section class="featured-games">
       <div class="game-card">
         <div class="game-info">
           <h2 class="game-title">DOTA 2</h2>
@@ -78,56 +128,6 @@
         </div>
       </div>
     </section>
-
-    <section class="tournaments-section" id="eventos">
-
-      <h2 class="section-title">TORNEOS ACTIVOS</h2>
-      <div class="lista-torneos">
-        <div class="carta-torneo" th:each="torneo : ${torneos}">
-          <div class="img-torneo">
-            <img
-              class="banner-torneo"
-              th:src="'data:image/png;base64,' + ${torneo.bannerBase64}"
-              th:alt="${torneo.nombre}"
-            />
-            <img
-              class="juego-torneo"
-              th:if="${torneo.juego != null and torneo.juego.imgJuegoBase64 != null}"
-              th:src="'data:image/png;base64,' + ${torneo.juego.imgJuegoBase64}"
-              th:alt="${torneo.juego.nombreJuego}"
-            />
-          </div>
-          <div class="contenido-torneo">
-            <h3 th:text="${torneo.nombre}">Nombre del torneo</h3>
-            <p th:text="${torneo.descripcion}">Descripcion del torneo</p>
-            <time
-              th:text="${#temporals.format(torneo.fecha, 'dd/MM/yyyy')}"
-            ></time>
-            <p th:text="${torneo.premio}+ ' monedas'"></p>
-            <p th:text="${torneo.cupos}"></p>
-            <p th:text="${torneo.formato}"></p>
-            <p th:text="${torneo.estado}"></p>
-          </div>
-        </div>
-      </div>
-      <div class="cards-container" id="tournaments-cards-container"></div>
-      <p
-        id="no-active-tournaments-message"
-        class="info-message"
-        style="display: none"
-      >
-        No hay torneos activos en este momento. ¡Vuelve pronto!
-      </p>
-    </section>
-
-    <div class="carousel-modal">
-      <div class="modal-content">
-        <span class="close-modal">&times;</span>
-        <div class="modal-tournament-content-area"></div>
-      </div>
-
-    </div>
-
     <div th:replace="~{fragments/footer}"></div>
     <div th:replace="~{fragments/modal-registro}"></div>
     <div th:replace="~{fragments/modal-login}"></div>
