@@ -47,3 +47,24 @@ h1 {
     width: 100%;
   }
 }
+.success-check {
+  width: 80px;
+  height: 80px;
+  background-image: url('/Imagenes/check.jpeg'); 
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+  animation: popIn 0.4s ease-out;
+}
+
+/* Animación para una entrada suave */
+@keyframes popIn {
+  from {
+    transform: scale(0.5);
+    opacity: 0;
+  }
+  to {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
