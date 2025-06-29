@@ -12,6 +12,9 @@ function listarJuegos() {
             <button id="new-tournament-btn" class="btn-primary"  onclick="registrarJuego()">
               Nuevo juego
             </button>
+            <form method="get" action="/ver/excel/juegos">
+              <button type="submit" class="btn-primary">Exportar un Excel</button>
+            </form>
         </div>
       
       <table class="tournaments-table">
@@ -42,7 +45,6 @@ function listarJuegos() {
       document.getElementById("contenedor-tablas").innerHTML = tabla;
     });
 }
-
 
 function registrarJuego() {
   const modalContainer = document.createElement("div");

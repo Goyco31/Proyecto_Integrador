@@ -1,5 +1,7 @@
 package com.integrador.spring.app.config;
 
+import javax.management.relation.Role;
+
 // Importaciones necesarias para configurar seguridad HTTP, sesiones y filtros
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -12,6 +14,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 
 // Filtro personalizado para autenticación JWT
 import com.integrador.spring.app.JWT.JwtAuthenticationFilter;
+import com.integrador.spring.app.Modelo.role;
 
 // Para la inyección de dependencias por constructor
 import lombok.RequiredArgsConstructor;
@@ -62,10 +65,11 @@ public class SecurityConfig {
                     "/pdfDota2",
                     "/pdfCSGO2",
                     "/clasificacion",
-                    "/administrador", "/canjes", "/ComprarMonedas", "/pago/**", "/pagoCancel", "pagoError").permitAll()
+                    "/administrador", "/canjes", "/ComprarMonedas", "/pago/**", "/pagoCancel", "pagoError", "/ver/excel/**").permitAll()
                     // Permitir acceso a las rutas de control
                     .requestMatchers("/control/login", "/control/registro", "/control/refresh-token", "/control/toggle-2fa","/control/forgot-password",
                     "/control/validate-reset-code", "/control/reset-password", "/control/validate-2fa").permitAll()
+                    
                     // Requiere autenticación para todo lo demás
                     .requestMatchers("/api/**").authenticated()
             )

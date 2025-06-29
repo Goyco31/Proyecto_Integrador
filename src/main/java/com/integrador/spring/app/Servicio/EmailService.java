@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.stereotype.Service;
+import java.util.Random;
 import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 
@@ -86,6 +87,34 @@ public class EmailService {
         mailSender.send(message);
     } catch (MessagingException e) {
         throw new RuntimeException("Error al enviar correo de configuración 2FA", e);
+    }
+}
+
+public void recompensaEmail(String email, String nombreRecompensa, String recompensaDescripcion) {
+    try {
+        MimeMessage message = mailSender.createMimeMessage();
+        MimeMessageHelper helper = new MimeMessageHelper(message, true, "UTF-8");
+
+        helper.setFrom(fromEmail);
+        helper.setTo(email);
+        helper.setSubject("¡Recompensa Canjeada!");
+
+        String[] codigos = {"3DJK9-GKCC6-FPRQQ-X4D2M-QR6HZ", "Q272C-K2H3C-RTQJ9-DYFT2-GH3JZ", "7R39G-HH77R-M74YJ-M9JM6-K364Z", "VCW37-T7QWV-292X3-DMC9H-2CPMZ", "CJ3HW-QVDFG-RTX2F-KCPJR-TPMFZ"};
+        Random random = new Random();
+        int numRandom = random.nextInt(codigos.length);
+        String codigoRandom = codigos[numRandom];
+
+        Context context = new Context();
+        context.setVariable("nombre", nombreRecompensa);
+        context.setVariable("descripcion", recompensaDescripcion);
+        context.setVariable("codigo", codigoRandom);
+
+        String htmlContent = templateEngine.process("email/recompensaCorreo", context);
+        helper.setText(htmlContent, true);
+
+        mailSender.send(message);
+    } catch (MessagingException e) {
+        throw new RuntimeException("Error al enviar correo electrónico de recompensa", e);
     }
 }
 }

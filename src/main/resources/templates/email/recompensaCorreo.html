@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Recompensa Canjeada</title>
+</head>
+
+<body>
+    <table style="width:100%;max-width:600px;margin:0 auto;font-family:Arial,sans-serif;border-collapse:collapse;">
+        <tr>
+            <td style="padding:20px;text-align:center;background-color:#f4f4f4;">
+                <h1 style="color:#333;">¡Felicidades!</h1>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:20px;">
+                <p style="font-size:16px;line-height:1.6;color:#555;">
+                    Has canjeado exitosamente la siguiente recompensa:
+                </p>
+                <h2 style="color:#333;margin-bottom:10px;" th:text="${nombre}">Nombre de la Recompensa</h2>
+                <p style="font-size:14px;line-height:1.4;color:#777;" th:text="${descripcion}">Descripción de la
+                    Recompensa</p>
+                <p id="codigo" style="font-size:14px;line-height:1.4;color:#777;">Su código es: <span
+                        th:text="${codigo}"></span></p>
+            </td>
+        </tr>
+        <tr>
+            <td style="padding:20px;text-align:center;background-color:#f4f4f4;">
+                <p style="font-size:12px;color:#777;">
+                    Gracias por ser parte de nuestra comunidad.
+                </p>
+            </td>
+        </tr>
+    </table>
+</body>
+
+</html>
