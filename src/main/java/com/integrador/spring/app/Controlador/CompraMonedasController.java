@@ -81,40 +81,6 @@ public class CompraMonedasController {
         }
     }
 
-    /*
-     * @PostMapping("/registar")
-     * public ResponseEntity<ComprarMonedas> agregarOpcion(@RequestBody
-     * ComprarMonedas comprarMonedas) {
-     * ComprarMonedas registrar = services_compra.guardar(comprarMonedas);
-     * return new ResponseEntity<>(registrar, HttpStatus.CREATED);
-     * }
-     */
-
-    /*
-     * @PutMapping("/actualizar/id/{id}")
-     * public ResponseEntity<ComprarMonedas> actualizarOpciones(@PathVariable
-     * Integer id,
-     * 
-     * @RequestBody ComprarMonedas comprarMonedas) {
-     * Optional<ComprarMonedas> existe = services_compra.buscarId(id);
-     * if (existe.isPresent()) {
-     * ComprarMonedas actualizar = existe.get();
-     * if (comprarMonedas.getNombre() != null) {
-     * actualizar.setNombre(comprarMonedas.getNombre());
-     * }
-     * if (comprarMonedas.getCantidad() != null) {
-     * actualizar.setCantidad(comprarMonedas.getCantidad());
-     * }
-     * if (comprarMonedas.getPrecioCompra() != null) {
-     * actualizar.setPrecioCompra(comprarMonedas.getPrecioCompra());
-     * }
-     * return new ResponseEntity<>(services_compra.guardar(actualizar),
-     * HttpStatus.OK);
-     * } else {
-     * return new ResponseEntity<>(HttpStatus.NOT_FOUND);
-     * }
-     * }
-     */
 
     @DeleteMapping("/eliminar/id/{id}")
     public ResponseEntity<Void> eliminarOpcion(@PathVariable Integer id) {

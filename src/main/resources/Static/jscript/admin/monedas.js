@@ -12,6 +12,12 @@ function listarMonedas() {
             <button id="new-tournament-btn" class="btn-primary"  onclick="registrarOpcion()">
               Nueva Opcion de recarga
             </button>
+            <form method="get" action="/ver/excel/opcionesRecarga">
+              <button type="submit" class="btn-primary">Exportar un Excel</button>
+            </form>
+            <form method="get" action="/ver/excel/historialRecarga">
+              <button type="submit" class="btn-primary">Exportar recargas realizadas</button>
+            </form>
         </div>
 
         <table class="tournaments-table">

@@ -28,7 +28,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (data.requires2fa || data.requires2FA) {
         // Guardar tempToken
         localStorage.setItem('tempToken', data.tempToken);
-
+        localStorage.setItem('idUser', data.idUser);
         // Mostrar modal de 2FA
         document.getElementById('login-modal').style.display = 'none';
         document.getElementById('2fa-modal').style.display = 'flex';
@@ -39,6 +39,7 @@ document.addEventListener('DOMContentLoaded', function () {
       // Si autenticación directa sin 2FA
       if (data.token) {
         localStorage.setItem('authToken', data.token);
+        localStorage.setItem('idUser', data.idUser);
         window.location.href = '/';
         return;
       }

@@ -85,6 +85,7 @@ public class ControladorService {
                     return ControladorResponse.builder()
                         .mensaje("Autenticación exitosa")
                         .token(token)
+                        .idUser(user.getId())
                         .build();
                 }
                 throw new RuntimeException("Código 2FA inválido o expirado");
@@ -99,6 +100,7 @@ public class ControladorService {
                 .mensaje("Se requiere verificación en dos pasos. Código enviado al correo.")
                 .requires2fa(true)
                 .tempToken(tempToken)
+                .idUser(user.getId())
                 .build();
         }
 
@@ -107,6 +109,7 @@ public class ControladorService {
         return ControladorResponse.builder()
             .mensaje("Autenticación exitosa")
             .token(token)
+            .idUser(user.getId())
             .build();
     }
 
@@ -134,6 +137,7 @@ public class ControladorService {
                 .correo(request.getCorreo())
                 .contraseña(passwordEncoder.encode(request.getContraseña()))
                 .role(isAdminEmail ? role.ADMIN : role.USER)
+                .monedas(0)
                 .fotoPerfil("default.png")
                 .is2faEnabled(true)
                 .build();

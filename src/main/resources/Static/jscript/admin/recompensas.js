@@ -12,6 +12,9 @@ function listarRecompensas() {
             <button id="new-tournament-btn" class="btn-primary"  onclick="registrarRecompensas()">
               Nueva Recompensa
             </button>
+            <form method="get" action="/ver/excel/recompensas">
+              <button type="submit" class="btn-primary">Exportar un Excel</button>
+            </form>
         </div>
 
         <table class="tournaments-table">

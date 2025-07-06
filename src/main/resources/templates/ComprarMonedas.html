@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SkillTourney - Comprar Monedas</title>
+  <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+  <link rel="stylesheet" th:href="@{/css/header.css}">
+  <link rel="stylesheet" th:href="@{/css/footer.css}">
+  <link rel="stylesheet" th:href="@{/css/style_monedas.css}">
+
+</head>
+
+<body>
+
+  <header th:replace="~{fragments/header :: header}"></header>
+  <div class="canje-page-container">
+    <h2 class="section-title">CANJEAR MONEDAS</h2>
+    <p class="context-text">Selecciona la cantidad de monedas que deseas canjear y elige tu método de pago.</p>
+
+    <div class="coin-cards-grid">
+      <div class="coin-card" th:each="opcion : ${opcionesRecarga}">
+        <div class="coin-value"><span th:text="${opcion.cantidad}">2500</span><i class="fas fa-coins"></i></div>
+        <div class="coin-price">$<span th:text="${opcion.precioCompra}">$22.50 USD</span></div>
+        <form method="post" action="/pago/crear">
+          <input type="hidden" name="precio" th:value="${opcion.precioCompra}" />
+          <input type="hidden" name="idCompra" th:value="${opcion.idCompra}" />
+          <input type="hidden" id="idUser" name="idUser" value="" />
+          <button type="submit">Recargar</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+
+  <script>
+    function getParameterByName(name, url = window.location.href) {
+      name = name.replace(/[\[\]]/g, "\\$&");
+      var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+      if (!results) return null;
+      if (!results[2]) return "";
+      return decodeURIComponent(results[2].replace(/\+/g, " "));
+    }
+
+    var idUser = localStorage.getItem("idUser");
+    var idUserElements = document.querySelectorAll("#idUser");
+    idUserElements.forEach(function (element) {
+      element.value = idUser;
+    });
+  </script>
+  <footer th:replace="~{fragments/footer}"></footer>
+
+  <script th:src="@{/jscript/pagPrincipal.js}"></script>
+  <script th:src="@{/jscript/modal-registro.js}"></script>
+  <script th:src="@{/jscript/modal-recuperarContra.js}" defer></script>
+  <script th:src="@{/jscript/modal-2fa-recuperacion.js}" defer></script>
+  <script th:src="@{/jscript/modal-actualizarContra.js}" defer></script>
+  <script th:src="@{/jscript/modal-login.js}"></script>
+  <script th:src="@{/jscript/modal-2FA.js}"></script>
+  <script src="/jscript/header.js" defer></script>
+  <script src="/jscript/logout.js" defer></script>
+</body>
+
+</html>

@@ -1,7 +1,10 @@
 package com.integrador.spring.app.Controlador;
 
+import java.security.Principal;
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -15,8 +18,12 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.integrador.spring.app.DTO.EquipoRequest;
+import com.integrador.spring.app.DTO.EquipoResponseDTO;
 import com.integrador.spring.app.Modelo.Equipo;
+import com.integrador.spring.app.Modelo.User;
 import com.integrador.spring.app.Servicio.EquipoServices;
+import com.integrador.spring.app.Servicio.UsuarioServices;
 
 import jakarta.persistence.EntityNotFoundException;
 
@@ -27,19 +34,64 @@ public class EquipoController {
     @Autowired
     private EquipoServices services_equipo;
 
+    @Autowired
+    private UsuarioServices userService;
+
+    @PostMapping("/crear")
+    public ResponseEntity<?> crearEquipo(@RequestBody EquipoRequest request, Principal principal) {
+        try {
+            User creador = userService.obtenerPorNickname(principal.getName());
+            Equipo nuevo = services_equipo.crearEquipo(
+                request.getNombre(),
+                request.getLogoUrl(),
+                request.getRegion(),
+                request.getDescripcion(),
+                creador
+            );
+
+            EquipoResponseDTO response = services_equipo.mapearEquipoAResponse(nuevo);
+            return new ResponseEntity<>(response, HttpStatus.CREATED);
+
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body(e.getMessage());
+        }
+    }
+
+
+    @PostMapping("/unirse/{id}")
+    public ResponseEntity<?> unirseAEquipo(@PathVariable Integer id, Principal principal) {
+        try {
+            Equipo equipo = services_equipo.buscarId(id).orElseThrow(() -> new NoSuchElementException("Equipo no encontrado"));
+            User usuario = userService.obtenerPorNickname(principal.getName());
+            Equipo actualizado = services_equipo.unirseAEquipo(equipo, usuario);
+            return new ResponseEntity<>(actualizado, HttpStatus.OK);
+        } catch (IllegalStateException | NoSuchElementException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+
     @GetMapping("")
-    public ResponseEntity<List<Equipo>> listarEquipos() {
+    public ResponseEntity<List<EquipoResponseDTO>> listarEquipos() {
         List<Equipo> equipos = services_equipo.listarEquipos();
-        return new ResponseEntity<>(equipos, HttpStatus.OK);
+        List<EquipoResponseDTO> response = equipos.stream()
+            .map(services_equipo::mapearEquipoAResponse)
+            .collect(Collectors.toList());
+        return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
     // buscar equipo por su id
     @GetMapping("/id/{id}")
-    public ResponseEntity<Equipo> buscarEquipoId(@PathVariable Integer id) {
+    public ResponseEntity<EquipoResponseDTO> buscarEquipoId(@PathVariable Integer id) {
         Optional<Equipo> equipo = services_equipo.buscarId(id);
-        return equipo.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        if (equipo.isPresent()) {
+            EquipoResponseDTO dto = services_equipo.mapearEquipoAResponse(equipo.get());
+            return new ResponseEntity<>(dto, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
+
 
     // buscar equipo por su nombre
     @GetMapping("/nombre/{nombre}")
