@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Base64;
 
+import com.integrador.spring.app.Modelo.Inscripciones;
 import com.integrador.spring.app.Modelo.Juego;
 import com.integrador.spring.app.Modelo.Torneo;
 import com.integrador.spring.app.Modelo.Torneo.EstadoTorneo;
@@ -26,7 +27,7 @@ import com.integrador.spring.app.Modelo.Torneo.Tipo;
 import com.integrador.spring.app.Servicio.TorneoServices;
 
 import jakarta.persistence.EntityNotFoundException;
-
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/api/torneos")
@@ -82,7 +83,7 @@ public class TorneoController {
     }
 
     // actualizar el juego por su id
-   @PutMapping("actualizar/id/{id}")
+    @PutMapping("actualizar/id/{id}")
     public ResponseEntity<Torneo> actualizarTorneo(@PathVariable Integer id,
             @RequestParam("nombre") String nombre,
             @RequestParam("descripcion") String descripcion,
@@ -125,6 +126,22 @@ public class TorneoController {
         return ResponseEntity.ok()
                 .body(base64Reglamento);
     }
+
+    /////////////////////////
+    @PostMapping("/registrarEquipoTorneo")
+    public ResponseEntity<Inscripciones> registrarEquipoEnTorneo(
+            @RequestParam("idTorneo") Integer idTorneo,
+            @RequestParam("idEquipo") Integer idEquipo) {
+
+        try {
+            Inscripciones nuevaInscripcion = services_torneo.registrarEquipoEnTorneo(idEquipo, idTorneo);
+            return ResponseEntity.ok(nuevaInscripcion);
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+        }
+    }
+
+    ///
 
     // elimina el torneo por su id
     @DeleteMapping("/eliminar/id/{id}")

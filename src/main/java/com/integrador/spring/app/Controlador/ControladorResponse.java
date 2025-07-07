@@ -18,4 +18,5 @@ public class ControladorResponse {
     boolean requires2fa; // Nuevo campo para indicar si requiere segundo factor
     String tempToken; // Token temporal para mantener la sesión durante 2FA
     Integer idUser;
+    Integer idEquipo;
 }
