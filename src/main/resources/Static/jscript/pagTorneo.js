@@ -1,63 +1,79 @@
-function modalTorneo(idTorneo, idEquipo) {
+function modalTorneo(idTorneo) {
   const crearModalTorneo = document.createElement("div");
   crearModalTorneo.id = "modal-verTorneo";
   crearModalTorneo.classList.add("modal");
 
   //let idEquipo = localStorage.getItem("idEquipo");
   let token = localStorage.getItem("authToken");
-  fetch(`api/torneos/id/${idTorneo}`, {
+  let idUser = localStorage.getItem("idUser");
+
+  fetch(`/api/usuarios/id/${idUser}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
-    .then((r) => r.json())
-    .then((data) => {
-      let modal = `
-            <div class="cerrar-detalle" id="cerrar-detalle">X</div>
-            <div class="torneo-detalle">
-                <div class="img-inspeccion-torneo">
-                    ${
-                      data.bannerBase64
-                        ? `<img src="'data:image/png;base64,' + ${data.bannerBase64}">`
-                        : ""
-                    }
-                    ${
-                      data.juego && data.juego.imgJuegoBase64
-                        ? `<img src="'data:image/png;base64, + ${data.juego.imgJuegoBase64}">`
-                        : ""
-                    }
-                </div>
-                <div class="contenido-inspeccion-torneo">
-                    <h3>${data.nombre}</h3>
-                    <p>${data.descripcion}</p>
-                    <P>${data.premio}</P>
-                    <p>${data.cupos}</p>
-                    <p>${data.formato}</p>
-                    <p>${data.estado}</p>
-                    <time>${data.fecha}</time>
-                    <a onclick="downloadReglamento('${
-                      data.idTorneo
-                    }')">Reglamento del torneo</a>
-                    <form method:"post" action="/api/torneos/registrarEquipoTorneo">
-                    <input type="hidden" name="idTorneo" id="idTorneo" value="${
-                      data.idTorneo
-                    }">
-                    <input type="hidden" name="idEquipo" id="idEquipo" value="${idEquipo}"> 
-                        <button type="submit">Registrar Equipo</button>
-                    </form>
-                </div>
-            </div>
-            `;
-      crearModalTorneo.innerHTML = modal;
+    .then((res) => res.json())
+    .then((userData) => {
+      const idEquipo = userData.equipo.idEquipo;
 
-      document.body.appendChild(crearModalTorneo);
-      crearModalTorneo.style.display = "block";
-      crearModalTorneo.style.backgroundColor = 'white';
+      fetch(`api/torneos/id/${idTorneo}`, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+        .then((r) => r.json())
+        .then((data) => {
+          let modal = `
+                <div class="cerrar-detalle" id="cerrar-detalle">X</div>
+                <div class="torneo-detalle">
+                    <div class="img-inspeccion-torneo">
+                        ${
+                          data.bannerBase64
+                            ? `<img src="'data:image/png;base64,' + ${data.bannerBase64}">`
+                            : ""
+                        }
+                        ${
+                          data.juego && data.juego.imgJuegoBase64
+                            ? `<img src="'data:image/png;base64, + ${data.juego.imgJuegoBase64}">`
+                            : ""
+                        }
+                    </div>
+                    <div class="contenido-inspeccion-torneo">
+                        <h3>${data.nombre}</h3>
+                        <p>${data.descripcion}</p>
+                        <P>${data.premio}</P>
+                        <p>${data.cupos}</p>
+                        <p>${data.formato}</p>
+                        <p>${data.estado}</p>
+                        <time>${data.fecha}</time>
+                        <a onclick="downloadReglamento('${
+                          data.idTorneo
+                        }')">Reglamento del torneo</a>
+                        <form method:"post" action="/api/torneos/registrarEquipoTorneo">
+                        <input type="hidden" name="idTorneo" id="idTorneo" value="${
+                          data.idTorneo
+                        }">
+                        <input type="hidden" name="idEquipo" id="idEquipo" value="${idEquipo}"> 
+                            <button type="submit">Registrar Equipo</button>
+                        </form>
+                    </div>
+                </div>
+                `;
+          crearModalTorneo.innerHTML = modal;
 
-      const btnCerrarDetalle = document.getElementById("cerrar-detalle");
-      btnCerrarDetalle.addEventListener("click", () => {
-        crearModalTorneo.remove();
-      });
+          document.body.appendChild(crearModalTorneo);
+          crearModalTorneo.style.display = "block";
+          crearModalTorneo.style.backgroundColor = "white";
+
+          const btnCerrarDetalle = document.getElementById("cerrar-detalle");
+          btnCerrarDetalle.addEventListener("click", () => {
+            crearModalTorneo.remove();
+          });
+        });
+    })
+    .catch((error) => {
+      console.error("Error! su equipo no cumple con los integrantes requeridos", error);
+      // Handle the error appropriately, e.g., display an error message to the user
     });
 }
 

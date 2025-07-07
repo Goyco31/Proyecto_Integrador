@@ -67,11 +67,8 @@ public class ControladorVistas {
                 torneo.getJuego().setImgJuegoBase64(imgJuegoBase64);
             }
         }
-        model.addAttribute("torneos", lista);
 
-        User usuario = new User();
-        Optional<User> user = services_user.buscarId(usuario.getId());
-        model.addAttribute("user", user);
+        model.addAttribute("torneos", lista);
         return "paginaTorneo";
     }
 

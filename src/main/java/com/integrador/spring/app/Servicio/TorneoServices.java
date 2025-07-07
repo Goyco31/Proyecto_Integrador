@@ -148,30 +148,23 @@ public class TorneoServices {
 
     public Inscripciones registrarEquipoEnTorneo(Integer idEquipo, Integer idTorneo) {
         Optional<Torneo> exiteTorneo = repo_torneo.findById(idTorneo);
-
-        if (!exiteTorneo.isPresent()) {
-            return null; //ResponseEntity.status(HttpStatus.NOT_FOUND).body("torneo no existe");
-        }
-
         Optional<Equipo> equipoOptional = equipoServices.buscarId(idEquipo);
 
-        if (!equipoOptional.isPresent()) {
-            return null;//ResponseEntity.status(HttpStatus.NOT_FOUND).body("Equipo no existe");
+        if (!exiteTorneo.isPresent() || !equipoOptional.isPresent()) {
+            return null;
         }
 
         Equipo equipo = equipoOptional.get();
+        Torneo torneo = exiteTorneo.get();
 
         if (equipo.getIntegrantes().size() != 5) {
-            return null;//ResponseEntity.status(HttpStatus.NOT_FOUND).body("Equipo incompleto, se necesitan 5 integrantes");
+            return null;
         }
 
-        Torneo torneo = exiteTorneo.get();
         Inscripciones inscripcion = new Inscripciones();
         inscripcion.setEquipo(equipo);
         inscripcion.setTorneo(torneo);
 
         return inscripcionesServices.guardar(inscripcion);
-
-        //return ResponseEntity.ok().body("Equipo registrado exitosamente en el torneo");
     }
 }

@@ -85,7 +85,7 @@
     <h2 class="section-title">TORNEOS ACTIVOS</h2>
     <div class="lista-torneos">
       <div class="carta-torneo" id="carta-torneo" th:each="torneo : ${torneos}">
-        <input type="hidden" name="idUserEquipo" id="idUserEquipo" th:value="${user.equipo.idEquipo}">
+        
         <input type="hidden" name="idTorneo" id="idTorneo" th:value="${torneo.idTorneo}">
         <div class="img-torneo">
           <img class="banner-torneo" th:src="'data:image/png;base64,' + ${torneo.bannerBase64}"
