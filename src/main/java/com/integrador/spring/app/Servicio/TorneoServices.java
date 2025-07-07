@@ -150,20 +150,19 @@ public class TorneoServices {
         Optional<Torneo> exiteTorneo = repo_torneo.findById(idTorneo);
 
         if (!exiteTorneo.isPresent()) {
-            return null; // ResponseEntity.status(HttpStatus.NOT_FOUND).body("torneo no existe");
+            return null; //ResponseEntity.status(HttpStatus.NOT_FOUND).body("torneo no existe");
         }
 
         Optional<Equipo> equipoOptional = equipoServices.buscarId(idEquipo);
 
         if (!equipoOptional.isPresent()) {
-            return null;// ResponseEntity.status(HttpStatus.NOT_FOUND).body("Equipo no existe");
+            return null;//ResponseEntity.status(HttpStatus.NOT_FOUND).body("Equipo no existe");
         }
 
         Equipo equipo = equipoOptional.get();
 
         if (equipo.getIntegrantes().size() != 5) {
-            return null;// ResponseEntity.status(HttpStatus.NOT_FOUND).body("Equipo incompleto, se
-                        // necesitan 5 integrantes");
+            return null;//ResponseEntity.status(HttpStatus.NOT_FOUND).body("Equipo incompleto, se necesitan 5 integrantes");
         }
 
         Torneo torneo = exiteTorneo.get();
@@ -173,7 +172,6 @@ public class TorneoServices {
 
         return inscripcionesServices.guardar(inscripcion);
 
-        // return ResponseEntity.ok().body("Equipo registrado exitosamente en el
-        // torneo");
+        //return ResponseEntity.ok().body("Equipo registrado exitosamente en el torneo");
     }
 }
