@@ -7,73 +7,90 @@ function modalTorneo(idTorneo) {
   let token = localStorage.getItem("authToken");
   let idUser = localStorage.getItem("idUser");
 
-  fetch(`/api/usuarios/id/${idUser}`, {
+  fetch(`api/torneos/id/${idTorneo}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
-    .then((res) => res.json())
-    .then((userData) => {
-      const idEquipo = userData.equipo.idEquipo;
+    .then((r) => r.json())
+    .then((data) => {
+      let modal = `
+            <div class="cerrar-detalle" id="cerrar-detalle">X</div>
+            <div class="torneo-detalle">
+                <div class="img-inspeccion-torneo">
+                    ${
+                      data.bannerBase64
+                        ? `<img src="'data:image/png;base64,' + ${data.bannerBase64}">`
+                        : ""
+                    }
+                    ${
+                      data.juego && data.juego.imgJuegoBase64
+                        ? `<img src="'data:image/png;base64, + ${data.juego.imgJuegoBase64}">`
+                        : ""
+                    }
+                </div>
+                <div class="contenido-inspeccion-torneo">
+                    <h3>${data.nombre}</h3>
+                    <p>${data.descripcion}</p>
+                    <P>${data.premio}</P>
+                    <p>${data.cupos}</p>
+                    <p>${data.formato}</p>
+                    <p>${data.estado}</p>
+                    <time>${data.fecha}</time>
+                    <a onclick="downloadReglamento('${
+                      data.idTorneo
+                    }')">Reglamento del torneo</a>`;
 
-      fetch(`api/torneos/id/${idTorneo}`, {
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((r) => r.json())
-        .then((data) => {
-          let modal = `
-                <div class="cerrar-detalle" id="cerrar-detalle">X</div>
-                <div class="torneo-detalle">
-                    <div class="img-inspeccion-torneo">
-                        ${
-                          data.bannerBase64
-                            ? `<img src="'data:image/png;base64,' + ${data.bannerBase64}">`
-                            : ""
-                        }
-                        ${
-                          data.juego && data.juego.imgJuegoBase64
-                            ? `<img src="'data:image/png;base64, + ${data.juego.imgJuegoBase64}">`
-                            : ""
-                        }
-                    </div>
-                    <div class="contenido-inspeccion-torneo">
-                        <h3>${data.nombre}</h3>
-                        <p>${data.descripcion}</p>
-                        <P>${data.premio}</P>
-                        <p>${data.cupos}</p>
-                        <p>${data.formato}</p>
-                        <p>${data.estado}</p>
-                        <time>${data.fecha}</time>
-                        <a onclick="downloadReglamento('${
-                          data.idTorneo
-                        }')">Reglamento del torneo</a>
+      if (idUser) {
+        fetch(`/api/usuarios/id/${idUser}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((res) => res.json())
+          .then((userData) => {
+            const idEquipo = userData.equipo.idEquipo;
+            modal += `
                         <form method:"post" action="/api/torneos/registrarEquipoTorneo">
-                        <input type="hidden" name="idTorneo" id="idTorneo" value="${
-                          data.idTorneo
-                        }">
+                        <input type="hidden" name="idTorneo" id="idTorneo" value="${data.idTorneo}">
                         <input type="hidden" name="idEquipo" id="idEquipo" value="${idEquipo}"> 
                             <button type="submit">Registrar Equipo</button>
-                        </form>
+                        </form>`;
+            modal += `
                     </div>
                 </div>
                 `;
-          crearModalTorneo.innerHTML = modal;
+            crearModalTorneo.innerHTML = modal;
 
-          document.body.appendChild(crearModalTorneo);
-          crearModalTorneo.style.display = "block";
-          crearModalTorneo.style.backgroundColor = "white";
+            document.body.appendChild(crearModalTorneo);
+            crearModalTorneo.style.display = "block";
+            crearModalTorneo.style.backgroundColor = "white";
 
-          const btnCerrarDetalle = document.getElementById("cerrar-detalle");
-          btnCerrarDetalle.addEventListener("click", () => {
-            crearModalTorneo.remove();
+            const btnCerrarDetalle = document.getElementById("cerrar-detalle");
+            btnCerrarDetalle.addEventListener("click", () => {
+              crearModalTorneo.remove();
+            });
+          })
+          .catch((error) => {
+            console.error("Error fetching equipo data:", error);
+            // Handle the error appropriately, e.g., display an error message to the user
           });
+      } else {
+        modal += `
+                    </div>
+                </div>
+                `;
+        crearModalTorneo.innerHTML = modal;
+
+        document.body.appendChild(crearModalTorneo);
+        crearModalTorneo.style.display = "block";
+        crearModalTorneo.style.backgroundColor = "white";
+
+        const btnCerrarDetalle = document.getElementById("cerrar-detalle");
+        btnCerrarDetalle.addEventListener("click", () => {
+          crearModalTorneo.remove();
         });
-    })
-    .catch((error) => {
-      console.error("Error! su equipo no cumple con los integrantes requeridos", error);
-      // Handle the error appropriately, e.g., display an error message to the user
+      }
     });
 }
 
