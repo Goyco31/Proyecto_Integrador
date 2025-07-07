@@ -26,8 +26,16 @@ async function modalTorneo(idTorneo) {
             <div class="cerrar-detalle" id="cerrar-detalle">X</div>
             <div class="torneo-detalle">
                 <div class="img-inspeccion-torneo">
-                    <img src="'data:image/png;base64,' + ${data.bannerBase64}">
-                    <img src="'data:image/png;base64, + ${data.juego.imgJuegoBase64}">
+                    ${
+                      data.bannerBase64
+                        ? `<img src="'data:image/png;base64,' + ${data.bannerBase64}">`
+                        : ""
+                    }
+                    ${
+                      data.juego && data.juego.imgJuegoBase64
+                        ? `<img src="'data:image/png;base64, + ${data.juego.imgJuegoBase64}">`
+                        : ""
+                    }
                 </div>
                 <div class="contenido-inspeccion-torneo">
                     <h3>${data.nombre}</h3>
@@ -37,9 +45,13 @@ async function modalTorneo(idTorneo) {
                     <p>${data.formato}</p>
                     <p>${data.estado}</p>
                     <time>${data.fecha}</time>
-                    <a onclick="downloadReglamento('${data.idTorneo}')">Reglamento del torneo</a>
+                    <a onclick="downloadReglamento('${
+                      data.idTorneo
+                    }')">Reglamento del torneo</a>
                     <form method:"post" action="/api/torneos/registrarEquipoTorneo">
-                    <input type="hidden" name="idTorneo" id="idTorneo" value="${data.idTorneo}">
+                    <input type="hidden" name="idTorneo" id="idTorneo" value="${
+                      data.idTorneo
+                    }">
                     <input type="hidden" name="idEquipo" id="idEquipo" value="${idEquipo}"> 
                         <button type="submit">Registrar Equipo</button>
                     </form>
@@ -47,12 +59,12 @@ async function modalTorneo(idTorneo) {
             </div>
             `;
       crearModalTorneo.innerHTML = modal;
+
+      document.body.appendChild(crearModalTorneo);
+
+      const btnCerrarDetalle = document.getElementById("cerrar-detalle");
+      btnCerrarDetalle.addEventListener("click", () => {
+        crearModalTorneo.remove();
+      });
     });
-
-  document.body.appendChild(crearModalTorneo);
-
-  const btnCerrarDetalle = document.getElementById("cerrar-detalle");
-  btnCerrarDetalle.addEventListener("click", () => {
-    crearModalTorneo.remove();
-  });
 }
