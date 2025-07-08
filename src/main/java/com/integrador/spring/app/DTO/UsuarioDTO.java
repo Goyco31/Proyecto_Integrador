@@ -3,6 +3,7 @@ package com.integrador.spring.app.DTO;
 
 import com.integrador.spring.app.Modelo.InfoUsuario;
 import com.integrador.spring.app.Modelo.User;
+import com.integrador.spring.app.Modelo.Equipo;
 
 public record UsuarioDTO(
     String nombre,
@@ -15,7 +16,8 @@ public record UsuarioDTO(
     String discord,
     String youtube,
     String twitch,
-    String kick
+    String kick,
+    Equipo equipo
 ) {
     public static UsuarioDTO from(User user) {
         InfoUsuario info = user.getInfo();
@@ -31,7 +33,8 @@ public record UsuarioDTO(
             info != null ? info.getDiscord() : null,
             info != null ? info.getYoutube() : null,
             info != null ? info.getTwitch() : null,
-            info != null ? info.getKick() : null
+            info != null ? info.getKick() : null,
+            user.getEquipo()
         );
     }
 }

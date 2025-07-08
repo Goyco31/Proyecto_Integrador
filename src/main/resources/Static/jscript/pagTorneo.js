@@ -45,13 +45,14 @@ function modalTorneo(idTorneo) {
 
       if (idUser) {
         fetch(`/api/usuarios/id/${idUser}?timestamp=${new Date().getTime()}`, {
-          method: "GET",
+          
           headers: {
             Authorization: `Bearer ${token}`,
           },
         })
           .then((res) => res.json())
           .then((userData) => {
+            console.log("userData.equipo:", userData.equipo);
             if (userData.equipo) {
               const idEquipo = userData.equipo.idEquipo;
               modal += `
