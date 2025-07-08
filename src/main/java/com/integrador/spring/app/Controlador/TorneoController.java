@@ -47,8 +47,19 @@ public class TorneoController {
     @GetMapping("/id/{id}")
     public ResponseEntity<Torneo> buscarTorneoId(@PathVariable Integer id) {
         Optional<Torneo> torneo = services_torneo.buscarId(id);
-        return torneo.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        if (torneo.isPresent()) {
+            Torneo t = torneo.get();
+            System.out.println("Torneo encontrado con ID: " + id);
+            System.out.println("bannerBase64: " + t.getBannerBase64());
+            if (t.getJuego() != null) {
+                System.out.println("juego.imgJuegoBase64: " + t.getJuego().getImgJuegoBase64());
+            } else {
+                System.out.println("juego is null");
+            }
+            return new ResponseEntity<>(t, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     // Buscar el torneo por su nombre

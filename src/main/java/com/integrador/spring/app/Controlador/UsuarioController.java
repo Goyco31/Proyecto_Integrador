@@ -107,8 +107,19 @@ public class UsuarioController {
     @GetMapping("/id/{id}")
     public ResponseEntity<User> buscarId(@PathVariable Integer id) {
         Optional<User> user = service_user.buscarId(id);
-        return user.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        if (user.isPresent()) {
+            User usuario = user.get();
+            System.out.println("Usuario encontrado con ID: " + id);
+            if (usuario.getEquipo() != null) {
+                System.out.println("El usuario pertenece al equipo con ID: " + usuario.getEquipo().getIdEquipo());
+            } else {
+                System.out.println("El usuario no pertenece a ningún equipo.");
+            }
+            return new ResponseEntity<>(usuario, HttpStatus.OK);
+        } else {
+            System.out.println("No se encontró ningún usuario con ID: " + id);
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     // Busca el usuarios por su nickname
