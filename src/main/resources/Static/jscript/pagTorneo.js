@@ -1,4 +1,5 @@
 function modalTorneo(idTorneo) {
+  
   const crearModalTorneo = document.createElement("div");
   crearModalTorneo.id = "modal-verTorneo";
   crearModalTorneo.classList.add("modal");
@@ -43,8 +44,8 @@ function modalTorneo(idTorneo) {
                       data.idTorneo
                     }')">Reglamento del torneo</a>`;
 
-      if (idUser) {
-        fetch(`/api/usuarios/id/${idUser}?timestamp=${new Date().getTime()}`, {
+      if (token) {
+        fetch(`/api/usuarios/me`, {
           
           headers: {
             Authorization: `Bearer ${token}`,
@@ -55,10 +56,12 @@ function modalTorneo(idTorneo) {
             console.log("userData.equipo:", userData.equipo);
             if (userData.equipo) {
               const idEquipo = userData.equipo.idEquipo;
+              
+              console.log("idEquipo", idEquipo)
               modal += `
-                          <form method:"post" action="/api/torneos/registrarEquipoTorneo">
-                          <input type="hidden" name="idTorneo" id="idTorneo" value="${data.idTorneo}">
-                          <input type="hidden" name="idEquipo" id="idEquipo" value="${idEquipo}"> 
+                          <form method="post" action="/api/torneos/registrarEquipoTorneo">
+                          <input type="hidden" name="idTorneo" id="idTorneo" value="${idTorneo}">
+                          <input type="hidden" name="idEquipo" id="idEquipo" value="${idEquipo}">
                               <button type="submit">Registrar Equipo</button>
                           </form>`;
             } else {
