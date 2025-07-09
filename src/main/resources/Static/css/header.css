@@ -89,7 +89,18 @@
     /* **CORRECCIÓN:** Ajusta el margen izquierdo para que no se pegue al último elemento de la lista */
     margin-left: 40px; /* Un poco más de espacio para separarlo de "TORNEOS" */
 }
-
+.icon-coin a{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 150px;
+    margin-right: 20px;
+    background-color: #333;
+    border-radius: 30px;
+}
+.icon-coin svg{
+    width: 50px;
+}
 .user-link {
     display: flex;
     align-items: center;

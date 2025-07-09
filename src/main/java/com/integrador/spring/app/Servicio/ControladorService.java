@@ -86,6 +86,7 @@ public class ControladorService {
                         .mensaje("Autenticación exitosa")
                         .token(token)
                         .idUser(user.getId())
+                        //.idEquipo(user.getEquipo().getIdEquipo())
                         .build();
                 }
                 throw new RuntimeException("Código 2FA inválido o expirado");
@@ -101,6 +102,7 @@ public class ControladorService {
                 .requires2fa(true)
                 .tempToken(tempToken)
                 .idUser(user.getId())
+                //.idEquipo(user.getEquipo().getIdEquipo())
                 .build();
         }
 
@@ -110,6 +112,7 @@ public class ControladorService {
             .mensaje("Autenticación exitosa")
             .token(token)
             .idUser(user.getId())
+            //.idEquipo(user.getEquipo().getIdEquipo())
             .build();
     }
 

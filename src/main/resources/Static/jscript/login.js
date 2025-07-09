@@ -29,6 +29,7 @@ document.addEventListener('DOMContentLoaded', function () {
         // Guardar tempToken
         localStorage.setItem('tempToken', data.tempToken);
         localStorage.setItem('idUser', data.idUser);
+        //localStorage.setItem('idEquipo', data.idEquipo);
         // Mostrar modal de 2FA
         document.getElementById('login-modal').style.display = 'none';
         document.getElementById('2fa-modal').style.display = 'flex';
@@ -40,6 +41,7 @@ document.addEventListener('DOMContentLoaded', function () {
       if (data.token) {
         localStorage.setItem('authToken', data.token);
         localStorage.setItem('idUser', data.idUser);
+        //localStorage.setItem('idEquipo', data.idEquipo);
         window.location.href = '/';
         return;
       }

@@ -3,6 +3,8 @@ package com.integrador.spring.app.Modelo;
 import java.time.LocalDate;
 import java.util.List;
 
+import com.fasterxml.jackson.annotation.JsonManagedReference;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -32,6 +34,7 @@ public class Equipo {
 
     //Relacio uno a muchos con la tabla usuario
     @OneToMany
+    @JsonManagedReference
     private List<User> integrantes;
 
     //Relacio uno a uno muchos la tabla Inscripciones

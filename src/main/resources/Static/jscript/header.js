@@ -19,7 +19,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
       // Nickname
       document.getElementById("user-nickname").innerText = data.nickname;
-
+      document.getElementById("monedas").innerHTML = data.monedas;
       // Imagen
       const avatar = data.fotoPerfil && data.fotoPerfil.trim() !== ""
         ? data.fotoPerfil

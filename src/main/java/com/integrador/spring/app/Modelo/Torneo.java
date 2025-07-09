@@ -40,13 +40,16 @@ public class Torneo {
 
     private String bannerBase64;
 
-    /*public String getBannerBase64() {
-        return bannerBase64;
+    public String getBannerBase64() {
+        if (banner != null) {
+            return Base64.getEncoder().encodeToString(banner);
+        }
+        return null;
     }
 
     public void setBannerBase64(String bannerBase64) {
         this.bannerBase64 = bannerBase64;
-    }*/
+    }
 
     // private byte[] imgJuego;
 

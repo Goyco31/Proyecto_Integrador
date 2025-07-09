@@ -19,6 +19,7 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.util.Base64;
 
+import com.integrador.spring.app.Modelo.Inscripciones;
 import com.integrador.spring.app.Modelo.Juego;
 import com.integrador.spring.app.Modelo.Torneo;
 import com.integrador.spring.app.Modelo.Torneo.EstadoTorneo;
@@ -26,7 +27,7 @@ import com.integrador.spring.app.Modelo.Torneo.Tipo;
 import com.integrador.spring.app.Servicio.TorneoServices;
 
 import jakarta.persistence.EntityNotFoundException;
-
+import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
 @RequestMapping("/api/torneos")
@@ -46,8 +47,19 @@ public class TorneoController {
     @GetMapping("/id/{id}")
     public ResponseEntity<Torneo> buscarTorneoId(@PathVariable Integer id) {
         Optional<Torneo> torneo = services_torneo.buscarId(id);
-        return torneo.map(value -> new ResponseEntity<>(value, HttpStatus.OK))
-                .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
+        if (torneo.isPresent()) {
+            Torneo t = torneo.get();
+            System.out.println("Torneo encontrado con ID: " + id);
+            System.out.println("bannerBase64: " + t.getBannerBase64());
+            if (t.getJuego() != null) {
+                System.out.println("juego.imgJuegoBase64: " + t.getJuego().getImgJuegoBase64());
+            } else {
+                System.out.println("juego is null");
+            }
+            return new ResponseEntity<>(t, HttpStatus.OK);
+        } else {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
     }
 
     // Buscar el torneo por su nombre
@@ -82,7 +94,7 @@ public class TorneoController {
     }
 
     // actualizar el juego por su id
-   @PutMapping("actualizar/id/{id}")
+    @PutMapping("actualizar/id/{id}")
     public ResponseEntity<Torneo> actualizarTorneo(@PathVariable Integer id,
             @RequestParam("nombre") String nombre,
             @RequestParam("descripcion") String descripcion,
@@ -125,6 +137,22 @@ public class TorneoController {
         return ResponseEntity.ok()
                 .body(base64Reglamento);
     }
+
+    /////////////////////////
+    @PostMapping("/registrarEquipo/{idEquipo}/Torneo/{idTorneo}")
+    public ResponseEntity<String> registrarEquipoEnTorneo(
+            @PathVariable Integer idTorneo,
+            @PathVariable Integer idEquipo) {
+
+        try {
+            ResponseEntity<String> registroEquipo = services_torneo.registrarEquipoEnTorneo(idEquipo, idTorneo);
+            return registroEquipo;
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paramentros no completados");
+        }
+    }
+
+    ///
 
     // elimina el torneo por su id
     @DeleteMapping("/eliminar/id/{id}")
