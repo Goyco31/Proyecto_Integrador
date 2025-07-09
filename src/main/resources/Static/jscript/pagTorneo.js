@@ -17,8 +17,9 @@ function modalTorneo(idTorneo) {
     .then((data) => {
       console.log("Tournament data:", data);
       let modal = `
-            <div class="cerrar-detalle" id="cerrar-detalle">X</div>
+            
             <div class="torneo-detalle">
+            <div class="cerrar-detalle" id="cerrar-detalle">X</div>
                 <div class="img-inspeccion-torneo">
                     ${data.bannerBase64
           ? `<img src="data:image/png;base64,${data.bannerBase64}">`
@@ -31,11 +32,11 @@ function modalTorneo(idTorneo) {
                 </div>
                 <div class="contenido-inspeccion-torneo">
                     <h3>${data.nombre}</h3>
-                    <p>${data.descripcion}</p>
-                    <P>${data.premio}</P>
-                    <p>${data.cupos}</p>
-                    <p>${data.formato}</p>
-                    <p>${data.estado}</p>
+                    <p class="descripcion-torneo">${data.descripcion}</p>
+                    <P class="premio-torneo">${data.premio}</P>
+                    <p class="cupos-torneo">${data.cupos}</p>
+                    <p class="formato-torneo">${data.formato}</p>
+                    <p class="estado-torneo" data-estado="${data.estado}">${data.estado}</p>
                     <time>${data.fecha}</time>
                     <a onclick="downloadReglamento('${data.idTorneo
         }')">Reglamento del torneo</a>`;
@@ -91,7 +92,7 @@ function modalTorneo(idTorneo) {
             }
 
             const btnCerrarDetalle = document.getElementById("cerrar-detalle");
-            btnCerrarDetalle.addEventListener("click", () => {
+            btnCerrarDetalle.addEventListener("click", () => { 
               crearModalTorneo.remove();
             });
           })
