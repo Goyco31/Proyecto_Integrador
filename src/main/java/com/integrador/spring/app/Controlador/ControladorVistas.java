@@ -2,6 +2,7 @@ package com.integrador.spring.app.Controlador;
 
 import java.util.Base64;
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -22,9 +23,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.integrador.spring.app.Modelo.ComprarMonedas;
 import com.integrador.spring.app.Modelo.Recompensa;
 import com.integrador.spring.app.Modelo.Torneo;
+import com.integrador.spring.app.Modelo.User;
 import com.integrador.spring.app.Servicio.ComprarMonedasServices;
 import com.integrador.spring.app.Servicio.RecompensaServices;
 import com.integrador.spring.app.Servicio.TorneoServices;
+import com.integrador.spring.app.Servicio.UsuarioServices;
+
 import org.springframework.web.bind.annotation.RequestParam;
 
 @Controller
@@ -38,6 +42,9 @@ public class ControladorVistas {
 
     @Autowired
     private ComprarMonedasServices services_compra;
+
+    @Autowired
+    private UsuarioServices services_user;
 
     @GetMapping("/")
     public String inicio() {
@@ -119,21 +126,6 @@ public class ControladorVistas {
         return new String();
     }
 
-   /*@GetMapping("/opcionesRecarga")
-    public String opcionesRecarga(Model model) {
-        List<ComprarMonedas> lista = services_compra.listar();
-
-        for (ComprarMonedas opcion : lista) {
-            if (opcion.getImgMoneda() != null) {
-                byte[] imgMonedasBytes = opcion.getImgMoneda();
-                String imgMonedasBase64 = Base64.getEncoder().encodeToString(imgMonedasBytes);
-                opcion.setImgimgMonedaBase64(imgMonedasBase64);
-            }
-        }
-        model.addAttribute("opcionesRecarga", lista);
-        return "opcionesRecarga";
-    }*/
-
     @GetMapping("/equipos")
     public String equipos() {
         return "equipos";
@@ -187,19 +179,21 @@ public class ControladorVistas {
 
         return new ResponseEntity<>(contenido2, headers2, HttpStatus.OK);
     }
+
     @GetMapping("/pagoCancel")
-public String pagoCancel() {
-    return "pagoCancel"; 
-}
+    public String pagoCancel() {
+        return "pagoCancel";
+    }
 
-@GetMapping("/pagoError")
-public String pagoError() {
-    return "pagoError"; 
-}
+    @GetMapping("/pagoError")
+    public String pagoError() {
+        return "pagoError";
+    }
 
-@GetMapping("/pagoExito")
-public String pagoExito() {
-    return "pagoExito"; 
-}
+    @GetMapping("/pagoExito")
+    public String pagoExito() {
+        return "pagoExito";
+    }
 
+    
 }

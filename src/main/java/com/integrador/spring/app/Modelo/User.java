@@ -25,6 +25,7 @@ import jakarta.persistence.OneToMany;
 import jakarta.persistence.OneToOne;
 import jakarta.persistence.Table;
 import jakarta.persistence.UniqueConstraint;
+import jakarta.persistence.FetchType;
 
 // Anotaciones de Lombok para generar código automáticamente (getters, setters, etc.)
 import lombok.AllArgsConstructor;
@@ -88,7 +89,7 @@ public class User implements UserDetails {
     private List<Mensajes> mensajes;
 
     // Relacion muchos a uno con la tabla equipo
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.EAGER)
     @JsonBackReference
     private Equipo equipo;
 

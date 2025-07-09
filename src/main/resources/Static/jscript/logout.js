@@ -6,6 +6,7 @@ document.addEventListener('DOMContentLoaded', function () {
       // 1. Eliminar el token
       localStorage.removeItem('authToken');
       localStorage.removeItem('tempToken');
+      localStorage.removeItem("idUser");
 
       // 2. Redirigir a la página de inicio
       window.location.href = '/';

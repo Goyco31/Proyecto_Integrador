@@ -1,246 +1,188 @@
-document.addEventListener('DOMContentLoaded', () => {
+function modalTorneo(idTorneo) {
+  const crearModalTorneo = document.createElement("div");
+  crearModalTorneo.id = "modal-verTorneo";
+  crearModalTorneo.classList.add("modal");
 
-    // 1. Cargar datos de torneos
-    // Intenta obtener los datos de torneos guardados en localStorage por la página de administración.
-    const tournamentsDataRaw = localStorage.getItem('adminTournamentsData');
-    // Si hay datos en localStorage, los parsea de JSON a un objeto JavaScript; si no, es un objeto vacío.
-    const tournamentsFromLocalStorage = tournamentsDataRaw ? JSON.parse(tournamentsDataRaw) : {};
+  //let idEquipo = localStorage.getItem("idEquipo");
+  let token = localStorage.getItem("authToken");
+  let idUser = localStorage.getItem("idUser");
+  console.log("idUser:", idUser);
 
-    // Combinar datos preestablecidos (hardcodeados) con los de localStorage.
-    // Los datos de localStorage sobrescribirán los preestablecidos si tienen el mismo 'id'.
-    const combinedTournamentsData = {
-        // --- Datos de ejemplo preestablecidos ---
-        "dota-julio-premium": {
-            id: "dota-julio-premium",
-            title: "Torneo DOTA 2 - Edición Premium Julio",
-            type: "Premium", // Asegúrate de que 'type' esté presente para la insignia
-            gameImage: "/Imagenes/dota-pro-banner.webp", // RUTA DE LA IMAGEN: Asegúrate que esta ruta sea correcta para tu proyecto (ej: src/main/resources/static/Imagenes/)
-            gameIcon: "/Imagenes/dota2-icon.png",        // RUTA DEL ICONO: Asegúrate que esta ruta sea correcta
-            date: "📅 20 Julio | 🕒 8:00 PM",
-            prize: "🏆 $100 PEN + Puntos de canje en SK-Tienda",
-            description: "¡La élite de Dota 2 se enfrenta! Participa en nuestro torneo premium y demuestra que eres el mejor. Estrategia, habilidad y trabajo en equipo te llevarán a la victoria.",
-            slots: "16/32 equipos",
-            format: "Eliminación Doble, Bo3",
-            // Las rutas de PDF (ReglamentoenDoc) son correctas según tu estructura de carpetas mostrada
-            rulesLink: "/pdfDota2",
-            registerLink: "/torneoinscrito",
-            status: "activo"
-        },
-        "dota-agosto-pro": {
-            id: "dota-agosto-pro",
-            title: "DOTA 2 Pro Challenge - Agosto",
-            type: "Pro",
-            gameImage: "/Imagenes/dota-pro-banner.webp",
-            gameIcon: "/Imagenes/dota2-icon.png",
-            date: "📅 15 Agosto | 🕒 7:30 PM",
-            prize: "🏆 $200 PEN + Puntos de canje en SK-Tienda",
-            description: "Sube de nivel y compite contra profesionales. Grandes premios y la oportunidad de hacerte un nombre en la escena.",
-            slots: "8/16 equipos",
-            format: "Eliminación Directa, Bo5 Finales",
-            rulesLink: "/pdfDota2",
-            registerLink: "/torneoinscrito",
-            status: "activo"
-        },
-        "csgo-julio-open": {
-            id: "csgo-julio-open",
-            title: "CS:GO Open Series - Julio",
-            type: "Open",
-            gameImage: "/Imagenes/csgo-tournament-banner.png",
-            gameIcon: "/Imagenes/csgo-icon.png",
-            date: "📅 25 Julio | 🕒 9:00 PM",
-            prize: "🏆 $250 PEN + Puntos de canje en SK-Tienda",
-            description: "Demuestra tu puntería y tácticas en el CS:GO Open. Abierto a todos los niveles. ¡No te quedes fuera!",
-            slots: "24/32 equipos",
-            format: "Sistema Suizo + Playoffs",
-            rulesLink: "/pdfCSGO2",
-            registerLink: "/torneoinscrito",
-            status: "activo"
-        },
-        // Los datos de localStorage se expanden aquí, sobrescribiendo los IDs duplicados de arriba
-        ...tournamentsFromLocalStorage
-    };
-
-    // 2. Obtener referencias a elementos del DOM
-    // Usamos las clases que definimos en el HTML y CSS
-    const tournamentsContainer = document.querySelector('.lista-torneos'); 
-    const noActiveTournamentsMessage = document.getElementById('no-active-tournaments-message');
-    const carouselModal = document.querySelector('.carousel-modal');
-    const closeCarouselModalBtn = document.querySelector('.close-modal');
-    const modalTournamentContentArea = document.querySelector('.modal-tournament-content-area');
-    const overlay = document.querySelector('.overlay'); 
-
-    // 3. Función para renderizar dinámicamente las tarjetas de torneos
-    const renderTournamentCards = () => {
-        if (!tournamentsContainer) {
-            console.error("Error: El contenedor de torneos (.lista-torneos) no se encontró en el HTML. Asegúrate de que el elemento exista y su clase sea correcta.");
-            return; // No podemos renderizar si no hay contenedor
+  fetch(`api/torneos/id/${idTorneo}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((r) => r.json())
+    .then((data) => {
+      console.log("Tournament data:", data);
+      let modal = `
+            
+            <div class="torneo-detalle">
+            <div class="cerrar-detalle" id="cerrar-detalle">X</div>
+                <div class="img-inspeccion-torneo">
+                    ${data.bannerBase64
+          ? `<img src="data:image/png;base64,${data.bannerBase64}">`
+          : ""
         }
-
-        tournamentsContainer.innerHTML = ''; // Limpiar cualquier tarjeta existente
-
-        const activeTournaments = Object.values(combinedTournamentsData).filter(tournament => tournament.status === 'activo');
-
-        if (activeTournaments.length === 0) {
-            if (noActiveTournamentsMessage) {
-                noActiveTournamentsMessage.style.display = 'block';
-            }
-            return;
-        } else {
-            if (noActiveTournamentsMessage) {
-                noActiveTournamentsMessage.style.display = 'none';
-            }
+                    ${data.juego && data.juego.imgJuegoBase64
+          ? `<img src="data:image/png;base64,${data.juego.imgJuegoBase64}">`
+          : ""
         }
-
-        // Crear una tarjeta HTML para cada torneo activo
-        activeTournaments.forEach(tournament => {
-            const tournamentCard = document.createElement('div');
-            // Usamos la clase 'carta-torneo' como en tu HTML y CSS
-            tournamentCard.classList.add('carta-torneo');
-            tournamentCard.dataset.tournamentId = tournament.id; // Almacena el ID del torneo
-
-            // Normalizar el tipo de torneo para la clase CSS (ej: "Premium" -> "premium")
-            const typeClass = tournament.type ? tournament.type.toLowerCase().replace(/\s/g, '') : 'default';
-
-            // --- Estructura HTML para cada tarjeta ---
-            tournamentCard.innerHTML = `
-                <div class="img-torneo">
-                    <img src="${tournament.gameImage}" alt="${tournament.title}" class="banner-torneo">
-                    <span class="type-badge type-${typeClass}">
-                        ${tournament.type ? tournament.type.toUpperCase() : ''}
-                    </span>
-                    <img src="${tournament.gameIcon}" alt="${tournament.title} Icon" class="juego-torneo">
                 </div>
-                <div class="contenido-torneo">
-                    <h3>${tournament.title}</h3>
-                    <p><i class="fas fa-calendar-alt"></i> ${tournament.date}</p>
-                    <p><i class="fas fa-trophy"></i> ${tournament.prize}</p>
-                    <p><i class="fas fa-users"></i> ${tournament.slots}</p>
-                </div>
-            `;
-            tournamentsContainer.appendChild(tournamentCard); // Añadir la tarjeta al contenedor
-        });
-    };
+                <div class="contenido-inspeccion-torneo">
+                    <h3>${data.nombre}</h3>
+                    <p class="descripcion-torneo">${data.descripcion}</p>
+                    <P class="premio-torneo">${data.premio}</P>
+                    <p class="cupos-torneo">${data.cupos}</p>
+                    <p class="formato-torneo">${data.formato}</p>
+                    <p class="estado-torneo" data-estado="${data.estado}">${data.estado}</p>
+                    <time>${data.fecha}</time>
+                    <a onclick="downloadReglamento('${data.idTorneo
+        }')">Reglamento del torneo</a>`;
 
-    // --- Funcionalidad de Carrusel de Imágenes en las secciones de juegos destacados ---
-    const initGameCarousels = () => {
-        const gameCards = document.querySelectorAll('.game-card'); // Contenedores individuales de carrusel
-        gameCards.forEach(card => {
-            const carouselImages = card.querySelectorAll('.game-carousel img');
-            let currentIndex = 0;
+      if (token) {
+        fetch(`/api/usuarios/me`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        })
+          .then((res) => res.json())
+          .then((userData) => {
+            console.log("userData.equipo:", userData.equipo);
+            if (userData.equipo) {
+              const idEquipo = userData.equipo.idEquipo;
 
-            if (carouselImages.length > 1) {
-                // Asegurarse de que solo la primera imagen esté activa al inicio
-                carouselImages.forEach((img, index) => {
-                    if (index === 0) {
-                        img.classList.add('active');
-                    } else {
-                        img.classList.remove('active');
-                    }
-                });
-
-                // Establecer el intervalo para cambiar las imágenes
-                setInterval(() => {
-                    carouselImages[currentIndex].classList.remove('active');
-                    currentIndex = (currentIndex + 1) % carouselImages.length;
-                    carouselImages[currentIndex].classList.add('active');
-                }, 3000); // Cambia cada 3 segundos
+              console.log("idEquipo", idEquipo);
+              console.log("idTorneo", parseInt(idTorneo));
+              modal += `
+                          <div class="registro-contenedor">
+                            <input type="hidden" name="idTorneo" id="idTorneo" value="${idTorneo}">
+                            <input type="hidden" name="idEquipo" id="idEquipo" value="${idEquipo}">
+                            <button class="btn-registro-equipo" id="btn-registro-equipo">Registrar Equipo</button>
+                          </div>
+                          `;
+            } else {
+              modal += `<p>No estás en un equipo. Debes crear un equipo para registrarte en este torneo.</p>`;
             }
-        });
-    };
-
-    // --- Funcionalidad del Modal de Detalles del Torneo ---
-
-    // Función para cargar el contenido del modal con los detalles de un torneo específico
-    const loadModalContent = (tournamentId) => {
-        const tournament = combinedTournamentsData[tournamentId]; // Obtener los datos del torneo por su ID
-        if (tournament && modalTournamentContentArea) {
-            // Rellenar el área de contenido del modal con la información del torneo
-            modalTournamentContentArea.innerHTML = `
-                <div class="modal-header">
-                    <img src="${tournament.gameImage}" alt="${tournament.title} Banner" class="modal-banner-image">
-                    <img src="${tournament.gameIcon}" alt="${tournament.title} Icon" class="modal-game-icon-lg">
-                </div>
-                <div class="modal-body">
-                    <h2 class="modal-title">${tournament.title}</h2>
-                    <p class="modal-description">${tournament.description}</p>
-                    <div class="modal-details-grid">
-                        <p><strong>Tipo:</strong> <span>${tournament.type || 'N/A'}</span></p>
-                        <p><strong>Fecha:</strong> <span>${tournament.date}</span></p>
-                        <p><strong>Premio:</strong> <span>${tournament.prize}</span></p>
-                        <p><strong>Cupos:</strong> <span>${tournament.slots}</span></p>
-                        <p><strong>Formato:</strong> <span>${tournament.format}</span></p>
+            modal += `
                     </div>
                 </div>
-                <div class="modal-footer">
-                    ${tournament.rulesLink ? `<a href="${tournament.rulesLink}" target="_blank" class="btn btn-secondary">Ver Reglamento</a>` : ''}
-                    ${tournament.registerLink ? `<a href="${tournament.registerLink}" target="_blank" class="btn btn-primary">Inscribirse</a>` : ''}
+                `;
+            crearModalTorneo.innerHTML = modal;
+
+            document.body.appendChild(crearModalTorneo);
+            crearModalTorneo.style.display = "block";
+            crearModalTorneo.style.backgroundColor = "white";
+
+            const btnRegistrar = crearModalTorneo.querySelector(
+              ".btn-registro-equipo"
+            );
+            if (btnRegistrar) {
+              btnRegistrar.addEventListener("click", function () {
+                const carta = this.closest(".registro-contenedor");
+                const idTorneo = carta.querySelector(
+                  "input[name='idTorneo']"
+                ).value;
+                const idEquipo = carta.querySelector(
+                  "input[name='idEquipo']"
+                ).value;
+                registroEquipo(idEquipo, idTorneo);
+              });
+            }
+
+            const btnCerrarDetalle = document.getElementById("cerrar-detalle");
+            btnCerrarDetalle.addEventListener("click", () => { 
+              crearModalTorneo.remove();
+            });
+          })
+          .catch((error) => {
+            console.error("Error fetching equipo data:", error);
+            // Handle the error appropriately, e.g., display an error message to the user
+          });
+      } else {
+        modal += `
+                    </div>
                 </div>
-            `;
-        } else if (modalTournamentContentArea) {
-            // Mensaje si no se encuentran los detalles del torneo
-            modalTournamentContentArea.innerHTML = '<p class="modal-error-message">Los detalles de este torneo no están disponibles.</p>';
+                `;
+        crearModalTorneo.innerHTML = modal;
+
+        document.body.appendChild(crearModalTorneo);
+        crearModalTorneo.style.display = "block";
+        crearModalTorneo.style.backgroundColor = "white";
+
+        const btnCerrarDetalle = document.getElementById("cerrar-detalle");
+        btnCerrarDetalle.addEventListener("click", () => {
+          crearModalTorneo.remove();
+        });
+      }
+    });
+}
+
+async function registroEquipo(idEquipo, idTorneo) {
+  const token = localStorage.getItem("authToken");
+  try {
+    const res = await fetch(
+      `/api/torneos/registrarEquipo/${idEquipo}/Torneo/${idTorneo}`,
+      {
+        method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      }
+    );
+    if (!res.ok) throw new Error();
+    Swal.fire("Equipo Registrado", "Tu equipo se registró en el torneo ¡Prepárate para la batalla!", "success")
+      .then(result => {
+        if(result.isConfirmed){
+          window.location.href ="/paginaTorneo"    
         }
-    };
+      });
+  } catch (error) {
+    Swal.fire(
+      "Error",
+      "Tu equipo no cumple con los integrantes necesarios",
+      "error"
+    );
+  }
+}
 
-    // Función para abrir el modal
-    const openTheModal = () => {
-        if (carouselModal) carouselModal.style.display = 'flex'; // Muestra el modal (CSS display: flex para centrar)
-        if (overlay) overlay.style.display = 'block'; // Muestra el overlay
-        document.body.style.overflow = 'hidden'; // Evita el scroll del cuerpo mientras el modal está abierto
-    }
+function downloadReglamento(torneoId) {
+  const token = localStorage.getItem("authToken");
+  fetch(`/api/torneos/downloadReglamento/${torneoId}`, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  })
+    .then((response) => response.text())
+    .then((base64Data) => {
+      // Convert Base64 data to a file
+      const byteCharacters = atob(base64Data);
+      const byteArrays = [];
 
-    // Función para cerrar el modal y limpiar su contenido
-    const closeTheModal = () => {
-        if (carouselModal) carouselModal.style.display = 'none'; // Oculta el modal
-        if (overlay) overlay.style.display = 'none'; // Oculta el overlay
-        document.body.style.overflow = 'auto'; // Restaura el scroll del cuerpo
-        if (modalTournamentContentArea) {
-            modalTournamentContentArea.innerHTML = ''; // Limpia el contenido del modal
+      for (let offset = 0; offset < byteCharacters.length; offset += 512) {
+        const slice = byteCharacters.slice(offset, offset + 512);
+
+        const byteNumbers = new Array(slice.length);
+        for (let i = 0; i < slice.length; i++) {
+          byteNumbers[i] = slice.charCodeAt(i);
         }
-    };
 
-    // Event listener para abrir el modal al hacer clic en cualquier tarjeta de torneo
-    // Usamos delegación de eventos en el contenedor padre para eficiencia
-    if (tournamentsContainer) {
-        tournamentsContainer.addEventListener('click', (e) => {
-            const card = e.target.closest('.carta-torneo'); // Encuentra la tarjeta de torneo más cercana al clic (usando la clase correcta)
-            if (card) {
-                const tournamentId = card.dataset.tournamentId; // Obtiene el ID del torneo de la tarjeta
-                if (tournamentId) {
-                    loadModalContent(tournamentId); // Carga el contenido en el modal
-                    openTheModal(); // Abre el modal
-                }
-            }
-        });
-    }
+        const byteArray = new Uint8Array(byteNumbers);
+        byteArrays.push(byteArray);
+      }
 
-    // Event listener para cerrar el modal al hacer clic en el botón de cerrar
-    if (closeCarouselModalBtn) closeCarouselModalBtn.addEventListener('click', closeTheModal);
+      const blob = new Blob(byteArrays, { type: "application/pdf" });
 
-    // Event listener para cerrar el modal al hacer clic fuera del contenido del modal (en el overlay o el propio fondo del modal)
-    if (overlay) {
-        overlay.addEventListener('click', (e) => {
-            // Solo cierra si el clic es directamente en el overlay y no en un elemento dentro del modal-content
-            // O si el clic es directamente en el fondo del modal (si el modal mismo es el target)
-            if (e.target === overlay || e.target === carouselModal) {
-                closeTheModal();
-            }
-        });
-    }
-
-    // Asegura que también se cierre si se hace clic directamente en el fondo del modal (si no es el overlay)
-    // Esto es un fallback, ya que el evento en 'overlay' ya debería capturar esto si el modal está contenido en el overlay.
-    // Sin embargo, mantenerlo no hace daño.
-    if (carouselModal) {
-        carouselModal.addEventListener('click', (e) => {
-            if (e.target === carouselModal) {
-                closeTheModal();
-            }
-        });
-    }
-
-
-    // --- Inicialización al cargar la página ---
-    renderTournamentCards(); // Renderiza los torneos activos al cargar la página
-    initGameCarousels(); // Inicializa los carruseles de imágenes de los juegos destacados
-});
+      // Create a download link
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `reglamento_${torneoId}.pdf`;
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    })
+    .catch((error) => {
+      console.error("Error downloading reglamento:", error);
+    });
+}
