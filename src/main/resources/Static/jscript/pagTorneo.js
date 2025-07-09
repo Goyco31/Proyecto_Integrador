@@ -37,6 +37,7 @@ function modalTorneo(idTorneo) {
                     <p class="cupos-torneo">${data.cupos}</p>
                     <p class="formato-torneo">${data.formato}</p>
                     <p class="estado-torneo" data-estado="${data.estado}">${data.estado}</p>
+                    <p >Quedan <span>${data.cupos}</span> cupos disponibles</p>
                     <time>${data.fecha}</time>
                     <a onclick="downloadReglamento('${data.idTorneo
         }')">Reglamento del torneo</a>`;
@@ -141,7 +142,7 @@ async function registroEquipo(idEquipo, idTorneo) {
   } catch (error) {
     Swal.fire(
       "Error",
-      "Tu equipo no cumple con los integrantes necesarios",
+      "Registro no se pudo concretar",
       "error"
     );
   }
