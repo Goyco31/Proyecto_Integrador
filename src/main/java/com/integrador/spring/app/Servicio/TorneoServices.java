@@ -158,12 +158,20 @@ public class TorneoServices {
         Torneo torneo = exiteTorneo.get();
 
         if (equipo.getIntegrantes().size() != 5) {
-            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("El equipo no cumple con los integrantes necesarios, se necesitan 5");
+            return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                    .body("El equipo no cumple con los integrantes necesarios, se necesitan 5");
         }
 
         Inscripciones inscripcion = new Inscripciones();
         inscripcion.setEquipo(equipo);
         inscripcion.setTorneo(torneo);
+
+        if (torneo.getCupos() < 1) {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CUpos completados");
+        }
+
+        torneo.setCupos(torneo.getCupos() - 1);
+        repo_torneo.save(torneo);
 
         inscripcionesServices.guardar(inscripcion);
         return ResponseEntity.ok().body("Equipo registrado correctamente");
