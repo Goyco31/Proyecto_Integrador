@@ -139,16 +139,16 @@ public class TorneoController {
     }
 
     /////////////////////////
-    @PostMapping("/registrarEquipoTorneo")
-    public ResponseEntity<Inscripciones> registrarEquipoEnTorneo(
-            @RequestParam("idTorneo") Integer idTorneo,
-            @RequestParam("idEquipo") Integer idEquipo) {
+    @PostMapping("/registrarEquipo/{idEquipo}/Torneo/{idTorneo}")
+    public ResponseEntity<String> registrarEquipoEnTorneo(
+            @PathVariable Integer idTorneo,
+            @PathVariable Integer idEquipo) {
 
         try {
-            Inscripciones nuevaInscripcion = services_torneo.registrarEquipoEnTorneo(idEquipo, idTorneo);
-            return ResponseEntity.ok(nuevaInscripcion);
+            ResponseEntity<String> registroEquipo = services_torneo.registrarEquipoEnTorneo(idEquipo, idTorneo);
+            return registroEquipo;
         } catch (Exception e) {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).body(null);
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Paramentros no completados");
         }
     }
 

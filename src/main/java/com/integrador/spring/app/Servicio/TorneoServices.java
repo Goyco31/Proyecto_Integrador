@@ -146,25 +146,26 @@ public class TorneoServices {
     @Autowired
     private InscripcionesServices inscripcionesServices;
 
-    public Inscripciones registrarEquipoEnTorneo(Integer idEquipo, Integer idTorneo) {
+    public ResponseEntity<String> registrarEquipoEnTorneo(Integer idEquipo, Integer idTorneo) {
         Optional<Torneo> exiteTorneo = repo_torneo.findById(idTorneo);
         Optional<Equipo> equipoOptional = equipoServices.buscarId(idEquipo);
 
         if (!exiteTorneo.isPresent() || !equipoOptional.isPresent()) {
-            return null;
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Equipo o torneo no encontrado");
         }
 
         Equipo equipo = equipoOptional.get();
         Torneo torneo = exiteTorneo.get();
 
         if (equipo.getIntegrantes().size() != 5) {
-            return null;
+            return  ResponseEntity.status(HttpStatus.NOT_FOUND).body("El equipo no cumple con los integrantes necesarios, se necesitan 5");
         }
 
         Inscripciones inscripcion = new Inscripciones();
         inscripcion.setEquipo(equipo);
         inscripcion.setTorneo(torneo);
 
-        return inscripcionesServices.guardar(inscripcion);
+        inscripcionesServices.guardar(inscripcion);
+        return ResponseEntity.ok().body("Equipo registrado correctamente");
     }
 }
