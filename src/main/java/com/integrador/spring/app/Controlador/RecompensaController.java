@@ -50,6 +50,14 @@ public class RecompensaController {
     @GetMapping("/disponibles")
     public ResponseEntity<List<Recompensa>> disponibles() {
         List<Recompensa> disponibles = services_recompensa.listarDisponibles();
+        
+        for(Recompensa recompensa : disponibles){
+            if (recompensa.getImgRecompensa() != null) {
+                byte[] imgRecompensa = recompensa.getImgRecompensa();
+                String imgRecompensaBase64 = Base64.getEncoder().encodeToString(imgRecompensa);
+                recompensa.setImgRecompensaBase64(imgRecompensaBase64);
+            }
+        }
         return new ResponseEntity<>(disponibles, HttpStatus.OK);
     }
 
