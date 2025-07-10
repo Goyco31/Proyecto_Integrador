@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 @RequestMapping("/api/torneos")
 public class TorneoController {
 
+    // inyeccion de servicios
     @Autowired
     private TorneoServices services_torneo;
 
@@ -47,6 +48,7 @@ public class TorneoController {
     @GetMapping("/id/{id}")
     public ResponseEntity<Torneo> buscarTorneoId(@PathVariable Integer id) {
         Optional<Torneo> torneo = services_torneo.buscarId(id);
+        // valida que el torneo exista
         if (torneo.isPresent()) {
             Torneo t = torneo.get();
             System.out.println("Torneo encontrado con ID: " + id);
@@ -85,6 +87,7 @@ public class TorneoController {
             @RequestParam("juego") Juego juego) throws java.io.IOException {
 
         try {
+            // envia los parametros al metodo
             Torneo nueva = services_torneo.añadirTorneo(nombre, descripcion, tipo, banner, fecha, premio, cupos,
                     descripcion, docReglamento, estado, juego);
             return new ResponseEntity<>(nueva, HttpStatus.CREATED);
@@ -108,6 +111,7 @@ public class TorneoController {
             @RequestParam("juego") Juego juego) throws java.io.IOException {
 
         try {
+            // envia los parametros al metodo
             Torneo actualizar = services_torneo.actualizarTorneo(id, nombre, descripcion, tipo, banner,
                     fecha, premio,
                     cupos, descripcion,
@@ -119,18 +123,22 @@ public class TorneoController {
 
     }
 
+    // proceso para descargar el archivo que tiene el reglamento
     @GetMapping("/downloadReglamento/{idTorneo}")
     public ResponseEntity<String> downloadReglamento(@PathVariable Integer idTorneo) {
         Optional<Torneo> torneo = services_torneo.buscarId(idTorneo);
+        // valida que el torneo existe
         if (!torneo.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+        //valida que el torneo tenga un documento
         byte[] docReglamento = torneo.get().getDocReglamento();
         if (docReglamento == null) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+        //tipo de documento
         String fileName = "reglamento_" + torneo.get().getNombre() + ".pdf";
         String base64Reglamento = Base64.getEncoder().encodeToString(docReglamento);
 
@@ -138,13 +146,14 @@ public class TorneoController {
                 .body(base64Reglamento);
     }
 
-    /////////////////////////
+    //registro de un equipo a un torneo
     @PostMapping("/registrarEquipo/{idEquipo}/Torneo/{idTorneo}")
     public ResponseEntity<String> registrarEquipoEnTorneo(
             @PathVariable Integer idTorneo,
             @PathVariable Integer idEquipo) {
 
         try {
+            //envia los parametros al metodo
             ResponseEntity<String> registroEquipo = services_torneo.registrarEquipoEnTorneo(idEquipo, idTorneo);
             return registroEquipo;
         } catch (Exception e) {

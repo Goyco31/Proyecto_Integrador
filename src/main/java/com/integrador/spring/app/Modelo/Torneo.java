@@ -40,18 +40,17 @@ public class Torneo {
 
     private String bannerBase64;
 
+    //metodo para codificar la imagen y poder guardarlo en la DB
     public String getBannerBase64() {
         if (banner != null) {
             return Base64.getEncoder().encodeToString(banner);
         }
         return null;
     }
-
     public void setBannerBase64(String bannerBase64) {
         this.bannerBase64 = bannerBase64;
     }
 
-    // private byte[] imgJuego;
 
     private LocalDate fecha;
     private Integer premio;
@@ -62,6 +61,7 @@ public class Torneo {
     @Column(name = "reglamento", columnDefinition = "LONGBLOB")
     private byte[] docReglamento;
 
+    //metodo para codificar el documento de reglamento para poder guardarlo en la DB
     public String getDocReglamentoBase64() {
         if (docReglamento != null) {
             return Base64.getEncoder().encodeToString(docReglamento);
@@ -79,10 +79,12 @@ public class Torneo {
     //@JsonManagedReference
     private List<Inscripciones> inscripciones;
 
+    //tipo de torneo
     public static enum Tipo {
         Premium, Pro, Open;
     }
 
+    //estado del torneo
     public static enum EstadoTorneo{
         Activo, Finalizado, Cancelado;
     }

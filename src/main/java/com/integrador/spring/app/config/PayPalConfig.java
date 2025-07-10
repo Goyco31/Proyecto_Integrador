@@ -8,7 +8,7 @@ import com.paypal.base.rest.APIContext;
 
 @Configuration
 public class PayPalConfig {
-
+    //obtiene los valores de la cuenta de paypal usada para recibir los pagos de los usuarios
     @Value("${paypal.client.id}")
     private String clienteId;
 

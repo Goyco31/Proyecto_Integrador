@@ -18,6 +18,7 @@ import com.integrador.spring.app.Modelo.User;
 @Service
 public class CanjeRecompensaServices {
 
+    //inyeccion de los repositorios
     @Autowired
     private CanjeRecompensaRepo repo_canje;
 
@@ -27,25 +28,29 @@ public class CanjeRecompensaServices {
     @Autowired
     private RecompensaRepo repo_recompensa;
 
+    //lista todos las recompensas canjeadas
     public List<CanjeRecompensa> listarTodas() {
         return repo_canje.findAll();
     }
 
+    //proceso para que un usuario caneje una recompensa
     public ResponseEntity<String> canjear(Integer idUser, Integer idRecompensa) {
         Optional<User> user = repo_user.findById(idUser);
         Optional<Recompensa> recom = repo_recompensa.findById(idRecompensa);
         CanjeRecompensa nuevoCanje = new CanjeRecompensa();
         
+        //valida que el usuario y recompensa exista
         if (user.isEmpty() || recom.isEmpty()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
         User usuario = user.get();
         Recompensa recompensa = recom.get();
+        //valida que la recompensa exista
         if (!recompensa.isDisponible()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("La recompensa no esta disponible");
         }
-
+        //valida que el usuario tenga las monedas suficientes para canjear la recompensa
         if (usuario.getMonedas() < recompensa.getCosto()) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("No tiene suficientes monedas");
         }

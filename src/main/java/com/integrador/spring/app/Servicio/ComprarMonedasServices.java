@@ -14,17 +14,21 @@ import com.integrador.spring.app.Modelo.ComprarMonedas;
 
 @Service
 public class ComprarMonedasServices {
+    //inyecion de repositorio
     @Autowired
     private ComprarMonedasRepo repo_comprar;
 
+    //lista todas las opciones de recarga
     public List<ComprarMonedas> listar() {
         return repo_comprar.findAll();
     }
 
+    //busca una opcion de recarga por su id
     public Optional<ComprarMonedas> buscarId(Integer id) {
         return repo_comprar.findById(id);
     }
 
+    //metodo para que se registre una nueva opcion
     public ComprarMonedas añadirCompra(String nombre, Integer cantidad, BigDecimal precio, MultipartFile imgMoneda)
             throws IOException {
         ComprarMonedas opcion = new ComprarMonedas();
@@ -35,15 +39,18 @@ public class ComprarMonedasServices {
         return repo_comprar.save(opcion);
     }
 
+    //actualiza una opcion de recarga
     public ComprarMonedas actualizarCompra(Integer id, String nombre, Integer cantidad, BigDecimal precio,
             MultipartFile imgMoneda) throws IOException {
 
+        //verifica que la opcion exista
         Optional<ComprarMonedas> existe = repo_comprar.findById(id);
         if (existe.isPresent()) {
             ComprarMonedas actualizar = existe.get();
             actualizar.setNombre(nombre);
             actualizar.setCantidad(cantidad);
             actualizar.setPrecioCompra(precio);
+            //valida que la imagen sea ingresada
             if (imgMoneda != null && !imgMoneda.isEmpty()) {
                 actualizar.setImgMoneda(imgMoneda.getBytes());
             }
@@ -54,10 +61,12 @@ public class ComprarMonedasServices {
 
     }
 
+    //guarda los datos
     public ComprarMonedas guardar(ComprarMonedas comprarMonedas) {
         return repo_comprar.save(comprarMonedas);
     }
 
+    //elimina por su id
     public void eliminar(Integer id) {
         repo_comprar.deleteById(id);
     }

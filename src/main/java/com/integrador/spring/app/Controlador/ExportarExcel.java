@@ -34,6 +34,7 @@ import jakarta.servlet.http.HttpServletResponse;
 @RequestMapping("/ver/excel")
 public class ExportarExcel extends AbstractXlsxView {
 
+    // inyeccion de servicios
     @Autowired
     private UsuarioServices services_user;
     @Autowired
@@ -47,17 +48,24 @@ public class ExportarExcel extends AbstractXlsxView {
     @Autowired
     private RecargaServices services_recarga;
 
+    // proceso de exportacion de la lista de usuarios en formato excel
     @GetMapping("/usuarios")
     protected void usuariosExcel(Map<String, Object> model, Workbook workbook, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+
+        //tipo de documento y nombre del archivo
         response.setHeader("Content-Disposition", "attachment; filename=\"listado-usuarios.xlsx\"");
         XSSFWorkbook wb = new XSSFWorkbook();
+        
+        //nombre de la hoja
         Sheet hoja = wb.createSheet("Usuarios");
 
+        //titulo de la hoja
         Row filaTitulo = hoja.createRow(0);
         Cell celda = filaTitulo.createCell(0);
         celda.setCellValue("Listado de usuarios");
 
+        //cabecera de la informacion
         Row filaData = hoja.createRow(2);
         String columnas[] = { "ID", "NOMBRE", "APELLIDO", "CORREO", "FECHA DE REGISTRO", "NICKNAME", "MONEDAS", "ROL" };
         for (int i = 0; i < columnas.length; i++) {
@@ -65,8 +73,10 @@ public class ExportarExcel extends AbstractXlsxView {
             celda.setCellValue(columnas[i]);
         }
 
+        //optione la informacion de los usuarios
         List<User> lista = (List<User>) services_user.listarUsuarios();
 
+        //inserta la informacion
         int numFila = 3;
         for (User user : lista) {
             filaData = hoja.createRow(numFila);
@@ -84,17 +94,24 @@ public class ExportarExcel extends AbstractXlsxView {
         wb.write(response.getOutputStream());
     }
 
+    // proceso de exportacion de la lista de torneos en formato excel
     @GetMapping("/torneos")
     protected void torneosExcel(Map<String, Object> model, Workbook workbook, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+        
+        //tipo de documento y nombre del archivo
         response.setHeader("Content-Disposition", "attachment; filename=\"listado-torneos.xlsx\"");
         XSSFWorkbook wb = new XSSFWorkbook();
+        
+        //nombre de la hoja
         Sheet hoja = wb.createSheet("Torneos");
-
+        
+        //titulo de la hoja
         Row filaTitulo = hoja.createRow(0);
         Cell celda = filaTitulo.createCell(0);
         celda.setCellValue("Listado de Torneos");
 
+        //cabecera de la informacion
         Row filaData = hoja.createRow(2);
         String columnas[] = { "ID", "NOMBRE", "DESCRIPCION", "TIPO", "FECHA DE INICIO", "PREMIO", "CUPOS", "FORMATO",
                 "REGLAMENTO", "ESTADO", "JUEGO" };
@@ -103,8 +120,10 @@ public class ExportarExcel extends AbstractXlsxView {
             celda.setCellValue(columnas[i]);
         }
 
+        //optione la informacion de los torneos
         List<Torneo> lista = services_torneo.listarTorneo();
 
+        //inserta la informacion
         int numFila = 3;
         for (Torneo torneo : lista) {
             filaData = hoja.createRow(numFila);
@@ -128,14 +147,19 @@ public class ExportarExcel extends AbstractXlsxView {
     @GetMapping("/juegos")
     protected void juegosExcel(Map<String, Object> model, Workbook workbook, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+        //tipo de documento y nombre del archivo
         response.setHeader("Content-Disposition", "attachment; filename=\"listado-juegos.xlsx\"");
         XSSFWorkbook wb = new XSSFWorkbook();
+        
+        //nombre de la hoja
         Sheet hoja = wb.createSheet("Juegos");
 
+        //titulo de la hoja
         Row filaTitulo = hoja.createRow(0);
         Cell celda = filaTitulo.createCell(0);
         celda.setCellValue("Listado de Juegos");
 
+        //cabecera de la informacion
         Row filaData = hoja.createRow(2);
         String columnas[] = { "ID", "NOMBRE", "GENERO", "IMAGEN" };
         for (int i = 0; i < columnas.length; i++) {
@@ -143,8 +167,10 @@ public class ExportarExcel extends AbstractXlsxView {
             celda.setCellValue(columnas[i]);
         }
 
+        //optione la informacion de los  juegos
         List<Juego> lista = services_juego.listarJuegos();
 
+        //inserta la informacion
         int numFila = 3;
         for (Juego juego : lista) {
             filaData = hoja.createRow(numFila);
@@ -162,14 +188,19 @@ public class ExportarExcel extends AbstractXlsxView {
     @GetMapping("/recompensas")
     protected void recompensasExcel(Map<String, Object> model, Workbook workbook, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+        //tipo de documento y nombre del archivo
         response.setHeader("Content-Disposition", "attachment; filename=\"listado-recompensas.xlsx\"");
         XSSFWorkbook wb = new XSSFWorkbook();
+        
+        //nombre de la hoja
         Sheet hoja = wb.createSheet("Recompensas");
 
+        //titulo de la hoja
         Row filaTitulo = hoja.createRow(0);
         Cell celda = filaTitulo.createCell(0);
         celda.setCellValue("Listado de Recompensas");
 
+        //cabecera de la informacion
         Row filaData = hoja.createRow(2);
         String columnas[] = { "ID", "NOMBRE", "DESCRIPCION", "COSTO", "DISPONIBLE", "CANTIDAD", "IMAGEN" };
         for (int i = 0; i < columnas.length; i++) {
@@ -177,8 +208,10 @@ public class ExportarExcel extends AbstractXlsxView {
             celda.setCellValue(columnas[i]);
         }
 
+        //optione la informacion de las recompensas
         List<Recompensa> lista = services_recompensa.listarTodas();
 
+        //inserta la informacion
         int numFila = 3;
         for (Recompensa recompensa : lista) {
             filaData = hoja.createRow(numFila);
@@ -199,14 +232,19 @@ public class ExportarExcel extends AbstractXlsxView {
     @GetMapping("/opcionesRecarga")
     protected void opcionesRecargaExcel(Map<String, Object> model, Workbook workbook, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+        //tipo de documento y nombre del archivo
         response.setHeader("Content-Disposition", "attachment; filename=\"listado-opcionesRecarga.xlsx\"");
         XSSFWorkbook wb = new XSSFWorkbook();
+        
+        //nombre de la hoja
         Sheet hoja = wb.createSheet("Opciones de recarga");
 
+        //titulo de la hoja
         Row filaTitulo = hoja.createRow(0);
         Cell celda = filaTitulo.createCell(0);
         celda.setCellValue("Listado de Opciones de Recarga");
 
+        //cabecera de la informacion
         Row filaData = hoja.createRow(2);
         String columnas[] = { "ID", "NOMBRE", "CANTIDAD", "PRECIO", "IMAGEN" };
         for (int i = 0; i < columnas.length; i++) {
@@ -214,8 +252,10 @@ public class ExportarExcel extends AbstractXlsxView {
             celda.setCellValue(columnas[i]);
         }
 
+        //optione la informacion de las opciones de recarga
         List<ComprarMonedas> lista = services_compra.listar();
 
+        //inserta la informacion
         int numFila = 3;
         for (ComprarMonedas compra : lista) {
             filaData = hoja.createRow(numFila);
@@ -234,14 +274,20 @@ public class ExportarExcel extends AbstractXlsxView {
     @GetMapping("/historialRecarga")
     protected void historialRecargaExcel(Map<String, Object> model, Workbook workbook, HttpServletRequest request,
             HttpServletResponse response) throws Exception {
+        
+        //tipo de documento y nombre del archivo
         response.setHeader("Content-Disposition", "attachment; filename=\"listado-historialRecarga.xlsx\"");
         XSSFWorkbook wb = new XSSFWorkbook();
+        
+        //nombre de la hoja
         Sheet hoja = wb.createSheet("Historial de recargas");
 
+        //titulo de la hoja
         Row filaTitulo = hoja.createRow(0);
         Cell celda = filaTitulo.createCell(0);
         celda.setCellValue("Listado de recargas realizadas");
 
+        //cabecera de la informacion
         Row filaData = hoja.createRow(2);
         String columnas[] = { "ID", "ESTADO", "FECHA", "PAGO", "USUARIO", "OPCION DE RECARGA", "CANTIDAD", "PRECIO" };
         for (int i = 0; i < columnas.length; i++) {
@@ -249,8 +295,10 @@ public class ExportarExcel extends AbstractXlsxView {
             celda.setCellValue(columnas[i]);
         }
 
+        //optione la informacion del historial de recargas
         List<Recarga> lista = services_recarga.listarRecarga();
 
+        //inserta la informacion
         int numFila = 3;
         for (Recarga recarga : lista) {
             filaData = hoja.createRow(numFila);

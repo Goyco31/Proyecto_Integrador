@@ -1,12 +1,17 @@
+//lista todas las recompensas
 function listarRecompensas() {
   const token = localStorage.getItem("authToken");
+  //accede a la url del controlador
   fetch("/api/recompensas/lista", {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
+    //convierte la respuesta a formato JSON
     .then((r) => r.json())
+    //mapea la informacion
     .then((data) => {
+      //tabla que aparecera para el admin
       let tabla = `
         <div class="tournament-actions">
             <button id="new-tournament-btn" class="btn-primary"  onclick="registrarRecompensas()">
@@ -30,6 +35,7 @@ function listarRecompensas() {
                                 <th>Acciones</th>
                             </tr>
                         </thead>`;
+      //ingresa la info de todas las opciones de recompensa
       data.forEach((l) => {
         tabla += `<tbody class="tournaments-table-body">
                           <td>${l.idRecompensa}</td>
@@ -53,20 +59,25 @@ function listarRecompensas() {
     });
 }
 
-
+//actualizar ua recompensa
 function actualizarRecompensa(id) {
   const token = localStorage.getItem("authToken");
+  //accede a la url del controlador
   fetch(`/api/recompensas/id/${id}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
+  //convierte la respuest a formato JSON
     .then((r) => r.json())
+    //mapea la info
     .then((data) => {
+      //crea un contenedor con su clase e id
       const modalContainer = document.createElement("div");
       modalContainer.id = "tournament-modal";
       modalContainer.classList.add("modal");
 
+      //modal para actualizar la recompensa elegida
       modalContainer.innerHTML = `
         <div class="modal-content">
           <span class="close">&times;</span>
@@ -120,14 +131,17 @@ function actualizarRecompensa(id) {
 
       document.body.appendChild(modalContainer);
 
+      //cierra el modal
       const btnCerrarModal = document.getElementById("cancel-tournament-modal");
       btnCerrarModal.addEventListener("click", () => {
         modalContainer.remove();
       });
 
+      //guarda la nueva informacion
       const guardarRecompensa = document.getElementById("btnGuardarRecompensa");
       guardarRecompensa.addEventListener("click", async (event) => {
         event.preventDefault();
+        //extrae los valores de la nueva informacion
         const nombre = document.getElementById("tournament-name").value;
         const descripcion = document.getElementById(
           "tournament-description"
@@ -142,6 +156,7 @@ function actualizarRecompensa(id) {
           .files[0];
         let disponible = cantidad > 0;
 
+        //guarda los valores en los parametros del controlador
         const dataSave = new FormData();
         dataSave.append("nombre", nombre);
         dataSave.append("descripcion", descripcion);
@@ -151,6 +166,7 @@ function actualizarRecompensa(id) {
         dataSave.append("imagen", imagen);
 
         const token = localStorage.getItem("authToken");
+        //accede ala url del controlador
         try {
           const res = await fetch(`/api/recompensas/actualizar/id/${id}`, {
             method: "PUT",
@@ -159,6 +175,7 @@ function actualizarRecompensa(id) {
             },
             body: dataSave,
           });
+          //verifica que todo salga bien
           if (!res.ok) throw new Error();
           Swal.fire("Exito", "Recompensa actualizada", "success");
           listarRecompensas();
@@ -170,17 +187,21 @@ function actualizarRecompensa(id) {
     });
 }
 
+//registro de recompensas
 function registrarRecompensas() {
+  //crea un contenedor con su clase e id
   const modalContainer = document.createElement("div");
   modalContainer.id = "tournament-modal";
   modalContainer.classList.add("modal");
 
+  //datos para acceder a las url
   const modalTitle = "Registrar Recompensa";
   const fetchUrl = "/api/recompensas/registrar";
   const fetchMethod = "POST";
   const successMessage = "Recompensa registrado";
   const errorMessage = "No se pudo registrar la recompensa";
 
+  //modal para registrar una nueva recompensa
   modalContainer.innerHTML = `
     <div class="modal-content">
       <span class="close">&times;</span>
@@ -230,14 +251,17 @@ function registrarRecompensas() {
   `;
   document.body.appendChild(modalContainer);
 
+  //cerrar el modal
   const btnCerrarModal = document.getElementById("cancel-tournament-modal");
   btnCerrarModal.addEventListener("click", () => {
     modalContainer.remove();
   });
 
+  //guarda la informacion
   const guardarRecompensa = document.getElementById("btnGuardarRecompensa");
   guardarRecompensa.addEventListener("click", async (event) => {
     event.preventDefault();
+    //extrae los valores ingresados
     const nombre = document.getElementById("tournament-name").value;
     const descripcion = document.getElementById("tournament-description").value;
     const costo = parseInt(document.getElementById("tournament-costo").value);
@@ -245,6 +269,7 @@ function registrarRecompensas() {
       document.getElementById("tournament-cantidad").value
     );
     let disponible;
+    //si la cantidad es mator a 0 la recompensa estara disponible
     if (cantidad > 0) {
       disponible = true;
     } else {
@@ -252,6 +277,7 @@ function registrarRecompensas() {
     }
     const imagen = document.getElementById("tournament-game-image").files[0];
 
+    //guarda los valores en los parametros del controlador
     const dataSave = new FormData();
     dataSave.append("nombre", nombre);
     dataSave.append("descripcion", descripcion);
@@ -262,6 +288,7 @@ function registrarRecompensas() {
 
     const token = localStorage.getItem("authToken");
     try {
+      //accede a la url del controlador
       const res = await fetch(fetchUrl, {
         method: fetchMethod,
         headers: {
@@ -269,6 +296,7 @@ function registrarRecompensas() {
         },
         body: dataSave,
       });
+      //verifica que todo funcione
       if (!res.ok) throw new Error();
       Swal.fire("Exito", successMessage, "success");
       listarRecompensas();
@@ -279,11 +307,14 @@ function registrarRecompensas() {
   });
 }
 
+//elimina la recompensa
 function eliminarRecompensa(idRecompensa) {
+  //crea un contenedor con sus clase e id
   const modalContainer = document.createElement("div");
   modalContainer.id = "confirm-modal";
   modalContainer.classList.add("modal");
 
+  //modal de confirmacion
   modalContainer.innerHTML = `
         <div class="modal-content small-modal">
           <p>¿Seguro que desea eliminar esta recompensa?😕</p>

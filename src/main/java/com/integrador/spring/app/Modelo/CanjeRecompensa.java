@@ -12,6 +12,7 @@ import jakarta.persistence.ManyToOne;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+//mapeo de la tabla
 @Data
 @NoArgsConstructor
 @Entity

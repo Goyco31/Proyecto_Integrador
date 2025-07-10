@@ -27,9 +27,11 @@ import jakarta.persistence.EntityNotFoundException;
 @RequestMapping("/api/recompensas")
 public class RecompensaController {
 
+    //inyeccion de servicio
     @Autowired
     private RecompensaServices services_recompensa;
 
+    //lista todas las recompensas
     @GetMapping("/lista")
     public ResponseEntity<List<Recompensa>> listar() {
         List<Recompensa> todos = services_recompensa.listarTodas();
@@ -44,12 +46,14 @@ public class RecompensaController {
         return new ResponseEntity<>(todos, HttpStatus.OK);
     }
 
+    //lista las recompensas disponibles
     @GetMapping("/disponibles")
     public ResponseEntity<List<Recompensa>> disponibles() {
         List<Recompensa> disponibles = services_recompensa.listarDisponibles();
         return new ResponseEntity<>(disponibles, HttpStatus.OK);
     }
 
+    //busca una recompensa por su id
     @GetMapping("/id/{id}")
     public ResponseEntity<Recompensa> buscarId(@PathVariable Integer id) {
         Optional<Recompensa> existe = services_recompensa.buscarId(id);
@@ -57,6 +61,7 @@ public class RecompensaController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    //registra una nueva recompensa
     @PostMapping("/registrar")
     public ResponseEntity<Recompensa> agregarRecompensa(
             @RequestParam("nombre") String nombre,
@@ -66,6 +71,7 @@ public class RecompensaController {
             @RequestParam("imagen") MultipartFile imagen) throws java.io.IOException {
 
         try {
+            //Envia los parametros al metodo del servicio
             Recompensa nueva = services_recompensa.añadirRecompensa(nombre, descripcion, costo, cantidad, imagen);
             return ResponseEntity.ok(nueva);
         } catch (IOException e) {
@@ -73,6 +79,7 @@ public class RecompensaController {
         }
     }
 
+    //actualiza la recompensa por su id
     @PutMapping("/actualizar/id/{id}")
     public ResponseEntity<Recompensa> actualizarRecompensa(@PathVariable Integer id,
             @RequestParam("nombre") String nombre,
@@ -84,6 +91,7 @@ public class RecompensaController {
 
         Optional<Recompensa> existe = services_recompensa.buscarId(id);
 
+        //valida los datos ya existentes
         if (existe.isPresent()) {
             Recompensa actualizar = existe.get();
             actualizar.setNombre(nombre);
@@ -102,6 +110,7 @@ public class RecompensaController {
         }
     }
 
+    //elimina la recompnesa por su id
     @DeleteMapping("/eliminar/id/{id}")
     public ResponseEntity<Void> eliminarRecompensa(@PathVariable Integer id) {
         try {

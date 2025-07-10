@@ -27,6 +27,7 @@ import jakarta.persistence.EntityNotFoundException;
 @RequestMapping("/api/juegos")
 public class JuegoController {
 
+    //inyeccion de servicios
     @Autowired
     private JuegoServices service_juego;
 
@@ -35,6 +36,7 @@ public class JuegoController {
     public ResponseEntity<List<Juego>> listarTodo() {
         List<Juego> lista = service_juego.listarJuegos();
 
+        //decoidifica la imagen de la DB
         for (Juego juego : lista) {
             if (juego.getImgJuego() != null) {
                 byte[] imgJuegoBytes = juego.getImgJuego();
@@ -68,6 +70,7 @@ public class JuegoController {
             @RequestParam("genero") String genero,
             @RequestParam("imagen") MultipartFile imagen) throws IOException, java.io.IOException {
         try {
+            //envia los parametros al metodo del servicio
             Juego juegoGuardado = service_juego.guardarJuego(nombre, genero, imagen);
             return ResponseEntity.ok(juegoGuardado);
         } catch (IOException e) {
@@ -83,7 +86,7 @@ public class JuegoController {
             @RequestParam("genero") String genero,
             @RequestParam("imagen") MultipartFile imagen) throws java.io.IOException {
         Optional<Juego> existe = service_juego.buscarId(id);
-        
+        //si existe los datos del juego se actualizaran
         if (existe.isPresent()) {
             Juego actualizar = existe.get();
             actualizar.setNombreJuego(nombre);
@@ -102,7 +105,7 @@ public class JuegoController {
             @RequestParam("genero") String genero,
             @RequestParam("imagen") MultipartFile imagen) throws java.io.IOException {
         Optional<Juego> existe = service_juego.buscarJuego(juego);
-        
+        //si existe los datos del juego se actualizaran
         if (existe.isPresent()) {
             Juego actualizar = existe.get();
             actualizar.setNombreJuego(nombre);

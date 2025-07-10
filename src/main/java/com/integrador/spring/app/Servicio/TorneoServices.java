@@ -25,24 +25,34 @@ import com.integrador.spring.app.Servicio.InscripcionesServices;
 @Service
 public class TorneoServices {
 
+    //inyeccion de repositorios
     @Autowired
     private TorneoRepo repo_torneo;
 
     @Autowired
     private JuegoRepo repo_juego;
+    @Autowired
+    private EquipoServices equipoServices;
 
+    @Autowired
+    private InscripcionesServices inscripcionesServices;
+
+    //lista todos los torneos
     public List<Torneo> listarTorneo() {
         return repo_torneo.findAll();
     }
 
+    //busca torneo por su id
     public Optional<Torneo> buscarId(Integer id) {
         return repo_torneo.findById(id);
     }
 
+    //busca torneo por su nombre
     public Optional<Torneo> buscarTorneoNombre(String nombre) {
         return repo_torneo.findByNombre(nombre);
     }
 
+    //crea un nuevo torneo
     public Torneo añadirTorneo(String nombre, String descripcion, Tipo tipo, MultipartFile banner, LocalDate fecha,
             Integer premio, Integer cupos, String formato, MultipartFile docReglamento, EstadoTorneo estado,
             Juego juego)
@@ -69,6 +79,7 @@ public class TorneoServices {
         return repo_torneo.save(nuevo);
     }
 
+    //actualiza el torneo
     public Torneo actualizarTorneo(Integer id, String nombre, String descripcion, Tipo tipo,
             MultipartFile banner,
             LocalDate fecha,
@@ -78,8 +89,10 @@ public class TorneoServices {
 
         Optional<Torneo> existe = repo_torneo.findById(id);
 
+        //valida que el torneo exista
         if (existe.isPresent()) {
             Torneo actualizar = existe.get();
+            //valida si es que una campo no es llenado tenga la informacion anterior
             if (nombre != null) {
                 actualizar.setNombre(nombre);
             }
@@ -128,23 +141,22 @@ public class TorneoServices {
         }
     }
 
+    //guardar informacion
     public Torneo guardar(Torneo torneo) {
         return repo_torneo.save(torneo);
     }
 
+    //elimina por su id
     public void eliminar(Integer id) {
         repo_torneo.deleteById(id);
     }
 
+    //elimina por su nombre
     public void eliminarTorneoNombre(String nombre) {
         repo_torneo.deleteByNombre(nombre);
     }
 
-    @Autowired
-    private EquipoServices equipoServices;
-
-    @Autowired
-    private InscripcionesServices inscripcionesServices;
+    
 
     public ResponseEntity<String> registrarEquipoEnTorneo(Integer idEquipo, Integer idTorneo) {
         Optional<Torneo> exiteTorneo = repo_torneo.findById(idTorneo);

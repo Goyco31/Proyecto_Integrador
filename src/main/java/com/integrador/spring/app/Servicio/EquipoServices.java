@@ -21,35 +21,43 @@ import jakarta.transaction.Transactional;
 @Service
 public class EquipoServices {
 
+    //inyeccion de repositorio
     @Autowired
     private EquipoRepo repo_equipo;
 
+    //lista todos los equipos
     public List<Equipo> listarEquipos() {
         return repo_equipo.findAll();
     }
 
+    //busca el equipo por su id
     public Optional<Equipo> buscarId(int id) {
         return repo_equipo.findById(id);
     }
 
+    //busca el equipo por su nombre
     public Optional<Equipo> buscarNombreEquipo(String nom_equipo) {
         return repo_equipo.findBfindByNombreEquipo(nom_equipo);
     }
 
+    //actualiza el equipo por su id
     public Equipo actualizar(int id, Equipo equipo) {
         Equipo existe = repo_equipo.findById(id)
         .orElseThrow(() -> new RuntimeException("Equipo no entontrado"));
         return repo_equipo.save(existe);
     }
 
+    //guarda los datos
     public Equipo guardar(Equipo equipo){
         return repo_equipo.save(equipo);
     }
 
+    //elimina el equipo por su id
     public void eliminar(int id) {
         repo_equipo.deleteById(id);
     }
 
+    //elimina el equipo por su nombre
     public void eliminarNombre(String nom_equipo){
         repo_equipo.deleteByNombreEquipo(nom_equipo);
     }

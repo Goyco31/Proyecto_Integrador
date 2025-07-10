@@ -31,12 +31,14 @@ import jakarta.persistence.EntityNotFoundException;
 @RequestMapping("/api/equipos")
 public class EquipoController {
 
+    //inyeccion de archivos de servicios
     @Autowired
     private EquipoServices services_equipo;
 
     @Autowired
     private UsuarioServices userService;
 
+    //proceso para crea un equipo
     @PostMapping("/crear")
     public ResponseEntity<?> crearEquipo(@RequestBody EquipoRequest request, Principal principal) {
         try {
@@ -58,6 +60,7 @@ public class EquipoController {
     }
 
 
+    //proceso para que el usuario se una a un equipo
     @PostMapping("/unirse/{id}")
     public ResponseEntity<?> unirseAEquipo(@PathVariable Integer id, Principal principal) {
         try {
@@ -71,6 +74,7 @@ public class EquipoController {
     }
 
 
+    //listado de los equipos existentes
     @GetMapping("")
     public ResponseEntity<List<EquipoResponseDTO>> listarEquipos() {
         List<Equipo> equipos = services_equipo.listarEquipos();
@@ -113,6 +117,7 @@ public class EquipoController {
     public ResponseEntity<Equipo> actualizarEquipoId(@PathVariable Integer id, @RequestBody Equipo equipo) {
         Optional<Equipo> existe = services_equipo.buscarId(id);
 
+        //validacion si es que el equipo existe
         if (existe.isPresent()) {
             Equipo actualizar = existe.get();
             if (equipo.getNombreEquipo() != null) {
@@ -129,6 +134,7 @@ public class EquipoController {
     public ResponseEntity<Equipo> actualizarEquipoNombre(@PathVariable String nombre, @RequestBody Equipo equipo) {
         Optional<Equipo> existe = services_equipo.buscarNombreEquipo(nombre);
 
+        //validacion si es que el equipo existe
         if (existe.isPresent()) {
             Equipo actualizar = existe.get();
             if (equipo.getNombreEquipo() != null) {

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 
 import com.integrador.spring.app.Modelo.Mensajes;
 
+//repositorio de la tabla mensajes
 @Repository
 public interface MensajesRepo extends JpaRepository<Mensajes, Integer>{
     public Optional<Mensajes> findByRazon(String razon);

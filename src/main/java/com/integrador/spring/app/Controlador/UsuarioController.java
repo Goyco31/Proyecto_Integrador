@@ -35,6 +35,7 @@ import jakarta.persistence.EntityNotFoundException;
 @RestController
 @RequestMapping("/api/usuarios")
 public class UsuarioController {
+    //inyeccion de servicios
     @Autowired
     private UsuarioServices service_user;
 
@@ -107,9 +108,11 @@ public class UsuarioController {
     @GetMapping("/id/{id}")
     public ResponseEntity<User> buscarId(@PathVariable Integer id) {
         Optional<User> user = service_user.buscarId(id);
+        //valida que el usuario existe
         if (user.isPresent()) {
             User usuario = user.get();
             System.out.println("Usuario encontrado con ID: " + id);
+            //valida que el usuario pertenesca a un equipo
             if (usuario.getEquipo() != null) {
                 System.out.println("El usuario pertenece al equipo con ID: " + usuario.getEquipo().getIdEquipo());
             } else {
@@ -245,6 +248,7 @@ public class UsuarioController {
         }
     }
 
+    //elimina al usuario por su nick
     @DeleteMapping("/nickname/{nick}")
     public ResponseEntity<Void> eliminarUsuarioNickname(@PathVariable String nick) {
         try {

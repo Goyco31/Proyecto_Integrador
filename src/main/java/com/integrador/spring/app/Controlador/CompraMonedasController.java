@@ -26,14 +26,16 @@ import jakarta.persistence.EntityNotFoundException;
 @RestController
 @RequestMapping("/api/comprarMonedas")
 public class CompraMonedasController {
-
+    //inyeccion del archivo sevicio
     @Autowired
     private ComprarMonedasServices services_compra;
 
+    //muestra todas las opciones de recarga de monedas
     @GetMapping("/lista")
     public ResponseEntity<List<ComprarMonedas>> listarOpciones() {
         List<ComprarMonedas> todos = services_compra.listar();
 
+        //decodifica la imagen almacenada en la DB
         for (ComprarMonedas monedas : todos) {
             if (monedas.getImgMoneda() != null) {
                 byte[] imgMoneda = monedas.getImgMoneda();
@@ -44,6 +46,7 @@ public class CompraMonedasController {
         return new ResponseEntity<>(todos, HttpStatus.OK);
     }
 
+    //busca una opcion de recarga por su id
     @GetMapping("/id/{id}")
     public ResponseEntity<ComprarMonedas> buscarId(@PathVariable Integer id) {
         Optional<ComprarMonedas> existe = services_compra.buscarId(id);
@@ -51,6 +54,7 @@ public class CompraMonedasController {
                 .orElseGet(() -> new ResponseEntity<>(HttpStatus.NOT_FOUND));
     }
 
+    //proceso para registrar una nueva opcion de recarga
     @PostMapping("/registrar")
     public ResponseEntity<ComprarMonedas> agregarOpcion(
             @RequestParam("nombre") String nombre,
@@ -59,6 +63,7 @@ public class CompraMonedasController {
             @RequestParam("imagen") MultipartFile imgMoneda) throws java.io.IOException {
 
         try {
+            //envia los parametros al metodo de servicio
             ComprarMonedas nueva = services_compra.añadirCompra(nombre, cantidad, precioCompra, imgMoneda);
             return ResponseEntity.ok(nueva);
         } catch (Exception e) {
@@ -66,6 +71,7 @@ public class CompraMonedasController {
         }
     }
 
+    //actualizar las opciones por su id
     @PutMapping("actualizar/id/{id}")
     public ResponseEntity<ComprarMonedas> actualizarOpciones(
             @PathVariable Integer id,
@@ -82,6 +88,7 @@ public class CompraMonedasController {
     }
 
 
+    //elimina las opciones por su id
     @DeleteMapping("/eliminar/id/{id}")
     public ResponseEntity<Void> eliminarOpcion(@PathVariable Integer id) {
         try {

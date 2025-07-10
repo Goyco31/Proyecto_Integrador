@@ -30,6 +30,7 @@ import com.integrador.spring.app.Modelo.User;
 
 @Service
 public class RecargaServices {
+    // inyeccion de repositorios
     @Autowired
     private RecargaRepo repo_recarga;
 
@@ -39,26 +40,33 @@ public class RecargaServices {
     @Autowired
     private ComprarMonedasRepo repo_compra;
 
+    // lista todas las recargas
     public List<Recarga> listarRecarga() {
         return repo_recarga.findAll();
     }
 
+    // metodo para que el usuario recarge sus monedas
     public ResponseEntity<String> recargar(Integer idUser, Integer idCompra) {
+
         Optional<User> existeUser = repo_user.findById(idUser);
         Optional<ComprarMonedas> existeOpcion = repo_compra.findById(idCompra);
         Recarga nuevaRecarga = new Recarga();
 
+        // valida que el usuario y opcion de recarga existan
         if (existeUser.isEmpty() || existeOpcion.isEmpty()) {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("error");
-            // return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
 
+        // mapea el usuario y opcion de recarga
         User usuario = existeUser.get();
         ComprarMonedas comprarMonedas = existeOpcion.get();
 
+        // suma las monedas que ya tiene el usuario con la cantidad de monedas que
+        // recargo
         usuario.setMonedas(usuario.getMonedas() + comprarMonedas.getCantidad());
         repo_user.save(usuario);
 
+        // guarda los datos de la recarga en su tabla
         nuevaRecarga.setUsuario(usuario);
         nuevaRecarga.setComprarMonedas(comprarMonedas);
         nuevaRecarga.setTipoPago(TipoPago.PAYPAL);
@@ -66,60 +74,17 @@ public class RecargaServices {
         repo_recarga.save(nuevaRecarga);
 
         return ResponseEntity.ok("Recarga realizada");
-        // return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    // guarda la informacion
     public Recarga guardar(Recarga recarga) {
         return repo_recarga.save(recarga);
     }
 
+    // elimina por su id
     public void eliminar(int id) {
         repo_recarga.deleteById(id);
     }
 
-    public byte[] exportRecargasToExcel() throws IOException {
-    List<Recarga> recargas = repo_recarga.findAll();
-
-    Workbook workbook = new XSSFWorkbook();
-    Sheet sheet = workbook.createSheet("Historial de Recargas");
-
-    // Estilo para el encabezado
-    CellStyle headerStyle = workbook.createCellStyle();
-    headerStyle.setFillForegroundColor(IndexedColors.LIGHT_BLUE.getIndex());
-    headerStyle.setFillPattern(FillPatternType.SOLID_FOREGROUND);
-    Font headerFont = workbook.createFont();
-    headerFont.setBold(true);
-    headerStyle.setFont(headerFont);
-
-    // Crear fila de encabezado (CORRECCIÓN: agregar índice de columna en createCell)
-    Row headerRow = sheet.createRow(0);
-    String[] headers = {"ID", "Usuario", "Cantidad de Monedas", "Tipo de Pago", "Estado", "Fecha"};
-    for (int i = 0; i < headers.length; i++) {
-        Cell cell = headerRow.createCell(i); // ¡Faltaba el índice "i" aquí!
-        cell.setCellValue(headers[i]);
-        cell.setCellStyle(headerStyle);
-    }
-
-    // Llenar datos (CORRECCIÓN: paréntesis y nombres de métodos)
-    int rowNum = 1;
-    for (Recarga recarga : recargas) { // Corregido: usé llaves "{" en lugar de corchetes "["
-        Row row = sheet.createRow(rowNum++);
-        row.createCell(0).setCellValue(recarga.getIdRecarga()); // Usar getId() en lugar de getIdRecarga()
-        row.createCell(1).setCellValue(recarga.getUsuario().getNombre());
-        row.createCell(2).setCellValue(recarga.getComprarMonedas().getCantidad()); // Corregido: getComprarMonedas()
-        row.createCell(3).setCellValue(recarga.getTipoPago().toString());
-        row.createCell(4).setCellValue(recarga.getEstado().toString());
-        row.createCell(5).setCellValue(recarga.getFechaRecarga().toString());
-    }
-
-    // Autoajustar columnas
-    for (int i = 0; i < headers.length; i++) {
-        sheet.autoSizeColumn(i);
-    }
-
-    ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
-    workbook.write(outputStream);
-    workbook.close();
-    return outputStream.toByteArray();
-}
+    
 }

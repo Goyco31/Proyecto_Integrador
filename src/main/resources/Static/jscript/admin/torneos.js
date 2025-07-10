@@ -1,12 +1,17 @@
+//listar torneos
 function listarTorneos() {
   const token = localStorage.getItem("authToken");
+  //accede a la url del controlador
   fetch("/api/torneos/lista", {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
+  //conviert la respuesta a formato JSON
     .then((r) => r.json())
+    //mapea la info
     .then((data) => {
+      //tabla para la info que aparecera en la vista del admin
       let tabla = `
         <div class="tournament-actions">
             <button id="new-tournament-btn" class="btn-primary"  onclick="registrarTorneo()">
@@ -33,6 +38,7 @@ function listarTorneos() {
                                 <th>Acciones</th>
                             </tr>
                         </thead>`;
+      //ingresa la informacion del torneo a la tabla
       data.forEach((l) => {
         tabla += `<tbody class="tournaments-table-body">
                           <td>${l.idTorneo}</td>
@@ -59,34 +65,39 @@ function listarTorneos() {
     });
 }
 
+//descarga el documento de reglamento
 function downloadReglamento(torneoId) {
   const token = localStorage.getItem("authToken");
+  //accede a la url del controlador
   fetch(`/api/torneos/downloadReglamento/${torneoId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
-  })
+  })//convierte la respuesta a un String
     .then((response) => response.text())
     .then((base64Data) => {
-      // Convert Base64 data to a file
+      // decodifica el string a binario 
       const byteCharacters = atob(base64Data);
       const byteArrays = [];
 
+      // Divide los caracteres en fragmentos de 512 bytes para convertirlos a bytes
       for (let offset = 0; offset < byteCharacters.length; offset += 512) {
         const slice = byteCharacters.slice(offset, offset + 512);
 
         const byteNumbers = new Array(slice.length);
         for (let i = 0; i < slice.length; i++) {
+          // Convierte cada caracter a su código ASCII
           byteNumbers[i] = slice.charCodeAt(i);
         }
 
+        // Crea un arreglo de bytes y lo agrega a la lista
         const byteArray = new Uint8Array(byteNumbers);
         byteArrays.push(byteArray);
       }
 
       const blob = new Blob(byteArrays, { type: "application/pdf" });
 
-      // Create a download link
+      //crea un link para descargar
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
       a.download = `reglamento_${torneoId}.pdf`;
@@ -98,19 +109,21 @@ function downloadReglamento(torneoId) {
       console.error("Error downloading reglamento:", error);
     });
 }
-
+//registro de un nuevo torneo
 function registrarTorneo() {
+  //crea un contenedor con su clase e id
   const modalContainer = document.createElement("div");
   modalContainer.id = "tournament-modal";
   modalContainer.classList.add("modal");
 
+  //datos para acceder a las url del controlador
   const modalTitle = "Registrar torneo";
   const fetchUrl = "/api/torneos/registrar";
   const fetchMethod = "POST";
   const successMessage = "Torneo registrado";
   const errorMessage = "No se pudo registrar el torneo";
 
-  // Create the modal content
+  //crea el modal para registar torneos
   modalContainer.innerHTML = `
     <div class="modal-content">
       <span class="close">&times;</span>
@@ -198,19 +211,19 @@ function registrarTorneo() {
     </div>
   `;
 
-  // Append the modal to the document body or a specific container
   document.body.appendChild(modalContainer);
 
-  // Add event listener to the close button
+//cierra el modal
   const closeBtn = document.getElementById("cancel-tournament-modal");
   closeBtn.addEventListener("click", () => {
     modalContainer.remove();
   });
 
-  // Add event listener to the submit button
+  //guarda la informacion 
   const guardarTorneoBtn = modalContainer.querySelector("#guardarTorneoBtn");
   guardarTorneoBtn.addEventListener("click", async (event) => {
     event.preventDefault();
+    //extrae los valores ingresado al modal
     const nombre = document.getElementById("tournament-name").value;
     const descripcion = document.getElementById("tournament-description").value;
     const tipo = document.getElementById("tournament-type").value;
@@ -226,6 +239,7 @@ function registrarTorneo() {
     const estado = document.getElementById("tournament-status").value;
     const juego = document.getElementById("tournament-juego").value;
 
+    //guarda los datos en los parametros del controlador
     const formData = new FormData();
     formData.append("nombre", nombre);
     formData.append("descripcion", descripcion);
@@ -241,6 +255,7 @@ function registrarTorneo() {
 
     const token = localStorage.getItem("authToken");
     try {
+      //accede a la url del navegador con una peticion Post
       const res = await fetch(fetchUrl, {
         method: fetchMethod,
         headers: {
@@ -248,6 +263,7 @@ function registrarTorneo() {
         },
         body: formData,
       });
+      //verifica que todo este bien
       if (!res.ok) throw new Error();
       Swal.fire("Éxito", successMessage, "success");
       listarTorneos();
@@ -257,20 +273,27 @@ function registrarTorneo() {
     }
   });
 }
+
+//actualiza la info d eun torneo
 function actualizarTorneo(torneoId) {
   const token = localStorage.getItem("authToken");
   const modalTitle = "Actualizar torneo";
+  //accede a la url del contrlador
   fetch(`/api/torneos/id/${torneoId}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
+  //convierte la respuesta a formato JSON
     .then((r) => r.json())
+    //mapea la info
     .then((data) => {
+      //crea un contenedor con su clase e id
       const modalContainer = document.createElement("div");
       modalContainer.id = "tournament-modal";
       modalContainer.classList.add("modal");
 
+      //mosal para actualizar la info del torneo
       modalContainer.innerHTML = `
           <div class="modal-content">
             <span class="close">&times;</span>
@@ -379,16 +402,19 @@ function actualizarTorneo(torneoId) {
 
       document.body.appendChild(modalContainer);
 
+      //cierra el modal
       const closeBtn = document.getElementById("cancel-tournament-modal");
       closeBtn.addEventListener("click", () => {
         modalContainer.remove();
       });
 
+      //guarda la nueva info
       const guardarTorneoBtn =
         modalContainer.querySelector("#guardarTorneoBtn");
 
       guardarTorneoBtn.addEventListener("click", async (event) => {
         event.preventDefault();
+        //extrae los valores de los nuevos datos ingresados
         const nombre = document.getElementById("tournament-name").value;
         const descripcion = document.getElementById(
           "tournament-description"
@@ -409,6 +435,7 @@ function actualizarTorneo(torneoId) {
         const estado = document.getElementById("tournament-status").value;
         const juego = document.getElementById("tournament-juego").value;
 
+        //guarda los valores a los parametros del controlador
         const formData = new FormData();
         formData.append("nombre", nombre);
         formData.append("descripcion", descripcion);
@@ -424,6 +451,7 @@ function actualizarTorneo(torneoId) {
 
         const token = localStorage.getItem("authToken");
         try {
+          //hace una peticion put al controlador
           const res = await fetch(`/api/torneos/actualizar/id/${torneoId}`, {
             method: "PUT",
             headers: {
@@ -431,6 +459,7 @@ function actualizarTorneo(torneoId) {
             },
             body: formData,
           });
+          //verifica que todo salga bien
           if (!res.ok) throw new Error();
           Swal.fire("Éxito", "Torneo actualizado", "success");
           listarTorneos();
@@ -442,11 +471,15 @@ function actualizarTorneo(torneoId) {
     });
 }
 
+
+//elimina el torneo
 function eliminarTorneo(idTorneo) {
+  //crea un contenedor con su clase e id
   const modalContainer = document.createElement("div");
   modalContainer.id = "confirm-modal";
   modalContainer.classList.add("modal");
 
+  //modal de confirmacion
   modalContainer.innerHTML = `
         <div class="modal-content small-modal">
           <p>¿Seguro que desea eliminar este torneo?😕</p>
@@ -469,7 +502,7 @@ function eliminarTorneo(idTorneo) {
 
   document.body.appendChild(modalContainer);
 
-  // Botón Cancelar (buscar dentro del modal)
+  // Botón Cancelar
   const btnCerrarModal = modalContainer.querySelector("#cancel-delete-btn");
   btnCerrarModal.addEventListener("click", () => {
     modalContainer.remove();
@@ -482,13 +515,14 @@ function eliminarTorneo(idTorneo) {
     const token = localStorage.getItem("authToken");
 
     try {
+      //hece la peticion delete al controlador
       const res = await fetch(`/api/torneos/eliminar/id/${idTorneo}`, {
         method: "DELETE",
         headers: {
           Authorization: `Bearer ${token}`
         }
       });
-
+      //verifica que todo salga bien
       if (!res.ok) throw new Error();
       Swal.fire("Éxito", "Torneo eliminado", "success");
       listarTorneos();

@@ -1,12 +1,18 @@
+//lista todas las opciones de recarga
 function listarMonedas() {
   const token = localStorage.getItem("authToken");
+  //accede a la utl del controlador
   fetch("/api/comprarMonedas/lista", {
     headers: {
+      //ingresa el token de verificacion
       Authorization: `Bearer ${token}`,
     },
   })
+  //convierte la respuesta a formato JSON
     .then((r) => r.json())
+    //mapea la informacion
     .then((data) => {
+      //añade la tabla al panel de admin
       let tabla = `
         <div class="tournament-actions">
             <button id="new-tournament-btn" class="btn-primary"  onclick="registrarOpcion()">
@@ -31,6 +37,7 @@ function listarMonedas() {
                                 <th>Acciones</th>
                             </tr>
                         </thead>`;
+      //añade todas las opciones a la tabla
       data.forEach((l) => {
         tabla += `<tbody class="tournaments-table-body">
                           <td>${l.idCompra}</td>
@@ -51,11 +58,14 @@ function listarMonedas() {
     });
 }
 
+//registro de nuevas opciones
 function registrarOpcion() {
+  //crea un contenedor con su clase e id
   const modalContainer = document.createElement("div");
   modalContainer.id = "tournament-modal";
   modalContainer.classList.add("modal");
 
+  //modal para ingresar los nuevos datos
   modalContainer.innerHTML = `<div class="modal-content">
           <span class="close">&times;</span>
           <h2>Registrar Opciones de recarga</h2>
@@ -95,14 +105,17 @@ function registrarOpcion() {
       `;
   document.body.appendChild(modalContainer);
 
+  //cierra el mdoal
   const btnCerrarModal = document.getElementById("cancel-tournament-modal");
   btnCerrarModal.addEventListener("click", () => {
     modalContainer.remove();
   });
 
+  //al hacer click en el boton guardar
   const guardarRecompensa = document.getElementById("btnGuardarOpcion");
   guardarRecompensa.addEventListener("click", async (event) => {
     event.preventDefault();
+    //extrae los valores de los datos ingresados en el modal
     const nombre = document.getElementById("tournament-name").value;
     const cantidad = parseInt(
       document.getElementById("tournament-cantidad").value
@@ -110,6 +123,7 @@ function registrarOpcion() {
     const precio = document.getElementById("tournament-precio").value;
     const imagen = document.getElementById("tournament-game-image").files[0];
 
+    //almacena la info en los parametros del controlador
     const dataSave3 = new FormData();
     dataSave3.append("nombre", nombre);
     dataSave3.append("cantidad", cantidad);
@@ -117,6 +131,7 @@ function registrarOpcion() {
     dataSave3.append("imagen", imagen);
 
     const token = localStorage.getItem("authToken");
+    //accede a la url del controlador
     try {
       const res = await fetch("/api/comprarMonedas/registrar", {
         method: "POST",
@@ -125,6 +140,7 @@ function registrarOpcion() {
         },
         body: dataSave3,
       });
+      //verifica que funcione
       if (!res.ok) throw new Error();
       Swal.fire("Exito", "Opcion de recarga registrada", "success");
       listarMonedas();
@@ -135,19 +151,25 @@ function registrarOpcion() {
   });
 }
 
+//actualizacion de opciones de recarga
 function actualizarOpcion(idCompra) {
   const token = localStorage.getItem("authToken");
+  //accede a la url del controlador con el id de la opcion
   fetch(`/api/comprarMonedas/id/${idCompra}`, {
     headers: {
       Authorization: `Bearer ${token}`,
     },
   })
+    //convierte la respuesta a formato JSON
     .then((r) => r.json())
+    //mapea la info
     .then((data) => {
+      //crea un contenedor con su clase e id
       const modalContainer = document.createElement("div");
       modalContainer.id = "tournament-modal";
       modalContainer.classList.add("modal");
 
+      //modal para la actualizacion
       modalContainer.innerHTML = `<div class="modal-content">
           <span class="close">&times;</span>
           <h2>Actualizar Opciones de recarga</h2>
@@ -189,15 +211,17 @@ function actualizarOpcion(idCompra) {
       `;
 
       document.body.appendChild(modalContainer);
-
+      //cierra el modal
       const btnCerrarModal = document.getElementById("cancel-tournament-modal");
       btnCerrarModal.addEventListener("click", () => {
         modalContainer.remove();
       });
 
+      //guarda la informacion
       const guardarRecompensa = document.getElementById("btnGuardarOpcion");
       guardarRecompensa.addEventListener("click", async (event) => {
         event.preventDefault();
+        //extrae los valores ingresado en el modal
         const nombre = document.getElementById("tournament-name").value;
         const cantidad = parseInt(
           document.getElementById("tournament-cantidad").value
@@ -206,6 +230,7 @@ function actualizarOpcion(idCompra) {
         const imagen = document.getElementById("tournament-game-image")
           .files[0];
 
+          //almacena los valores en los parametros del controlador
         const dataSave3 = new FormData();
         dataSave3.append("nombre", nombre);
         dataSave3.append("cantidad", cantidad);
@@ -213,7 +238,7 @@ function actualizarOpcion(idCompra) {
         dataSave3.append("imagen", imagen);
 
         const token = localStorage.getItem("authToken");
-
+        //accede a la url del controlador
         try {
           const res = await fetch(
             `/api/comprarMonedas/actualizar/id/${idCompra}`,
@@ -225,6 +250,7 @@ function actualizarOpcion(idCompra) {
               body: dataSave3,
             }
           );
+          //veridica que todo salga bien
           if (!res.ok) throw new Error();
           Swal.fire("Exito", "Opcion de recarga actualizada", "success");
           listarMonedas();
@@ -240,11 +266,14 @@ function actualizarOpcion(idCompra) {
     });
 }
 
+//eliminacion de opcion
 function eliminarMonedas(CompraID) {
+  //crea un contenedor con su clase e id
   const modalContainer = document.createElement("div");
   modalContainer.id = "confirm-modal";
   modalContainer.classList.add("modal");
 
+  //modal de confirmacion para la eliminacion
   modalContainer.innerHTML = `
         <div class="modal-content small-modal">
           <p>¿Seguro que desea eliminar esta Opcion?😕</p>

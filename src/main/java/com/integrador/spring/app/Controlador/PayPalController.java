@@ -22,11 +22,14 @@ import lombok.extern.slf4j.Slf4j;
 @Slf4j
 public class PayPalController {
 
+    //inyeccion de servicios
+    @Autowired
     private final PayPalService services_paypal;
 
     @Autowired
     private RecargaServices service_recarga;
 
+    //proceso de pago
     @PostMapping("/pago/crear")
     public RedirectView crearPago(
             @RequestParam(value = "currency", defaultValue = "USD") String currency,
@@ -34,25 +37,26 @@ public class PayPalController {
             @RequestParam("idUser") Integer idUser,
             @RequestParam("precio") BigDecimal precio) {
         try {
-            // Validate currency
+            // Validacion del pago
             try {
                 Currency.getInstance(currency);
             } catch (IllegalArgumentException e) {
-                log.error("Invalid currency code: {}", currency);
                 return new RedirectView("/pago/error");
             }
 
+            //endpoint de las vistas postpago
             String cancelUrl = "http://localhost:8080/pago/cancel";
             String successUrl = "http://localhost:8080/pago/exito";
-            log.info(
-                    "Creating payment with total: 10.0, currency: {}, method: paypal, intent: sale, description: Payment descripction, cancelUrl: {}, successUrl: {}",
-                    currency, cancelUrl, successUrl);
+            
+            //envia los parametros al metodo del servicio
             Payment payment = services_paypal.crearPago(precio, currency, "paypal", "sale", "Payment descripction",
                     cancelUrl, successUrl);
 
+            //aprueba el pago
             for (Links links : payment.getLinks()) {
                 if (links.getRel().equals("approval_url")) {
                     String approvalUrl = links.getHref();
+                    //envia los parametros al metodo recarga para que el usuario obtenga sus monedas
                     service_recarga.recargar(idUser, idCompra);
                     log.info("Approval URL: {}", approvalUrl);
                     return new RedirectView(approvalUrl);
@@ -64,9 +68,12 @@ public class PayPalController {
         return new RedirectView("/pago/error");
     }
 
+    //pago exitoso
     @GetMapping("/pago/exito")
     public String pagoExitoso(@RequestParam("paymentId") String paymentId,
             @RequestParam("PayerID") String payerId) {
+        
+        //ejecuta el pago exitoso
         try {
             Payment payment = services_paypal.ejecutarPago(paymentId, payerId);
             if (payment.getState().equals("approved")) {
@@ -79,11 +86,13 @@ public class PayPalController {
         return "pagoExito";
     }
 
+    //pago cancelado
     @GetMapping("/pago/cancel")
     public String pagoCancel() {
         return "pagoCancel";
     }
 
+    //pago erroneo
     @GetMapping("/pago/error")
     public String pagoError() {
         return "pagoError";

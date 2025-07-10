@@ -22,31 +22,18 @@ import java.io.IOException;
 @RestController
 @RequestMapping("/api/recarga")
 public class RecargaController {
+    //inyeccion del servicio
     @Autowired
     private RecargaServices services_recarga;
 
+    //lista todas las recargas realizadas
     @GetMapping("")
     public ResponseEntity<List<Recarga>> listar() {
         List<Recarga> todas = services_recarga.listarRecarga();
         return new ResponseEntity<>(todas, HttpStatus.OK);
     }
 
-    @GetMapping("/export/excel")
-    public ResponseEntity<byte[]> exportRecargasToExcel() {
-        try {
-            byte[] excelBytes = services_recarga.exportRecargasToExcel();
-            
-            HttpHeaders headers = new HttpHeaders();
-            headers.setContentType(MediaType.APPLICATION_OCTET_STREAM);
-            headers.setContentDisposition(ContentDisposition.attachment()
-                    .filename("historial_recargas.xlsx").build());
-            
-            return new ResponseEntity<>(excelBytes, headers, HttpStatus.OK);
-        } catch (IOException e) { // Ahora usa el IOException correcto
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-        }
-    }
-
+    //proceso para recargar las monedas del usuario
     @PostMapping("/usuario/{idUser}/recarga/{idCompra}")
     public ResponseEntity<String> recargarMonedas(@PathVariable Integer idUser, @PathVariable Integer idCompra) {
         return services_recarga.recargar(idUser, idCompra);

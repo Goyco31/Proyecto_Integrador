@@ -9,7 +9,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Lob;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+//mapeo de la tabla
 @Data
 @NoArgsConstructor
 @Entity
