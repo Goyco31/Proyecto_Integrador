@@ -14,12 +14,14 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.servlet.view.document.AbstractXlsxView;
 
+import com.integrador.spring.app.Modelo.CanjeRecompensa;
 import com.integrador.spring.app.Modelo.ComprarMonedas;
 import com.integrador.spring.app.Modelo.Juego;
 import com.integrador.spring.app.Modelo.Recarga;
 import com.integrador.spring.app.Modelo.Recompensa;
 import com.integrador.spring.app.Modelo.Torneo;
 import com.integrador.spring.app.Modelo.User;
+import com.integrador.spring.app.Servicio.CanjeRecompensaServices;
 import com.integrador.spring.app.Servicio.ComprarMonedasServices;
 import com.integrador.spring.app.Servicio.JuegoServices;
 import com.integrador.spring.app.Servicio.RecargaServices;
@@ -29,6 +31,8 @@ import com.integrador.spring.app.Servicio.UsuarioServices;
 
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 @Controller
 @RequestMapping("/ver/excel")
@@ -47,6 +51,8 @@ public class ExportarExcel extends AbstractXlsxView {
     private ComprarMonedasServices services_compra;
     @Autowired
     private RecargaServices services_recarga;
+    @Autowired
+    private CanjeRecompensaServices services_canje;
 
     // proceso de exportacion de la lista de usuarios en formato excel
     @GetMapping("/usuarios")
@@ -317,6 +323,50 @@ public class ExportarExcel extends AbstractXlsxView {
         wb.write(response.getOutputStream());
     }
 
+    @GetMapping("/recompensasCanjeadas")
+    protected void recompensasCanjeadas(Map<String, Object> model, Workbook workbook, HttpServletRequest request,
+            HttpServletResponse response) throws Exception {
+        
+        //tipo de documento y nombre del archivo
+        response.setHeader("Content-Disposition", "attachment; filename=\"listado-recompensasCanjeadas.xlsx\"");
+        XSSFWorkbook wb = new XSSFWorkbook();
+        
+        //nombre de la hoja
+        Sheet hoja = wb.createSheet("Recompensas Canjeadas");
+
+        //titulo de la hoja
+        Row filaTitulo = hoja.createRow(0);
+        Cell celda = filaTitulo.createCell(0);
+        celda.setCellValue("Listado de recompensas canjeadas");
+
+        //cabecera de la informacion
+        Row filaData = hoja.createRow(2);
+        String columnas[] = { "ID CANJE", "NOMBRE RECOMPENSA", "DESCRIPCION", "COSTO", "USUARIO", "FECHA"};
+        for (int i = 0; i < columnas.length; i++) {
+            celda = filaData.createCell(i);
+            celda.setCellValue(columnas[i]);
+        }
+
+        //optione la informacion del historial de canjes
+        List<CanjeRecompensa> lista = services_canje.listarTodas();
+
+        //inserta la informacion
+        int numFila = 3;
+        for (CanjeRecompensa canje : lista) {
+            filaData = hoja.createRow(numFila);
+            filaData.createCell(0).setCellValue(canje.getIdCanje());
+            filaData.createCell(1).setCellValue(canje.getRecompensa().getNombre());
+            filaData.createCell(2).setCellValue(canje.getRecompensa().getDescripcion());
+            filaData.createCell(3).setCellValue(canje.getRecompensa().getCosto()+" monedas");
+            filaData.createCell(4).setCellValue(canje.getUsuario().getNickname());
+            filaData.createCell(5).setCellValue(canje.getFechaCanje());
+            
+            numFila++;
+        }
+        response.setContentType("application/vnd.openxmlformats-officedocument.spreadsheetml.sheet");
+        wb.write(response.getOutputStream());
+    }
+    
     @Override
     protected void buildExcelDocument(Map<String, Object> model, Workbook workbook, HttpServletRequest request,
             HttpServletResponse response) throws Exception {

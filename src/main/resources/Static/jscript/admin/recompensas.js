@@ -23,6 +23,9 @@ function listarRecompensas() {
             <form method="get" action="/ver/excel/recompensas">
               <button type="submit" class="btn-primary">Exportar un Excel</button>
             </form>
+            <form method="get" action="/ver/excel/recompensasCanjeadas">
+              <button type="submit" class="btn-primary">Recompensas Canjeadas</button>
+            </form>
         </div>
 
         <table class="tournaments-table">
@@ -393,6 +396,7 @@ function listarRecompensasDisponibles(){
             <form method="get" action="/ver/excel/recompensas">
               <button type="submit" class="btn-primary">Exportar un Excel</button>
             </form>
+            
         </div>
 
         <table class="tournaments-table">
