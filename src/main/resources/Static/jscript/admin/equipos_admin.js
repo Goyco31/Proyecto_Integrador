@@ -36,7 +36,7 @@ function listarEquipos() {
                                 <td>${l.descripcion}</td>
                                 <td>${l.liderNickname}</td>
                                 <td>${l.cantidadMiembros}</td>
-                                <td>${l.integrantes.nickname}</td>
+                                <td>${l.integrantes.map(integrante => integrante.nickname).join('<br/> ')}</td>
                                 <td>
                                     <button  class="btn-danger delete-btn" data-equipo-id="${l.id}">Eliminar</button></td>
                         </tbody>`;
