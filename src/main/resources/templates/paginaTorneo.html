@@ -12,14 +12,17 @@
 
 <body>
   <div class="overlay" id="overlay"></div>
-
+  <!--Llama al header para que se muestre en la pagina de torneo-->
   <div th:replace="~{fragments/header :: header}"></div>
 
+  <!-- Sección principal del banner de bienvenida con eslogan -->
   <section class="hero-banner">
     <div class="slogan-container">
       <h1 class="main-slogan">
         Impulsa tu juego<br />Atrae a tu audiencia<br />Haz historia
       </h1>
+
+      <!-- Mensaje y enlace para que el usuario cree o se una a un equipo antes de inscribirse -->
       <div class="inscribir-equipo">
         <p class="">Si quieres inscribirte a un torneo, debes tener un equipo primero.</p>
         <a href="/equipos" class="unirse-equipo">Unirte a equipo</a>
@@ -27,20 +30,19 @@
     </div>
   </section>
 
-
-
-
-
+  <!-- Estructura del modal para mostrar el carrusel de torneos cuando el usuario da clic en 'ver detalles' -->
   <div class="carousel-modal">
     <div class="modal-content">
       <span class="close-modal">&times;</span>
       <div class="modal-tournament-content-area"></div>
     </div>
-
   </div>
+
+  <!-- Sección de juegos destacados -->
   <section class="featured-games">
     <div class="game-card">
       <div class="game-info">
+        <!-- Tarjeta del juego DOTA 2 con su descripción -->
         <h2 class="game-title">DOTA 2</h2>
         <p class="game-description">
           Torneos profesionales con premios en efectivo. Forma tu equipo y
@@ -53,19 +55,21 @@
           <span>Modo: Competitivo</span>
         </div>
       </div>
+      <!-- Carrusel de imágenes para DOTA 2 -->
       <div class="game-carousel">
         <img th:src="@{/Imagenes/dota2.webp}" class="active" alt="Dota 2 gameplay 1" />
         <img th:src="@{/Imagenes/torneodota2.jpg}" alt="Dota 2 gameplay 2" />
 
       </div>
     </div>
-
+    <!-- Segunda tarjeta -->
     <div class="game-card reverse">
       <div class="game-carousel">
         <img th:src="@{/Imagenes/counter-strike-2.webp}" class="active" alt="CSGO gameplay 1" />
         <img th:src="@{/Imagenes/torneo-counter-strike-esports.webp}" alt="CSGO gameplay 2" />
       </div>
       <div class="game-info">
+        <!-- Tarjeta de juego CS:GO 2 con carrusel y descripción -->
         <h2 class="game-title">CS:GO 2</h2>
         <p class="game-description">
           Demuestra tu precisión en el shooter táctico más popular, en uno de
@@ -75,24 +79,28 @@
           <span>5vs5</span>
           <span>Premio: 💰 Variable</span>
           <span>Modo: Defusal</span>
-          T
+
         </div>
       </div>
     </div>
+
+  <!-- Sección que lista todos los torneos activos -->
   </section>
   <section class="tournaments-section" id="eventos">
-
     <h2 class="section-title">TORNEOS ACTIVOS</h2>
+    <!-- Iteración con Thymeleaf para mostrar una carta por cada torneo en la lista -->
     <div class="lista-torneos">
       <div class="carta-torneo" id="carta-torneo" th:each="torneo : ${torneos}">
-        
+        <!-- Campo oculto con el ID del torneo (útil para el PagTorneo.js que abre el modal) -->
         <input type="hidden" name="idTorneo" id="idTorneo" th:value="${torneo.idTorneo}">
+        <!-- Imágenes del torneo y del juego asociadas en formato base64 -->
         <div class="img-torneo">
           <img class="banner-torneo" th:src="'data:image/png;base64,' + ${torneo.bannerBase64}"
             th:alt="${torneo.nombre}" />
           <img class="juego-torneo" th:if="${torneo.juego != null and torneo.juego.imgJuegoBase64 != null}"
             th:src="'data:image/png;base64,' + ${torneo.juego.imgJuegoBase64}" th:alt="${torneo.juego.nombreJuego}" />
         </div>
+        <!-- Contenido con los datos del torneo -->
         <div class="contenido-torneo">
           <h3 th:text="${torneo.nombre}">Nombre del torneo</h3>
           <p th:text="${torneo.descripcion}">Descripcion del torneo</p>
@@ -101,17 +109,20 @@
           <p th:text="${torneo.formato}"></p>
           <p th:text="${torneo.estado}"></p>
           <time th:text="${#temporals.format(torneo.fecha, 'dd/MM/yyyy')}"></time>
+          <!-- Botón para mostrar detalles del torneo en un modal (llama una funcion de PagTorneo.js) -->
           <button th:onclick="'modalTorneo(\'' + ${torneo.idTorneo} + '\')'">Ver detalles</button>
         </div>
       </div>
     </div>
-
+    <!-- Contenedor oculto que mostrará el modal del torneo al hacer clic -->
     <div id="modal-verTorneo" class="modal" style="display: none"></div>
+    <!-- Contenedor adicional para nuevas tarjetas que se agreguen o mensaje si no hay torneos -->
     <div class="cards-container" id="tournaments-cards-container"></div>
     <p id="no-active-tournaments-message" class="info-message" style="display: none">
       No hay torneos activos en este momento. ¡Vuelve pronto!
     </p>
   </section>
+  <!-- Inclusión de fragmentos comunes: pie de página y modales reutilizables -->
   <div th:replace="~{fragments/footer}"></div>
   <div th:replace="~{fragments/modal-registro}"></div>
   <div th:replace="~{fragments/modal-login}"></div>

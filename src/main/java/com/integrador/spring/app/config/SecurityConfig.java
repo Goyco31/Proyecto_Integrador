@@ -64,6 +64,17 @@ public class SecurityConfig {
                     "/paginaTorneo",
                     "/pdfDota2",
                     "/pdfCSGO2",
+                    "/api/torneos/*/banner",
+                    "/api/torneos/lista",
+                    "/api/usuarios/registrar",
+                    "/api/recarga",
+                    "/api/recompensas/lista",
+                    "/api/comprarMonedas/lista",
+                    "/api/equipos",
+                    "/api/juegos/lista",
+                    "/api/usuarios/lista",
+                    "/api/usuarios/id/{id}",
+                    "/api/torneos/*/game-icon",
                     "/clasificacion",
                     "/administrador", "/canjes", "/ComprarMonedas", "/pago/**", "/pagoCancel", "pagoError", "/ver/excel/**", "/api/**").permitAll()
                     // Permitir acceso a las rutas de control
