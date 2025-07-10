@@ -7,7 +7,7 @@ function listarUsuarios() {
       Authorization: `Bearer ${token}`,
     },
   })
-  //convierte la respuesta a formato JSON
+    //convierte la respuesta a formato JSON
     .then((r) => r.json())
     //mapea la info
     .then((data) => {

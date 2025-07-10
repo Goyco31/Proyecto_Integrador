@@ -146,7 +146,7 @@ public class EquipoController {
         }
     }
 
-    // elimina el juego por su id
+    // elimina el equipo por su id
     @DeleteMapping("/id/{id}")
     public ResponseEntity<Void> eliminarEquipoId(@PathVariable Integer id) {
         try {
@@ -157,7 +157,7 @@ public class EquipoController {
         }
     }
 
-    // elimina el juego por su nombre
+    // elimina el equipo por su nombre
     @DeleteMapping("/nombre/{nombre}")
     public ResponseEntity<Void> eliminarEquipoNombre(@PathVariable String nombre) {
         try {

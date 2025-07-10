@@ -14,6 +14,9 @@ function listarRecompensas() {
       //tabla que aparecera para el admin
       let tabla = `
         <div class="tournament-actions">
+            <button id="new-tournament-btn" class="btn-primary"  onclick="listarRecompensasDisponibles()">
+              Listar Recompensas disponibles
+            </button>
             <button id="new-tournament-btn" class="btn-primary"  onclick="registrarRecompensas()">
               Nueva Recompensa
             </button>
@@ -365,4 +368,66 @@ function eliminarRecompensa(idRecompensa) {
       Swal.fire("Error", "No se pudo eliminar la recompensa", "error");
     }
   });
+}
+
+
+function listarRecompensasDisponibles(){
+   document.getElementById("contenedor-tablas").innerHTML = "";
+  const token = localStorage.getItem("authToken");
+  fetch("/api/recompensas/disponibles", {
+    headers:{
+      Authorization: `Bearer ${token}`,
+    }
+  })
+  .then(r => r.json())
+  .then((data) => {
+      //tabla que aparecera para el admin
+      let tabla = `
+        <div class="tournament-actions">
+            <button id="new-tournament-btn" class="btn-primary"  onclick="listarRecompensasDisponibles()">
+              Listar Recompensas disponibles
+            </button>
+            <button id="new-tournament-btn" class="btn-primary"  onclick="registrarRecompensas()">
+              Nueva Recompensa
+            </button>
+            <form method="get" action="/ver/excel/recompensas">
+              <button type="submit" class="btn-primary">Exportar un Excel</button>
+            </form>
+        </div>
+
+        <table class="tournaments-table">
+                          <thead>
+                            <tr>
+                                <th>Id</th>
+                                <th>Nombre</th>
+                                <th>Descripcion</th>
+                                <th>Costo</th>
+                                <th>Disponible</th>
+                                <th>Cantidad</th>
+                                <th>Imagen</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>`;
+      //ingresa la info de todas las opciones de recompensa
+      data.forEach((l) => {
+        tabla += `<tbody class="tournaments-table-body">
+                          <td>${l.idRecompensa}</td>
+                                <td>${l.nombre}</td>
+                                <td>${l.descripcion}</td>
+                                <td>${l.costo} monedas</td>
+                                <td>${l.disponible}</td>
+                                <td>${l.cantidad}</td>
+                                <td>
+                                    <img src="data:image/png;base64,${l.imgRecompensaBase64}" alt="${l.nombre}" style="width: 100px; height: 100px;">
+                                </td>
+                                </td>
+                                <td>
+                                    <button class="btn-secondary edit-btn" data-id="${l.idRecompensa}" onclick="actualizarRecompensa(${l.idRecompensa})">Editar</button>
+                                    <button class="btn-danger delete-btn" data-recompensa-id="${l.idRecompensa}" onclick="eliminarRecompensa(${l.idRecompensa})">Eliminar</button>
+                                </td>
+                        </tbody>`;
+      });
+      tabla += `</table>`;
+      document.getElementById("contenedor-tablas").innerHTML = tabla;
+    });
 }
